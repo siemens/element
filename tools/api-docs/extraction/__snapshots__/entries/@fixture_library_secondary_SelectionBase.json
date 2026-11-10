@@ -1,0 +1,305 @@
+{
+  "id": "@fixture/library/secondary#SelectionBase",
+  "name": "SelectionBase",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "directive",
+  "internal": false,
+  "angularKind": "directive",
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/metadata.ts",
+    "startLine": 156,
+    "endLine": 160
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 156,
+        "endLine": 160
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "SelectionBase<T, IV>",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 156,
+            "endLine": 160
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "value",
+      "kind": "property",
+      "type": "IV | undefined",
+      "description": "",
+      "jsdocTags": [],
+      "optional": true,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 157,
+        "endLine": 157
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "valueInput",
+      "kind": "property",
+      "type": "InputSignal<IV | undefined>",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "inputAlias": "valueInput",
+      "required": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 158,
+        "endLine": 158
+      },
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "InputSignal",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/core.d.ts"
+          },
+          "type": "InputSignal<IV | undefined>"
+        }
+      ],
+      "sourceDefaultValue": null,
+      "signalReadType": "IV | undefined"
+    },
+    {
+      "name": "valueChange",
+      "kind": "property",
+      "type": "OutputEmitterRef<IV>",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "outputAlias": "valueChange",
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 159,
+        "endLine": 159
+      },
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "OutputEmitterRef",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/<chunk>.d.ts"
+          },
+          "type": "OutputEmitterRef<IV>"
+        }
+      ],
+      "sourceDefaultValue": "output<IV>()"
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "SelectionBase",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#SelectionBase",
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 156,
+        "endLine": 160
+      },
+      "type": "SelectionBase<T, IV>"
+    },
+    {
+      "name": "InputSignal",
+      "packageName": "@angular/core",
+      "importPath": "@angular/core",
+      "source": {
+        "packageName": "@angular/core",
+        "filePath": "node_modules/@angular/core/types/core.d.ts"
+      },
+      "type": "InputSignal<IV | undefined>"
+    },
+    {
+      "name": "OutputEmitterRef",
+      "packageName": "@angular/core",
+      "importPath": "@angular/core",
+      "source": {
+        "packageName": "@angular/core",
+        "filePath": "node_modules/@angular/core/types/<chunk>.d.ts"
+      },
+      "type": "OutputEmitterRef<IV>"
+    }
+  ],
+  "selector": "",
+  "exportAs": [],
+  "generics": [
+    "T",
+    "IV"
+  ],
+  "providedInRoot": false,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 156,
+        "endLine": 160
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "SelectionBase<T, IV>",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 156,
+            "endLine": 160
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "value",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 157,
+        "endLine": 157
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": true,
+      "static": false,
+      "inherited": false,
+      "type": "IV | undefined",
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "valueInput",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 158,
+        "endLine": 158
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "InputSignal",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/core.d.ts"
+          },
+          "type": "InputSignal<IV | undefined>"
+        }
+      ],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "InputSignal<IV | undefined>",
+      "sourceDefaultValue": null,
+      "signalReadType": "IV | undefined",
+      "inputAlias": "valueInput",
+      "required": false
+    },
+    {
+      "name": "valueChange",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 159,
+        "endLine": 159
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "OutputEmitterRef",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/<chunk>.d.ts"
+          },
+          "type": "OutputEmitterRef<IV>"
+        }
+      ],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "OutputEmitterRef<IV>",
+      "sourceDefaultValue": "output<IV>()",
+      "outputAlias": "valueChange"
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

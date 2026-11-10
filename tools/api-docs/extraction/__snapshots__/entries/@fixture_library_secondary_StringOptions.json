@@ -1,0 +1,155 @@
+{
+  "id": "@fixture/library/secondary#StringOptions",
+  "name": "StringOptions",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "interface",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/index-signatures.ts",
+    "startLine": 7,
+    "endLine": 7
+  },
+  "members": [
+    {
+      "name": "known",
+      "kind": "property",
+      "type": "string | undefined",
+      "description": "",
+      "jsdocTags": [],
+      "optional": true,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": true,
+      "source": {
+        "filePath": "library/secondary/index-signatures.ts",
+        "startLine": 2,
+        "endLine": 2
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "inheritedFrom": {
+        "name": "IndexedOptions",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#IndexedOptions",
+        "source": {
+          "filePath": "library/secondary/index-signatures.ts",
+          "startLine": 1,
+          "endLine": 5
+        },
+        "type": "IndexedOptions<string>"
+      }
+    },
+    {
+      "name": "[key: string]",
+      "kind": "index_signature",
+      "description": "Additional options keyed by name.",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/index-signatures.ts",
+        "startLine": 4,
+        "endLine": 4
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "type": "string | undefined",
+      "rawComment": "/** Additional options keyed by name. */",
+      "inherited": true
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [
+    "@fixture/library/secondary#IndexedOptions"
+  ],
+  "typeReferences": [
+    {
+      "name": "IndexedOptions",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#IndexedOptions",
+      "source": {
+        "filePath": "library/secondary/index-signatures.ts",
+        "startLine": 1,
+        "endLine": 5
+      },
+      "type": "IndexedOptions<string>"
+    },
+    {
+      "name": "StringOptions",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#StringOptions",
+      "source": {
+        "filePath": "library/secondary/index-signatures.ts",
+        "startLine": 7,
+        "endLine": 7
+      },
+      "type": "StringOptions"
+    }
+  ],
+  "generics": [],
+  "extends": [
+    "IndexedOptions<string>"
+  ],
+  "typeMembers": [
+    {
+      "name": "known",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/index-signatures.ts",
+        "startLine": 2,
+        "endLine": 2
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "inheritedFrom": {
+        "name": "IndexedOptions",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#IndexedOptions",
+        "source": {
+          "filePath": "library/secondary/index-signatures.ts",
+          "startLine": 1,
+          "endLine": 5
+        },
+        "type": "IndexedOptions<string>"
+      },
+      "optional": true,
+      "static": false,
+      "inherited": true,
+      "type": "string | undefined",
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "[key: string]",
+      "kind": "index_signature",
+      "description": "Additional options keyed by name.",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/index-signatures.ts",
+        "startLine": 4,
+        "endLine": 4
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "type": "string | undefined",
+      "rawComment": "/** Additional options keyed by name. */",
+      "inherited": true
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

@@ -1,0 +1,80 @@
+{
+  "id": "@fixture/library/secondary#LocalOptions@library/secondary/types.ts",
+  "name": "LocalOptions",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "interface",
+  "internal": false,
+  "description": "A truly local signature type.",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/types.ts",
+    "startLine": 26,
+    "endLine": 29
+  },
+  "members": [
+    {
+      "name": "value",
+      "kind": "property",
+      "description": "Local value.",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/types.ts",
+        "startLine": 28,
+        "endLine": 28
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "string",
+      "sourceDefaultValue": null,
+      "rawComment": "/** Local value. */"
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "LocalOptions",
+      "packageName": "@fixture/library",
+      "id": "@fixture/library/secondary#LocalOptions@library/secondary/types.ts",
+      "source": {
+        "filePath": "library/secondary/types.ts",
+        "startLine": 26,
+        "endLine": 29
+      },
+      "type": "LocalOptions"
+    }
+  ],
+  "generics": [],
+  "typeMembers": [
+    {
+      "name": "value",
+      "kind": "property",
+      "description": "Local value.",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/types.ts",
+        "startLine": 28,
+        "endLine": 28
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "string",
+      "sourceDefaultValue": null,
+      "rawComment": "/** Local value. */"
+    }
+  ],
+  "documentationOnly": true,
+  "related": true,
+  "docsVisible": true
+}

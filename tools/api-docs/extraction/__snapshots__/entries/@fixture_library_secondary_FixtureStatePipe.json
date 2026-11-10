@@ -1,0 +1,371 @@
+{
+  "id": "@fixture/library/secondary#FixtureStatePipe",
+  "name": "FixtureStatePipe",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "pipe",
+  "internal": false,
+  "angularKind": "pipe",
+  "description": "Formats a fixture state.",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/kinds.ts",
+    "startLine": 20,
+    "endLine": 28
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/kinds.ts",
+        "startLine": 20,
+        "endLine": 28
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "FixtureStatePipe",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/kinds.ts",
+            "startLine": 20,
+            "endLine": 28
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "transform",
+      "kind": "method",
+      "type": "string",
+      "description": "",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The state to format."
+        },
+        {
+          "name": "param",
+          "comment": "Whether to upper-case the result."
+        }
+      ],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "signatures": [
+        {
+          "returnType": "string",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "FixtureState",
+              "description": "The state to format.",
+              "source": {
+                "filePath": "library/secondary/kinds.ts",
+                "startLine": 25,
+                "endLine": 25
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "The state to format."
+                }
+              ]
+            },
+            {
+              "name": "upper",
+              "type": "boolean",
+              "description": "Whether to upper-case the result.",
+              "source": {
+                "filePath": "library/secondary/kinds.ts",
+                "startLine": 25,
+                "endLine": 25
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "false",
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "Whether to upper-case the result."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The state to format."
+            },
+            {
+              "name": "param",
+              "comment": "Whether to upper-case the result."
+            }
+          ],
+          "source": {
+            "filePath": "library/secondary/kinds.ts",
+            "startLine": 25,
+            "endLine": 27
+          },
+          "rawComment": "/**\n   * @param value The state to format.\n   * @param upper Whether to upper-case the result.\n   */",
+          "implementation": true
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/kinds.ts",
+        "startLine": 25,
+        "endLine": 27
+      },
+      "references": [
+        "@fixture/library/secondary#FixtureState"
+      ],
+      "typeReferences": [
+        {
+          "name": "FixtureState",
+          "packageName": "@fixture/library",
+          "importPath": "@fixture/library/secondary",
+          "id": "@fixture/library/secondary#FixtureState",
+          "source": {
+            "filePath": "library/secondary/kinds.ts",
+            "startLine": 4,
+            "endLine": 10
+          },
+          "type": "FixtureState"
+        }
+      ],
+      "sourceDefaultValue": null,
+      "rawComment": "/**\n   * @param value The state to format.\n   * @param upper Whether to upper-case the result.\n   */",
+      "implementedFrom": {
+        "name": "PipeTransform",
+        "packageName": "@angular/core",
+        "importPath": "@angular/core",
+        "source": {
+          "packageName": "@angular/core",
+          "filePath": "node_modules/@angular/core/types/core.d.ts"
+        },
+        "type": "PipeTransform"
+      }
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [
+    "@fixture/library/secondary#FixtureState"
+  ],
+  "typeReferences": [
+    {
+      "name": "FixtureState",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#FixtureState",
+      "source": {
+        "filePath": "library/secondary/kinds.ts",
+        "startLine": 4,
+        "endLine": 10
+      },
+      "type": "FixtureState"
+    },
+    {
+      "name": "FixtureStatePipe",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#FixtureStatePipe",
+      "source": {
+        "filePath": "library/secondary/kinds.ts",
+        "startLine": 20,
+        "endLine": 28
+      },
+      "type": "FixtureStatePipe"
+    },
+    {
+      "name": "PipeTransform",
+      "packageName": "@angular/core",
+      "importPath": "@angular/core",
+      "source": {
+        "packageName": "@angular/core",
+        "filePath": "node_modules/@angular/core/types/core.d.ts"
+      },
+      "type": "PipeTransform"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "implements": [
+    "PipeTransform"
+  ],
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/kinds.ts",
+        "startLine": 20,
+        "endLine": 28
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "FixtureStatePipe",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/kinds.ts",
+            "startLine": 20,
+            "endLine": 28
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "transform",
+      "kind": "method",
+      "description": "",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The state to format."
+        },
+        {
+          "name": "param",
+          "comment": "Whether to upper-case the result."
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/kinds.ts",
+        "startLine": 25,
+        "endLine": 27
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "FixtureState",
+          "packageName": "@fixture/library",
+          "importPath": "@fixture/library/secondary",
+          "id": "@fixture/library/secondary#FixtureState",
+          "source": {
+            "filePath": "library/secondary/kinds.ts",
+            "startLine": 4,
+            "endLine": 10
+          },
+          "type": "FixtureState"
+        }
+      ],
+      "implementedFrom": {
+        "name": "PipeTransform",
+        "packageName": "@angular/core",
+        "importPath": "@angular/core",
+        "source": {
+          "packageName": "@angular/core",
+          "filePath": "node_modules/@angular/core/types/core.d.ts"
+        },
+        "type": "PipeTransform"
+      },
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "string",
+      "signatures": [
+        {
+          "returnType": "string",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "FixtureState",
+              "description": "The state to format.",
+              "source": {
+                "filePath": "library/secondary/kinds.ts",
+                "startLine": 25,
+                "endLine": 25
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "The state to format."
+                }
+              ]
+            },
+            {
+              "name": "upper",
+              "type": "boolean",
+              "description": "Whether to upper-case the result.",
+              "source": {
+                "filePath": "library/secondary/kinds.ts",
+                "startLine": 25,
+                "endLine": 25
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "false",
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "Whether to upper-case the result."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The state to format."
+            },
+            {
+              "name": "param",
+              "comment": "Whether to upper-case the result."
+            }
+          ],
+          "source": {
+            "filePath": "library/secondary/kinds.ts",
+            "startLine": 25,
+            "endLine": 27
+          },
+          "rawComment": "/**\n   * @param value The state to format.\n   * @param upper Whether to upper-case the result.\n   */",
+          "implementation": true
+        }
+      ],
+      "sourceDefaultValue": null,
+      "rawComment": "/**\n   * @param value The state to format.\n   * @param upper Whether to upper-case the result.\n   */"
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

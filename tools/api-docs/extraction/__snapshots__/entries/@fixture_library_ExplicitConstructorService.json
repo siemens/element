@@ -1,0 +1,269 @@
+{
+  "id": "@fixture/library#ExplicitConstructorService",
+  "name": "ExplicitConstructorService",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library",
+  "kind": "undecorated_class",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/constructors.ts",
+    "startLine": 1,
+    "endLine": 11
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "ExplicitConstructorService",
+      "description": "Builds a greeting.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The greeting recipient."
+        },
+        {
+          "name": "param",
+          "comment": "Additional labels."
+        }
+      ],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "signatures": [
+        {
+          "returnType": "ExplicitConstructorService",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The greeting recipient.",
+              "source": {
+                "filePath": "library/constructors.ts",
+                "startLine": 8,
+                "endLine": 8
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "'world'",
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "The greeting recipient."
+                }
+              ]
+            },
+            {
+              "name": "labels",
+              "type": "string[]",
+              "description": "Additional labels.",
+              "source": {
+                "filePath": "library/constructors.ts",
+                "startLine": 8,
+                "endLine": 8
+              },
+              "optional": false,
+              "rest": true,
+              "sourceDefaultValue": null,
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "Additional labels."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "Builds a greeting.",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The greeting recipient."
+            },
+            {
+              "name": "param",
+              "comment": "Additional labels."
+            }
+          ],
+          "source": {
+            "filePath": "library/constructors.ts",
+            "startLine": 8,
+            "endLine": 10
+          },
+          "rawComment": "/** Builds a greeting.\n   * @param name The greeting recipient.\n   * @param labels Additional labels.\n   */",
+          "implementation": true
+        }
+      ],
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 8,
+        "endLine": 10
+      },
+      "explicitPublic": true,
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Builds a greeting.\n   * @param name The greeting recipient.\n   * @param labels Additional labels.\n   */"
+    },
+    {
+      "name": "greeting",
+      "kind": "property",
+      "type": "string",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 2,
+        "endLine": 2
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "ExplicitConstructorService",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library",
+      "id": "@fixture/library#ExplicitConstructorService",
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 1,
+        "endLine": 11
+      },
+      "type": "ExplicitConstructorService"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "Builds a greeting.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The greeting recipient."
+        },
+        {
+          "name": "param",
+          "comment": "Additional labels."
+        }
+      ],
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 8,
+        "endLine": 10
+      },
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "explicitPublic": true,
+      "inherited": false,
+      "signatures": [
+        {
+          "returnType": "ExplicitConstructorService",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "The greeting recipient.",
+              "source": {
+                "filePath": "library/constructors.ts",
+                "startLine": 8,
+                "endLine": 8
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "'world'",
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "The greeting recipient."
+                }
+              ]
+            },
+            {
+              "name": "labels",
+              "type": "string[]",
+              "description": "Additional labels.",
+              "source": {
+                "filePath": "library/constructors.ts",
+                "startLine": 8,
+                "endLine": 8
+              },
+              "optional": false,
+              "rest": true,
+              "sourceDefaultValue": null,
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "Additional labels."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "Builds a greeting.",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The greeting recipient."
+            },
+            {
+              "name": "param",
+              "comment": "Additional labels."
+            }
+          ],
+          "source": {
+            "filePath": "library/constructors.ts",
+            "startLine": 8,
+            "endLine": 10
+          },
+          "rawComment": "/** Builds a greeting.\n   * @param name The greeting recipient.\n   * @param labels Additional labels.\n   */",
+          "implementation": true
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Builds a greeting.\n   * @param name The greeting recipient.\n   * @param labels Additional labels.\n   */"
+    },
+    {
+      "name": "greeting",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 2,
+        "endLine": 2
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "string",
+      "sourceDefaultValue": null
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

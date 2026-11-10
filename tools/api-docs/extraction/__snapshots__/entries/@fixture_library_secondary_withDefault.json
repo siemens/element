@@ -1,0 +1,96 @@
+{
+  "id": "@fixture/library/secondary#withDefault",
+  "name": "withDefault",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "function",
+  "internal": false,
+  "description": "A documented function.",
+  "jsdocTags": [
+    {
+      "name": "param",
+      "comment": "The value."
+    }
+  ],
+  "source": {
+    "filePath": "library/secondary/types.ts",
+    "startLine": 12,
+    "endLine": 14
+  },
+  "members": [],
+  "signatures": [
+    {
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string | undefined",
+          "description": "The value.",
+          "source": {
+            "filePath": "library/secondary/types.ts",
+            "startLine": 11,
+            "endLine": 11
+          },
+          "optional": true,
+          "rest": false,
+          "sourceDefaultValue": null,
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The value."
+            }
+          ]
+        }
+      ],
+      "generics": [],
+      "description": "A documented function.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The value."
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/types.ts",
+        "startLine": 11,
+        "endLine": 11
+      },
+      "rawComment": "/** A documented function.\n * @param value The value.\n */",
+      "implementation": false
+    },
+    {
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string",
+          "description": "",
+          "source": {
+            "filePath": "library/secondary/types.ts",
+            "startLine": 12,
+            "endLine": 12
+          },
+          "optional": true,
+          "rest": false,
+          "sourceDefaultValue": "'default'",
+          "jsdocTags": []
+        }
+      ],
+      "generics": [],
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/types.ts",
+        "startLine": 12,
+        "endLine": 14
+      },
+      "implementation": true
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [],
+  "type": "string",
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

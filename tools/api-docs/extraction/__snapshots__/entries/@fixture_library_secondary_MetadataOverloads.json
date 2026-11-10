@@ -1,0 +1,539 @@
+{
+  "id": "@fixture/library/secondary#MetadataOverloads",
+  "name": "MetadataOverloads",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "undecorated_class",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/metadata.ts",
+    "startLine": 57,
+    "endLine": 83
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "MetadataOverloads",
+      "description": "Actual construction.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "Initial value."
+        }
+      ],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "signatures": [
+        {
+          "returnType": "MetadataOverloads",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 59,
+                "endLine": 59
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "String construction.",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 59,
+            "endLine": 59
+          },
+          "rawComment": "/** String construction. */",
+          "implementation": false
+        },
+        {
+          "returnType": "MetadataOverloads",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 61,
+                "endLine": 61
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "Numeric construction.",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 61,
+            "endLine": 61
+          },
+          "rawComment": "/** Numeric construction. */",
+          "implementation": false
+        },
+        {
+          "returnType": "MetadataOverloads",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string | number",
+              "description": "Initial value.",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 65,
+                "endLine": 65
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "1",
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "Initial value."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "Actual construction.",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "Initial value."
+            }
+          ],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 65,
+            "endLine": 67
+          },
+          "rawComment": "/** Actual construction.\n   * @param value Initial value.\n   */",
+          "implementation": true
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 65,
+        "endLine": 67
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Actual construction.\n   * @param value Initial value.\n   */"
+    },
+    {
+      "name": "convert",
+      "kind": "method",
+      "type": "string | number",
+      "description": "Actual method.\n\n ```ts\n const result = '  preserve spacing';\n ```",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The value."
+        }
+      ],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "signatures": [
+        {
+          "returnType": "string",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 70,
+                "endLine": 70
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "String method.",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 70,
+            "endLine": 70
+          },
+          "rawComment": "/** String method. */",
+          "implementation": false
+        },
+        {
+          "returnType": "number",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 72,
+                "endLine": 72
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "Numeric method.",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 72,
+            "endLine": 72
+          },
+          "rawComment": "/** Numeric method. */",
+          "implementation": false
+        },
+        {
+          "returnType": "string | number",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string | number",
+              "description": "The value.",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 80,
+                "endLine": 80
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "The value."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "Actual method.\n\n```ts\nconst result = '  preserve spacing';\n```",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The value."
+            }
+          ],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 80,
+            "endLine": 82
+          },
+          "rawComment": "/** Actual method.\n   *\n   * ```ts\n   * const result = '  preserve spacing';\n   * ```\n   * @param value The value.\n   */",
+          "implementation": true
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 80,
+        "endLine": 82
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Actual method.\n   *\n   * ```ts\n   * const result = '  preserve spacing';\n   * ```\n   * @param value The value.\n   */"
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "MetadataOverloads",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#MetadataOverloads",
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 57,
+        "endLine": 83
+      },
+      "type": "MetadataOverloads"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "Actual construction.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "Initial value."
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 65,
+        "endLine": 67
+      },
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "signatures": [
+        {
+          "returnType": "MetadataOverloads",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 59,
+                "endLine": 59
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "String construction.",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 59,
+            "endLine": 59
+          },
+          "rawComment": "/** String construction. */",
+          "implementation": false
+        },
+        {
+          "returnType": "MetadataOverloads",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 61,
+                "endLine": 61
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "Numeric construction.",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 61,
+            "endLine": 61
+          },
+          "rawComment": "/** Numeric construction. */",
+          "implementation": false
+        },
+        {
+          "returnType": "MetadataOverloads",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string | number",
+              "description": "Initial value.",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 65,
+                "endLine": 65
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "1",
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "Initial value."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "Actual construction.",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "Initial value."
+            }
+          ],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 65,
+            "endLine": 67
+          },
+          "rawComment": "/** Actual construction.\n   * @param value Initial value.\n   */",
+          "implementation": true
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Actual construction.\n   * @param value Initial value.\n   */"
+    },
+    {
+      "name": "convert",
+      "kind": "method",
+      "description": "String method.\nNumeric method.\nActual method.\n\n```ts\nconst result = '  preserve spacing';\n```",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The value."
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 80,
+        "endLine": 82
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "string | number",
+      "signatures": [
+        {
+          "returnType": "string",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 70,
+                "endLine": 70
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "String method.",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 70,
+            "endLine": 70
+          },
+          "rawComment": "/** String method. */",
+          "implementation": false
+        },
+        {
+          "returnType": "number",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 72,
+                "endLine": 72
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "Numeric method.",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 72,
+            "endLine": 72
+          },
+          "rawComment": "/** Numeric method. */",
+          "implementation": false
+        },
+        {
+          "returnType": "string | number",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string | number",
+              "description": "The value.",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 80,
+                "endLine": 80
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "The value."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "Actual method.\n\n```ts\nconst result = '  preserve spacing';\n```",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The value."
+            }
+          ],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 80,
+            "endLine": 82
+          },
+          "rawComment": "/** Actual method.\n   *\n   * ```ts\n   * const result = '  preserve spacing';\n   * ```\n   * @param value The value.\n   */",
+          "implementation": true
+        }
+      ],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Actual method.\n   *\n   * ```ts\n   * const result = '  preserve spacing';\n   * ```\n   * @param value The value.\n   */"
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

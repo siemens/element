@@ -1,0 +1,112 @@
+{
+  "id": "@fixture/library/secondary#InternalAliasTarget",
+  "name": "InternalAliasTarget",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "undecorated_class",
+  "internal": true,
+  "description": "Internal original summary.",
+  "jsdocTags": [
+    {
+      "name": "internal",
+      "comment": ""
+    }
+  ],
+  "source": {
+    "filePath": "library/secondary/aliases.ts",
+    "startLine": 29,
+    "endLine": 29
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/aliases.ts",
+        "startLine": 29,
+        "endLine": 29
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "InternalAliasTarget",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/aliases.ts",
+            "startLine": 29,
+            "endLine": 29
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "InternalAliasTarget",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#InternalAliasTarget",
+      "source": {
+        "filePath": "library/secondary/aliases.ts",
+        "startLine": 29,
+        "endLine": 29
+      },
+      "type": "InternalAliasTarget"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/aliases.ts",
+        "startLine": 29,
+        "endLine": 29
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "InternalAliasTarget",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/aliases.ts",
+            "startLine": 29,
+            "endLine": 29
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    }
+  ],
+  "docsVisible": false,
+  "typeOnlyExport": false
+}

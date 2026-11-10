@@ -1,0 +1,213 @@
+{
+  "id": "@fixture/library#ProtectedConstructorService",
+  "name": "ProtectedConstructorService",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library",
+  "kind": "undecorated_class",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/constructors.ts",
+    "startLine": 13,
+    "endLine": 22
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "ProtectedConstructorService",
+      "description": "Builds a protected service.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The initial count."
+        }
+      ],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "protected",
+      "inherited": false,
+      "signatures": [
+        {
+          "returnType": "ProtectedConstructorService",
+          "parameters": [
+            {
+              "name": "count",
+              "type": "number",
+              "description": "The initial count.",
+              "source": {
+                "filePath": "library/constructors.ts",
+                "startLine": 19,
+                "endLine": 19
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "5",
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "The initial count."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "Builds a protected service.",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The initial count."
+            }
+          ],
+          "source": {
+            "filePath": "library/constructors.ts",
+            "startLine": 19,
+            "endLine": 21
+          },
+          "rawComment": "/** Builds a protected service.\n   * @param count The initial count.\n   */",
+          "implementation": true
+        }
+      ],
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 19,
+        "endLine": 21
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Builds a protected service.\n   * @param count The initial count.\n   */"
+    },
+    {
+      "name": "count",
+      "kind": "property",
+      "type": "number",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 14,
+        "endLine": 14
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "ProtectedConstructorService",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library",
+      "id": "@fixture/library#ProtectedConstructorService",
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 13,
+        "endLine": 22
+      },
+      "type": "ProtectedConstructorService"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "Builds a protected service.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The initial count."
+        }
+      ],
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 19,
+        "endLine": 21
+      },
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "protected",
+      "inherited": false,
+      "signatures": [
+        {
+          "returnType": "ProtectedConstructorService",
+          "parameters": [
+            {
+              "name": "count",
+              "type": "number",
+              "description": "The initial count.",
+              "source": {
+                "filePath": "library/constructors.ts",
+                "startLine": 19,
+                "endLine": 19
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "5",
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "The initial count."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "Builds a protected service.",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The initial count."
+            }
+          ],
+          "source": {
+            "filePath": "library/constructors.ts",
+            "startLine": 19,
+            "endLine": 21
+          },
+          "rawComment": "/** Builds a protected service.\n   * @param count The initial count.\n   */",
+          "implementation": true
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Builds a protected service.\n   * @param count The initial count.\n   */"
+    },
+    {
+      "name": "count",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 14,
+        "endLine": 14
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "number",
+      "sourceDefaultValue": null
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

@@ -1,0 +1,325 @@
+{
+  "id": "@fixture/library/secondary#ReferencedTransformMetadata",
+  "name": "ReferencedTransformMetadata",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "undecorated_class",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/metadata.ts",
+    "startLine": 127,
+    "endLine": 133
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 127,
+        "endLine": 133
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "ReferencedTransformMetadata",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 127,
+            "endLine": 133
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "converted",
+      "kind": "property",
+      "type": "InputSignalWithTransform<number | undefined, unknown>",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 128,
+        "endLine": 128
+      },
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "InputSignalWithTransform",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/core.d.ts"
+          },
+          "type": "InputSignalWithTransform<number | undefined, unknown>"
+        }
+      ],
+      "sourceDefaultValue": "undefined",
+      "signalReadType": "number | undefined",
+      "signalTransformType": "number"
+    },
+    {
+      "name": "spreadConverted",
+      "kind": "property",
+      "type": "InputSignalWithTransform<number | undefined, unknown>",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 129,
+        "endLine": 131
+      },
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "InputSignalWithTransform",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/core.d.ts"
+          },
+          "type": "InputSignalWithTransform<number | undefined, unknown>"
+        }
+      ],
+      "sourceDefaultValue": "undefined",
+      "signalReadType": "number | undefined",
+      "signalTransformType": "number"
+    },
+    {
+      "name": "requiredConverted",
+      "kind": "property",
+      "type": "InputSignalWithTransform<number, unknown>",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 132,
+        "endLine": 132
+      },
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "InputSignalWithTransform",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/core.d.ts"
+          },
+          "type": "InputSignalWithTransform<number, unknown>"
+        }
+      ],
+      "sourceDefaultValue": null,
+      "signalReadType": "number",
+      "signalTransformType": "number"
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "ReferencedTransformMetadata",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#ReferencedTransformMetadata",
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 127,
+        "endLine": 133
+      },
+      "type": "ReferencedTransformMetadata"
+    },
+    {
+      "name": "InputSignalWithTransform",
+      "packageName": "@angular/core",
+      "importPath": "@angular/core",
+      "source": {
+        "packageName": "@angular/core",
+        "filePath": "node_modules/@angular/core/types/core.d.ts"
+      },
+      "type": "InputSignalWithTransform<number | undefined, unknown>"
+    },
+    {
+      "name": "InputSignalWithTransform",
+      "packageName": "@angular/core",
+      "importPath": "@angular/core",
+      "source": {
+        "packageName": "@angular/core",
+        "filePath": "node_modules/@angular/core/types/core.d.ts"
+      },
+      "type": "InputSignalWithTransform<number, unknown>"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 127,
+        "endLine": 133
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "ReferencedTransformMetadata",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 127,
+            "endLine": 133
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "converted",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 128,
+        "endLine": 128
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "InputSignalWithTransform",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/core.d.ts"
+          },
+          "type": "InputSignalWithTransform<number | undefined, unknown>"
+        }
+      ],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "InputSignalWithTransform<number | undefined, unknown>",
+      "sourceDefaultValue": "undefined",
+      "signalReadType": "number | undefined",
+      "signalTransformType": "number"
+    },
+    {
+      "name": "spreadConverted",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 129,
+        "endLine": 131
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "InputSignalWithTransform",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/core.d.ts"
+          },
+          "type": "InputSignalWithTransform<number | undefined, unknown>"
+        }
+      ],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "InputSignalWithTransform<number | undefined, unknown>",
+      "sourceDefaultValue": "undefined",
+      "signalReadType": "number | undefined",
+      "signalTransformType": "number"
+    },
+    {
+      "name": "requiredConverted",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 132,
+        "endLine": 132
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "InputSignalWithTransform",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/core.d.ts"
+          },
+          "type": "InputSignalWithTransform<number, unknown>"
+        }
+      ],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "InputSignalWithTransform<number, unknown>",
+      "sourceDefaultValue": null,
+      "signalReadType": "number",
+      "signalTransformType": "number"
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

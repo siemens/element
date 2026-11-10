@@ -1,0 +1,190 @@
+{
+  "id": "@fixture/library/secondary#overloaded",
+  "name": "overloaded",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "function",
+  "internal": false,
+  "description": "The implementation.",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/metadata.ts",
+    "startLine": 53,
+    "endLine": 55
+  },
+  "members": [],
+  "signatures": [
+    {
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string",
+          "description": "The string value.",
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 45,
+            "endLine": 45
+          },
+          "optional": false,
+          "rest": false,
+          "sourceDefaultValue": null,
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The string value."
+            }
+          ]
+        }
+      ],
+      "generics": [],
+      "description": "String overload.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The string value."
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 45,
+        "endLine": 45
+      },
+      "rawComment": "/** String overload.\n * @param value The string value.\n */",
+      "implementation": false
+    },
+    {
+      "returnType": "number",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "number",
+          "description": "The numeric value.",
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 49,
+            "endLine": 49
+          },
+          "optional": false,
+          "rest": false,
+          "sourceDefaultValue": null,
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "The numeric value."
+            }
+          ]
+        }
+      ],
+      "generics": [],
+      "description": "Numeric overload.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "The numeric value."
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 49,
+        "endLine": 49
+      },
+      "rawComment": "/** Numeric overload.\n * @param value The numeric value.\n */",
+      "implementation": false
+    },
+    {
+      "returnType": "T",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "T",
+          "description": "",
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 51,
+            "endLine": 51
+          },
+          "optional": false,
+          "rest": false,
+          "sourceDefaultValue": null,
+          "jsdocTags": []
+        },
+        {
+          "name": "fallback",
+          "type": "T | undefined",
+          "description": "",
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 51,
+            "endLine": 51
+          },
+          "optional": true,
+          "rest": false,
+          "sourceDefaultValue": null,
+          "jsdocTags": []
+        }
+      ],
+      "generics": [
+        "T extends string | number = string"
+      ],
+      "description": "Generic overload.",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 51,
+        "endLine": 51
+      },
+      "rawComment": "/** Generic overload. */",
+      "implementation": false
+    },
+    {
+      "returnType": "string | number",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string | number",
+          "description": "",
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 53,
+            "endLine": 53
+          },
+          "optional": false,
+          "rest": false,
+          "sourceDefaultValue": null,
+          "jsdocTags": []
+        },
+        {
+          "name": "fallback",
+          "type": "string | number",
+          "description": "",
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 53,
+            "endLine": 53
+          },
+          "optional": true,
+          "rest": false,
+          "sourceDefaultValue": "0",
+          "jsdocTags": []
+        }
+      ],
+      "generics": [],
+      "description": "The implementation.",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 53,
+        "endLine": 55
+      },
+      "rawComment": "/** The implementation. */",
+      "implementation": true
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [],
+  "type": "string",
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

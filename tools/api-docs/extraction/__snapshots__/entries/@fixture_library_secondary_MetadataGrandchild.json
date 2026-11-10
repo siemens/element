@@ -1,0 +1,636 @@
+{
+  "id": "@fixture/library/secondary#MetadataGrandchild",
+  "name": "MetadataGrandchild",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "undecorated_class",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/metadata.ts",
+    "startLine": 40,
+    "endLine": 40
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 40,
+        "endLine": 40
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "MetadataGrandchild",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 40,
+            "endLine": 40
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "value",
+      "kind": "property",
+      "type": "string[]",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": true,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 21,
+        "endLine": 21
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "inheritedFrom": {
+        "name": "GenericParent",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#GenericParent",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 20,
+          "endLine": 31
+        },
+        "type": "GenericParent<string[]>"
+      },
+      "implementedFrom": {
+        "name": "Contract",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#Contract",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 15,
+          "endLine": 18
+        },
+        "type": "Contract<string[]>"
+      }
+    },
+    {
+      "name": "convert",
+      "kind": "method",
+      "type": "string[]",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": true,
+      "signatures": [
+        {
+          "returnType": "string[]",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string[]",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 22,
+                "endLine": 22
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 22,
+            "endLine": 24
+          },
+          "implementation": true
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 22,
+        "endLine": 24
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "inheritedFrom": {
+        "name": "GenericParent",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#GenericParent",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 20,
+          "endLine": 31
+        },
+        "type": "GenericParent<string[]>"
+      },
+      "implementedFrom": {
+        "name": "Contract",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#Contract",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 15,
+          "endLine": 18
+        },
+        "type": "Contract<string[]>"
+      }
+    },
+    {
+      "name": "inheritedContract",
+      "kind": "method",
+      "type": "string[]",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": true,
+      "signatures": [
+        {
+          "returnType": "string[]",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string[]",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 25,
+                "endLine": 25
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 25,
+            "endLine": 27
+          },
+          "implementation": true
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 25,
+        "endLine": 27
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "inheritedFrom": {
+        "name": "GenericParent",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#GenericParent",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 20,
+          "endLine": 31
+        },
+        "type": "GenericParent<string[]>"
+      },
+      "implementedFrom": {
+        "name": "ParentContract",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#ParentContract",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 11,
+          "endLine": 13
+        },
+        "type": "ParentContract<string[]>"
+      }
+    },
+    {
+      "name": "identity",
+      "kind": "method",
+      "type": "T",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": true,
+      "signatures": [
+        {
+          "returnType": "T",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "T",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 28,
+                "endLine": 28
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [
+            "T"
+          ],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 28,
+            "endLine": 30
+          },
+          "implementation": true
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 28,
+        "endLine": 30
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "inheritedFrom": {
+        "name": "GenericParent",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#GenericParent",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 20,
+          "endLine": 31
+        },
+        "type": "GenericParent<string[]>"
+      }
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [
+    "@fixture/library/secondary#MetadataMiddle"
+  ],
+  "typeReferences": [
+    {
+      "name": "MetadataGrandchild",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#MetadataGrandchild",
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 40,
+        "endLine": 40
+      },
+      "type": "MetadataGrandchild"
+    },
+    {
+      "name": "MetadataMiddle",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#MetadataMiddle",
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 39,
+        "endLine": 39
+      },
+      "type": "MetadataMiddle<string>"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "extends": [
+    "MetadataMiddle<string>"
+  ],
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 40,
+        "endLine": 40
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "MetadataGrandchild",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 40,
+            "endLine": 40
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "value",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 21,
+        "endLine": 21
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "inheritedFrom": {
+        "name": "GenericParent",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#GenericParent",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 20,
+          "endLine": 31
+        },
+        "type": "GenericParent<string[]>"
+      },
+      "implementedFrom": {
+        "name": "Contract",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#Contract",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 15,
+          "endLine": 18
+        },
+        "type": "Contract<string[]>"
+      },
+      "optional": false,
+      "static": false,
+      "inherited": true,
+      "type": "string[]",
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "convert",
+      "kind": "method",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 22,
+        "endLine": 24
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "inheritedFrom": {
+        "name": "GenericParent",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#GenericParent",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 20,
+          "endLine": 31
+        },
+        "type": "GenericParent<string[]>"
+      },
+      "implementedFrom": {
+        "name": "Contract",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#Contract",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 15,
+          "endLine": 18
+        },
+        "type": "Contract<string[]>"
+      },
+      "optional": false,
+      "static": false,
+      "inherited": true,
+      "type": "string[]",
+      "signatures": [
+        {
+          "returnType": "string[]",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string[]",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 22,
+                "endLine": 22
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 22,
+            "endLine": 24
+          },
+          "implementation": true
+        }
+      ],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "inheritedContract",
+      "kind": "method",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 25,
+        "endLine": 27
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "inheritedFrom": {
+        "name": "GenericParent",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#GenericParent",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 20,
+          "endLine": 31
+        },
+        "type": "GenericParent<string[]>"
+      },
+      "implementedFrom": {
+        "name": "ParentContract",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#ParentContract",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 11,
+          "endLine": 13
+        },
+        "type": "ParentContract<string[]>"
+      },
+      "optional": false,
+      "static": false,
+      "inherited": true,
+      "type": "string[]",
+      "signatures": [
+        {
+          "returnType": "string[]",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string[]",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 25,
+                "endLine": 25
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 25,
+            "endLine": 27
+          },
+          "implementation": true
+        }
+      ],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "identity",
+      "kind": "method",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 28,
+        "endLine": 30
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "inheritedFrom": {
+        "name": "GenericParent",
+        "packageName": "@fixture/library",
+        "importPath": "@fixture/library/secondary",
+        "id": "@fixture/library/secondary#GenericParent",
+        "source": {
+          "filePath": "library/secondary/metadata.ts",
+          "startLine": 20,
+          "endLine": 31
+        },
+        "type": "GenericParent<string[]>"
+      },
+      "optional": false,
+      "static": false,
+      "inherited": true,
+      "type": "T",
+      "signatures": [
+        {
+          "returnType": "T",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "T",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 28,
+                "endLine": 28
+              },
+              "optional": false,
+              "rest": false,
+              "sourceDefaultValue": null,
+              "jsdocTags": []
+            }
+          ],
+          "generics": [
+            "T"
+          ],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 28,
+            "endLine": 30
+          },
+          "implementation": true
+        }
+      ],
+      "sourceDefaultValue": null
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

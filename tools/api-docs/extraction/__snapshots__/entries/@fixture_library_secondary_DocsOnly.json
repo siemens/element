@@ -1,0 +1,40 @@
+{
+  "id": "@fixture/library/secondary#DocsOnly",
+  "name": "DocsOnly",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "type_alias",
+  "internal": false,
+  "description": "Only explicitly published to the docs barrel.",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/docs-only.ts",
+    "startLine": 2,
+    "endLine": 2
+  },
+  "members": [
+    {
+      "name": "[index: number]",
+      "kind": "index_signature",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "packageName": "typescript",
+        "filePath": "node_modules/typescript/lib/lib.es5.d.ts"
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [],
+      "type": "string",
+      "inherited": true
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [],
+  "type": "'documentation'",
+  "generics": [],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}
