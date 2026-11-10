@@ -6,11 +6,17 @@ import { A11yModule } from '@angular/cdk/a11y';
 import {
   AfterViewInit,
   Component,
+  ComponentRef,
   ElementRef,
   inject,
+  input,
+  OnDestroy,
   OnInit,
   signal,
+  TemplateRef,
+  Type,
   viewChild,
+  ViewContainerRef,
   DOCUMENT,
   NgZone
 } from '@angular/core';
@@ -28,15 +34,22 @@ import { ModalRef } from './modalref';
     '(window:keydown.esc)': 'onEsc($event)'
   }
 })
-export class SiModalComponent implements OnInit, AfterViewInit {
+export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
+  readonly content = input.required<TemplateRef<unknown> | Type<unknown>>();
+
   private readonly document = inject(DOCUMENT);
   private readonly ngZone = inject(NgZone);
-  protected readonly modalRef = inject(ModalRef<unknown, any>);
+  protected readonly modalRef = inject(ModalRef<unknown, unknown>);
 
   protected readonly dialogClass = this.modalRef.dialogClass ?? '';
   protected readonly titleId = this.modalRef.data?.ariaLabelledBy ?? '';
   protected readonly show = signal(true);
   protected readonly showBackdropVisible = signal(false);
+
+  private readonly contentContainer = viewChild.required('contentContainer', {
+    read: ViewContainerRef
+  });
+  private componentRef?: ComponentRef<unknown>;
 
   private clickStartInDialog = false;
   private origBodyOverflow?: string;
@@ -45,6 +58,14 @@ export class SiModalComponent implements OnInit, AfterViewInit {
 
   private readonly modalContainerRef = viewChild.required<ElementRef>('modalContainer');
 
+  get contentInstance(): unknown {
+    return this.componentRef?.instance;
+  }
+
+  setContentInput(inputName: string, value: unknown): void {
+    this.componentRef?.setInput(inputName, value);
+  }
+
   ngOnInit(): void {
     this.ngZone.runOutsideAngular(() =>
       setTimeout(() => (this.backdropGhostClickPrevention = false), 300)
@@ -52,7 +73,32 @@ export class SiModalComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    queueMicrotask(() => this.modalRef?.shown.next(this.modalContainerRef()));
+    this.attachContent();
+    const modalContainer = this.modalContainerRef();
+    queueMicrotask(() => this.modalRef.shown.next(modalContainer));
+  }
+
+  ngOnDestroy(): void {
+    this.componentRef = undefined;
+  }
+
+  private attachContent(): void {
+    const content = this.content();
+    const viewContainer = this.contentContainer();
+    if (content instanceof TemplateRef) {
+      viewContainer.createEmbeddedView(content, {
+        modalRef: this.modalRef,
+        ...this.modalRef.data.inputValues
+      });
+      return;
+    }
+
+    this.componentRef = viewContainer.createComponent(content, {
+      environmentInjector: this.modalRef.data.environmentInjector
+    });
+    for (const [key, value] of Object.entries(this.modalRef.data.inputValues ?? {})) {
+      this.componentRef.setInput(key, value);
+    }
   }
 
   /** @internal */

@@ -5,10 +5,7 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
-  ApplicationRef,
   ComponentRef,
-  createComponent,
-  EmbeddedViewRef,
   EnvironmentInjector,
   inject,
   Injectable,
@@ -53,28 +50,19 @@ export interface ModalOptions<T = Record<string, any>> extends ModalDependencyIn
 }
 
 class ModalRefImpl<T = never, CT = void> extends ModalRef<T, CT> {
-  contentRef: TemplateRef<any> | Type<any>;
-  viewRef?: EmbeddedViewRef<any>;
   modalCompRef?: ComponentRef<SiModalComponent>;
-  componentRef?: ComponentRef<T>;
   overlayRef?: OverlayRef;
 
   override get content(): T {
-    return this.componentRef?.instance as T;
+    return this.modalCompRef?.instance.contentInstance as T;
   }
 
   override setInput(input: string, value: unknown): void {
-    this.componentRef?.setInput(input, value);
+    this.modalCompRef?.instance.setContentInput(input, value);
   }
 
-  constructor(
-    contentRef: TemplateRef<any> | Type<any>,
-    layer: number,
-    data: ModalOptions,
-    closeValue?: CT
-  ) {
+  constructor(layer: number, data: ModalOptions, closeValue?: CT) {
     super();
-    this.contentRef = contentRef;
     this.layer = layer;
     this.data = data;
     this.ignoreBackdropClick = data.ignoreBackdropClick !== false;
@@ -87,9 +75,7 @@ class ModalRefImpl<T = never, CT = void> extends ModalRef<T, CT> {
 export class SiModalService {
   private modalsCount = 0;
   private readonly overlay = inject(Overlay);
-  private appRef = inject(ApplicationRef);
   private injector = inject(Injector);
-  private environmentInjector = inject(EnvironmentInjector);
 
   /**
    * Shows a modal with the given content and configuration.
@@ -103,12 +89,14 @@ export class SiModalService {
     config: ModalOptions<T>,
     closeValue?: CT
   ): ModalRef<T, CT> {
-    const modalRef = new ModalRefImpl<T, CT>(content, ++this.modalsCount, config, closeValue);
-    const siModalRef = this.attachComponent(modalRef);
+    const modalRef = new ModalRefImpl<T, CT>(++this.modalsCount, config, closeValue);
+    const siModalRef = this.attachComponent(content, modalRef);
     modalRef.modalCompRef = siModalRef;
     modalRef.detach = () => this.detach(modalRef);
-    modalRef.hide = (param?: CT) => siModalRef.instance.hideDialog(param);
+    modalRef.hide = (param?: CT) => modalRef.modalCompRef?.instance.hideDialog(param);
     modalRef.isCurrent = () => modalRef.layer === this.modalsCount;
+    // Initialize the modal view so content is available before show() returns.
+    siModalRef.changeDetectorRef.detectChanges();
 
     if (this.modalsCount === 1) {
       siModalRef.instance.showBackdrop();
@@ -117,7 +105,10 @@ export class SiModalService {
     return modalRef;
   }
 
-  private attachComponent<T, CT>(modalRef: ModalRefImpl<T, CT>): ComponentRef<SiModalComponent> {
+  private attachComponent<T, CT>(
+    content: TemplateRef<unknown> | Type<T>,
+    modalRef: ModalRefImpl<T, CT>
+  ): ComponentRef<SiModalComponent> {
     const providers: StaticProvider[] = [{ provide: ModalRef, useValue: modalRef }];
     modalRef.data.providers?.forEach(p => providers.push(p));
     const injector = Injector.create({
@@ -130,36 +121,9 @@ export class SiModalService {
       direction: isRTL() ? 'rtl' : 'ltr'
     });
     const compPortal = new ComponentPortal(SiModalComponent, null, injector);
-    // Ensure compatibility between Angular CDK 19 and 20 since constructor arguments have changed
-    compPortal.projectableNodes = this.getContentProjectableNodes(injector, modalRef);
-    return modalRef.overlayRef.attach(compPortal);
-  }
-
-  private getContentProjectableNodes<T, CT>(
-    injector: Injector,
-    modalRef: ModalRefImpl<T, CT>
-  ): Node[][] {
-    if (modalRef.contentRef instanceof TemplateRef) {
-      modalRef.viewRef = modalRef.contentRef.createEmbeddedView({
-        modalRef,
-        ...modalRef.data.inputValues
-      });
-      this.appRef.attachView(modalRef.viewRef);
-      return [modalRef.viewRef.rootNodes];
-    }
-
-    modalRef.componentRef = createComponent(modalRef.contentRef, {
-      environmentInjector: modalRef.data.environmentInjector ?? this.environmentInjector,
-      elementInjector: injector
-    });
-    // set initial @Input() / input()
-    for (const [key, value] of Object.entries(modalRef.data?.inputValues ?? {})) {
-      modalRef.componentRef?.setInput(key, value);
-    }
-    modalRef.componentRef.changeDetectorRef.detectChanges();
-
-    this.appRef.attachView(modalRef.componentRef.hostView);
-    return [[modalRef.componentRef.location.nativeElement]];
+    const componentRef = modalRef.overlayRef.attach(compPortal);
+    componentRef.setInput('content', content);
+    return componentRef;
   }
 
   protected detach(modalRef: ModalRef<unknown, any>): void {
@@ -167,10 +131,6 @@ export class SiModalService {
     if (ref.modalCompRef) {
       ref.modalCompRef?.destroy();
       ref.modalCompRef = undefined;
-      ref.componentRef?.destroy();
-      ref.componentRef = undefined;
-      ref.viewRef?.destroy();
-      ref.viewRef = undefined;
       ref.overlayRef?.dispose();
       ref.shown.complete();
       this.modalsCount--;
