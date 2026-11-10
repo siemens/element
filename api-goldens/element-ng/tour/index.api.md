@@ -31,6 +31,10 @@ export interface TourStep extends TourStepCommonOptions {
         element: string | HTMLElement | (() => string | HTMLElement);
     };
     id?: string;
+    imgAlt?: TranslatableString;
+    imgClass?: string;
+    imgObjectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
+    imgSrc?: string;
     text?: TranslatableString;
     title: TranslatableString;
 }

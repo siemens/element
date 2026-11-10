@@ -33,6 +33,15 @@
         <si-icon [icon]="icons.elementCancel" />
       </button>
     </div>
+    @if (tourStep.step.imgSrc) {
+      <img
+        class="w-100 mb-6"
+        [class]="tourStep.step.imgClass"
+        [attr.src]="tourStep.step.imgSrc"
+        [attr.alt]="tourStep.step.imgAlt | translate"
+        [style.object-fit]="tourStep.step.imgObjectFit ?? 'scale-down'"
+      />
+    }
     <div class="step-text si-body-paragraph px-6 pb-8">
       {{ tourStep.step.text | translate }}
     </div>
