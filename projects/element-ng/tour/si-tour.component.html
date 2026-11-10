@@ -20,9 +20,6 @@
     @let tourStep = step()!;
     <div class="d-flex">
       <div class="p-6 flex-fill">
-        <div class="pb-2 si-body text-secondary">
-          {{ progressText | translate: { step: tourStep.stepNumber, total: tourStep.totalSteps } }}
-        </div>
         <div id="__si-tour-step-title" class="si-h4 mb-0">
           {{ tourStep.step.title | translate }}
         </div>
@@ -40,6 +37,9 @@
       {{ tourStep.step.text | translate }}
     </div>
     <div class="d-flex justify-content-end align-items-center p-6 gap-6">
+      <div class="text-secondary me-auto">
+        {{ progressText | translate: { step: tourStep.stepNumber, total: tourStep.totalSteps } }}
+      </div>
       @if (tourStep.stepNumber !== 1) {
         <button
           type="button"
