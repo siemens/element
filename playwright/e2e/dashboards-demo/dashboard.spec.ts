@@ -254,6 +254,21 @@ test.describe('dashboard', () => {
     await si.runVisualAndA11yTests(stepName);
   });
 
+  test(example + ' module-federation vite widget', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+    await openWidgetCatalog(page);
+
+    await page.getByRole('option', { name: 'Download (module-federation vite)' }).click();
+    const addBtn = page.getByText('Add', { exact: true });
+    await expect(addBtn).not.toBeDisabled();
+    await addBtn.click();
+
+    const widgetHost = page.locator('si-widget-host', {
+      hasText: 'Download (module-federation vite)'
+    });
+    await expect(widgetHost.locator('app-download svg')).toBeVisible();
+  });
+
   test(example + ' cancel restores auto-positioned layout', async ({ page, si }) => {
     await si.visitExample(example, undefined);
     await expect(page.getByRole('heading', { name: 'Sample Dashboard' })).toBeVisible();

@@ -278,6 +278,35 @@ registerModuleFederatedWidgetLoader(mfInstance);
 
 For more details, refer to [Combining Native Federation and Module Federation](https://www.angulararchitects.io/blog/combining-native-federation-and-module-federation/).
 
+#### Vite remotes (`@module-federation/vite`)
+
+Remote widgets built with Vite and [`@module-federation/vite`](https://github.com/module-federation/vite) emit an ES module `remoteEntry.js`.
+They are loaded by the existing loaders, no extra loader is needed:
+
+- Module Federation host: use `factoryType: 'module-federation'` with `type: 'module'`.
+- Native Federation host: add the remote to the `@module-federation/runtime` instance and use `factoryType: 'native-federation-module-bridge'`.
+
+```ts
+// Module Federation host
+componentFactory: {
+  factoryType: 'module-federation',
+  type: 'module',
+  remoteEntry: 'https://example.com/mfe-vite/remoteEntry.js',
+  exposedModule: './Download',
+  componentName: 'DownloadComponent'
+}
+
+// Native Federation host, with { name: 'mfeVite', entry: '…/remoteEntry.js', type: 'esm' } in the runtime remotes
+componentFactory: {
+  factoryType: 'native-federation-module-bridge',
+  id: 'mfeVite/Download',
+  componentName: 'DownloadComponent'
+}
+```
+
+Share at least `@angular/core` as a singleton in the remote, so the widget uses the Angular instance of the host.
+The demo builds its `mfe` widgets this way with [`vite.config.mjs`](https://github.com/siemens/element/blob/main/projects/dashboards-demo/mfe/vite.config.mjs).
+
 #### Running the Demo Application
 
 The [dashboard demo project](https://github.com/siemens/element/blob/main/projects/dashboards-demo/) includes examples of all microfrontend modes. Use these npm scripts to run locally:
