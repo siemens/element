@@ -1,0 +1,9 @@
+- list:
+  - listitem: /Supply voltage Within the configured range \d+ V/
+  - listitem:
+    - img "Loading…"
+    - text: Verify communication with the backup control unit
+  - listitem: Cooling circuit Flow is below the required minimum 8 L/min
+  - listitem: Safety relay
+  - listitem: Optional sensor This installation has no optional sensor
+  - listitem: Service access Locked
