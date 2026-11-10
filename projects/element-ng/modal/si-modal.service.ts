@@ -16,7 +16,7 @@ import {
   TemplateRef,
   Type
 } from '@angular/core';
-import { isRTL } from '@siemens/element-ng/common';
+import { areAnimationsDisabled, isRTL } from '@siemens/element-ng/common';
 import { SiNoTranslateService, SiTranslateService } from '@siemens/element-translate-ng/translate';
 
 import { ModalRef } from './modalref';
@@ -105,10 +105,6 @@ export class SiModalService {
     // Initialize the modal view so content is available before show() returns.
     siModalRef.changeDetectorRef.detectChanges();
 
-    if (this.modalsCount === 1) {
-      siModalRef.instance.showBackdrop();
-    }
-
     return modalRef;
   }
 
@@ -125,7 +121,9 @@ export class SiModalService {
 
     modalRef.overlayRef = this.overlay.create({
       positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
-      direction: isRTL() ? 'rtl' : 'ltr'
+      direction: isRTL() ? 'rtl' : 'ltr',
+      hasBackdrop: modalRef.layer === 1,
+      disableAnimations: modalRef.data.animated === false || areAnimationsDisabled()
     });
     const compPortal = new ComponentPortal(SiModalComponent, null, injector, undefined, [
       inputBinding('content', () => content)

@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
+import { userEvent } from 'vitest/browser';
 
 import { SiModalService } from './si-modal.service';
 
@@ -159,5 +160,41 @@ describe('SiModalService', () => {
       expect(confirmed).toHaveBeenCalledExactlyOnceWith('Bound value');
       modalRef.detach();
     });
+  });
+
+  it('closes nested modals in Escape order and restores body scrolling after the last closes', async () => {
+    const parentRef = service.show(DialogComponent, {
+      inputValues: { inputProp: 'parent' },
+      keyboard: true
+    });
+    const childRef = service.show(DialogComponent, {
+      inputValues: { inputProp: 'child' },
+      keyboard: true
+    });
+    const parentHidden = vi.fn();
+    const childHidden = vi.fn();
+    const parentDestroyed = vi.fn();
+    const childDestroyed = vi.fn();
+    parentRef.hidden.subscribe(parentHidden);
+    childRef.hidden.subscribe(childHidden);
+    parentRef.content.destroyRef.onDestroy(parentDestroyed);
+    childRef.content.destroyRef.onDestroy(childDestroyed);
+
+    expect(document.body.style.overflow).toBe('hidden');
+    await userEvent.keyboard('{Escape}');
+    await appRef.whenStable();
+
+    expect(childHidden).toHaveBeenCalledOnce();
+    expect(childDestroyed).toHaveBeenCalledOnce();
+    expect(parentHidden).not.toHaveBeenCalled();
+    expect(parentDestroyed).not.toHaveBeenCalled();
+    expect(document.body.style.overflow).toBe('hidden');
+
+    await userEvent.keyboard('{Escape}');
+    await appRef.whenStable();
+
+    expect(parentHidden).toHaveBeenCalledOnce();
+    expect(parentDestroyed).toHaveBeenCalledOnce();
+    expect(document.body.style.overflow).not.toBe('hidden');
   });
 });
