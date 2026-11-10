@@ -106,6 +106,36 @@ describe('SiCarouselComponent', () => {
       await expect.element(page.getByText('Slide 3', { exact: true })).not.toHaveAttribute('inert');
       await expect.element(page.getByText('Slide 1', { exact: true })).toHaveAttribute('inert');
     });
+
+    it('should settle on the clicked slide when consecutive frames share a timestamp', async () => {
+      const viewport: HTMLElement = fixture.nativeElement.querySelector('.carousel-viewport');
+      const requestFrame = window.requestAnimationFrame.bind(window);
+      let animationFrameCount = 0;
+      // Snap is only disabled while the carousel animates; those frames get 1000, 1000, 2000, 3000, ...
+      using requestFrameSpy = vi
+        .spyOn(window, 'requestAnimationFrame')
+        .mockImplementation(callback => {
+          if (viewport.style.scrollSnapType !== 'none') {
+            return requestFrame(callback);
+          }
+          const time = Math.max(1, animationFrameCount++) * 1000;
+          return requestFrame(() => callback(time));
+        });
+
+      await userEvent.click(page.getByRole('button', { name: 'Slide 3 of 5' }));
+
+      const slide3 = page.getByText('Slide 3', { exact: true });
+      await expect
+        .poll(
+          () =>
+            slide3.element().getBoundingClientRect().left - viewport.getBoundingClientRect().left
+        )
+        .toBeCloseTo(0, 0);
+      await expect.element(slide3).not.toHaveAttribute('inert');
+      await expect.element(page.getByText('Slide 1', { exact: true })).toHaveAttribute('inert');
+      expect(requestFrameSpy).toHaveBeenCalled();
+      expect(animationFrameCount).toBeGreaterThan(1);
+    });
   });
 
   describe('Scroll', () => {
