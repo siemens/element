@@ -4,6 +4,7 @@
  */
 import { Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { resetViewport } from '@siemens/element-ng/test-helpers';
 import { Subscription } from 'rxjs';
 import { Mock } from 'vitest';
 import { page } from 'vitest/browser';
@@ -21,16 +22,17 @@ describe('ResizeObserverService', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
   let service: ResizeObserverService;
-  let subscription: Subscription;
+  let subscriptions: Subscription;
   let spy: Mock<(dim: ElementDimensions) => void>;
 
   const subscribe = (initial: boolean): void => {
-    subscription = service
-      .observe(component.theDiv().nativeElement, 50, initial)
-      .subscribe(dim => spy(dim));
+    subscriptions.add(
+      service.observe(component.theDiv().nativeElement, 50, initial).subscribe(dim => spy(dim))
+    );
   };
 
   beforeEach(async () => {
+    subscriptions = new Subscription();
     await page.viewport(100, 100);
     service = TestBed.inject(ResizeObserverService);
     fixture = TestBed.createComponent(TestHostComponent);
@@ -39,8 +41,9 @@ describe('ResizeObserverService', () => {
     spy = vi.fn();
   });
 
-  afterEach(() => {
-    subscription?.unsubscribe();
+  afterEach(async () => {
+    subscriptions.unsubscribe();
+    await resetViewport();
   });
 
   it('emits initial size event when asked', async () => {
@@ -76,9 +79,9 @@ describe('ResizeObserverService', () => {
     subscribe(true);
 
     const spy2: Mock<(dim: ElementDimensions) => void> = vi.fn();
-    const subs2 = service
-      .observe(component.theDiv().nativeElement, 50, true)
-      .subscribe(dim => spy2(dim));
+    subscriptions.add(
+      service.observe(component.theDiv().nativeElement, 50, true).subscribe(dim => spy2(dim))
+    );
 
     await vi.waitFor(() => {
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 100, height: 100 }));
@@ -90,7 +93,5 @@ describe('ResizeObserverService', () => {
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
       expect(spy2).toHaveBeenCalledWith(expect.objectContaining({ width: 200, height: 100 }));
     });
-
-    subs2.unsubscribe();
   });
 });
