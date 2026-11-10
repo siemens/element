@@ -129,9 +129,9 @@ export class SiModalService {
   protected detach(modalRef: ModalRef<unknown, any>): void {
     const ref = modalRef as ModalRefImpl<unknown>;
     if (ref.modalCompRef) {
-      ref.modalCompRef?.destroy();
       ref.modalCompRef = undefined;
-      ref.overlayRef?.dispose();
+      ref.overlayRef?.detach();
+      ref.overlayRef = undefined;
       ref.shown.complete();
       this.modalsCount--;
     }

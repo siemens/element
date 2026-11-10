@@ -21,6 +21,7 @@ import { SiModalService } from './si-modal.service';
 })
 class DialogComponent {
   readonly inputProp = input<string>();
+  readonly destroyRef = inject(DestroyRef);
 }
 
 @Component({
@@ -114,6 +115,24 @@ describe('SiModalService', () => {
       expect(modal).toMatchTextContent('new input value');
       modalRef.hide();
       await appRef.whenStable();
+    });
+
+    it('emits the close value and destroys the content only once', () => {
+      const modalRef = service.show(DialogComponent, {});
+      const hidden = vi.fn();
+      const complete = vi.fn();
+      const destroyed = vi.fn();
+      modalRef.hidden.subscribe({ next: hidden, complete });
+      modalRef.content.destroyRef.onDestroy(destroyed);
+
+      modalRef.hide('closed');
+      modalRef.hide('again');
+      modalRef.detach();
+
+      expect(hidden).toHaveBeenCalledExactlyOnceWith('closed');
+      expect(complete).toHaveBeenCalledOnce();
+      expect(destroyed).toHaveBeenCalledOnce();
+      expect(document.querySelector('si-modal')).not.toBeInTheDocument();
     });
   });
 });
