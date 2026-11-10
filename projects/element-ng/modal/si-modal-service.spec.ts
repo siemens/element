@@ -5,6 +5,8 @@
 import {
   ApplicationRef,
   Component,
+  DestroyRef,
+  inject,
   input,
   inputBinding,
   output,
@@ -13,6 +15,7 @@ import {
   viewChild
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 
 import { SiModalService } from './si-modal.service';
 
@@ -25,12 +28,26 @@ import { SiModalService } from './si-modal.service';
 class DialogComponent {
   readonly inputProp = input<string>();
   readonly confirmed = output<string | undefined>();
+  readonly destroyRef = inject(DestroyRef);
 }
 
 @Component({
+  selector: 'si-template-content',
+  template: '<span>template child</span>'
+})
+class TemplateContentComponent {
+  static readonly destroyed = vi.fn();
+
+  constructor() {
+    inject(DestroyRef).onDestroy(() => TemplateContentComponent.destroyed());
+  }
+}
+
+@Component({
+  imports: [TemplateContentComponent],
   template: `
     <ng-template #ref>
-      <div>test template</div>
+      <div>test template <si-template-content /></div>
     </ng-template>
   `
 })
@@ -50,60 +67,79 @@ describe('SiModalService', () => {
   describe('with template', () => {
     let templateRef: TemplateRef<unknown>;
 
-    beforeEach(() => {
+    beforeEach(async () => {
+      TemplateContentComponent.destroyed.mockClear();
       const comp = TestBed.createComponent(DialogTemplateComponent);
-      comp.detectChanges();
+      await comp.whenStable();
       templateRef = comp.componentInstance.templateRef();
     });
 
-    it('shows and hides the dialog', () => {
+    it('shows and hides the dialog', async () => {
       const modalRef = service.show(templateRef, {});
       const bodyStyle = getComputedStyle(document.body);
 
-      appRef.tick();
+      await appRef.whenStable();
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
-      expect(modal).toHaveTextContent('test template');
+      expect(modal).toHaveTextContent('test template template child');
       expect(bodyStyle.overflow).toBe('hidden');
 
       modalRef.hide();
-      appRef.tick();
+      await appRef.whenStable();
 
       expect(document.querySelector('si-modal')).not.toBeInTheDocument();
+      expect(TemplateContentComponent.destroyed).toHaveBeenCalledOnce();
       expect(bodyStyle.overflow).not.toBe('hidden');
     });
   });
 
   describe('with component', () => {
-    it('shows and hides the dialog', () => {
+    it('shows and hides the dialog', async () => {
       const modalRef = service.show(DialogComponent, {});
 
-      appRef.tick();
+      await firstValueFrom(modalRef.shown);
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
       expect(modal).toMatchTextContent('test component');
 
       modalRef.hide();
-      appRef.tick();
+      await appRef.whenStable();
 
       expect(document.querySelector('si-modal')).not.toBeInTheDocument();
     });
 
-    it('preserves inputValues and imperative setInput updates', () => {
+    it('exposes initialized content and accepts immediate input updates', async () => {
       const modalRef = service.show(DialogComponent, { inputValues: { inputProp: 'input value' } });
 
-      appRef.tick();
+      expect(modalRef.content.inputProp()).toBe('input value');
+      modalRef.setInput('inputProp', 'new input value');
 
+      await appRef.whenStable();
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
-      expect(modal).toMatchTextContent('input value');
-      modalRef.setInput('inputProp', 'new input value');
-      appRef.tick();
       expect(modal).toMatchTextContent('new input value');
       modalRef.hide();
-      appRef.tick();
+      await appRef.whenStable();
+    });
+
+    it('emits the close value and destroys the content only once', () => {
+      const modalRef = service.show(DialogComponent, {});
+      const hidden = vi.fn();
+      const complete = vi.fn();
+      const destroyed = vi.fn();
+      modalRef.hidden.subscribe({ next: hidden, complete });
+      modalRef.content.destroyRef.onDestroy(destroyed);
+
+      modalRef.hide('closed');
+      modalRef.hide('again');
+      modalRef.detach();
+
+      expect(hidden).toHaveBeenCalledExactlyOnceWith('closed');
+      expect(complete).toHaveBeenCalledOnce();
+      expect(destroyed).toHaveBeenCalledOnce();
+      expect(document.querySelector('si-modal')).not.toBeInTheDocument();
     });
 
     it('passes input and output bindings to the modal component', async () => {
