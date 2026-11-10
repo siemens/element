@@ -32,6 +32,17 @@ export interface TourStep extends TourStepCommonOptions {
   title: TranslatableString;
   /** Body text of the modal. */
   text?: TranslatableString;
+  /** Optional image source to display. */
+  imgSrc?: string;
+  /** Alt text for a provided image. */
+  imgAlt?: TranslatableString;
+  /** CSS class applied to the image. */
+  imgClass?: string;
+  /**
+   * Sets the image [object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) CSS property.
+   * @defaultValue 'scale-down'
+   */
+  imgObjectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
   /** The element, the step should be attached to on the page. */
   attachTo?: {
     element: string | HTMLElement | (() => string | HTMLElement);

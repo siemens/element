@@ -231,7 +231,10 @@ export class SampleComponent implements AfterViewInit, OnDestroy {
       {
         id: 'finish',
         title: 'Tour completed',
-        text: 'The guided tour is now complete. Thank you.'
+        text: 'The guided tour is now complete. Thank you.',
+        imgSrc: 'assets/images/tour-example.png',
+        imgAlt: 'A hand holding a phone displaying a building, with location and fire symbols.',
+        imgClass: 'background-0'
       }
     ];
   }
