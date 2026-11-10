@@ -1,8 +1,9 @@
+@use 'sass:map';
 @use 'sass:math';
 
 @use '@siemens/element-theme/src/styles/variables';
 
-$si-result-details-list-timeline-width: 1px;
+$si-result-details-list-connector-width: 1px;
 
 si-loading-spinner {
   --loading-spinner-size: #{variables.$si-icon-font-size};
@@ -11,40 +12,37 @@ si-loading-spinner {
 }
 
 .result-description {
-  flex: 2 1;
-  align-self: center;
+  grid-area: description;
   overflow: hidden;
 }
 
 .result-value {
-  flex: 1 1;
+  grid-area: value;
+  align-self: start;
   white-space: nowrap;
-  align-self: top;
 }
 
 .result-detail {
   letter-spacing: 0.15px;
   display: block;
-  display: -webkit-box;
-  max-block-size: calc(
-    variables.$si-sys-typography-body-font-size * variables.$si-sys-typography-body-line-height * 2
-  );
-  word-wrap: break-word;
-  line-clamp: 2;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  max-block-size: 2lh;
+  overflow-wrap: break-word;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-%timeline-bar {
+ul:has(.result-value) {
+  --_result-value-column: 1fr;
+}
+
+%result-connector {
   content: '';
   position: absolute;
-  inline-size: $si-result-details-list-timeline-width;
+  inset-inline-start: map.get(variables.$spacers-inline, 6);
+  inline-size: $si-result-details-list-connector-width;
   background-color: variables.$si-sys-color-border-2;
   block-size: calc(50% - variables.$si-icon-font-size / 2);
   margin-inline-start: calc(
-    variables.$si-icon-font-size / 2 - math.div($si-result-details-list-timeline-width, 2)
+    variables.$si-icon-font-size / 2 - math.div($si-result-details-list-connector-width, 2)
   );
 }
 
@@ -52,14 +50,30 @@ si-icon {
   color: variables.$si-sys-color-text-secondary;
 }
 
-.timeline {
+.result-step {
+  position: relative;
+  display: grid;
+  grid-template: 'icon description value' auto / max-content minmax(0, 2fr) minmax(
+      min-content,
+      var(--_result-value-column, 0fr)
+    );
+  align-items: center;
+  padding-block: map.get(variables.$spacers-block, 5);
+  padding-inline: map.get(variables.$spacers-inline, 6);
+  overflow: hidden;
+
+  .icon {
+    grid-area: icon;
+    margin-inline-end: map.get(variables.$spacers-inline, 4);
+  }
+
   &:not(:first-child)::before {
-    @extend %timeline-bar;
+    @extend %result-connector;
     inset-block-start: 0;
   }
 
   &:not(:last-child)::after {
-    @extend %timeline-bar;
+    @extend %result-connector;
     inset-block-end: 0;
   }
 }
