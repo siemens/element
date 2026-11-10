@@ -30,6 +30,12 @@ import { ModalRef } from './modalref';
   imports: [A11yModule],
   templateUrl: './si-modal.component.html',
   host: {
+    class: 'modal d-block',
+    role: 'dialog',
+    'aria-modal': 'true',
+    '[attr.aria-labelledby]': 'titleId',
+    '[class.dialog-leave]': '!show()',
+    '(transitionend)': 'onLeaveEnd($event)',
     '[style.--element-animations-enabled]': 'modalRef.data.animated === false ? 0 : null',
     '(mousedown)': 'clickStarted($event)',
     '(mouseup)': 'onClickStop($event)',
@@ -42,6 +48,7 @@ export class SiModalComponent implements OnInit, AfterViewInit {
 
   private readonly document = inject(DOCUMENT);
   private readonly ngZone = inject(NgZone);
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   protected readonly modalRef = inject(ModalRef<unknown, unknown>);
 
   protected readonly dialogClass = this.modalRef.dialogClass ?? '';
@@ -56,8 +63,6 @@ export class SiModalComponent implements OnInit, AfterViewInit {
   private origBodyOverflow?: string;
   private backdropGhostClickPrevention = true;
   private detachFn?: () => void;
-
-  private readonly modalContainerRef = viewChild.required<ElementRef>('modalContainer');
 
   constructor() {
     inject(DestroyRef).onDestroy(() => this.restoreBodyOverflow());
@@ -80,8 +85,7 @@ export class SiModalComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const modalContainer = this.modalContainerRef();
-    queueMicrotask(() => this.modalRef.shown.next(modalContainer));
+    queueMicrotask(() => this.modalRef.shown.next(this.elementRef));
   }
 
   private attachContent(
@@ -119,9 +123,9 @@ export class SiModalComponent implements OnInit, AfterViewInit {
 
     // Check transition duration before toggling the DOM changes to avoid issues with zero-duration transitions where transitionend won't fire
     const isAnimated =
-      parseFloat(getComputedStyle(this.modalContainerRef().nativeElement).transitionDuration) > 0;
+      parseFloat(getComputedStyle(this.elementRef.nativeElement).transitionDuration) > 0;
 
-    // Toggle the @if condition to trigger animate.leave on the dialog
+    // Toggle the leave class on the host.
     this.show.set(false);
     this.restoreBodyOverflow();
     this.modalRef?.hidden.next(param);
@@ -148,12 +152,12 @@ export class SiModalComponent implements OnInit, AfterViewInit {
   }
 
   protected clickStarted(event: MouseEvent): void {
-    this.clickStartInDialog = event.target !== this.modalContainerRef().nativeElement;
+    this.clickStartInDialog = event.target !== this.elementRef.nativeElement;
   }
 
   protected onClickStop(event: MouseEvent): void {
     const clickedInBackdrop =
-      event.target === this.modalContainerRef().nativeElement && !this.clickStartInDialog;
+      event.target === this.elementRef.nativeElement && !this.clickStartInDialog;
     if (this.modalRef?.ignoreBackdropClick || !clickedInBackdrop) {
       this.clickStartInDialog = false;
       return;

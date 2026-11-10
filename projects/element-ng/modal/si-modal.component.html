@@ -1,15 +1,5 @@
-<div
-  #modalContainer
-  role="dialog"
-  class="modal d-block"
-  aria-modal="true"
-  [class.dialog-leave]="!show()"
-  [attr.aria-labelledby]="titleId"
-  (transitionend)="onLeaveEnd($event)"
->
-  <div cdkTrapFocus cdkTrapFocusAutoCapture [class]="`modal-dialog ${dialogClass}`">
-    <div class="modal-content">
-      <ng-container #contentContainer />
-    </div>
+<div cdkTrapFocus cdkTrapFocusAutoCapture [class]="`modal-dialog ${dialogClass}`">
+  <div class="modal-content">
+    <ng-container #contentContainer />
   </div>
 </div>
