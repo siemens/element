@@ -1,0 +1,191 @@
+{
+  "id": "@fixture/library/secondary#ReadonlyAccessors",
+  "name": "ReadonlyAccessors",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "undecorated_class",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/metadata.ts",
+    "startLine": 179,
+    "endLine": 188
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 179,
+        "endLine": 188
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "ReadonlyAccessors<T>",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 179,
+            "endLine": 188
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "content",
+      "kind": "getter",
+      "type": "T",
+      "description": "The accessed content, not a callable member.",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 181,
+        "endLine": 183
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** The accessed content, not a callable member. */"
+    },
+    {
+      "name": "activeToasts",
+      "kind": "getter",
+      "type": "string[]",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 185,
+        "endLine": 187
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "ReadonlyAccessors",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#ReadonlyAccessors",
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 179,
+        "endLine": 188
+      },
+      "type": "ReadonlyAccessors<T>"
+    }
+  ],
+  "generics": [
+    "T"
+  ],
+  "providedInRoot": false,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 179,
+        "endLine": 188
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "ReadonlyAccessors<T>",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 179,
+            "endLine": 188
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "content",
+      "kind": "getter",
+      "description": "The accessed content, not a callable member.",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 181,
+        "endLine": 183
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "T",
+      "sourceDefaultValue": null,
+      "rawComment": "/** The accessed content, not a callable member. */"
+    },
+    {
+      "name": "activeToasts",
+      "kind": "getter",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 185,
+        "endLine": 187
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "string[]",
+      "sourceDefaultValue": null
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

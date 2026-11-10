@@ -1,0 +1,195 @@
+{
+  "id": "@fixture/library/secondary#AccessorMetadata",
+  "name": "AccessorMetadata",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "undecorated_class",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/metadata.ts",
+    "startLine": 165,
+    "endLine": 177
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 165,
+        "endLine": 177
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "AccessorMetadata",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 165,
+            "endLine": 177
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "value",
+      "kind": "getter",
+      "type": "number",
+      "description": "Reads the current value.",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 168,
+        "endLine": 170
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Reads the current value. */"
+    },
+    {
+      "name": "value",
+      "kind": "setter",
+      "type": "number",
+      "description": "Writes the current value.",
+      "jsdocTags": [
+        {
+          "name": "defaultValue",
+          "comment": "3"
+        }
+      ],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 174,
+        "endLine": 176
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Writes the current value.\n   * @defaultValue 3\n   */"
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "AccessorMetadata",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#AccessorMetadata",
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 165,
+        "endLine": 177
+      },
+      "type": "AccessorMetadata"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 165,
+        "endLine": 177
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "AccessorMetadata",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 165,
+            "endLine": 177
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "current",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 166,
+        "endLine": 166
+      },
+      "visibility": "private",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "number",
+      "sourceDefaultValue": "0"
+    },
+    {
+      "name": "value",
+      "kind": "getter",
+      "description": "Reads the current value.\nWrites the current value.",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 168,
+        "endLine": 170
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "number",
+      "sourceDefaultValue": null,
+      "rawComment": "/** Reads the current value. */"
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

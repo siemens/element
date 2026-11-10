@@ -1,0 +1,37 @@
+{
+  "id": "@fixture/library/secondary#helpers",
+  "name": "helpers",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "namespace",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/types.ts",
+    "startLine": 1,
+    "endLine": 6
+  },
+  "members": [
+    {
+      "name": "Options",
+      "kind": "interface",
+      "type": "",
+      "description": "Namespaced options.",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

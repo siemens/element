@@ -1,0 +1,296 @@
+{
+  "id": "@fixture/library/secondary#VisibilityMetadata",
+  "name": "VisibilityMetadata",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "undecorated_class",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/secondary/metadata.ts",
+    "startLine": 139,
+    "endLine": 153
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 139,
+        "endLine": 153
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "VisibilityMetadata",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 139,
+            "endLine": 153
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "visible",
+      "kind": "property",
+      "type": "number",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 140,
+        "endLine": 140
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": "1"
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "VisibilityMetadata",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library/secondary",
+      "id": "@fixture/library/secondary#VisibilityMetadata",
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 139,
+        "endLine": 153
+      },
+      "type": "VisibilityMetadata"
+    },
+    {
+      "name": "HiddenPayload",
+      "packageName": "@fixture/library",
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 135,
+        "endLine": 137
+      },
+      "type": "HiddenPayload"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 139,
+        "endLine": 153
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "VisibilityMetadata",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 139,
+            "endLine": 153
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "visible",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 140,
+        "endLine": 140
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "number",
+      "sourceDefaultValue": "1"
+    },
+    {
+      "name": "actionSubject",
+      "kind": "property",
+      "description": "Private subject.",
+      "jsdocTags": [
+        {
+          "name": "defaultValue",
+          "comment": "'documented'"
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 144,
+        "endLine": 144
+      },
+      "visibility": "private",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "string",
+      "sourceDefaultValue": "'actual'",
+      "rawComment": "/** Private subject.\n   * @defaultValue 'documented'\n   */"
+    },
+    {
+      "name": "payload",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 145,
+        "endLine": 145
+      },
+      "visibility": "private",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "HiddenPayload",
+          "packageName": "@fixture/library",
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 135,
+            "endLine": 137
+          },
+          "type": "HiddenPayload"
+        }
+      ],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "HiddenPayload",
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "internalWork",
+      "kind": "method",
+      "description": "Internal implementation.",
+      "jsdocTags": [
+        {
+          "name": "internal",
+          "comment": ""
+        }
+      ],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 150,
+        "endLine": 152
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "number",
+      "signatures": [
+        {
+          "returnType": "number",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "description": "",
+              "source": {
+                "filePath": "library/secondary/metadata.ts",
+                "startLine": 150,
+                "endLine": 150
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "2",
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "Internal implementation.",
+          "jsdocTags": [
+            {
+              "name": "internal",
+              "comment": ""
+            }
+          ],
+          "source": {
+            "filePath": "library/secondary/metadata.ts",
+            "startLine": 150,
+            "endLine": 152
+          },
+          "rawComment": "/** Internal implementation.\n   * @internal\n   */",
+          "implementation": true
+        }
+      ],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Internal implementation.\n   * @internal\n   */"
+    },
+    {
+      "name": "cached",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/secondary/metadata.ts",
+        "startLine": 146,
+        "endLine": 146
+      },
+      "visibility": "private",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": true,
+      "inherited": false,
+      "type": "boolean",
+      "sourceDefaultValue": "false"
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

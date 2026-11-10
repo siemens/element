@@ -1,0 +1,78 @@
+{
+  "id": "@fixture/library/secondary#SourceOnly",
+  "name": "SourceOnly",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library/secondary",
+  "kind": "interface",
+  "internal": false,
+  "description": "A source-only dependency with no generated declarations.",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "dependency/index.ts",
+    "startLine": 2,
+    "endLine": 4
+  },
+  "members": [
+    {
+      "name": "source",
+      "kind": "property",
+      "type": "boolean",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "dependency/index.ts",
+        "startLine": 3,
+        "endLine": 3
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "SourceOnly",
+      "packageName": "@fixture/dependency",
+      "importPath": "@fixture/dependency",
+      "id": "@fixture/dependency#SourceOnly",
+      "source": {
+        "filePath": "dependency/index.ts",
+        "startLine": 2,
+        "endLine": 4
+      },
+      "type": "SourceOnly"
+    }
+  ],
+  "generics": [],
+  "typeMembers": [
+    {
+      "name": "source",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "dependency/index.ts",
+        "startLine": 3,
+        "endLine": 3
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "boolean",
+      "sourceDefaultValue": null
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}
