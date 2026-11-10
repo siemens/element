@@ -1,0 +1,129 @@
+{
+  "id": "@fixture/library#PrivateConstructorService",
+  "name": "PrivateConstructorService",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library",
+  "kind": "undecorated_class",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/constructors.ts",
+    "startLine": 24,
+    "endLine": 30
+  },
+  "members": [
+    {
+      "name": "count",
+      "kind": "property",
+      "type": "number",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 25,
+        "endLine": 25
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "PrivateConstructorService",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library",
+      "id": "@fixture/library#PrivateConstructorService",
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 24,
+        "endLine": 30
+      },
+      "type": "PrivateConstructorService"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 27,
+        "endLine": 29
+      },
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "private",
+      "inherited": false,
+      "signatures": [
+        {
+          "returnType": "PrivateConstructorService",
+          "parameters": [
+            {
+              "name": "count",
+              "type": "number",
+              "description": "",
+              "source": {
+                "filePath": "library/constructors.ts",
+                "startLine": 27,
+                "endLine": 27
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "1",
+              "jsdocTags": []
+            }
+          ],
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/constructors.ts",
+            "startLine": 27,
+            "endLine": 29
+          },
+          "implementation": true
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "count",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 25,
+        "endLine": 25
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "number",
+      "sourceDefaultValue": null
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

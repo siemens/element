@@ -1,0 +1,83 @@
+{
+  "id": "@fixture/library#InternalType",
+  "name": "InternalType",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library",
+  "kind": "interface",
+  "internal": true,
+  "description": "",
+  "jsdocTags": [
+    {
+      "name": "internal",
+      "comment": ""
+    }
+  ],
+  "source": {
+    "filePath": "library/internal-type.ts",
+    "startLine": 2,
+    "endLine": 4
+  },
+  "members": [
+    {
+      "name": "hidden",
+      "kind": "property",
+      "type": "boolean",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/internal-type.ts",
+        "startLine": 3,
+        "endLine": 3
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "InternalType",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library",
+      "id": "@fixture/library#InternalType",
+      "source": {
+        "filePath": "library/internal-type.ts",
+        "startLine": 2,
+        "endLine": 4
+      },
+      "type": "InternalType"
+    }
+  ],
+  "generics": [],
+  "typeMembers": [
+    {
+      "name": "hidden",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/internal-type.ts",
+        "startLine": 3,
+        "endLine": 3
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "boolean",
+      "sourceDefaultValue": null
+    }
+  ],
+  "docsVisible": false,
+  "typeOnlyExport": false
+}

@@ -2,16 +2,17 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Config } from '@simpl/docs-composer';
-
-export const config: Config = {
+export const config = {
   include: [
-    'projects/element-ng',
-    'projects/charts-ng',
-    'projects/dashboards-ng',
-    { packageDir: 'projects/native-charts-ng', publicEntrypoint: 'docs.ts' },
-    'projects/element-translate-ng',
-    'projects/maps-ng'
+    { packageDir: 'projects/element-ng' },
+    { packageDir: 'projects/charts-ng' },
+    { packageDir: 'projects/dashboards-ng' },
+    {
+      packageDir: 'projects/native-charts-ng',
+      publicEntrypoint: 'docs.ts'
+    },
+    { packageDir: 'projects/element-translate-ng' },
+    { packageDir: 'projects/maps-ng' }
   ],
   typedocJson: 'src/assets/typedoc/**/docs.json',
   generate: {

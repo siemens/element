@@ -1,0 +1,314 @@
+{
+  "id": "@fixture/library#FixtureService",
+  "name": "FixtureService",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library",
+  "kind": "undecorated_class",
+  "internal": false,
+  "angularKind": "injectable",
+  "description": "Injectable fixture.",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/service.ts",
+    "startLine": 6,
+    "endLine": 14
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/service.ts",
+        "startLine": 6,
+        "endLine": 14
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "FixtureService",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/service.ts",
+            "startLine": 6,
+            "endLine": 14
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "documentToken",
+      "kind": "property",
+      "type": "InjectionToken<Document>",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/service.ts",
+        "startLine": 7,
+        "endLine": 7
+      },
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "InjectionToken",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/<chunk>.d.ts"
+          },
+          "type": "InjectionToken<Document>"
+        }
+      ],
+      "sourceDefaultValue": "DOCUMENT"
+    },
+    {
+      "name": "greet",
+      "kind": "method",
+      "type": "string",
+      "description": "Makes a greeting.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "Who to greet."
+        }
+      ],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "signatures": [
+        {
+          "returnType": "string",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "Who to greet.",
+              "source": {
+                "filePath": "library/service.ts",
+                "startLine": 11,
+                "endLine": 11
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "'world'",
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "Who to greet."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "Makes a greeting.",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "Who to greet."
+            }
+          ],
+          "source": {
+            "filePath": "library/service.ts",
+            "startLine": 11,
+            "endLine": 13
+          },
+          "rawComment": "/** Makes a greeting.\n   * @param name Who to greet.\n   */",
+          "implementation": true
+        }
+      ],
+      "source": {
+        "filePath": "library/service.ts",
+        "startLine": 11,
+        "endLine": 13
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Makes a greeting.\n   * @param name Who to greet.\n   */"
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "FixtureService",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library",
+      "id": "@fixture/library#FixtureService",
+      "source": {
+        "filePath": "library/service.ts",
+        "startLine": 6,
+        "endLine": 14
+      },
+      "type": "FixtureService"
+    },
+    {
+      "name": "InjectionToken",
+      "packageName": "@angular/core",
+      "importPath": "@angular/core",
+      "source": {
+        "packageName": "@angular/core",
+        "filePath": "node_modules/@angular/core/types/<chunk>.d.ts"
+      },
+      "type": "InjectionToken<Document>"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": true,
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/service.ts",
+        "startLine": 6,
+        "endLine": 14
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "FixtureService",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/service.ts",
+            "startLine": 6,
+            "endLine": 14
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "documentToken",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/service.ts",
+        "startLine": 7,
+        "endLine": 7
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [
+        {
+          "name": "InjectionToken",
+          "packageName": "@angular/core",
+          "importPath": "@angular/core",
+          "source": {
+            "packageName": "@angular/core",
+            "filePath": "node_modules/@angular/core/types/<chunk>.d.ts"
+          },
+          "type": "InjectionToken<Document>"
+        }
+      ],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "InjectionToken<Document>",
+      "sourceDefaultValue": "DOCUMENT"
+    },
+    {
+      "name": "greet",
+      "kind": "method",
+      "description": "Makes a greeting.",
+      "jsdocTags": [
+        {
+          "name": "param",
+          "comment": "Who to greet."
+        }
+      ],
+      "source": {
+        "filePath": "library/service.ts",
+        "startLine": 11,
+        "endLine": 13
+      },
+      "visibility": "public",
+      "readonly": false,
+      "references": [],
+      "typeReferences": [],
+      "optional": false,
+      "static": false,
+      "inherited": false,
+      "type": "string",
+      "signatures": [
+        {
+          "returnType": "string",
+          "parameters": [
+            {
+              "name": "name",
+              "type": "string",
+              "description": "Who to greet.",
+              "source": {
+                "filePath": "library/service.ts",
+                "startLine": 11,
+                "endLine": 11
+              },
+              "optional": true,
+              "rest": false,
+              "sourceDefaultValue": "'world'",
+              "jsdocTags": [
+                {
+                  "name": "param",
+                  "comment": "Who to greet."
+                }
+              ]
+            }
+          ],
+          "generics": [],
+          "description": "Makes a greeting.",
+          "jsdocTags": [
+            {
+              "name": "param",
+              "comment": "Who to greet."
+            }
+          ],
+          "source": {
+            "filePath": "library/service.ts",
+            "startLine": 11,
+            "endLine": 13
+          },
+          "rawComment": "/** Makes a greeting.\n   * @param name Who to greet.\n   */",
+          "implementation": true
+        }
+      ],
+      "sourceDefaultValue": null,
+      "rawComment": "/** Makes a greeting.\n   * @param name Who to greet.\n   */"
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}

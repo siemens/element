@@ -1,0 +1,180 @@
+{
+  "id": "@fixture/library#InheritedConstructorService",
+  "name": "InheritedConstructorService",
+  "packageName": "@fixture/library",
+  "importPath": "@fixture/library",
+  "kind": "undecorated_class",
+  "internal": false,
+  "description": "",
+  "jsdocTags": [],
+  "source": {
+    "filePath": "library/constructors.ts",
+    "startLine": 45,
+    "endLine": 45
+  },
+  "members": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 45,
+        "endLine": 45
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "InheritedConstructorService",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/constructors.ts",
+            "startLine": 45,
+            "endLine": 45
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "value",
+      "kind": "property",
+      "type": "string",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": true,
+      "static": false,
+      "visibility": "public",
+      "inherited": true,
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 33,
+        "endLine": 33
+      },
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null,
+      "inheritedFrom": {
+        "name": "GenericBase",
+        "packageName": "@fixture/library",
+        "source": {
+          "filePath": "library/constructors.ts",
+          "startLine": 32,
+          "endLine": 43
+        },
+        "type": "GenericBase<string>"
+      }
+    }
+  ],
+  "sourceDefaultValue": null,
+  "references": [],
+  "typeReferences": [
+    {
+      "name": "GenericBase",
+      "packageName": "@fixture/library",
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 32,
+        "endLine": 43
+      },
+      "type": "GenericBase<string>"
+    },
+    {
+      "name": "InheritedConstructorService",
+      "packageName": "@fixture/library",
+      "importPath": "@fixture/library",
+      "id": "@fixture/library#InheritedConstructorService",
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 45,
+        "endLine": 45
+      },
+      "type": "InheritedConstructorService"
+    }
+  ],
+  "generics": [],
+  "providedInRoot": false,
+  "extends": [
+    "GenericBase<string>"
+  ],
+  "typeMembers": [
+    {
+      "name": "constructor",
+      "kind": "constructor",
+      "type": "",
+      "description": "",
+      "jsdocTags": [],
+      "optional": false,
+      "readonly": false,
+      "static": false,
+      "visibility": "public",
+      "inherited": false,
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 45,
+        "endLine": 45
+      },
+      "signatures": [
+        {
+          "parameters": [],
+          "returnType": "InheritedConstructorService",
+          "generics": [],
+          "description": "",
+          "jsdocTags": [],
+          "source": {
+            "filePath": "library/constructors.ts",
+            "startLine": 45,
+            "endLine": 45
+          }
+        }
+      ],
+      "references": [],
+      "typeReferences": [],
+      "sourceDefaultValue": null
+    },
+    {
+      "name": "value",
+      "kind": "property",
+      "description": "",
+      "jsdocTags": [],
+      "source": {
+        "filePath": "library/constructors.ts",
+        "startLine": 33,
+        "endLine": 33
+      },
+      "visibility": "public",
+      "readonly": true,
+      "references": [],
+      "typeReferences": [],
+      "inheritedFrom": {
+        "name": "GenericBase",
+        "packageName": "@fixture/library",
+        "source": {
+          "filePath": "library/constructors.ts",
+          "startLine": 32,
+          "endLine": 43
+        },
+        "type": "GenericBase<string>"
+      },
+      "optional": false,
+      "static": false,
+      "inherited": true,
+      "type": "string",
+      "sourceDefaultValue": null
+    }
+  ],
+  "docsVisible": true,
+  "typeOnlyExport": false
+}
