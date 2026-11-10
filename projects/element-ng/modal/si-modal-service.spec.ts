@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
-import { userEvent } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiModalService } from './si-modal.service';
 
@@ -159,6 +159,45 @@ describe('SiModalService', () => {
 
       expect(confirmed).toHaveBeenCalledExactlyOnceWith('Bound value');
       modalRef.detach();
+    });
+  });
+
+  describe('outside clicks', () => {
+    beforeEach(() => vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] }));
+    afterEach(() => vi.useRealTimers());
+
+    const clickOutsideContent = async (): Promise<void> => {
+      await userEvent.click(page.getByRole('dialog'), { position: { x: 2, y: 2 } });
+    };
+
+    const expireGhostClickGuard = async (): Promise<void> => {
+      await vi.advanceTimersByTimeAsync(300);
+    };
+
+    it('keeps the opening ghost-click guard and then closes on outside clicks', async () => {
+      service.show(DialogComponent, { ignoreBackdropClick: false });
+      const modal = document.querySelector<HTMLElement>('si-modal')!;
+
+      await clickOutsideContent();
+      expect(modal).toBeInTheDocument();
+
+      await expireGhostClickGuard();
+      await clickOutsideContent();
+
+      expect(modal).not.toBeInTheDocument();
+    });
+
+    it('does not close when a drag starts inside the dialog', async () => {
+      const modalRef = service.show(DialogComponent, { ignoreBackdropClick: false });
+      const modal = document.querySelector<HTMLElement>('si-modal')!;
+
+      await expireGhostClickGuard();
+      await userEvent.dragAndDrop(page.getByText('test component-'), page.getByRole('dialog'), {
+        targetPosition: { x: 2, y: 2 }
+      });
+
+      expect(modal).toBeInTheDocument();
+      modalRef.hide();
     });
   });
 
