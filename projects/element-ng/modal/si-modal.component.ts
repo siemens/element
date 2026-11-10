@@ -34,8 +34,7 @@ import { ModalRef } from './modalref';
     role: 'dialog',
     'aria-modal': 'true',
     '[attr.aria-labelledby]': 'titleId',
-    '[class.dialog-leave]': '!show()',
-    '(transitionend)': 'onLeaveEnd($event)',
+    'animate.leave': 'dialog-leave',
     '[style.--element-animations-enabled]': 'modalRef.data.animated === false ? 0 : null',
     '(mousedown)': 'clickStarted($event)',
     '(mouseup)': 'onClickStop($event)',
@@ -53,16 +52,15 @@ export class SiModalComponent implements OnInit, AfterViewInit {
 
   protected readonly dialogClass = this.modalRef.dialogClass ?? '';
   protected readonly titleId = this.modalRef.data?.ariaLabelledBy ?? '';
-  protected readonly show = signal(true);
 
   private readonly contentContainer = viewChild.required('contentContainer', {
     read: ViewContainerRef
   });
 
+  private readonly show = signal(true);
   private clickStartInDialog = false;
   private origBodyOverflow?: string;
   private backdropGhostClickPrevention = true;
-  private detachFn?: () => void;
 
   constructor() {
     inject(DestroyRef).onDestroy(() => this.restoreBodyOverflow());
@@ -117,37 +115,19 @@ export class SiModalComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // Capture `detach()` in modal ref to no-op so that the animation is unaffected if called
-    this.detachFn = this.modalRef.detach;
-    this.modalRef.detach = () => {};
-
-    // Check transition duration before toggling the DOM changes to avoid issues with zero-duration transitions where transitionend won't fire
-    const isAnimated =
-      parseFloat(getComputedStyle(this.elementRef.nativeElement).transitionDuration) > 0;
-
-    // Toggle the leave class on the host.
     this.show.set(false);
     this.restoreBodyOverflow();
     this.modalRef?.hidden.next(param);
     this.modalRef?.hidden.complete();
     this.modalRef?.message.complete();
 
-    // For disabled animations or test environments, transitionend won't fire (0s duration)
-    if (!isAnimated) {
-      this.detachFn?.();
-    }
+    this.modalRef.detach();
   }
 
   private restoreBodyOverflow(): void {
     if (this.origBodyOverflow !== undefined) {
       this.document.body.style.overflow = this.origBodyOverflow;
       this.origBodyOverflow = undefined;
-    }
-  }
-
-  protected onLeaveEnd(event: TransitionEvent): void {
-    if (!this.show() && event.target === event.currentTarget) {
-      this.detachFn?.();
     }
   }
 
