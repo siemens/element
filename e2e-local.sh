@@ -13,11 +13,9 @@ PLAYWRIGHT_IMAGE="mcr.microsoft.com/playwright:v1.65.0-noble"
 OS=$(uname -s)
 CWD=$(pwd)
 
-if [ x"$DOCKER" = "x" ]; then
-  DOCKER=docker
-fi
+CONTAINER_ENGINE=${CONTAINER_ENGINE:-podman}
 
-case "$DOCKER" in
+case "$CONTAINER_ENGINE" in
   *podman*)
     BRIDGE_ADDRESS=host.containers.internal
     ;;
@@ -51,11 +49,11 @@ if [ x$PORT = "x" ]; then
   PORT=4200
 fi
 
-echo "Using '$DOCKER' in '$NETWORK_MODE' mode, connecting to '$LOCAL_ADDRESS:$PORT'"
+echo "Using '$CONTAINER_ENGINE' in '$NETWORK_MODE' mode, connecting to '$LOCAL_ADDRESS:$PORT'"
 
 if [ x$1 = "xshell" ]; then
   shift
-  $DOCKER run -it --rm \
+  $CONTAINER_ENGINE run -it --rm \
     -e DISPLAY=$DISPLAY \
     -e LOCAL_ADDRESS=$LOCAL_ADDRESS \
     -e PLAYWRIGHT_BROWSER_ADDRESS=$BROWSER_ADDRESS \
@@ -100,7 +98,7 @@ else
   # The extra 'sleep 1' prevents tests initially failing sometimes with Chrome reporting
   #   Failed to load resource: net::ERR_NETWORK_CHANGED
   # The reason is if the container is started but network isn't ready yet
-  $DOCKER run -it --rm \
+  $CONTAINER_ENGINE run -it --rm \
     -e LOCAL_ADDRESS=$LOCAL_ADDRESS \
     -e PLAYWRIGHT_BROWSER_ADDRESS=$BROWSER_ADDRESS \
     -e PORT=$PORT \
