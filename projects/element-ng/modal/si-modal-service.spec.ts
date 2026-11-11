@@ -2,16 +2,29 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ApplicationRef, Component, input, TemplateRef, viewChild } from '@angular/core';
+import {
+  ApplicationRef,
+  Component,
+  input,
+  inputBinding,
+  output,
+  outputBinding,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiModalService } from './si-modal.service';
 
 @Component({
-  template: '<div>test component-{{inputProp()}}</div>'
+  template: `
+    <div>test component-{{ inputProp() }}</div>
+    <button type="button" (click)="confirmed.emit(inputProp())">Confirm</button>
+  `
 })
 class DialogComponent {
   readonly inputProp = input<string>();
+  readonly confirmed = output<string | undefined>();
 }
 
 @Component({
@@ -22,7 +35,7 @@ class DialogComponent {
   `
 })
 class DialogTemplateComponent {
-  readonly templateRef = viewChild.required<TemplateRef<any>>('ref');
+  readonly templateRef = viewChild.required<TemplateRef<unknown>>('ref');
 }
 
 describe('SiModalService', () => {
@@ -35,7 +48,7 @@ describe('SiModalService', () => {
   });
 
   describe('with template', () => {
-    let templateRef: TemplateRef<any>;
+    let templateRef: TemplateRef<unknown>;
 
     beforeEach(() => {
       const comp = TestBed.createComponent(DialogTemplateComponent);
@@ -78,7 +91,7 @@ describe('SiModalService', () => {
       expect(document.querySelector('si-modal')).not.toBeInTheDocument();
     });
 
-    it('set input using setInputs', () => {
+    it('preserves inputValues and imperative setInput updates', () => {
       const modalRef = service.show(DialogComponent, { inputValues: { inputProp: 'input value' } });
 
       appRef.tick();
@@ -91,6 +104,24 @@ describe('SiModalService', () => {
       expect(modal).toMatchTextContent('new input value');
       modalRef.hide();
       appRef.tick();
+    });
+
+    it('passes input and output bindings to the modal component', async () => {
+      const confirmed = vi.fn();
+      const modalRef = service.show(DialogComponent, {
+        bindings: [
+          inputBinding('inputProp', () => 'Bound value'),
+          outputBinding('confirmed', confirmed)
+        ]
+      });
+      await appRef.whenStable();
+
+      expect(document.querySelector('si-modal')).toMatchTextContent('Bound value');
+      document.querySelector<HTMLButtonElement>('si-modal button')!.click();
+      await appRef.whenStable();
+
+      expect(confirmed).toHaveBeenCalledExactlyOnceWith('Bound value');
+      modalRef.detach();
     });
   });
 });

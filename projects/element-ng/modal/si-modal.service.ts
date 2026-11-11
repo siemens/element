@@ -6,6 +6,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ApplicationRef,
+  Binding,
   ComponentRef,
   createComponent,
   EmbeddedViewRef,
@@ -33,6 +34,11 @@ export interface ModalDependencyInjectionOptions {
 }
 
 export interface ModalOptions<T = Record<string, any>> extends ModalDependencyInjectionOptions {
+  /**
+   * Angular bindings for component content, created with `inputBinding`, `outputBinding`, or
+   * `twoWayBinding`. Ignored for template content.
+   */
+  bindings?: Binding[];
   /**
    * Use this to assign values to either `@Input()` or `input()` fields of the provided component.
    * If a template is used, the values are available in the template context.
@@ -150,7 +156,8 @@ export class SiModalService {
 
     modalRef.componentRef = createComponent(modalRef.contentRef, {
       environmentInjector: modalRef.data.environmentInjector ?? this.environmentInjector,
-      elementInjector: injector
+      elementInjector: injector,
+      bindings: modalRef.data.bindings
     });
     // set initial @Input() / input()
     for (const [key, value] of Object.entries(modalRef.data?.inputValues ?? {})) {
