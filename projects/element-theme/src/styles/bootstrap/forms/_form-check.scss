@@ -1,4 +1,3 @@
-@use '../../variables/semantic-tokens';
 @use '../../variables/si-sys-variables';
 @use '../../variables/spacers';
 @use '../functions';
@@ -65,7 +64,7 @@ $form-check-label-start: calc($form-check-size + map.get(spacers.$spacers-inline
 %form-check-checkbox {
   inline-size: $form-check-size !important; // stylelint-disable-line declaration-no-important
   block-size: $form-check-size !important; // stylelint-disable-line declaration-no-important
-  border-radius: semantic-tokens.$element-button-radius;
+  border-radius: si-sys-variables.$si-sys-sizing-border-radius-xs;
 
   &::after {
     content: '';
