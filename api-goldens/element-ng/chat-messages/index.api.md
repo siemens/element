@@ -7,6 +7,7 @@
 import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
+import { Binding } from '@angular/core';
 import { Definition } from 'mdast';
 import { ElementRef } from '@angular/core';
 import { EnvironmentInjector } from '@angular/core';
