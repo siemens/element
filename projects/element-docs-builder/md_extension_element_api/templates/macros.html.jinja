@@ -1,0 +1,48 @@
+{% macro fragments(parts, local, inline_code=true) -%}
+{%- for part in parts -%}
+{%- if part.kind == 'link' -%}{% set url = href(part, local) %}{% if url is not none %}<a href="{{ url }}">{{ part.text }}</a>{% else %}{{ part.text }}{% endif %}
+{%- elif part.kind == 'code' and inline_code -%}<code>{{ part.text }}</code>
+{%- else -%}{{ part.text }}{%- endif -%}
+{%- endfor -%}
+{%- endmacro %}
+
+{% macro blocks(items, local) -%}
+{% for block in items %}{% if block.kind == 'code' %}<pre><code{% if block.language is defined and block.language %} class="language-{{ block.language }}"{% endif %}>{% for part in block.parts %}{{ part.text }}{% endfor %}</code></pre>{% else %}<p>{{ fragments(block.parts, local) }}</p>{% endif %}{% endfor %}
+{%- endmacro %}
+
+{% macro signatures(items, local, shared_documentation=[]) -%}
+{% for signature in items %}<section id="{{ signature.anchor }}">
+<pre class="api-signature"><code>{{ fragments(signature.label, local, false) }}</code></pre>
+{% for block in signature.documentation %}{% if block not in shared_documentation %}{{ blocks([block], local) }}{% endif %}{% endfor %}
+{% if signature.parameters %}{{ rows(signature.parameters, true, 'Parameters', local) }}{% endif %}
+{% if signature.returns %}<p><strong>Returns: </strong>{{ fragments(signature.returns, local) }}</p>{% endif %}
+</section>{% endfor %}
+{%- endmacro %}
+
+{% macro group(group, local) -%}
+{% if group.kind in ['members', 'methods', 'constructors'] %}
+<div class="api-members"><p class="api-group-title"><strong>{{ group.title }}</strong></p>
+{% for row in group.rows %}<section class="api-member" id="{{ row.anchor }}">
+{% if row.signatures %}
+{% if row.sourceUrl %}<p class="api-member-source"><a href="{{ safe_url(row.sourceUrl) }}" aria-label="Source for {{ row.name }}">Source</a></p>{% endif %}
+{% if row.default is not none %}<p><strong>Default: </strong><code>{{ row.default }}</code></p>{% endif %}
+{% else %}
+<p class="api-member-declaration">{% if row.sourceUrl %}<a href="{{ safe_url(row.sourceUrl) }}" title="Source for {{ row.name }}"><strong>{{ row.name }}</strong></a>{% else %}<strong>{{ row.name }}</strong>{% endif %}: <code>{{ fragments(row.type, local, false) }}{% if row.default is not none %} = {{ row.default }}{% endif %}</code></p>
+{% endif %}
+{% if row.badges %}<span class="api-badges">{% for badge in row.badges %}<span class="api-badge" data-badge="{{ badge }}">{{ badge }}</span>{% endfor %}</span>{% endif %}
+{{ blocks(row.documentation, local) }}
+{{ signatures(row.signatures, local, row.documentation) }}
+</section>{% endfor %}</div>
+{% else %}{{ rows(group.rows, group.showDefaults, group.title, local) }}{% endif %}
+{%- endmacro %}
+
+{% macro rows(items, show_defaults, title, local) -%}
+<div class="api-table" tabindex="0" role="group" aria-label="{{ title }}"><table><caption>{{ title }}</caption>
+<colgroup><col style="inline-size: {{ '26%' if show_defaults else '27%' }}"><col style="inline-size: {{ '23%' if show_defaults else '25%' }}">{% if show_defaults %}<col style="inline-size: 17%">{% endif %}<col style="inline-size: {{ '34%' if show_defaults else '48%' }}"></colgroup>
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th>{% if show_defaults %}<th scope="col">Default</th>{% endif %}<th scope="col">Description</th></tr></thead>
+<tbody>{% for row in items %}<tr id="{{ row.anchor }}">
+<th scope="row">{% if row.sourceUrl %}<a href="{{ safe_url(row.sourceUrl) }}" aria-label="Source for {{ row.name }}">{{ row.name }}</a>{% else %}<strong>{{ row.name }}</strong>{% endif %}{% if row.badges %}<span class="api-badges">{% for badge in row.badges %}<span class="api-badge" data-badge="{{ badge }}">{{ badge }}</span>{% endfor %}</span>{% endif %}</th>
+<td><code>{{ fragments(row.type, local, false) }}</code></td>{% if show_defaults %}<td>{% if row.default is not none %}<code>{{ row.default }}</code>{% endif %}</td>{% endif %}
+<td>{{ blocks(row.documentation, local) }}</td>
+</tr>{% if row.signatures %}<tr class="api-details"><td colspan="{{ 4 if show_defaults else 3 }}">{{ signatures(row.signatures, local) }}</td></tr>{% endif %}{% endfor %}</tbody></table></div>
+{%- endmacro %}

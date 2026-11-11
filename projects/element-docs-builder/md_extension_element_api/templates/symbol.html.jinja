@@ -1,0 +1,16 @@
+{% import 'macros.html.jinja' as api with context %}
+{# API declarations are not standalone copyable examples. Avoid the theme
+   inserting duplicate unlabeled navigation landmarks for every signature. #}
+<section class="si-docs-api no-copy" id="{{ symbol_anchor }}">
+<div class="api-type-card">
+<div class="api-type-header">
+{% if not no_heading %}<h3>{% else %}<strong>{% endif %}{% if symbol.sourceUrl %}<a href="{{ safe_url(symbol.sourceUrl) }}" title="Source for {{ symbol.name }}">{{ heading }}</a>{% else %}{{ heading }}{% endif %}{% if not no_heading %}</h3>{% else %}</strong>{% endif %}
+<span class="api-kind">{{ symbol.kind.replace('undecorated_', '').replace('_', ' ') }}</span></div>
+<div class="{{ 'api-type-body' if mode == 'type' else 'api-symbol-body' }}">
+{% if symbol.metadata %}<dl class="api-metadata">{% for item in symbol.metadata %}<dt>{{ item.label }}</dt><dd><code>{{ item.value }}</code></dd>{% endfor %}</dl>{% endif %}
+{% if symbol.importStatement %}<pre class="api-import"><code>{{ symbol.importStatement }}</code></pre>{% endif %}
+{{ api.blocks(view.documentation, local) }}
+{{ api.signatures(view.signatures, local) }}
+{% for group in view.groups %}{{ api.group(group, local) }}{% endfor %}
+</div></div>
+</section>

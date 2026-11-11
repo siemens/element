@@ -217,6 +217,6 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
 `SiFormly` internally uses a [custom extension](https://formly.dev/docs/guide/custom-formly-extension) `translate` to internationalize your forms.  
 It is configured similar to [this doc on formly](https://formly.dev/docs/examples/advanced/i18n-alternative) but without the hard dependency to `ngx-translate` library.
 
-<si-docs-api component="SiFormlyComponent"></si-docs-api>
+<si-docs-api component="SiFormlyComponent" importPath="@siemens/element-ng/formly"></si-docs-api>
 
 <si-docs-types></si-docs-types>

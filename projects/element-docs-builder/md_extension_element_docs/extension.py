@@ -1,5 +1,4 @@
 import re
-from abc import abstractmethod
 
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
@@ -31,15 +30,9 @@ class ElementTabPreProcessor(Preprocessor):
 
     return processed_lines
 
-class ElementHtmlPreProcessor(Preprocessor):
-  def __init__(self, tag_name, *args, **kwargs):
-    """Initialize."""
-    self.tag_name = tag_name
-    super().__init__(*args, **kwargs)
-
+class ElementExamplePreProcessor(Preprocessor):
   def run(self, lines):
     escape_regex = re.compile(r'.*`.*`.*')
-    full_line_regex = re.compile(rf'<{self.tag_name}.*</{self.tag_name}>')
     lines_processed = []
     line_processing_buffer = []
     for line in lines:
@@ -48,16 +41,16 @@ class ElementHtmlPreProcessor(Preprocessor):
         lines_processed.append(line)
         continue
 
-      match_start = f'<{self.tag_name}' in line
-      match_end = f'</{self.tag_name}>' in line
+      match_start = '<si-docs-component' in line
+      match_end = '</si-docs-component>' in line
       if match_start and match_end:
-        lines_processed.append(full_line_regex.sub(line, self.convert_tag(line)))
+        lines_processed.append(self.md.htmlStash.store(line))
         line_processing_buffer.clear()
       elif match_start:
         line_processing_buffer.append(line)
       elif match_end:
         line_processing_buffer.append(line)
-        lines_processed.append(self.convert_tag(''.join(line_processing_buffer)))
+        lines_processed.append(self.md.htmlStash.store(''.join(line_processing_buffer)))
         line_processing_buffer.clear()
       elif len(line_processing_buffer) > 0:
         line_processing_buffer.append(line)
@@ -65,17 +58,6 @@ class ElementHtmlPreProcessor(Preprocessor):
         lines_processed.append(line)
 
     return lines_processed
-
-  @abstractmethod
-  def convert_tag(self, line) -> str:
-    pass
-
-class ElementExamplePreProcessor(ElementHtmlPreProcessor):
-  def __init__(self, *args, **kwargs):
-    super().__init__('si-docs-component', *args, **kwargs)
-
-  def convert_tag(self, line) -> str:
-    return self.md.htmlStash.store(line)
 
 class ElementDocsExtension(Extension):
   def extendMarkdown(self, md):

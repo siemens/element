@@ -1,60 +1,58 @@
+"""Send original Markdown to Composer for structured output, never site HTML."""
 import os
-
+from pathlib import Path
 
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 
+from mkdocs_element_docs_builder.stage_snippets import expand_files
 
-api_enabled = os.environ.get('DOCS_COMPOSER', 'false') in ('true', '1', 'yes', 'y')
+
 structured_output_path = 'source'
 
-class DocsComposerExtension(Extension):
-  current_file_path: str = ""
 
-  def __init__(self, docs_composer_configuration, docs_composer, is_serve, **kwargs):
-    super().__init__(**kwargs)
+class DocsComposerExtension(Extension):
+  def __init__(self, docs_composer_configuration, docs_composer):
+    super().__init__()
     self.docs_composer_configuration = docs_composer_configuration
     self.docs_composer = docs_composer
-    self.is_serve = is_serve
 
   def extendMarkdown(self, md):
-    md.preprocessors.register(
-      DocsComposerPreprocessor(md, self),
-      'docscomposer',
-      31,  # Register after snippets and before other preprocessors
-    )
+    md.preprocessors.register(DocsComposerPreprocessor(md, self), 'docscomposer', 31)
 
 
 class DocsComposerPreprocessor(Preprocessor):
-  def __init__(self, md, extension: DocsComposerExtension):
+  def __init__(self, md, extension):
     super().__init__(md)
     self.extension = extension
 
   def run(self, lines):
-    if api_enabled:
-      current_file_path = self.extension.current_file_path
-      if not current_file_path and 'rendering_context' in self.md.preprocessors:
-        context = self.md.preprocessors['rendering_context']
-        # Zensical paths are docs-relative; Docs Composer indexes repo-relative paths.
-        current_file_path = os.path.relpath(os.path.join(
-          context.config['root_dir'], context.config['docs_dir'], context.page.path
-        ))
-
-      source = '\n'.join(lines)
-      processed_text: str = self.extension.docs_composer.buildFile(
-        self.extension.docs_composer_configuration,
-        source,
-        current_file_path,
-        self.extension.is_serve,
-        True,
-        structured_output_path,
-        True,
-        True,
-        timeout=1000 * 60 * 1,  # 1 minute timeout
-      )
-      return processed_text.splitlines()
+    context = self.md.preprocessors['rendering_context']
+    root = Path(context.config['extra']['element_docs_root']).resolve()
+    page = Path(context.page.path)
+    original_docs = root / 'docs'
+    # Lexical containment permits authored README/DEVELOPER symlinks to root.
+    original = Path(os.path.abspath(original_docs / page))
+    if not original.is_relative_to(original_docs):
+      raise ValueError(f'Documentation path escapes docs directory: {page}')
+    identity = (Path('docs') / page).as_posix()
+    if page.parts[0] == 'api':
+      if not original.exists():
+        # New reference exports have no legacy structured/LLM source.
+        return lines
+      with original.open(encoding='utf-8', newline='') as stream:
+        source = expand_files(root, [{'path': identity, 'content': stream.read()}])[0]['content']
+    else:
+      staged_docs = (root / context.config['docs_dir']).resolve()
+      staged = (staged_docs / page).resolve()
+      if not staged.is_relative_to(staged_docs):
+        raise ValueError(f'Staged documentation path escapes docs directory: {page}')
+      # Read the expanded authored bytes before Markdown normalizes newlines.
+      with staged.open(encoding='utf-8', newline='') as stream:
+        source = stream.read()
+    self.extension.docs_composer.buildFile(
+      self.extension.docs_composer_configuration,
+      source, identity, False, True, structured_output_path, True, True,
+      timeout=1000 * 60,
+    )
     return lines
-
-
-def makeExtension(*args, **kwargs):
-    return DocsComposerExtension(*args, **kwargs)
