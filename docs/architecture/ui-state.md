@@ -86,6 +86,6 @@ const config: ApplicationConfig = {
 };
 ```
 
-<si-docs-type name="provideSiUiStateService"></si-docs-api>
+<si-docs-type name="provideSiUiState"></si-docs-type>
 
 <si-docs-types></si-docs-types>

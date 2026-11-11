@@ -1,1 +1,1 @@
-from .extension import DocsComposerExtension, makeExtension, structured_output_path  # noqa: F401
+"""Native structured-output bridge to Docs Composer."""
