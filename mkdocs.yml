@@ -3,7 +3,7 @@ site_name: Siemens Element Documentation
 site_author: 'Siemens'
 site_url: 'https://element.siemens.io/'
 site_dir: 'dist/design'
-use_directory_urls: !ENV [USE_DIRECTORY_URLS, true]
+use_directory_urls: true
 
 repo_name: 'siemens/element'
 repo_url: 'https://github.com/siemens/element'
@@ -296,6 +296,5 @@ markdown_extensions:
 
 plugins:
   - material/search
-  - element-docs-builder
   - minify:
       minify_html: true

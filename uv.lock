@@ -458,21 +458,14 @@ version = "1.0.0"
 source = { editable = "projects/element-docs-builder" }
 dependencies = [
     { name = "javascript" },
-    { name = "mkdocs" },
-]
-
-[package.optional-dependencies]
-zensical = [
-    { name = "zensical" },
+    { name = "jinja2" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "javascript", specifier = "==1!1.2.6" },
-    { name = "mkdocs", specifier = ">=1.6.1" },
-    { name = "zensical", marker = "extra == 'zensical'", specifier = ">=0.0.59" },
+    { name = "jinja2", specifier = ">=3.1.2" },
 ]
-provides-extras = ["zensical"]
 
 [[package]]
 name = "mkdocs-get-deps"

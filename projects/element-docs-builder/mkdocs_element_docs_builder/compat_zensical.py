@@ -1,106 +1,76 @@
+"""Install the site's native config wrapper once, when MkDocs YAML imports it."""
 import atexit
 import shutil
-import sys
-from functools import partial
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any, Callable
 
-from md_extension_element_docs_composer import DocsComposerExtension
+import zensical.config as zensical_config
 
-from .plugin import ElementDocsBuilderPlugin
+from md_extension_element_docs_composer.extension import DocsComposerExtension
 
-PATCH_MARKER = '_mkdocs_element_docs_builder_patch'
+from .plugin import configure, apply_staged_navigation, apply_staged_markdown
+from .preparation import prepare_config
 
+
+_apply_defaults = zensical_config._apply_defaults
 _TEMP_DIR: TemporaryDirectory[str] | None = None
 _COMPOSER_EXTENSION: DocsComposerExtension | None = None
 _POST_BUILD: Callable[[], None] | None = None
 
 
 def _run_post_build() -> None:
-  if _POST_BUILD is not None:
-    _POST_BUILD()
+  global _POST_BUILD, _COMPOSER_EXTENSION
+  callback = _POST_BUILD
+  _POST_BUILD = None
+  _COMPOSER_EXTENSION = None
+  if callback is not None:
+    callback()
 
 
-def makeExtension(**kwargs: Any) -> DocsComposerExtension:
+def makeExtension() -> DocsComposerExtension:
   if _COMPOSER_EXTENSION is None:
     raise RuntimeError('Docs Composer has not been initialized')
   return DocsComposerExtension(
     _COMPOSER_EXTENSION.docs_composer_configuration,
     _COMPOSER_EXTENSION.docs_composer,
-    _COMPOSER_EXTENSION.is_serve,
-    **kwargs,
   )
 
 
-def _patch_zensical_config() -> bool:
-  zensical_config = sys.modules.get('zensical.config')
-  if zensical_config is None:
-    return False
+def _apply_defaults_with_element_docs(
+  config: dict[str, Any], path: str
+) -> dict[str, Any]:
+  global _POST_BUILD, _COMPOSER_EXTENSION, _TEMP_DIR
+  # A failing config load must not finalize the previous successful config.
+  _POST_BUILD = None
+  _COMPOSER_EXTENSION = None
+  # Preparation precedes native page discovery and navigation normalization.
+  if prepare_config(config, path):
+    apply_staged_navigation(config)
+    apply_staged_markdown(config)
+  result = _apply_defaults(config, path)
+  _COMPOSER_EXTENSION, finalize = configure(result)
+  if _COMPOSER_EXTENSION is not None:
+    result['markdown_extensions'] = [
+      __name__ if extension is _COMPOSER_EXTENSION else extension
+      for extension in result['markdown_extensions']
+    ]
 
-  apply_defaults = getattr(zensical_config, '_apply_defaults')
-  if getattr(apply_defaults, PATCH_MARKER, False):
-    return True
-
-  def apply_defaults_with_element_docs(
-    config: dict[str, Any], path: str
-  ) -> dict[str, Any]:
-    global _POST_BUILD
-    enabled = any(
-      entry == 'element-docs-builder'
-      or isinstance(entry, dict) and 'element-docs-builder' in entry
-      for entry in config.get('plugins') or []
-    )
-    result = apply_defaults(config, path)
-    if not enabled:
-      _POST_BUILD = None
-      return result
-
-    plugin = ElementDocsBuilderPlugin()
-    plugin.on_startup('serve' if 'serve' in sys.argv[1:] else 'build', False)
-    nav = result.get('nav')
-    result = plugin.on_config(result)
-    global _COMPOSER_EXTENSION
-    _COMPOSER_EXTENSION = plugin.extension
-    if _COMPOSER_EXTENSION is not None:
-      result['markdown_extensions'] = [
-        __name__ if extension is _COMPOSER_EXTENSION else extension
-        for extension in result['markdown_extensions']
-      ]
-    if result.get('nav') != nav:
-      result['nav'] = getattr(zensical_config, '_convert_nav')(result['nav'])
-    result['extra_javascript'] = getattr(
-      zensical_config, '_convert_extra_javascript'
-    )(result['extra_javascript'])
-
-    global _TEMP_DIR
-    if _TEMP_DIR is None:
-      _TEMP_DIR = TemporaryDirectory()
-
-    template_dir = Path(_TEMP_DIR.name)
-    package_dir = Path(__file__).parent
-    for asset in ('docs-builder.css', 'docs-builder.js'):
-      shutil.copyfile(package_dir / asset, template_dir / asset)
-
-    result['theme_dirs'].append(str(template_dir))
-    result['theme']['static_templates'].extend(
-      ['docs-builder.css', 'docs-builder.js']
-    )
-    theme_files = getattr(zensical_config, '_list_templates')(result)
-    result['template_hash'] = getattr(zensical_config, '_hash')(theme_files)
-    result['mdx_configs_hash'] = getattr(zensical_config, '_hash')(
-      result['mdx_configs']
-    )
-    result['plugins_hash'] = getattr(zensical_config, '_hash')(result['plugins'])
-    _POST_BUILD = partial(plugin.on_post_build, result)
-    return result
-
-  setattr(apply_defaults_with_element_docs, PATCH_MARKER, True)
-  setattr(zensical_config, '_apply_defaults', apply_defaults_with_element_docs)
-  # Zensical has no post-build hook. Finalize at exit, after rendering and before
-  # the JavaScript bridge's earlier-registered shutdown callback runs.
-  atexit.register(_run_post_build)
-  return True
+  if _TEMP_DIR is None:
+    _TEMP_DIR = TemporaryDirectory()
+  template_dir = Path(_TEMP_DIR.name)
+  package_dir = Path(__file__).parent
+  shutil.copyfile(package_dir / 'docs-builder.css', template_dir / 'docs-builder.css')
+  result['theme_dirs'].append(str(template_dir))
+  result['theme']['static_templates'].append('docs-builder.css')
+  theme_files = zensical_config._list_templates(result)
+  result['template_hash'] = zensical_config._hash(theme_files)
+  result['mdx_configs_hash'] = zensical_config._hash(result['mdx_configs'])
+  _POST_BUILD = finalize
+  return result
 
 
-compat = _patch_zensical_config()
+zensical_config._apply_defaults = _apply_defaults_with_element_docs
+# Finalize at exit, after rendering and before the bridge's earlier shutdown.
+atexit.register(_run_post_build)
+compat = True  # Required YAML import pointer; module caching installs only once.

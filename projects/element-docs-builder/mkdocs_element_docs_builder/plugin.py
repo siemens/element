@@ -1,114 +1,77 @@
-import os
-from os.path import relpath
+"""Native Zensical configuration and structured Composer finalization."""
 import json
-from typing import Any
+import os
 
-from mkdocs.config.base import Config
-from mkdocs.plugins import BasePlugin
-from mkdocs.structure.files import Files, File
+from md_extension_element_docs_composer.extension import DocsComposerExtension, structured_output_path
 
-from os.path import dirname
 
-from md_extension_element_docs_composer import DocsComposerExtension, structured_output_path
-
-api_enabled = os.environ.get('DOCS_COMPOSER', 'false') in ('true', '1', 'yes', 'y')
-api_generate = True if os.environ.get('DOCS_COMPOSER_GENERATE', 'false') in ('true', '1', 'yes', 'y') else (
-  False if os.environ.get('DOCS_COMPOSER_GENERATE', 'false') not in ('false', '0', 'no', 'n') else None
-)
+api_enabled = os.environ.get('DOCS_COMPOSER') == 'true'
+api_generate = os.environ.get('DOCS_COMPOSER_GENERATE') == 'true'
 
 if api_enabled:
   from javascript import require
   try:
     docs_composer = require('./index.mjs')
-  except Exception as e:
-    raise ImportError('Failed to import Docs Composer. Ensure it is correctly installed and available in the environment. Make sure you are running version 11.9.0 or later.') from e
+  except Exception as error:
+    raise ImportError('Failed to import Docs Composer. Ensure version 11.9.0 or later is installed.') from error
 
 
-class ElementDocsBuilderPlugin(BasePlugin):
-  docs_composer_configuration: Any = None
-  is_serve = False
-  ran_typedoc = False
-  generated_nav: Any | None = None
-  extension: Any | None = None
-
-  def on_startup(self, command: str, dirty: bool) -> None:
-    if not api_enabled:
+def apply_staged_navigation(config):
+  """Insert the prepared API subtree, never Composer's legacy navigation."""
+  nav = config['extra']['element_api_nav']
+  for section in config['nav']:
+    if 'Components' in section:
+      entries = section['Components']
+      entries[:] = [entry for entry in entries if not isinstance(entry, dict) or 'API' not in entry]
+      entries.append({'API': nav})
       return
+  raise ValueError('Missing Components navigation section')
 
-    if command == 'serve':
-      self.is_serve = True
 
-  def on_config(self, config: Config):
-    config.get('extra_css').append('docs-builder.css')
-    config.get('extra_javascript').append('docs-builder.js')
+def apply_staged_markdown(config):
+  """Staging already expanded snippets; do not expand them twice."""
+  config['markdown_extensions'] = [
+    entry for entry in config['markdown_extensions']
+    if not (isinstance(entry, dict) and 'pymdownx.snippets' in entry)
+  ]
 
-    if not api_enabled:
-      return config
 
-    if self.ran_typedoc:
-      if self.generated_nav is not None:
-        config['nav'] = self.generated_nav
-      return config
+def apply_api_markdown(config):
+  name = 'md_extension_element_api.extension'
+  extra = config['extra']
+  config['mdx_configs'][name] = {
+    'artifact_path': extra['element_docs_api_json'],
+    'artifact_revision': extra['element_docs_api_revision'],
+  }
+  config['markdown_extensions'].append(name)
 
-    self.ran_typedoc = True
 
-    docs_composer_options = os.environ.get('DOCS_COMPOSER_OPTIONS', '{}')
-    if docs_composer_options:
-      # Read JSON string from environment variable
-      try:
-        docs_composer_options = json.loads(docs_composer_options)
-      except json.JSONDecodeError:
-        raise ValueError('Invalid JSON in DOCS_COMPOSER_OPTIONS environment variable.')
-    else:
-      docs_composer_options = {}
+def configure(config):
+  """Configure native rendering and return its Composer extension and finalizer."""
+  if os.environ.get('ELEMENT_DOCS_API') == 'true':
+    apply_api_markdown(config)
+  config['extra_css'].append('docs-builder.css')
+  if not api_enabled:
+    return None, None
 
-    self.docs_composer_configuration = docs_composer.runTypedoc(
-      docs_composer_options,
-      None,
-      not self.is_serve and api_generate is not False,
-      False,
-      self.is_serve,
-      timeout=1000 * 60 * 5,  # 5 minutes timeout
+  try:
+    options = json.loads(os.environ['DOCS_COMPOSER_OPTIONS'])
+  except json.JSONDecodeError as error:
+    raise ValueError('Invalid JSON in DOCS_COMPOSER_OPTIONS environment variable.') from error
+  configuration = docs_composer.runTypedoc(
+    options, None, True, False, False,
+    timeout=1000 * 60 * 5,
+  )
+  if api_generate:
+    # Preserve ORIGINAL docs/api generation and its legacy LLM tracking.
+    docs_composer.getGeneratedFiles(configuration, timeout=1000 * 60 * 3)
+  extension = DocsComposerExtension(configuration, docs_composer)
+  config['markdown_extensions'].append(extension)
+
+  def finalize():
+    docs_composer.saveLLMsTxt(
+      configuration, '.', structured_output_path,
+      timeout=1000 * 60,
     )
 
-    if api_generate:
-      _, config['nav'] = docs_composer.getGeneratedFiles(self.docs_composer_configuration, timeout=1000 * 60 * 3) # 3 minutes timeout
-      config['nav'] = config['nav'].valueOf()
-      self.generated_nav = config['nav']
-
-    # Add the instantiated extension to the config
-    if 'markdown_extensions' not in config:
-      config['markdown_extensions'] = []
-
-    if not any(isinstance(ext, DocsComposerExtension) for ext in config['markdown_extensions']):
-      self.extension = DocsComposerExtension(self.docs_composer_configuration, docs_composer, self.is_serve)
-      config['markdown_extensions'].append(
-        self.extension
-      )
-
-    return config
-
-  def on_page_markdown(
-    self, markdown: str, page: Any, config: Config, files: Any
-  ) -> str:
-    if self.extension is not None:
-      # Save the file path (relative to the repo dir) to the extension for later use
-      self.extension.current_file_path = relpath(page.file.abs_src_path, os.getcwd())
-    return markdown
-
-  def on_post_build(self, config: Config) -> None:
-      if not api_enabled:
-        return
-
-      if self.extension is not None:
-        docs_composer.saveLLMsTxt(
-          self.docs_composer_configuration,
-          '.',
-          structured_output_path,
-          timeout=1000 * 60 * 1,  # 1 minute timeout
-        )
-
-  def on_files(self, files: Files, config: Config):
-    files.append(File('docs-builder.css', dirname(__file__), config.get('site_dir'), config.get('use_directory_urls')))
-    files.append(File('docs-builder.js', dirname(__file__), config.get('site_dir'), config.get('use_directory_urls')))
-    return files
+  return extension, finalize

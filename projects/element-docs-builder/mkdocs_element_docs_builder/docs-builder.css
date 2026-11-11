@@ -18,207 +18,227 @@
   display: none;
 }
 
-.type-table {
-  display: table;
-  inline-size: 100%;
+/* Keep the API in the documentation theme, outside the element-* icon namespace. */
+.md-typeset .si-docs-api {
+  min-inline-size: 0;
   max-inline-size: 100%;
-  margin-block: 1.15rem 0.625rem;
-  padding: 0;
-  overflow: hidden;
-  box-shadow: var(
-    --md-shadow-z3,
-    0 2px 2px 0 rgba(0, 0, 0, 0.14),
-    0 1px 5px 0 rgba(0, 0, 0, 0.12),
-    0 3px 1px -2px rgba(0, 0, 0, 0.2)
-  );
-  border-radius: 0.125rem;
-  font-size: 0.8rem;
-  border: 0.05rem solid var(--md-typeset-table-color, transparent);
+  color: var(--si-sys-color-text-primary, var(--md-default-fg-color));
 }
 
-.type-table:first-child {
-  margin-block-start: 0.625rem;
+.md-typeset .si-docs-api a {
+  text-decoration: underline;
 }
 
-.type-table td {
-  padding: 0;
+.md-typeset .si-docs-api :target,
+.md-typeset .si-docs-api:target {
+  scroll-margin-block-start: 5rem;
 }
 
-.type-subtable {
-  inline-size: 100%;
+.md-typeset .si-docs-api .api-metadata {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.25rem 0.6rem;
+  margin-block: 0.6rem;
+  font-size: 0.7rem;
+}
+
+.md-typeset .si-docs-api .api-metadata dt,
+.md-typeset .si-docs-api .api-metadata dd {
+  margin: 0;
+}
+
+.md-typeset .si-docs-api pre {
+  min-inline-size: 0;
   max-inline-size: 100%;
-  padding-block: 0.375rem;
-  padding-inline: 0.5rem;
-  border-block-start: 0.1rem solid rgba(0, 0, 0, 0.07);
-  background-color: var(--md-typeset-table-color--light);
+  overflow-x: auto;
+  font-size: 0.64rem;
 }
 
-.type-subtable th {
-  padding-block: 0.1875em;
-  padding-inline: 0.125rem;
-  text-align: start;
-  font-size: 0.84375rem;
+.md-typeset .si-docs-api .api-import {
+  margin-block: 0.6rem 0.8rem;
 }
 
-.type-subtable td {
-  padding-block: 0.1875rem;
-  padding-inline: 0.125rem;
-  line-height: 1.125rem;
+/* Classless tables deliberately reuse the theme's compact table skin. Only
+   layout is constrained here; wide declarations scroll locally, not the page. */
+.md-typeset .si-docs-api .api-group-title {
+  margin-block: 1rem 0.6rem;
 }
 
-.type-subtable td.nested .type-table {
-  box-shadow: var(
-    --md-shadow-z3,
-    0 2px 2px 0 rgba(0, 0, 0, 0.1),
-    0 1px 5px 0 rgba(0, 0, 0, 0.08),
-    0 3px 1px -2px rgba(0, 0, 0, 0.1)
-  );
-  margin-block: 0.5rem 0.25rem;
+.md-typeset .si-docs-api .api-member {
+  min-inline-size: 0;
+  padding: 0.6rem 0.8rem;
+  background-color: var(--md-table-bg-color, var(--md-default-bg-color));
+  border-inline: 0.05rem solid var(--md-table-border-color, var(--md-typeset-table-color));
+  border-block-start: 0.1rem solid var(--md-table-border-color, var(--md-typeset-table-color));
 }
 
-.type-subtable td.nested .type-table:first-child {
-  margin-block-start: 0.25rem;
+.md-typeset .si-docs-api .api-member:first-of-type {
+  border-block-start-width: 0.05rem;
 }
 
-.type-subtable td.nested .type-table th {
-  padding: unset;
-  text-align: unset;
-  font-size: unset;
-  line-height: 1.6;
+.md-typeset .si-docs-api .api-member:last-of-type {
+  border-block-end: 0.05rem solid var(--md-table-border-color, var(--md-typeset-table-color));
 }
 
-.type-subtable td.nested .type-table .type-header {
-  padding-block: 0.375rem;
-  padding-inline: 0.5rem;
-  text-align: start;
+.md-typeset .si-docs-api .api-member > p {
+  margin-block: 0 0.6rem;
 }
 
-.type-subtable td.nested .type-table td {
-  padding: 0;
-  line-height: unset;
+.md-typeset .si-docs-api .api-member-source {
+  font-size: 0.64rem;
 }
 
-.type-subtable td.nested .type-table .type-subtable th {
-  padding-block: 0.1875em;
-  padding-inline: 0.125rem;
-  text-align: start;
-  font-size: 0.84375rem;
+.md-typeset .si-docs-api .api-member-declaration {
+  overflow-wrap: anywhere;
 }
 
-.type-subtable td.nested .type-table .type-subtable td {
-  padding-block: 0.1875rem;
-  padding-inline: 0.125rem;
-  line-height: 1.125rem;
-}
-
-.type-table .type-header {
-  inline-size: 100%;
+.md-typeset .si-docs-api .api-table {
+  min-inline-size: 0;
   max-inline-size: 100%;
-  padding-block: 0.375rem;
-  padding-inline: 0.5rem;
-  border-radius: 0.125rem 0.125rem 0 0;
-  background-color: var(--md-table-bg-color, #e3e3e3);
-  text-align: start;
-  font-weight: normal;
+  margin-block: 1rem;
+  overflow-x: auto;
 }
 
-.type-table .type-headerrow {
-  display: flex;
-  flex-direction: row;
-  inline-size: 100%;
+.md-typeset .si-docs-api .api-table th a,
+.md-typeset .si-docs-api .api-table td > code a {
+  text-decoration: none;
 }
 
-.type-table .type-headerrow > div {
-  font-weight: normal;
-  padding-block: 0.1875rem;
-  padding-inline-start: 0.375rem;
-  word-break: break-all;
-  min-inline-size: min-content;
-  text-align: start;
+.md-typeset .si-docs-api .api-table:focus-visible {
+  outline: 0.1rem solid var(--si-sys-color-text-accent, var(--md-typeset-a-color));
+  outline-offset: 0.1rem;
 }
 
-.type-table .type-headerrow > div:first-child {
-  padding-inline-start: 0;
-  flex-grow: 0;
+.md-typeset .si-docs-api .api-table .md-typeset__scrollwrap {
+  margin: 0;
+  overflow: visible;
 }
 
-.type-table .type-headerrow > div:nth-child(2) {
-  vertical-align: top;
-  font-weight: bold;
-  white-space: nowrap;
-  font-size: 0.9375rem;
-  padding-inline-start: 0;
-  padding-block-start: 0;
-  word-break: keep-all;
-  min-inline-size: max-content;
-  flex-grow: 0;
-}
-
-.type-table .type-headerrow > div:last-child {
-  padding-inline-end: 0.1875rem;
-  min-inline-size: max-content;
-  flex-grow: 0;
-}
-
-.type-expand {
-  flex-grow: 100;
-}
-
-.type-no-name {
-  padding-inline-start: 0 !important;
-}
-
-.type-sub-item-description {
-  font-style: italic;
-  font-size: 0.9em;
-}
-
-.type-table:target,
-.type-table *:target {
-  scroll-margin-top: 5rem;
-}
-
-.collapsible-body {
-  /* Hidden by default */
-  visibility: hidden;
-  block-size: 0;
-  position: relative;
-  overflow: hidden;
+.md-typeset .si-docs-api .api-table .md-typeset__table {
   display: block;
+  padding: 0;
 }
 
-.collapsible-container {
-  cursor: pointer;
+.md-typeset .si-docs-api .api-table table:not([class]) {
+  display: table;
+  table-layout: fixed;
+  inline-size: 100%;
+  min-inline-size: 32rem;
+  margin: 0;
 }
 
-.collapsible-container .collapsible-body {
-  cursor: auto;
+.md-typeset .si-docs-api caption {
+  padding-block: 0 0.5rem;
+  text-align: start;
+  font-size: 0.85rem;
+  font-weight: bold;
 }
 
-.collapsible-container .toggle-icon {
+.md-typeset .si-docs-api th,
+.md-typeset .si-docs-api td {
+  text-align: start;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .si-docs-api th[scope='row'] {
+  font-weight: bold;
+  border-block-start: 0.1rem solid var(--md-table-border-color, var(--md-typeset-table-color));
+  border-block-end: 0;
+}
+
+.md-typeset .si-docs-api td code {
+  white-space: normal;
+}
+
+.md-typeset .si-docs-api pre code {
+  white-space: pre;
+}
+
+.md-typeset .si-docs-api td > :first-child {
+  margin-block-start: 0;
+}
+
+.md-typeset .si-docs-api td > :last-child {
+  margin-block-end: 0;
+}
+
+.md-typeset .si-docs-api .api-details > td {
+  padding-block: 0.6rem;
+}
+
+.md-typeset .si-docs-api .api-details section + section {
+  margin-block-start: 1rem;
+}
+
+.md-typeset .si-docs-api .api-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin-block-start: 0.3rem;
+}
+
+.md-typeset .si-docs-api .api-badge {
   display: inline-block;
-  margin: 0 0.25em 0 0.5em;
-  transition: transform 0.2s;
-  font-size: 0.9em;
-  color: var(--md-typeset-a-color);
-  user-select: none;
+  padding: 0.05rem 0.3rem;
+  border-radius: 0.125rem;
+  background-color: var(--si-sys-color-background-2, var(--md-code-bg-color));
+  color: var(--si-sys-color-text-primary, var(--md-default-fg-color));
+  font-size: 0.6rem;
+  font-weight: normal;
+  line-height: 1.5;
+  text-transform: capitalize;
 }
 
-.collapsible-container[data-collapsed='false'] .toggle-icon {
-  transform: rotate(90deg);
+.md-typeset .si-docs-api .api-badge[data-badge='required'] {
+  background-color: var(--si-sys-color-background-accent, var(--md-typeset-a-color));
+  color: var(--si-sys-color-text-on-accent, var(--md-default-bg-color));
 }
 
-.collapsible-container[data-collapsed='false'] .collapsible-body {
-  /* Show table body when expanded */
-  display: table-row-group;
-  visibility: visible;
-  block-size: auto;
-  position: static;
+.md-typeset .si-docs-api .api-type-card {
+  margin-block: 1rem;
+  border: 0.05rem solid var(--md-table-border-color, var(--md-typeset-table-color));
+  border-radius: 0.125rem;
+  box-shadow: var(--md-shadow-z1, 0 1px 3px rgb(0 0 0 / 12%));
 }
 
-.icon {
-  font-size: 1.25rem;
-  color: var(--md-default-fg-color);
+.md-typeset .si-docs-api .api-type-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.3rem 1rem;
+  padding: 0.6rem 0.8rem;
+  background-color: var(--si-sys-color-background-2, var(--md-code-bg-color));
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .si-docs-api .api-type-header h3 {
+  margin: 0;
+  font-size: inherit;
+}
+
+.md-typeset .si-docs-api .api-kind {
+  flex: 0 0 auto;
+  font-size: 0.64rem;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.md-typeset .si-docs-api .api-type-body,
+.md-typeset .si-docs-api .api-symbol-body {
+  min-inline-size: 0;
+  padding: 0.2rem 0.8rem 0.8rem;
+}
+
+.md-typeset .si-docs-api .api-type-body {
+  font-size: 0.7rem;
+}
+
+.md-typeset .si-docs-api .api-type-body > :last-child,
+.md-typeset .si-docs-api .api-symbol-body > :last-child {
+  margin-block-end: 0;
 }
 
 .icon-large {

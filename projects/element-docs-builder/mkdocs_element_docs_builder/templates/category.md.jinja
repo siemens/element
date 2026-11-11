@@ -1,0 +1,13 @@
+---
+search:
+  exclude: true
+---
+
+# {{ page.title }}
+
+{% for group in page.groups %}{% if group.letter %}
+## {{ group.letter }}
+
+{% endif %}{% for entry in group.entries %}- [{{ entry.name }}]({{ safe_url(entry.href) }})
+{% endfor %}{% if not loop.last %}
+{% endif %}{% endfor %}
