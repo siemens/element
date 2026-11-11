@@ -44,13 +44,17 @@ In **edit mode**, users can customize the dashboard to fit their specific needs.
 The _dashboard options_ area is replaced by _editing options_ that allow users
 to add widgets and perform other actions.
 
+When space is limited, all editing actions collapse together into the **More actions**
+menu. The **Save** and **Cancel** buttons remain visible outside the menu.
+
 ![Flexible dashboard edit](images/flexible-dashboard-edit.png)
 
 > 1. Title (optional), 2. Editing options (optional), 3. Content area, 4. Save and cancel button
 
 #### Add widget
 
-1. Select `Add widget` to open the widget library.
+1. Select `Add widget` to open the widget library. On narrow layouts, open the
+   **More actions** menu first.
 1. Select the desired widget.
 1. Click `Add`. The library will be closed and the new widget will be added at
    the bottom of the page.
