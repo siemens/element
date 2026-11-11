@@ -77,3 +77,6 @@ __screenshots__/
 
 # EsLint cache
 .eslintcache
+
+# API documentation tooling dependencies
+/tools/api-docs/node_modules

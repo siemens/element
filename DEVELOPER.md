@@ -230,6 +230,41 @@ pnpm run docs:serve
 Open the documentation at `http://localhost:8000` so it uses the same loopback
 hostname as the embedded examples and can access browser storage.
 
+### API documentation pipeline
+
+`docs:build` and `docs:serve` are the fast, API-disabled commands. API-enabled
+builds prepare the API data once, then invoke Zensical with `mkdocs.yml`:
+
+```shell
+pnpm run docs:build:api       # API references and Composer structured output
+pnpm run docs:build:generate  # Also exclude generated pages from Composer output
+pnpm run docs:serve:api       # API references without Composer
+```
+
+The package configuration is `.docs-composerrc.mts`. Its `include` list defines
+the package directories. The compiler extractor discovers public entry points
+from each `ng-package.json`; it does not require a bulk `docs.ts` export file or
+manually listed entry points. Composer keeps its existing inputs for structured
+and LLM output. Run
+`pnpm run docs:prepare` to extract the API JSON and reference catalog to their fixed
+paths under `.cache/element-docs/`. TypeScript prepares the display views, member
+selections, related types, reference groups and navigation, and validates the JSON
+before publishing it. Python renders the prepared data with Jinja; only tag
+parsing, page-local anchors and links, and Zensical integration remain there.
+
+API rendering is enabled only when `ELEMENT_DOCS_API` is exactly `true`; the API
+scripts set it for you. `mkdocs.yml` keeps directory-style URLs enabled. The API
+build scripts preserve the Docs Composer structured-output and `llms.txt` flow.
+
+Restart `docs:serve:api` after TypeScript source or source Markdown changes. Native
+Zensical configuration reloads normally and does not require TypeScript extraction.
+
+The API documentation checks used in CI are:
+
+```shell
+CI=true pnpm run docs:test
+```
+
 ### General writing style guide
 
 To ensure clarity and consistency, follow these writing style guidelines:
@@ -265,7 +300,9 @@ Each chapter must include:
 
 To improve the user experience, mention all relevant components, directives, services, pipes and types
 inline using the tags instead of linking them.
-Components (and their types) can be documented by re-exporting them in `docs.ts`.
+Export local APIs through the public entry point declared in `ng-package.json`.
+The compiler extractor discovers those exports automatically; `docs.ts` is only
+used by the legacy Composer flow for structured and LLM output.
 
 To enhance the docs with live examples and API specs, use these tags in the Markdown files:
 
