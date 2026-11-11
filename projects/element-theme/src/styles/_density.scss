@@ -7,17 +7,18 @@
 @use 'variables/typography';
 
 @mixin define-sizing($tokens) {
-  // Exclude tokens other than spacing, size, icons, and focus rings until other categories migrate.
+  // Emit spacing, size, icon, focus-ring, and border-radius tokens until other categories migrate.
   @each $name, $value in $tokens {
     $is-spacing: string.index($name, 'si-sys-sizing-spacing-') == 1;
     $is-size: string.index($name, 'si-sys-sizing-size-') == 1;
     $is-icon: string.index($name, 'si-sys-sizing-icon-') == 1;
     $is-focus-ring: string.index($name, 'si-sys-sizing-focus-ring-') == 1;
+    $is-radius: string.index($name, 'si-sys-sizing-border-radius-') == 1;
 
     @if $is-icon {
       // Keep icons in rem so they scale with the root font size.
       --#{$name}: #{typography.px-to-rem($value)};
-    } @else if $is-spacing or $is-size or $is-focus-ring {
+    } @else if $is-spacing or $is-size or $is-focus-ring or $is-radius {
       --#{$name}: #{$value};
     }
   }

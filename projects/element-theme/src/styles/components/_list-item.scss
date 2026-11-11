@@ -26,12 +26,12 @@ ol:has(.list-item) {
 
   &.list-filled .list-item {
     background-color: variables.$si-sys-color-background-1;
-    border-radius: variables.$element-radius-2;
+    border-radius: variables.$si-sys-sizing-border-radius-sm;
   }
 
   &.list-outline .list-item {
     border: 1px solid variables.$si-sys-color-border-4;
-    border-radius: variables.$element-radius-2;
+    border-radius: variables.$si-sys-sizing-border-radius-sm;
   }
 }
 
