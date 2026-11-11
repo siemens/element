@@ -2,10 +2,10 @@
 @use 'semantic-tokens';
 
 // Building focus< with outline
-$focus-style-outline: semantic-tokens.$element-button-focus-width solid
+$focus-style-outline: si-sys-variables.$si-sys-sizing-focus-ring-width solid
   si-sys-variables.$si-sys-color-effects-focus;
-$focus-style-outline-offset: semantic-tokens.$element-button-focus-overlay-width;
-$focus-style-outline-inside-offset: calc(-1 * #{semantic-tokens.$element-button-focus-width});
+$focus-style-outline-offset: si-sys-variables.$si-sys-sizing-focus-ring-offset;
+$focus-style-outline-inside-offset: calc(-1 * #{si-sys-variables.$si-sys-sizing-focus-ring-width});
 
 @mixin make-outline-focus() {
   outline: $focus-style-outline;
@@ -21,10 +21,10 @@ $focus-style-outline-inside-offset: calc(-1 * #{semantic-tokens.$element-button-
 
 @function make-focus($focus-color) {
   $focus-width: calc(
-    semantic-tokens.$element-button-focus-width +
-      semantic-tokens.$element-button-focus-overlay-width
+    si-sys-variables.$si-sys-sizing-focus-ring-width +
+      si-sys-variables.$si-sys-sizing-focus-ring-offset
   );
-  $focus-overlay: 0 0 0 semantic-tokens.$element-button-focus-overlay-width
+  $focus-overlay: 0 0 0 si-sys-variables.$si-sys-sizing-focus-ring-offset
     semantic-tokens.$element-button-focus-overlay-color;
 
   @return $focus-overlay, 0 0 0 $focus-width $focus-color;
@@ -34,10 +34,10 @@ $focus-style-outline-inside-offset: calc(-1 * #{semantic-tokens.$element-button-
 // e.g. the textarea
 @function make-focus-with-offset($focus-color, $offset) {
   $focus-width: calc(
-    semantic-tokens.$element-button-focus-width +
-      semantic-tokens.$element-button-focus-overlay-width + $offset
+    si-sys-variables.$si-sys-sizing-focus-ring-width +
+      si-sys-variables.$si-sys-sizing-focus-ring-offset + $offset
   );
-  $focus-overlay: 0 0 0 calc(semantic-tokens.$element-button-focus-overlay-width + $offset)
+  $focus-overlay: 0 0 0 calc(si-sys-variables.$si-sys-sizing-focus-ring-offset + $offset)
     semantic-tokens.$element-button-focus-overlay-color;
 
   @return $focus-overlay, 0 0 0 $focus-width $focus-color;
@@ -45,11 +45,11 @@ $focus-style-outline-inside-offset: calc(-1 * #{semantic-tokens.$element-button-
 
 @function make-focus-inside($focus-color) {
   $focus-width: calc(
-    semantic-tokens.$element-button-focus-width +
-      semantic-tokens.$element-button-focus-overlay-width
+    si-sys-variables.$si-sys-sizing-focus-ring-width +
+      si-sys-variables.$si-sys-sizing-focus-ring-offset
   );
 
-  @return inset 0 0 0 semantic-tokens.$element-button-focus-width $focus-color;
+  @return inset 0 0 0 si-sys-variables.$si-sys-sizing-focus-ring-width $focus-color;
 }
 
 $si-focus-styling-box-shadow: make-focus(si-sys-variables.$si-sys-color-effects-focus);
