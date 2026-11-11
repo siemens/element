@@ -72,7 +72,7 @@ jobs:
   test:
     runs-on: ubuntu-26.04
     # We use playwright browser to run tests
-    container: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:7852dc5a7d72f5fe458a597d690f6c42fbc8e9e26ddfa95f8e6ef552558d9bbf
+    container: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:6e3fb709361521eb27161606e6da6d2674e5e89fa16516cb37d6fdd91372273d
     env:
       # See: https://github.com/microsoft/playwright/issues/27620
       HOME: /root
@@ -159,7 +159,7 @@ jobs:
 
   e2e:
     runs-on: ubuntu-26.04
-    container: mcr.microsoft.com/playwright:v1.64.1-noble@sha256:7852dc5a7d72f5fe458a597d690f6c42fbc8e9e26ddfa95f8e6ef552558d9bbf
+    container: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:6e3fb709361521eb27161606e6da6d2674e5e89fa16516cb37d6fdd91372273d
     needs:
       - build
     strategy:
