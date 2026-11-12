@@ -24,14 +24,14 @@
 
   > .btn:first-of-type:not(.btn-circle),
   > label:first-of-type .btn:not(.btn-circle) {
-    border-start-start-radius: semantic-tokens.$element-button-radius;
-    border-end-start-radius: semantic-tokens.$element-button-radius;
+    border-start-start-radius: si-sys-variables.$si-sys-sizing-border-radius-xs;
+    border-end-start-radius: si-sys-variables.$si-sys-sizing-border-radius-xs;
   }
 
   > .btn:last-of-type:not(.btn-circle),
   > label:last-of-type .btn:not(.btn-circle) {
-    border-start-end-radius: semantic-tokens.$element-button-radius;
-    border-end-end-radius: semantic-tokens.$element-button-radius;
+    border-start-end-radius: si-sys-variables.$si-sys-sizing-border-radius-xs;
+    border-end-end-radius: si-sys-variables.$si-sys-sizing-border-radius-xs;
   }
 
   > .btn-check:focus + .btn,

@@ -2,7 +2,6 @@
 @use '../bootstrap/variables';
 @use '../variables/animations';
 @use '../variables/focus';
-@use '../variables/semantic-tokens';
 @use '../variables/si-sys-variables';
 @use '../variables/spacers';
 @use '../variables/utilities';
@@ -45,7 +44,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 
 .ngx-datatable.table-element {
   background-color: variables.$table-bg;
-  border-radius: semantic-tokens.$element-radius-2;
+  border-radius: si-sys-variables.$si-sys-sizing-border-radius-sm;
 
   // Compat for v26. This element hos no class.
   [role='table'] {

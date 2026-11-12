@@ -56,7 +56,7 @@ $link-decoration: none !default;
 $link-shade-percentage: 20% !default;
 $link-hover-color: si-sys-variables.$si-sys-color-text-accent-hover;
 $link-hover-decoration: underline !default;
-$link-border-radius: semantic-tokens.$element-button-radius;
+$link-border-radius: si-sys-variables.$si-sys-sizing-border-radius-xs;
 
 $stretched-link-pseudo-element: after !default;
 $stretched-link-z-index: 1 !default;
@@ -129,9 +129,9 @@ $border-widths: (
 
 $border-color: si-sys-variables.$si-sys-color-border-4 !default;
 
-$border-radius: semantic-tokens.$element-radius-2 !default;
-$border-radius-sm: semantic-tokens.$element-radius-1 !default;
-$border-radius-lg: semantic-tokens.$element-radius-2 !default;
+$border-radius: si-sys-variables.$si-sys-sizing-border-radius-sm !default;
+$border-radius-sm: si-sys-variables.$si-sys-sizing-border-radius-xs !default;
+$border-radius-lg: si-sys-variables.$si-sys-sizing-border-radius-sm !default;
 $border-radius-pill: 50rem !default;
 
 // DEPRECATED: Use $si-sys-color-effects-shadow-20 instead.
@@ -278,7 +278,7 @@ $table-striped-order: odd !default;
 
 $table-group-separator-color: currentColor !default;
 
-$table-caption-color: semantic-tokens.$element-text-secondary !default;
+$table-caption-color: si-sys-variables.$si-sys-color-text-secondary !default;
 
 $table-variants: (
   'success': si-sys-variables.$si-sys-color-background-success-subtle,
@@ -305,9 +305,9 @@ $btn-link-hover-color: $link-hover-color !default;
 $btn-link-disabled-color: si-sys-variables.$si-sys-color-text-disabled !default;
 
 // Allows for customizing button radius independently from global border radius
-$btn-border-radius: semantic-tokens.$element-button-radius !default;
-$btn-border-radius-sm: semantic-tokens.$element-button-radius !default;
-$btn-border-radius-lg: semantic-tokens.$element-button-radius !default;
+$btn-border-radius: si-sys-variables.$si-sys-sizing-border-radius-xs !default;
+$btn-border-radius-sm: si-sys-variables.$si-sys-sizing-border-radius-xs !default;
+$btn-border-radius-lg: si-sys-variables.$si-sys-sizing-border-radius-xs !default;
 
 $btn-transition:
   color 0.15s ease-in-out,
@@ -356,7 +356,7 @@ $input-border-width: $border-width !default;
 // DEPRECATED: There is no replacement.
 $input-box-shadow: $box-shadow-inset !default;
 
-$input-border-radius: semantic-tokens.$element-input-radius !default;
+$input-border-radius: si-sys-variables.$si-sys-sizing-border-radius-xs !default;
 
 $input-focus-bg: $input-bg !default;
 $input-focus-color: $input-color !default;
@@ -464,7 +464,7 @@ $dropdown-font-size: $font-size-base !default;
 $dropdown-line-height: $badge-height;
 $dropdown-color: $body-color !default;
 $dropdown-bg: si-sys-variables.$si-sys-color-background-3 !default;
-$dropdown-border-radius: semantic-tokens.$element-radius-2 !default;
+$dropdown-border-radius: si-sys-variables.$si-sys-sizing-border-radius-sm !default;
 $dropdown-divider-bg: si-sys-variables.$si-sys-color-border-4 !default;
 $dropdown-divider-margin-y: 4px !default;
 $dropdown-box-shadow: si-sys-variables.$si-sys-color-effects-shadow-20 !default;
@@ -497,7 +497,7 @@ $tooltip-font-size: $font-size-base !default;
 $tooltip-max-width: 200px !default;
 $tooltip-color: si-sys-variables.$si-sys-color-text-inverse !default;
 $tooltip-bg: si-sys-variables.$si-sys-color-background-inverse !default;
-$tooltip-border-radius: semantic-tokens.$element-radius-2 !default;
+$tooltip-border-radius: si-sys-variables.$si-sys-sizing-border-radius-sm !default;
 $tooltip-opacity: 0.9 !default;
 $tooltip-padding-y: map.get(spacers.$spacers-block, 4) !default;
 $tooltip-padding-x: map.get(spacers.$spacers-inline, 6) !default;
@@ -672,7 +672,7 @@ $code-color: si-sys-variables.$si-sys-color-text-primary !default;
 $code-background: si-sys-variables.$si-sys-color-background-active !default;
 $code-padding-y: map.get(spacers.$spacers-block, 1) !default;
 $code-padding-x: map.get(spacers.$spacers-inline, 2) !default;
-$code-border-radius: semantic-tokens.$element-radius-1 !default;
+$code-border-radius: si-sys-variables.$si-sys-sizing-border-radius-xs !default;
 
 $kbd-padding-y: 0.2rem !default;
 $kbd-padding-x: 0.4rem !default;
@@ -686,4 +686,4 @@ $pre-padding-y: map.get(spacers.$spacers-block, 4) !default;
 $pre-padding-x: map.get(spacers.$spacers-inline, 4) !default;
 $pre-border-color: si-sys-variables.$si-sys-color-border-4 !default;
 $pre-border-width: $border-width !default;
-$pre-border-radius: semantic-tokens.$element-radius-1 !default;
+$pre-border-radius: si-sys-variables.$si-sys-sizing-border-radius-xs !default;
