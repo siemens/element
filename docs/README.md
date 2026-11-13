@@ -10,10 +10,9 @@ Learn more in the technical documentation [Build with AI](get-started/element-mc
 
 # Siemens Element Design System
 
-Siemens Element is a design system of the smart infrastructure domain
-that implements the Siemens Design Language in Angular. It includes UI
-components, design tools and resources, human interface guidelines, and
-a vibrant community of contributors.
+Siemens Element is a design system that implements the Siemens Design
+Language in Angular. It includes UI components, design tools and resources,
+human interface guidelines, and a vibrant community of contributors.
 
 ![Moodboard components dark](images/mood-components-dark.png)
 
