@@ -15,16 +15,6 @@ $default-chart-padding: 32px;
   flex-direction: column;
 }
 
-:host-context(:dir(rtl)) {
-  --flex-dir1: row-reverse;
-  --flex-dir2: row;
-}
-
-:host-context([dir='rtl']) {
-  --flex-dir1: row-reverse;
-  --flex-dir2: row;
-}
-
 .legend-container {
   display: flex;
   flex-direction: var(--flex-dir1);
@@ -77,8 +67,8 @@ $default-chart-padding: 32px;
 .legend-item-container-right-floating-inner {
   max-width: calc(100% - #{$default-chart-padding});
   min-width: calc(100% - #{$default-chart-padding});
-  padding-right: 12px;
-  float: left;
+  padding-inline-end: 12px;
+  float: inline-start;
 }
 
 .legend-single-axis {
@@ -100,12 +90,12 @@ $default-chart-padding: 32px;
 }
 
 .tooltip-arrow {
-  left: 12px;
+  inset-inline-start: 12px;
 }
 
 .legend-item {
   cursor: pointer;
-  margin-right: 12px;
+  margin-inline-end: 12px;
   display: flex;
   flex-direction: var(--flex-dir1);
   align-items: center;
@@ -121,9 +111,13 @@ $default-chart-padding: 32px;
   }
 }
 
+// icon and text of a legend item keep their LTR order
+:host-context([dir='rtl']) .legend-item {
+  flex-direction: row-reverse;
+}
+
 .legend-item-right {
-  margin-right: 0;
-  margin-left: 12px;
+  margin-inline: 12px 0;
 }
 
 .left-legend-circle {
@@ -131,7 +125,6 @@ $default-chart-padding: 32px;
 }
 
 .right-legend-circle {
-  margin-right: 0;
   margin-left: 8px;
 }
 
@@ -167,24 +160,23 @@ $default-chart-padding: 32px;
 .both-scenario-legend-container {
   max-width: calc(100% - #{$default-chart-padding});
   min-width: calc(100% - #{$default-chart-padding});
-  padding-left: 12px;
+  padding-inline-start: 12px;
 }
 
 .right-unit-text {
   min-width: 100%;
   min-height: 100%;
-  padding-left: 2px;
+  padding-inline-start: 2px;
 }
 
 .left-legends {
-  padding-right: 36px;
+  padding-inline-end: 36px;
 }
 
 .right-legends {
-  padding-left: 28px;
+  padding-inline-start: 28px;
 }
 
 .both-legend-container {
-  padding-right: 0;
-  padding-left: 0;
+  padding-inline: 0;
 }
