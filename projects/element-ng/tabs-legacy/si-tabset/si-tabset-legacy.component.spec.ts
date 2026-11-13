@@ -5,6 +5,7 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { userEvent } from 'vitest/browser';
 
 import { SiTabsLegacyModule } from '../si-tabs-legacy.module';
 import { SiTabsetLegacyComponent } from './si-tabset-legacy.component';
@@ -66,18 +67,6 @@ describe('SiTabset', () => {
     fixture.nativeElement.querySelector(
       `.tab-container-buttonbar-list > button:nth-child(${index + 1}`
     );
-
-  const focusNext = (): void => {
-    document.activeElement?.dispatchEvent(
-      new KeyboardEvent('keydown', { code: 'ArrowRight', key: 'ArrowRight' })
-    );
-  };
-
-  const focusPrevious = (): void => {
-    document.activeElement?.dispatchEvent(
-      new KeyboardEvent('keydown', { code: 'ArrowLeft', key: 'ArrowLeft' })
-    );
-  };
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
@@ -197,39 +186,38 @@ describe('SiTabset', () => {
     expect(preventDefault).toHaveBeenCalledTimes(3);
   });
 
-  it.skipIf(!document.hasFocus())('should handle focus correctly', async () => {
+  it('should handle focus correctly', async () => {
     testComponent.tabs = ['1', '2', '3'];
     fixture.detectChanges();
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
     getElement(0).focus();
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
-    expect(getElement(0).getAttribute('tabindex')).toEqual('-1');
-    focusNext();
-    expect(document.activeElement).toBe(getElement(1));
-    focusPrevious();
-    expect(document.activeElement).toBe(getElement(0));
+    expect(getElement(0)).toHaveAttribute('tabindex', '-1');
+    await userEvent.keyboard('{ArrowRight}');
+    expect(getElement(1)).toHaveFocus();
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(getElement(0)).toHaveFocus();
   });
 
-  it.skipIf(!document.hasFocus())(
-    'should restore focus to active element when blurred',
-    async () => {
-      testComponent.tabs = ['1', '2'];
-      fixture.detectChanges();
-      await fixture.whenStable();
-      getElement(0).focus();
-      vi.advanceTimersByTime(500);
-      await fixture.whenStable();
-      focusNext();
-      vi.advanceTimersByTime(500);
-      await fixture.whenStable();
-      expect(document.activeElement).toBe(getElement(1));
-      (document.activeElement! as HTMLElement).blur();
-      vi.advanceTimersByTime(500);
-      await fixture.whenStable();
-
-      expect(getElement(0).getAttribute('tabindex')).toBe('0');
-    }
-  );
+  it('should restore focus to active element when blurred', async () => {
+    testComponent.tabs = ['1', '2'];
+    fixture.detectChanges();
+    vi.advanceTimersByTime(1000);
+    await fixture.whenStable();
+    getElement(0).focus();
+    vi.advanceTimersByTime(500);
+    await fixture.whenStable();
+    await userEvent.keyboard('{ArrowRight}');
+    vi.advanceTimersByTime(500);
+    await fixture.whenStable();
+    expect(getElement(1)).toHaveFocus();
+    await userEvent.tab();
+    vi.advanceTimersByTime(500);
+    await fixture.whenStable();
+    expect(getElement(0)).toHaveAttribute('tabindex', '0');
+  });
 
   it('should use defined tabButtonMaxWidth value', async () => {
     testComponent.tabButtonMaxWidth.set(110);
@@ -270,12 +258,12 @@ describe('SiTabset', () => {
     await fixture.whenStable();
 
     expect(closeSpy).toHaveBeenCalledWith(expect.objectContaining({ heading: '3' }));
-    expect(getElement(2)).toBe(document.activeElement);
+    expect(getElement(2)).toHaveFocus();
 
-    focusPrevious();
+    await userEvent.keyboard('{ArrowLeft}');
     vi.advanceTimersByTime(500);
     await fixture.whenStable();
-    expect(getElement(1)).toBe(document.activeElement);
+    expect(getElement(1)).toHaveFocus();
   });
 
   it('should emit tab close event for closable tab and select next tab as active', async () => {
@@ -291,11 +279,11 @@ describe('SiTabset', () => {
     vi.advanceTimersByTime(500);
     await fixture.whenStable();
     expect(closeSpy).toHaveBeenCalledWith(expect.objectContaining({ heading: '3' }));
-    expect(getElement(2)).toBe(document.activeElement);
-    focusPrevious();
+    expect(getElement(2)).toHaveFocus();
+    await userEvent.keyboard('{ArrowLeft}');
     vi.advanceTimersByTime(500);
     await fixture.whenStable();
-    expect(getElement(1)).toBe(document.activeElement);
+    expect(getElement(1)).toHaveFocus();
   });
 
   it('should not display close icon for non closable tab', () => {

@@ -77,6 +77,8 @@ describe('SiFormFieldComponent', () => {
 
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
+    // Bind inputs before the next frame, or the date input's validity animation throws NG0950.
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 
