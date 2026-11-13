@@ -94,6 +94,11 @@
   justify-content: space-between;
 }
 
+.header-title-container,
+.header-title {
+  min-inline-size: 0;
+}
+
 .header-title {
   margin-inline-start: map.get(all-variables.$spacers, 6);
 }
