@@ -5,7 +5,7 @@
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { inputBinding, outputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { page } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
 import { SiLaunchpadHarness } from '../testing/si-launchpad.harness';
@@ -47,13 +47,14 @@ describe('SiLaunchpad', () => {
       { name: 'App', systemName: longSystemName, href: '/system' }
     ]);
     await fixture.whenStable();
-    const nameLink = page.getByRole('link', { name: `${longName} System`, exact: true }).element();
-    const systemLink = page
-      .getByRole('link', { name: `App ${longSystemName}`, exact: true })
-      .element();
+    const nameLink = page.getByRole('link', { name: `${longName} System`, exact: true });
+    const systemLink = page.getByRole('link', { name: `App ${longSystemName}`, exact: true });
 
-    nameLink.focus();
-    await fixture.whenStable();
+    // The tooltip requires :focus-visible, which programmatic focus only gets after keyboard input.
+    // Focus links explicitly afterwards, so the test does not depend on the document tab order.
+    await userEvent.tab();
+    nameLink.element().focus();
+    await expect.element(nameLink).toHaveFocus();
 
     await expect
       .element(page.getByRole('tooltip').getByText(longName, { exact: true }))
@@ -62,8 +63,8 @@ describe('SiLaunchpad', () => {
       .element(page.getByRole('tooltip').getByText('System', { exact: true }))
       .toBeVisible();
 
-    systemLink.focus();
-    await fixture.whenStable();
+    systemLink.element().focus();
+    await expect.element(systemLink).toHaveFocus();
 
     await expect.element(page.getByRole('tooltip').getByText('App', { exact: true })).toBeVisible();
     await expect
@@ -74,10 +75,12 @@ describe('SiLaunchpad', () => {
   it('does not show a tooltip on focus when both labels fit', async () => {
     apps.set([{ name: 'App', systemName: 'System', href: '/app' }]);
     await fixture.whenStable();
-    const link = page.getByRole('link', { name: 'App System', exact: true }).element();
+    const link = page.getByRole('link', { name: 'App System', exact: true });
 
-    link.focus();
-    await fixture.whenStable();
+    // Keyboard input makes :focus-visible match, so the absence of a tooltip is meaningful.
+    await userEvent.tab();
+    link.element().focus();
+    await expect.element(link).toHaveFocus();
 
     await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
   });
