@@ -177,7 +177,7 @@
     "rimraf": "6.1.4",
     "semantic-release": "25.0.9",
     "semver": "7.8.6",
-    "stylelint": "17.16.0",
+    "stylelint": "18.0.0",
     "stylelint-scss": "7.4.0",
     "tsx": "4.23.15",
     "typescript": "6.0.3",
