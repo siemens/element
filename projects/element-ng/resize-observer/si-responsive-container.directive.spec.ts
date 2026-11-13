@@ -2,28 +2,18 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { resetViewport } from '@siemens/element-ng/test-helpers';
 import { page } from 'vitest/browser';
 
 import { SiResponsiveContainerDirective } from './index';
 
 @Component({
   imports: [SiResponsiveContainerDirective],
-  template: `
-    <div
-      siResponsiveContainer
-      class="vh-100 w-100"
-      [resizeThrottle]="10"
-      [style.width.px]="width()"
-    >
-      Testli
-    </div>
-  `
+  template: ` <div siResponsiveContainer class="vh-100 w-100" [resizeThrottle]="10">Testli</div> `
 })
-class TestHostComponent {
-  readonly width = signal(100);
-}
+class TestHostComponent {}
 
 describe('SiResponsiveContainerDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
@@ -35,7 +25,10 @@ describe('SiResponsiveContainerDirective', () => {
     element = fixture.nativeElement;
   });
 
-  afterEach(() => vi.useRealTimers());
+  afterEach(async () => {
+    vi.useRealTimers();
+    await resetViewport();
+  });
 
   const testSize = async (size: string | number, clazz: string | number): Promise<void> => {
     vi.useFakeTimers();
