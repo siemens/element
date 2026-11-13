@@ -1,0 +1,21 @@
+- table:
+  - rowgroup:
+    - row "Name Role Company":
+      - columnheader "Name"
+      - columnheader "Role"
+      - columnheader "Company"
+  - rowgroup:
+    - row:
+      - cell:
+        - alert:
+          - text: Failed to load users
+          - paragraph: The server encountered an unexpected problem. Try again later.
+          - button "Retry"
+- text: Settings Simulated server response
+- combobox "Simulated server response":
+  - option /\d+ OK/
+  - option "Network error"
+  - option /\d+ Unauthorized/
+  - option /\d+ Forbidden/
+  - option /\d+ Internal Server Error/ [selected]
+  - option /\d+ Gateway Timeout/
