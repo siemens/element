@@ -89,7 +89,7 @@ $thumb-handle-size: calc($thumb-size + 2 * #{map.get(variables.$spacers-block, 4
   .track {
     position: absolute;
     inset-block-start: 50%;
-    border-radius: variables.$element-radius-1;
+    border-radius: variables.$si-sys-sizing-border-radius-xs;
     margin-block-start: calc($track-height / -2);
     block-size: $track-height;
     inline-size: 100%;

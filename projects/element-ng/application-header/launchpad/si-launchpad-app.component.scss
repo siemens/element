@@ -12,7 +12,7 @@
   max-inline-size: calc(7rem + 2 * map.get(variables.$spacers-inline, 7));
   padding-inline: map.get(variables.$spacers-inline, 4);
   color: variables.$si-sys-color-text-primary;
-  border-radius: variables.$element-radius-2;
+  border-radius: variables.$si-sys-sizing-border-radius-sm;
 
   &.action {
     color: variables.$si-sys-color-text-accent;
@@ -48,7 +48,7 @@
   inline-size: 3rem;
   block-size: 3rem;
   margin-block-end: map.get(variables.$spacers-block, 4);
-  border-radius: variables.$element-radius-2;
+  border-radius: variables.$si-sys-sizing-border-radius-sm;
 
   &:is(si-icon) {
     background: variables.$element-launchpad-app-background;
