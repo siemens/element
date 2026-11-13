@@ -83,6 +83,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     readonly placeholder: _angular_core.InputSignal<string>;
     readonly scrollStrategy: _angular_core.InputSignal<() => _angular_cdk_overlay.ScrollStrategy>;
     readonly searchCriteria: _angular_core.ModelSignal<SearchCriteria>;
+    readonly searchCriteriaClear: _angular_core.OutputEmitterRef<void>;
+    readonly searchCriteriaSubmit: _angular_core.OutputEmitterRef<SearchCriteria>;
     readonly searchDebounceTime: _angular_core.InputSignal<number>;
     readonly searchForFreeTextLabel: _angular_core.InputSignal<TranslatableString>;
     readonly searchLabel: _angular_core.InputSignal<TranslatableString>;
