@@ -28,7 +28,7 @@ button.loading {
 
 .spinner-wrapper {
   --loading-spinner-size: 24px;
-  --loading-spinner-color: #{variables.$element-ui-6};
+  --loading-spinner-color: #{variables.$si-sys-color-text-on-accent};
   position: absolute;
   inset: 0;
 }

@@ -15,7 +15,7 @@ import { createPart, type Part } from 'ag-grid-community';
 export const elementRadioStyle: Part = createPart({
   css: `
   .ag-radio-button-input-wrapper {
-  background-color: var(--element-ui-5);
+  background-color: var(--si-sys-color-background-1);
   border: 1px solid var(--si-sys-color-border-1);
 }
 
@@ -26,7 +26,7 @@ export const elementRadioStyle: Part = createPart({
 
 .ag-radio-button-input-wrapper.ag-checked {
   border-color: var(--si-sys-color-border-accent);
-  background-color: var(--element-ui-5);
+  background-color: var(--si-sys-color-background-1);
 }
 
 .ag-radio-button-input-wrapper.ag-checked::after {
@@ -46,7 +46,7 @@ export const elementRadioStyle: Part = createPart({
 
 .ag-radio-button-input-wrapper.ag-disabled {
   border-color: var(--si-sys-color-border-3);
-  background-color: var(--element-ui-5);
+  background-color: var(--si-sys-color-background-1);
   opacity: 1;
 }
 
