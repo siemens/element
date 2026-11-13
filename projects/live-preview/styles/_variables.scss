@@ -18,10 +18,10 @@ $live-preview-button-background-color: variables.$si-sys-color-background-accent
 
 $live-preview-control-fill-color: variables.$si-sys-color-text-primary;
 
-$live-preview-focus-outline: var(--element-button-focus-width, 2px) solid
+$live-preview-focus-outline: var(--si-sys-sizing-focus-ring-width, 2px) solid
   variables.$si-sys-color-effects-focus;
-$live-preview-focus-outline-offset: var(--element-button-focus-overlay-width, 1px);
-$live-preview-focus-outline-inside-offset: calc(-1 * var(--element-button-focus-width, 2px));
+$live-preview-focus-outline-offset: var(--si-sys-sizing-focus-ring-offset, 1px);
+$live-preview-focus-outline-inside-offset: calc(-1 * var(--si-sys-sizing-focus-ring-width, 2px));
 $live-preview-font-color: variables.$si-sys-color-text-primary;
 
 $live-preview-link-color: variables.$si-sys-color-text-accent;
