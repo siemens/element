@@ -1729,24 +1729,21 @@ describe('SiFilteredSearchComponent', () => {
   });
 
   describe('with Keyboard interaction workflows', () => {
-    it.skipIf(!document.hasFocus())(
-      'should focus out of criterion after keyboard Enter (criterion value)',
-      async () => {
-        component.searchCriteria.set({
-          criteria: [{ name: 'location', value: 'Munich' }],
-          value: 'Max'
-        });
+    it('should focus out of criterion after keyboard Enter (criterion value)', async () => {
+      component.searchCriteria.set({
+        criteria: [{ name: 'location', value: 'Munich' }],
+        value: 'Max'
+      });
 
-        const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-        const criteria = await filteredSearch.getCriteria();
-        const criteriaValue = await criteria[0].value();
-        await criteriaValue?.click();
-        await criteriaValue?.sendKeys(TestKey.ENTER);
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const criteria = await filteredSearch.getCriteria();
+      const criteriaValue = await criteria[0].value();
+      await criteriaValue?.click();
+      await criteriaValue?.sendKeys(TestKey.ENTER);
 
-        const input = fixture.nativeElement.querySelector('input.value-input:focus');
-        expect(input).toBeTruthy();
-      }
-    );
+      const input = fixture.nativeElement.querySelector('input.value-input:focus');
+      expect(input).toBeTruthy();
+    });
 
     it('should focus out of criterion after keyboard semicolon (criterion value)', async () => {
       component.searchCriteria.set({
