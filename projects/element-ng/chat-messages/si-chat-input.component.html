@@ -33,6 +33,9 @@
     <label class="form-label d-none" [for]="id">{{ label() | translate }}</label>
     <textarea
       #textInput
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="8"
       class="chat-textarea w-100 border-0"
       rows="1"
       [id]="id"
@@ -41,7 +44,6 @@
       [maxlength]="maxLength() || null"
       [(ngModel)]="value"
       (keydown)="onKeyDown($event)"
-      (input)="adjustTextareaHeight($event)"
     ></textarea>
   </div>
 
