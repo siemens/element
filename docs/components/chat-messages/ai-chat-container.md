@@ -1,19 +1,21 @@
-# AI chat
+# AI chat container
 
-AI chat enables users to interact with the product using natural language.
-It supports tasks that benefit from suggestions, step-by-step help, or open-ended input.
+The **AI chat container** is the frame for any conversation with AI.
+It manages the message area, the input, and the states around them.
 
 ## Usage ---
 
-AI chat is useful when users describe tasks in their own words and expect structured responses or guidance.
+The AI chat container arranges the [chat input](../chat-messages/chat-input.md), [chat messages](../chat-messages/), and [AI welcome screen](../chat-messages/ai-welcome-screen.md) into a single
+conversational space and handles the logic that connects them.
 
 ![AI chat](images/ai-chat.png)
 
 ### When to use
 
+- For AI features where users describe tasks in their own words and expect structured responses or guidance.
 - For tasks that are complex, open-ended, or benefit from iteration.
-- When natural language input improves user experience.
-- When users need help without navigating multiple UI elements.
+- When natural language input improves the experience compared
+  to navigating multiple UI elements.
 
 ### Best practices
 
@@ -32,7 +34,7 @@ AI chat is useful when users describe tasks in their own words and expect struct
 
 1. [Chat input](../../components/chat-messages/chat-input.md)
 2. [Chat message - AI](../../components/chat-messages/chat-message.md)
-3. [Chat message- User](../../components/chat-messages/chat-message.md)
+3. [Chat message - User](../../components/chat-messages/chat-message.md)
 
 ### Layouts
 
@@ -60,20 +62,6 @@ In this case, the AI appears as an on-demand assistant without disrupting the wo
 
 ![AI chat in side panel](images/ai-chat-side-panel.png)
 
-### Initial screen
-
-Before the first message, show an initial screen to set expectations and explain what the AI can do.
-As soon as the user prompts a message, the initial screen should disappear.
-
-![AI initial screen](images/ai-initial-screen.png)
-
-1. AI icon
-1. Salutation: A brief, welcoming message that sets a conversational tone.
-1. Prompt categories (optional): When suggestions exceed a manageable number, group them by topic or function using
-   [summary chips](../../components/status-notifications/summary-chip.md)
-1. Prompt suggestions (optional): Curated prompts or example questions that reflect common or relevant actions.
-1. [Chat input](../../components/chat-messages/chat-input.md)
-
 ### Errors and AI limitations
 
 System errors, such as timeouts or backend crashes, occur outside the AI’s reasoning.
@@ -98,29 +86,3 @@ and clear them as soon as the user sends a new message.
 > 1. Follow-up prompts
 
 ## Code ---
-
-Use the chat container with the chat messages to build chat message interfaces.
-
-The **si-chat-container** component is a wrapper component, it has slots for
-[chat messages](../../components/chat-messages/chat-message.md) and a
-[chat input](../../components/chat-messages/chat-input.md).
-
-The slots are:
-
-- default -> chat messages or initial screen (`si-welcome-screen`)
-- `si-chat-input/siChatContainerInput (helper directive)` -> For the input (whether default or custom).
-- `si-inline-notification` -> Slotted above the input for displaying the status.
-
-<si-docs-component example="si-chat-messages/si-chat-container" height="600"></si-docs-component>
-
-<si-docs-api component="SiChatContainerComponent"></si-docs-api>
-
-### Initial Screen
-
-When initially displaying a chat interface use the initial **si-welcome-screen** component that displays when there are no messages. It can be slotted into the **si-chat-container** component. It accepts prompt suggestions as an input.
-
-<si-docs-component example="si-chat-messages/si-ai-welcome-screen" height="600"></si-docs-component>
-
-<si-docs-api component="SiAiWelcomeScreenComponent"></si-docs-api>
-
-<si-docs-types></si-docs-types>

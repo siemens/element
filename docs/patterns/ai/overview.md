@@ -7,6 +7,8 @@ AI interactions define how users experience AI-driven features in the product.
 AI features can appear as prompts, embedded actions, or automated suggestions triggered by user behavior.
 This section explains how to represent AI visually and functionally.
 
+For conversational experiences, use the [AI chat container](../../components/chat-messages/ai-chat-container.md).
+
 ![AI interactions](images/ai.png)
 
 ### Best practices

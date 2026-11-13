@@ -15,7 +15,7 @@ Selecting a chip opens a popover with the source entry and a short excerpt.
 
 ### When to use
 
-- In [AI answers](../../patterns/ai/ai-chat.md), research summaries, or
+- In [AI answers](ai-chat-container.md), research summaries, or
   any content grounded in documents or external data.
 
 ## Design ---

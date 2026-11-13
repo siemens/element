@@ -171,6 +171,9 @@ nav:
       - Activity message:                 'components/chat-messages/activity-message.md'
       - Markdown:                         'components/chat-messages/markdown.md'
       - Source chips:                     'components/chat-messages/source-chips.md'
+      - AI welcome screen:                'components/chat-messages/ai-welcome-screen.md'
+      - AI chat container:                'components/chat-messages/ai-chat-container.md'
+
     - Charts:
       - Overview:                         'components/charts/index.md'
       - Bar chart:                        'components/charts/bar-chart.md'
@@ -202,7 +205,6 @@ nav:
     - HTTP error pages:                   'patterns/http-error-pages.md'
     - AI:
       - Overview:                         'patterns/ai/overview.md'
-      - AI chat:                          'patterns/ai/ai-chat.md'
       - AI chat history:                  'patterns/ai/ai-chat-history.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
