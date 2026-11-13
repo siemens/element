@@ -114,6 +114,11 @@
       matchPackageNames: ["ol", "ol-ext", "ol-mapbox-style", "@types/geojson"]
     },
     {
+      description: ["Disable updates for Vitest and its packages"],
+      matchPackageNames: ["vitest", "@vitest/**"],
+      enabled: false
+    },
+    {
       groupName: "E2E dependencies",
       description: ["Update E2E packages"],
       matchPackageNames: [
