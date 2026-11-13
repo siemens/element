@@ -265,7 +265,7 @@ $icon-terrain: url('@siemens/element-icons/icons/element-waters.svg');
 
     &:disabled {
       cursor: not-allowed;
-      opacity: variables.$element-action-disabled-opacity;
+      opacity: variables.$si-sys-color-effects-disable-opacity;
     }
 
     &:not(:disabled) {

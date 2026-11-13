@@ -1,5 +1,4 @@
 @use '../variables/focus';
-@use '../variables/semantic-tokens';
 @use '../variables/spacers';
 @use '../variables/si-sys-variables';
 @use '../variables/typography';
@@ -81,7 +80,7 @@
   }
 
   &[inert] {
-    opacity: semantic-tokens.$element-action-disabled-opacity;
+    opacity: si-sys-variables.$si-sys-color-effects-disable-opacity;
   }
 
   // Selection buttons
