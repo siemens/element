@@ -30,7 +30,7 @@ $toast-timer-height: 2px;
   align-items: flex-start;
   color: all-variables.$si-sys-color-text-primary;
   background: all-variables.$si-sys-color-background-3;
-  border-radius: all-variables.$element-radius-2;
+  border-radius: all-variables.$si-sys-sizing-border-radius-sm;
   padding-inline: map.get(all-variables.$spacers-inline, 5) $toast-padding-inline;
   padding-block: $toast-padding-block;
   margin-block-end: $toast-window-margin-block;

@@ -10,7 +10,7 @@
   padding-inline: map.get(variables.$spacers-inline, 4);
   color: variables.$si-sys-color-text-inverse;
   background-color: variables.$si-sys-color-background-inverse;
-  border-radius: variables.$element-radius-1;
+  border-radius: variables.$si-sys-sizing-border-radius-xs;
 
   &::before {
     content: '';
