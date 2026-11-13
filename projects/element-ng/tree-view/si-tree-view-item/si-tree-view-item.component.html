@@ -21,57 +21,49 @@
           [ngTemplateOutlet]="toggleTemplate"
           [ngTemplateOutletContext]="{
             biggerPaddingStart: negativeBiggerPaddingStart,
-            paddingStart: paddingStart,
-            toggleIcon: 'si-tree-view-item-dropdown-caret'
+            paddingStart: paddingStart
           }"
         />
       }
       <ng-container [ngTemplateOutlet]="checkboxOrOption" />
 
-      <div class="si-tree-view-item-main d-flex flex-grow-1 align-self-stretch">
-        @if (showIcon()) {
-          <div class="si-tree-stretch-center">
-            <si-icon class="si-tree-view-item-icon" [icon]="treeItem.icon!" />
+      @if (showIcon()) {
+        <si-icon class="si-tree-view-item-icon" [icon]="treeItem.icon!" />
+      }
+      <div class="si-tree-view-item-object-data overflow-hidden">
+        @if (!templates().length) {
+          <ng-content select=":not(si-tree-view-item):not([dragPreview])"
+            ><div class="text-truncate" [class.si-h5]="enableSelection() && treeItem.selected">{{
+              treeItem.label | translate
+            }}</div></ng-content
+          >
+        } @else {
+          <div>
+            <ng-container
+              *ngTemplateOutlet="renderMatchingTemplate(treeItem); context: { $implicit: treeItem }"
+            />
           </div>
         }
-        <div
-          class="si-tree-view-item-object-data d-flex flex-column justify-content-center overflow-hidden"
-        >
-          @if (!templates().length) {
-            <ng-content select=":not(si-tree-view-item):not([dragPreview])"
-              ><div class="text-truncate" [class.si-h5]="enableSelection() && treeItem.selected">{{
-                treeItem.label | translate
-              }}</div></ng-content
-            >
-          } @else {
-            <div>
-              <ng-container
-                *ngTemplateOutlet="
-                  renderMatchingTemplate(treeItem);
-                  context: { $implicit: treeItem }
-                "
-              />
-            </div>
-          }
-          @if (enableDataField1() && treeItem.dataField1) {
-            <p class="si-tree-view-item-object-data-field-1 text-truncate">{{
-              treeItem.dataField1 | translate
-            }}</p>
-          }
-          @if (enableDataField2() && treeItem.dataField2) {
-            <p class="si-tree-view-item-object-data-field-2 text-truncate">{{
-              treeItem.dataField2 | translate
-            }}</p>
-          }
-        </div>
-        @if (treeItem.badge) {
-          <span class="badge flex-shrink-0" [class]="`bg-${treeItem.badgeColor || 'default'}`">{{
-            treeItem.badge
-          }}</span>
+        @if (enableDataField1() && treeItem.dataField1) {
+          <p class="si-tree-view-item-object-data-field-1 text-truncate">{{
+            treeItem.dataField1 | translate
+          }}</p>
+        }
+        @if (enableDataField2() && treeItem.dataField2) {
+          <p class="si-tree-view-item-object-data-field-2 text-truncate">{{
+            treeItem.dataField2 | translate
+          }}</p>
         }
       </div>
+      @if (treeItem.badge) {
+        <span
+          class="si-tree-view-item-badge badge"
+          [class]="`bg-${treeItem.badgeColor || 'default'}`"
+          >{{ treeItem.badge }}</span
+        >
+      }
       <div
-        class="si-tree-view-item-end-icons d-flex ms-2 align-items-center"
+        class="si-tree-view-item-end-icons ms-2"
         [class.si-tree-view-item-end-icons-sticky]="stickyEndItems()"
       >
         @if (showStateIndicator() && getStateIndicatorColor()) {
@@ -84,29 +76,24 @@
           ></div>
         }
         @if (isContextMenuButtonVisible()) {
-          <div class="si-tree-stretch-center si-tree-context-menu-btn">
-            <div
-              #menuTrigger="cdkMenuTriggerFor"
-              tabindex="-1"
-              aria-hidden="true"
-              [cdkMenuTriggerFor]="contextMenu"
-              (cdkMenuOpened)="onToggleContextMenuOpen()"
-              (cdkMenuClosed)="onToggleContextMenuClose()"
-              (click)="$event.stopPropagation()"
-            >
-              <i
-                aria-hidden="true"
-                class="si-tree-view-item-icon si-tree-view-menu-btn"
-                [class]="icons().itemMenu"
-              ></i>
-            </div>
+          <div
+            #menuTrigger="cdkMenuTriggerFor"
+            class="si-tree-context-menu-btn"
+            tabindex="-1"
+            aria-hidden="true"
+            [cdkMenuTriggerFor]="contextMenu"
+            (cdkMenuOpened)="onToggleContextMenuOpen()"
+            (cdkMenuClosed)="onToggleContextMenuClose()"
+            (click)="$event.stopPropagation()"
+          >
+            <i aria-hidden="true" class="si-tree-view-item-icon" [class]="icons().itemMenu"></i>
           </div>
         }
         @if (showFolderStateEnd) {
           <ng-container
             [ngTemplateOutlet]="treeItem.state === 'leaf' ? spacerTemplate : toggleTemplate"
             [ngTemplateOutletContext]="{
-              toggleIcon: 'si-tree-view-item-icon',
+              spaced: true,
               positionEnd: true
             }"
           />
@@ -121,7 +108,7 @@
         <ng-container
           [ngTemplateOutlet]="toggleTemplate"
           [ngTemplateOutletContext]="{
-            toggleIcon: 'si-tree-view-item-icon'
+            spaced: true
           }"
         />
       }
@@ -130,12 +117,13 @@
         [ngTemplateOutletContext]="{ classNames: 'form-check mb-2' }"
       />
 
-      <p class="mb-0">{{ treeItem.label | translate }}</p>
+      <p class="si-tree-view-item-group-label mb-0">{{ treeItem.label | translate }}</p>
       @if (showFolderStateEnd) {
         <ng-container
           [ngTemplateOutlet]="toggleTemplate"
           [ngTemplateOutletContext]="{
-            toggleIcon: 'si-tree-view-item-icon'
+            spaced: true,
+            positionEnd: true
           }"
         />
       }
@@ -168,32 +156,38 @@
   #toggleTemplate
   let-biggerPaddingStart="biggerPaddingStart"
   let-paddingStart="paddingStart"
-  let-toggleIcon="toggleIcon"
+  let-spaced="spaced"
   let-positionEnd="positionEnd"
 >
   @let folderStateClass = getItemFolderStateClass();
-  <a
-    class="si-tree-stretch-center si-tree-view-item-toggle"
-    tabindex="-1"
-    [class.si-tree-view-item-toggle-end]="positionEnd"
-    [class.disabled]="!folderStateClass"
-    [style.margin-inline-start]="biggerPaddingStart"
-    [style.padding-inline-start]="paddingStart"
-    (click)="onItemFolderClicked(); $event.stopPropagation()"
-  >
-    @if (isExpanding) {
-      <si-loading-spinner />
-    } @else {
-      <i aria-hidden="true" [class]="`${toggleIcon} ${folderStateClass}`"></i>
-    }
-  </a>
+  @if (isExpanding) {
+    <si-loading-spinner
+      class="si-tree-view-item-toggle"
+      [class.si-tree-view-item-icon]="spaced"
+      [class.si-tree-view-item-toggle-end]="positionEnd"
+      [style.margin-inline-start]="biggerPaddingStart"
+      [style.padding-inline-start]="paddingStart"
+      (click)="onItemFolderClicked(); $event.stopPropagation()"
+    />
+  } @else {
+    <i
+      aria-hidden="true"
+      class="si-tree-view-item-toggle"
+      [class]="folderStateClass"
+      [class.si-tree-view-item-icon]="spaced"
+      [class.si-tree-view-item-toggle-end]="positionEnd"
+      [class.disabled]="!folderStateClass"
+      [style.margin-inline-start]="biggerPaddingStart"
+      [style.padding-inline-start]="paddingStart"
+      (click)="onItemFolderClicked(); $event.stopPropagation()"
+    ></i>
+  }
 </ng-template>
 
 <ng-template #spacerTemplate let-positionEnd="positionEnd">
-  <div
-    class="si-tree-stretch-center si-tree-view-item-toggle"
+  <i
+    aria-hidden="true"
+    class="si-tree-view-item-toggle si-tree-view-item-icon si-tree-view-item-icon-spacer"
     [class.si-tree-view-item-toggle-end]="positionEnd"
-  >
-    <i aria-hidden="true" class="si-tree-view-item-icon si-tree-view-item-icon-spacer"></i>
-  </div>
+  ></i>
 </ng-template>

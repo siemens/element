@@ -74,18 +74,6 @@
       cursor: default;
       background-color: unset;
     }
-
-    .si-tree-view-item-dropdown-caret {
-      cursor: pointer;
-    }
-
-    .si-tree-view-item-toggle-end {
-      cursor: pointer;
-
-      .si-tree-view-item-icon {
-        color: variables.$si-sys-color-text-primary;
-      }
-    }
   }
 
   .si-tree-view-item-end-icons {
@@ -94,38 +82,30 @@
 }
 
 %si-tree-view-item-all {
-  display: flex;
+  display: grid;
   align-items: center;
 }
 
-.si-tree-stretch-center {
-  align-self: stretch;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  text-decoration: none;
-}
-
-a.si-tree-view-item-toggle,
-.si-tree-context-menu-btn > div[role='button'] {
-  cursor: pointer;
-}
-
-.si-tree-view-item-toggle.disabled .si-tree-view-item-icon {
+.si-tree-view-item-toggle.disabled.si-tree-view-item-icon {
   inline-size: map.get(variables.$spacers-inline, 8);
 }
 
-.si-tree-stretch-center + .si-tree-view-item-toggle-end .si-tree-view-item-icon {
+.si-tree-context-menu-btn ~ .si-tree-view-item-toggle-end.si-tree-view-item-icon {
   margin-inline-start: map.get(variables.$negative-spacers-inline, 2);
 }
 
+.si-tree-view-item-icon,
+.si-tree-view-item-toggle {
+  color: variables.$si-sys-color-text-primary;
+  font-size: var(--si-tree-view-icon-size);
+}
+
 .si-tree-view-item-icon {
+  grid-area: icon;
   padding-inline-end: map.get(variables.$spacers-inline, 2);
 
   &.si-tree-view-item-icon-spacer {
-    box-sizing: content-box;
-    inline-size: var(--si-tree-view-icon-size);
+    cursor: inherit;
   }
 }
 
@@ -137,7 +117,9 @@ a.si-tree-view-item-toggle,
 
 .si-tree-view-item {
   @extend %si-tree-view-item-all;
-  justify-content: space-between;
+
+  grid-template-areas: 'toggle checkbox icon content badge . actions actions actions';
+  grid-template-columns: 0 auto auto minmax(0, max-content) auto minmax(0, 1fr) auto auto auto;
 
   min-block-size: var(--si-tree-view-item-min-height);
   padding-inline: var(--si-tree-view-padding-base-horizontal)
@@ -149,6 +131,7 @@ a.si-tree-view-item-toggle,
 }
 
 .si-tree-view-state-indicator {
+  grid-area: indicator;
   margin-block: 0;
   margin-inline: calc(var(--si-tree-view-padding-base-horizontal) * 0.75);
   min-inline-size: 0.375rem;
@@ -163,32 +146,23 @@ a.si-tree-view-item-toggle,
 .si-tree-view-item-group {
   @extend %si-tree-view-item-all;
 
+  grid-template-areas: 'toggle checkbox content toggle-end';
+  grid-template-columns: auto auto minmax(0, max-content) auto;
+  justify-content: start;
+
   padding-block: calc(2 * var(--si-tree-view-padding-base-vertical));
 
   padding-inline: calc(var(--si-tree-view-padding-base-horizontal) / 2);
   cursor: default;
-
-  .si-tree-view-item-dropdown-caret:hover,
-  .si-tree-view-item-icon:hover {
-    cursor: pointer;
-  }
 }
 
-.si-tree-view-item-dropdown-caret,
-.si-tree-view-item-dropdown-caret:hover,
-.si-tree-view-item-icon,
-.si-tree-view-item-icon:hover {
-  color: variables.$si-sys-color-text-primary;
-  text-decoration: none;
-  font-size: var(--si-tree-view-icon-size);
+.si-tree-view-item-object-data,
+.si-tree-view-item-group-label {
+  grid-area: content;
 }
 
-.si-tree-view-item-main {
-  overflow-x: hidden;
-
-  > .badge {
-    margin-block: auto;
-  }
+.si-tree-view-item-badge {
+  grid-area: badge;
 }
 
 .si-tree-view-item-object-data {
@@ -212,11 +186,12 @@ a.si-tree-view-item-toggle,
   }
 }
 
-.si-tree-view-menu-btn {
-  pointer-events: none;
-}
-
 .si-tree-view-item-end-icons {
+  @extend %si-tree-view-item-all;
+
+  grid-area: actions;
+  grid-template-columns: subgrid;
+  grid-template-areas: 'indicator menu toggle-end';
   block-size: calc(
     var(--si-tree-view-item-min-height) - 2 *
       (variables.$si-sys-sizing-focus-ring-width + variables.$si-sys-sizing-focus-ring-offset)
@@ -228,7 +203,32 @@ a.si-tree-view-item-toggle,
   }
 }
 
+.si-tree-view-item-toggle {
+  // The returning chevron and leaving spinner share a cell, never adding their widths.
+  grid-area: toggle;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+  inline-size: var(--si-tree-view-icon-size);
+  cursor: pointer;
+
+  &.si-tree-view-item-toggle-end {
+    grid-area: toggle-end;
+  }
+}
+
+.si-tree-context-menu-btn {
+  grid-area: menu;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 .input-box {
+  grid-area: checkbox;
   margin-inline: map.get(variables.$spacers-inline, 1) map.get(variables.$spacers-inline, 5);
 }
 
