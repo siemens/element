@@ -12,25 +12,26 @@
     </si-list-pane-header>
     <si-list-pane-body>
       <div class="si-layout-fixed-height overflow-auto">
-        <div class="list-group list-group-flush">
+        <div class="list list-divider">
           @for (user of users; track user.id) {
             <button
               type="button"
-              class="list-group-item list-group-item-action d-flex align-items-center gap-4"
+              class="list-item list-item-action align-indicator-center"
               [class.active]="selectedUser().id === user.id"
               [attr.aria-current]="selectedUser().id === user.id ? 'true' : null"
               [attr.aria-label]="'Select ' + user.name"
               (click)="selectUser(user)"
             >
               <si-avatar
+                class="list-item-indicator"
                 size="small"
                 autoColor="true"
                 [initials]="user.initials"
                 [altText]="user.name"
               />
-              <span class="d-flex flex-column text-start overflow-hidden">
-                <span class="si-body-sbold text-truncate">{{ user.name }}</span>
-                <span class="si-body-sm text-secondary text-truncate">{{ user.role }}</span>
+              <span class="list-item-title text-truncate">{{ user.name }}</span>
+              <span class="list-item-description text-secondary text-truncate">
+                {{ user.role }}
               </span>
             </button>
           }
