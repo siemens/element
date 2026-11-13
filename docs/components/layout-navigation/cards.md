@@ -115,10 +115,17 @@ is placed on the edge of the card and padding is set internally.
 
 ### Action cards
 
-Action cards function as interactive buttons that can perform actions when clicked.
-Use `si-action-card` when you need cards that trigger specific actions.
+Action cards make the whole card interactive. Apply `si-action-card` to a native
+`<button>` element for actions or an `<a>` element for navigation.
 
-The component includes a `selectable` input that enables selection state on the card.
+- Use `<button si-action-card type="button">` to trigger actions, such as opening a dialog.
+- Use `<a si-action-card>` with `href` for standard links or `routerLink` for Angular routes.
+  When using `routerLink`, import Angular's [RouterLink directive](https://angular.dev/api/router/RouterLink)
+  into your component.
+
+The `selectable` input enables selection state on button cards. The `selectable` and
+`selected` inputs are ignored on anchor cards, which retain native link behavior.
+Use a `<button>` for selectable or disabled cards.
 
 <si-docs-component example="si-card/si-action-card" height="300"></si-docs-component>
 

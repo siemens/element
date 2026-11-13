@@ -3,20 +3,27 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { SiActionCardComponent } from '@siemens/element-ng/card';
-import { SiIconModule } from '@siemens/element-ng/icon';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiIconComponent } from '@siemens/element-ng/icon';
+import { LOG_EVENT, provideExampleRoutes } from '@siemens/live-preview';
+
+@Component({
+  template: '<p class="mb-0">Energy report opened using Angular routing.</p>'
+})
+export class EnergyReportComponent {}
 
 @Component({
   selector: 'app-sample',
-  imports: [SiActionCardComponent, SiIconModule],
+  imports: [RouterLink, RouterOutlet, SiActionCardComponent, SiIconComponent],
   templateUrl: './si-action-card.html',
   styles: `
     .card {
       inline-size: 100%;
       block-size: 100%;
     }
-  `
+  `,
+  providers: [provideExampleRoutes([{ path: 'energy-report', component: EnergyReportComponent }])]
 })
 export class SampleComponent {
   private readonly log = inject(LOG_EVENT);
