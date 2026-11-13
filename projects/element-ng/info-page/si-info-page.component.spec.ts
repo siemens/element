@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { inputBinding, signal } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { Link } from '@siemens/element-ng/link';
@@ -14,13 +14,20 @@ describe('SiInfoPageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;
 
-  const icon = signal<string>('element-warning-filled');
-  const titleText = signal<TranslatableString>('');
-  const copyText = signal<TranslatableString | undefined>(undefined);
-  const instructions = signal<TranslatableString | undefined>(undefined);
-  const link = signal<Link | undefined>(undefined);
+  let icon: WritableSignal<string>;
+  let titleText: WritableSignal<TranslatableString>;
+  let description: WritableSignal<TranslatableString | undefined>;
+  let copyText: WritableSignal<TranslatableString | undefined>;
+  let instructions: WritableSignal<TranslatableString | undefined>;
+  let link: WritableSignal<Link | undefined>;
 
   beforeEach(() => {
+    icon = signal('element-warning-filled');
+    titleText = signal('');
+    description = signal(undefined);
+    copyText = signal(undefined);
+    instructions = signal(undefined);
+    link = signal(undefined);
     TestBed.configureTestingModule({
       providers: [provideRouter([])]
     });
@@ -28,6 +35,7 @@ describe('SiInfoPageComponent', () => {
       bindings: [
         inputBinding('icon', icon),
         inputBinding('titleText', titleText),
+        inputBinding('description', description),
         inputBinding('copyText', copyText),
         inputBinding('instructions', instructions),
         inputBinding('link', link)
@@ -36,7 +44,7 @@ describe('SiInfoPageComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('should contain all passed strings', async () => {
+  it('should render the deprecated copy text and instructions', async () => {
     icon.set('element-sun');
     titleText.set('Title');
     copyText.set('Subtitle');
@@ -48,6 +56,17 @@ describe('SiInfoPageComponent', () => {
     expect(element.querySelector('h1')!).toHaveTextContent('Title');
     expect(element.querySelector('h2')!).toHaveTextContent('Subtitle');
     expect(element.querySelector('p')!).toHaveTextContent('Some Description');
+  });
+
+  it('should prefer the description over deprecated text inputs', async () => {
+    titleText.set('Title');
+    description.set('New description');
+    copyText.set('Legacy copy text');
+    instructions.set('Legacy instructions');
+    await fixture.whenStable();
+
+    expect(element.querySelector('p')!).toHaveTextContent('New description');
+    expect(element.querySelector('h2')).toBeNull();
   });
 
   it('should invoke navigation on button press', async () => {

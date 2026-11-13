@@ -1,37 +1,33 @@
 <si-info-page
-  titleText="Does this ring a bell. All done?"
-  copyText="An error occurred while generating the report."
-  instructions="Contact your administrator to get more information. Help us to solve the issue by submitting error related information."
+  titleText="Access request pending"
+  description="Awaiting administrator approval. A confirmation will be sent by email."
 >
   <span class="icon-size icon-stack si-info-image">
     <si-icon class="status-success" icon="element-shield-filled" />
     <si-icon class="status-success-contrast" [icon]="face" />
   </span>
   <div class="si-info-actions">
-    <a class="btn btn-secondary me-6 mb-6" href="/">Back to application link</a>
     <button
       type="button"
       class="btn btn-secondary me-6 mb-6"
       (click)="face = 'element-state-face-very-unhappy'"
-      >Not at all</button
     >
+      Contact administrator
+    </button>
     <button
       type="button"
       class="btn btn-secondary me-6 mb-6"
       (click)="face = 'element-state-face-confused'"
-      >No</button
     >
-    <button
-      type="button"
-      class="btn btn-secondary me-6 mb-6"
-      (click)="face = 'element-state-face-happy'"
-      >A bit</button
-    >
+      Cancel request
+    </button>
+
     <button
       type="button"
       class="btn btn-primary me-6 mb-6"
       (click)="face = 'element-state-face-very-happy'"
-      >Yes</button
     >
+      Back to application
+    </button>
   </div>
 </si-info-page>

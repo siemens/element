@@ -10,9 +10,12 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
 export class SiInfoPageComponent {
+    // @deprecated
     readonly copyText: _angular_core.InputSignal<TranslatableString | undefined>;
+    readonly description: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly icon: _angular_core.InputSignal<string>;
     readonly iconColor: _angular_core.InputSignal<string | undefined>;
+    // @deprecated
     readonly instructions: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly link: _angular_core.InputSignal<Link | undefined>;
     readonly titleText: _angular_core.InputSignal<TranslatableString>;

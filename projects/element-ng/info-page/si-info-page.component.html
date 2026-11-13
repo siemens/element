@@ -3,11 +3,15 @@
     <si-icon class="icon-size" [class]="iconColor()" [icon]="icon()" />
   </ng-content>
   <h1 class="si-h1 si-info-page-title">{{ titleText() | translate }}</h1>
-  @if (copyText()) {
-    <h2 class="mt-6 mb-0"> {{ copyText() | translate }} </h2>
-  }
-  @if (instructions()) {
-    <p class="text-pre-wrap si-body-lg mt-6 mb-0">{{ instructions() | translate }}</p>
+  @if (description()) {
+    <p class="text-pre-wrap si-body-lg mt-6 mb-0">{{ description() | translate }}</p>
+  } @else {
+    @if (copyText()) {
+      <h2 class="mt-6 mb-0">{{ copyText() | translate }}</h2>
+    }
+    @if (instructions()) {
+      <p class="text-pre-wrap si-body-lg mt-6 mb-0">{{ instructions() | translate }}</p>
+    }
   }
   @if (link()?.title) {
     <a class="btn btn-primary si-info-page-link" [siLink]="link()">
