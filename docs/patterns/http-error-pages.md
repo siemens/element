@@ -80,7 +80,7 @@ Project the mapped illustration and suitable recovery actions into the info page
 ```html
 <si-info-page
   titleText="SI_HTTP_ERRORS.NOT_FOUND.HEADING"
-  instructions="SI_HTTP_ERRORS.NOT_FOUND.DESCRIPTION"
+  description="SI_HTTP_ERRORS.NOT_FOUND.DESCRIPTION"
 >
   <img
     class="si-info-image"
