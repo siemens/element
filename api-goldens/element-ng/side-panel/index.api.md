@@ -113,6 +113,7 @@ export class SiSidePanelContentComponent implements OnInit {
     readonly showMobileDrawerBadge: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // @deprecated
     readonly statusActions: _angular_core.InputSignal<StatusItem[]>;
+    readonly subHeading: _angular_core.InputSignal<TranslatableString | undefined>;
     toggleFullscreen(): void;
     readonly toggleItemLabel: _angular_core.InputSignal<TranslatableString>;
 }
