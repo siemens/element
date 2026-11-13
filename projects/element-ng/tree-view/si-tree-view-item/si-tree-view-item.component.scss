@@ -219,7 +219,7 @@ a.si-tree-view-item-toggle,
 .si-tree-view-item-end-icons {
   block-size: calc(
     var(--si-tree-view-item-min-height) - 2 *
-      (variables.$element-button-focus-width + variables.$element-button-focus-overlay-width)
+      (variables.$si-sys-sizing-focus-ring-width + variables.$si-sys-sizing-focus-ring-offset)
   );
 
   &.si-tree-view-item-end-icons-sticky {

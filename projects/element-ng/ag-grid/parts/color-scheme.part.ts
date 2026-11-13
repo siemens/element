@@ -30,8 +30,8 @@ export const elementColorScheme: Part = createPart({
   css: `
     .ag-header-cell:focus-visible,
     .ag-header-group-cell:focus-visible {
-      outline: var(--element-button-focus-width) solid var(--element-focus-default);
-      outline-offset: calc(-1 * var(--element-button-focus-width));
+      outline: var(--si-sys-sizing-focus-ring-width) solid var(--si-sys-color-effects-focus);
+      outline-offset: calc(-1 * var(--si-sys-sizing-focus-ring-width));
     }
   `,
   params: {
