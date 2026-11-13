@@ -99,6 +99,7 @@ export class SiTabsetComponent {
     // Per the ARIA tabs pattern, at least one tab should be active. If the app
     // does not provide an active tab, activate the first non-disabled content
     // tab so the tablist stays keyboard reachable.
+    // Link tabs are activated by the router; selecting one here would navigate.
     effect(() => {
       const hasActiveTab = !!this.activeTab();
       untracked(() => {
@@ -106,14 +107,10 @@ export class SiTabsetComponent {
           return;
         }
         const tabToActivate = this.tabPanels().find(tab => {
-          if (tab.disabledTab()) {
+          if (!(tab instanceof SiTabComponent) || tab.disabledTab()) {
             return false;
           }
-          if (tab instanceof SiTabComponent) {
-            const canActivate = tab.canActivate();
-            return canActivate ? canActivate() : true;
-          }
-          return true;
+          return tab.canActivate()?.() ?? true;
         });
         tabToActivate?.selectTab();
       });
