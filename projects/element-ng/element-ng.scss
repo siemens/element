@@ -1,8 +1,10 @@
+@use '@siemens/element-theme/src/styles/variables/si-sys-variables';
 @use '@angular/cdk/overlay' with (
   // these muse be higher than the Bootstrap $zindex-modal, otherwise popover/tooltips won't work inside modals
   $overlay-container-z-index: 1070,
   $overlay-z-index: 1070,
-  $overlay-backdrop-z-index: 1070
+  $overlay-backdrop-z-index: 1070,
+  $overlay-backdrop-color: si-sys-variables.$si-sys-color-effects-backdrop
 );
 @use '@angular/cdk/a11y';
 

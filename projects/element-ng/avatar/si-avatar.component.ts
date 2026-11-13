@@ -45,7 +45,7 @@ export class SiAvatarComponent {
    */
   readonly initials = input<string>();
   /**
-   * The desired color index from $element-data-* color tokens. This can be set to any kind of
+   * The desired color index from $si-sys-color-data-categorical-* tokens. This can be set to any kind of
    * positive integer that is then mapped to a color index.
    * A better way to set a pseudo-random color is to set * {@link autoColor} to `true`.
    *

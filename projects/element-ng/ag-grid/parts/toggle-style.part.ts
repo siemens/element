@@ -31,7 +31,7 @@ export const elementToggleStyle: Part = createPart({
     }
 
     .ag-toggle-button-input-wrapper.ag-checked::before {
-      background-color: var(--element-ui-5);
+      background-color: var(--si-sys-color-background-0);
     }
   `
 });

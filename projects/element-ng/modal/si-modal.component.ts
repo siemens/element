@@ -7,6 +7,7 @@ import {
   AfterViewInit,
   Component,
   ComponentRef,
+  DestroyRef,
   effect,
   ElementRef,
   inject,
@@ -46,7 +47,6 @@ export class SiModalComponent implements OnInit, AfterViewInit {
   protected readonly dialogClass = this.modalRef.dialogClass ?? '';
   protected readonly titleId = this.modalRef.data?.ariaLabelledBy ?? '';
   protected readonly show = signal(true);
-  protected readonly showBackdropVisible = signal(false);
 
   private readonly contentContainer = viewChild.required('contentContainer', {
     read: ViewContainerRef
@@ -60,6 +60,7 @@ export class SiModalComponent implements OnInit, AfterViewInit {
   private readonly modalContainerRef = viewChild.required<ElementRef>('modalContainer');
 
   constructor() {
+    inject(DestroyRef).onDestroy(() => this.restoreBodyOverflow());
     effect(() => {
       const content = this.content();
       const viewContainer = this.contentContainer();
@@ -68,6 +69,11 @@ export class SiModalComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    if (this.modalRef.layer === 1) {
+      // Lock only the background; overflowing content scrolls in the modal container.
+      this.origBodyOverflow = this.document.body.style.overflow;
+      this.document.body.style.overflow = 'hidden';
+    }
     this.ngZone.runOutsideAngular(() =>
       setTimeout(() => (this.backdropGhostClickPrevention = false), 300)
     );
@@ -117,7 +123,7 @@ export class SiModalComponent implements OnInit, AfterViewInit {
 
     // Toggle the @if condition to trigger animate.leave on the dialog
     this.show.set(false);
-    this.hideBackdrop();
+    this.restoreBodyOverflow();
     this.modalRef?.hidden.next(param);
     this.modalRef?.hidden.complete();
     this.modalRef?.message.complete();
@@ -128,15 +134,7 @@ export class SiModalComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /** @internal */
-  showBackdrop(): void {
-    this.showBackdropVisible.set(true);
-    this.origBodyOverflow = this.document.body.style.overflow;
-    this.document.body.style.overflow = 'hidden';
-  }
-
-  private hideBackdrop(): void {
-    this.showBackdropVisible.set(false);
+  private restoreBodyOverflow(): void {
     if (this.origBodyOverflow !== undefined) {
       this.document.body.style.overflow = this.origBodyOverflow;
       this.origBodyOverflow = undefined;
