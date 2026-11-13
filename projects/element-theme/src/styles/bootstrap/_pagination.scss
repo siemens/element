@@ -1,5 +1,4 @@
 @use '../variables/si-sys-variables';
-@use '../variables/semantic-tokens';
 @use '../variables/spacers';
 @use 'mixins/lists';
 
@@ -39,7 +38,7 @@ $page-button-size: 1.5rem;
   }
 
   &.disabled {
-    opacity: semantic-tokens.$element-action-disabled-opacity;
+    opacity: si-sys-variables.$si-sys-color-effects-disable-opacity;
   }
 
   &.separator {
