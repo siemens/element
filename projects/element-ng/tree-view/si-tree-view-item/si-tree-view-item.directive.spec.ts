@@ -131,7 +131,7 @@ describe('SiTreeViewItemDirective', () => {
       'New fourth'
     ]);
 
-    rows[0].querySelector<HTMLElement>('.si-tree-view-item-main')!.click();
+    rows[0].querySelector<HTMLElement>('.si-tree-view-item-object-data')!.click();
     await fixture.whenStable();
 
     expect(itemClicked).toHaveBeenCalledExactlyOnceWith(updatedItems[0]);
