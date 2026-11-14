@@ -5,8 +5,8 @@
 import { ComponentHarness } from '@angular/cdk/testing';
 
 export class SiActionCardHarness extends ComponentHarness {
-  /** @defaultValue 'button[si-action-card]' */
-  static hostSelector = 'button[si-action-card]';
+  /** @defaultValue 'button[si-action-card], a[si-action-card]' */
+  static hostSelector = 'button[si-action-card], a[si-action-card]';
 
   async clickActionButton(): Promise<void> {
     (await this.host()).click();

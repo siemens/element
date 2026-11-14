@@ -123,6 +123,13 @@ button.card {
   }
 }
 
+a.card.action-card {
+  overflow: hidden;
+  color: inherit;
+  text-align: start;
+  text-decoration: none;
+}
+
 .card-header {
   min-block-size: calc(1lh + 2 * variables.$card-cap-padding-y);
   white-space: nowrap;
