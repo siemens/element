@@ -2,15 +2,16 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { ApplicationRef, Component, inject, ViewEncapsulation } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   SiShadowRootDirective,
   provideShadowRootThemeTarget
 } from '@siemens/element-ng/shadow-root';
-import { firstValueFrom, of, throwError } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { type Mock, type MockInstance } from 'vitest';
+import { type Mock } from 'vitest';
 
 import { SI_THEME_LOCAL_STORAGE_KEY, SiThemeStore } from './si-theme-store';
 import { ELEMENT_THEME_NAME, Theme } from './si-theme.model';
@@ -29,36 +30,34 @@ describe('SiThemeService', () => {
   }
 
   let service: TestService;
-  let matchMediaSpy: MockInstance<typeof window.matchMedia>;
+  let mediaQuery: BehaviorSubject<BreakpointState>;
+  const breakpointObserver = { observe: vi.fn(() => mediaQuery.asObservable()) };
   let themeSwitchSpy: Mock;
 
   const setupTestBed = (prefersDarkColor: boolean = false, store?: Partial<SiThemeStore>): void => {
     document.documentElement.classList.remove('app--dark');
-    matchMediaSpy.mockReturnValue({
+    mediaQuery = new BehaviorSubject<BreakpointState>({
       matches: prefersDarkColor,
-      media: '',
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn()
-    } satisfies MediaQueryList);
+      breakpoints: { '(prefers-color-scheme: dark)': prefersDarkColor }
+    });
     TestBed.configureTestingModule({
-      providers: [TestService, { provide: SiThemeStore, useValue: store }]
+      providers: [
+        TestService,
+        { provide: SiThemeStore, useValue: store },
+        { provide: BreakpointObserver, useValue: breakpointObserver }
+      ]
     });
     service = TestBed.inject(TestService);
     service.resolvedColorScheme$.subscribe(themeSwitchSpy);
   };
 
-  // Keep the `using` spy alive for the test body and always restore shared DOM state afterward.
+  // Restore shared DOM state until all theme state is owned by effects.
   aroundEach(async runTest => {
-    using spy = vi.spyOn(window, 'matchMedia');
-    matchMediaSpy = spy;
     const rootClassName = document.documentElement.className;
     try {
       await runTest();
     } finally {
+      TestBed.resetTestingModule();
       document.documentElement.className = rootClassName;
       document.querySelectorAll('style[id^="__theme-"]').forEach(style => style.remove());
     }
@@ -67,50 +66,126 @@ describe('SiThemeService', () => {
   beforeEach(() => (themeSwitchSpy = vi.fn()));
   afterEach(() => localStorage.removeItem(SI_THEME_LOCAL_STORAGE_KEY));
 
+  describe('on destruction', () => {
+    it('should unsubscribe from automatic color-scheme changes', async () => {
+      setupTestBed(true);
+      service.applyThemeType('auto');
+      await TestBed.inject(ApplicationRef).whenStable();
+      expect(breakpointObserver.observe).toHaveBeenCalledWith('(prefers-color-scheme: dark)');
+      expect(mediaQuery.observed).toBe(true);
+      expect(document.documentElement.classList).toContain('app--dark');
+
+      TestBed.resetTestingModule();
+
+      expect(mediaQuery.observed).toBe(false);
+      mediaQuery.next({ matches: false, breakpoints: { '(prefers-color-scheme: dark)': false } });
+      expect(document.documentElement.classList).toContain('app--dark');
+    });
+  });
+
   describe('with theme type auto', () => {
-    it('should set theme to `light` if preferred', () => {
+    it('should set theme to `light` if preferred', async () => {
       setupTestBed();
       service.applyThemeType('auto');
+      await TestBed.inject(ApplicationRef).whenStable();
       expect(document.documentElement.classList).not.toContain('app--dark');
       expect(themeSwitchSpy).toHaveBeenCalledWith('light');
     });
 
-    it('should set theme to `dark` if preferred', () => {
+    it('should set theme to `dark` if preferred', async () => {
       setupTestBed(true);
       service.applyThemeType('auto');
+      await TestBed.inject(ApplicationRef).whenStable();
       expect(document.documentElement.classList).toContain('app--dark');
       expect(themeSwitchSpy).toHaveBeenCalledWith('dark');
+    });
+
+    it('should react to changes in the preferred color scheme', async () => {
+      setupTestBed();
+      service.applyThemeType('auto');
+      await TestBed.inject(ApplicationRef).whenStable();
+
+      mediaQuery.next({ matches: true, breakpoints: {} });
+      await TestBed.inject(ApplicationRef).whenStable();
+      expect(document.documentElement.classList).toContain('app--dark');
+      expect(themeSwitchSpy).toHaveBeenLastCalledWith('dark');
+
+      mediaQuery.next({ matches: false, breakpoints: {} });
+      await TestBed.inject(ApplicationRef).whenStable();
+      expect(document.documentElement.classList).not.toContain('app--dark');
+      expect(themeSwitchSpy).toHaveBeenLastCalledWith('light');
+    });
+
+    it('should stop observing when selecting the currently resolved fixed scheme', async () => {
+      setupTestBed(true);
+      service.applyThemeType('auto');
+      await TestBed.inject(ApplicationRef).whenStable();
+      expect(document.documentElement.classList).toContain('app--dark');
+
+      service.applyThemeType('dark');
+      await TestBed.inject(ApplicationRef).whenStable();
+      mediaQuery.next({ matches: false, breakpoints: {} });
+      await TestBed.inject(ApplicationRef).whenStable();
+
+      expect(mediaQuery.observed).toBe(false);
+      expect(document.documentElement.classList).toContain('app--dark');
     });
   });
 
   describe('with fixed theme type values', () => {
     beforeEach(() => setupTestBed());
 
-    it('should not set `app--dark` class on `light` mode', () => {
+    it('should leave the initial color-scheme metadata untouched', async () => {
+      const previousTag = document.querySelector('meta[name="color-scheme"]')?.outerHTML;
+
+      await TestBed.inject(ApplicationRef).whenStable();
+
+      expect(document.querySelector('meta[name="color-scheme"]')?.outerHTML).toBe(previousTag);
+      expect(service.resolvedColorScheme).toBe('light');
+      expect(themeSwitchSpy).not.toHaveBeenCalled();
+    });
+
+    it('should not set `app--dark` class on `light` mode', async () => {
       service.applyThemeType('light');
+      await TestBed.inject(ApplicationRef).whenStable();
       expect(document.documentElement.classList).not.toContain('app--dark');
       expect(themeSwitchSpy).not.toHaveBeenCalled(); // because light is the default
     });
 
-    it('should set `app--dark` class on `dark` mode', () => {
+    it('should set `app--dark` class on `dark` mode', async () => {
       service.applyThemeType('dark');
+      await TestBed.inject(ApplicationRef).whenStable();
       expect(document.documentElement.classList).toContain('app--dark');
       expect(themeSwitchSpy).toHaveBeenCalledWith('dark');
     });
   });
 
   describe('with a shadow root target', () => {
-    it('should apply the color scheme only to the shadow host', () => {
+    it('should leave the shadow host color scheme unchanged when destroyed', async () => {
+      setupTestBed();
+      const fixture = TestBed.createComponent(ShadowThemeHostComponent);
+      const host = fixture.nativeElement as HTMLElement;
+      fixture.componentInstance.themeService.applyThemeType('dark');
+      await fixture.whenStable();
+      expect(host.classList).toContain('app--dark');
+
+      fixture.destroy();
+
+      expect(host.classList).toContain('app--dark');
+    });
+
+    it('should apply the color scheme only to the shadow host', async () => {
       setupTestBed();
       const fixture = TestBed.createComponent(ShadowThemeHostComponent);
 
       fixture.componentInstance.themeService.applyThemeType('dark');
+      await fixture.whenStable();
 
       expect(fixture.nativeElement.classList).toContain('app--dark');
       expect(document.documentElement.classList).not.toContain('app--dark');
     });
 
-    it('should add custom theme styles to the shadow root with host selectors', () => {
+    it('should add custom theme styles to the shadow root with host selectors', async () => {
       setupTestBed();
       const fixture = TestBed.createComponent(ShadowThemeHostComponent);
       const theme: Theme = {
@@ -122,6 +197,7 @@ describe('SiThemeService', () => {
       };
 
       fixture.componentInstance.themeService.applyTheme(theme, 'dark', true);
+      await fixture.whenStable();
 
       const style = fixture.nativeElement.shadowRoot.getElementById('__theme-example');
       expect(fixture.nativeElement.classList).toContain('theme-example');

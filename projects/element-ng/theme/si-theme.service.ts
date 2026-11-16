@@ -2,8 +2,20 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
-import { DOCUMENT, EventEmitter, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import {
+  DOCUMENT,
+  computed,
+  effect,
+  EventEmitter,
+  inject,
+  Injectable,
+  PLATFORM_ID,
+  signal,
+  untracked
+} from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
@@ -19,10 +31,6 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class SiThemeService {
-  /**
-   * The current color scheme. (e.g. light or dark).
-   */
-  private _resolvedColorScheme: ThemeType | undefined = 'light';
   private resolvedColorSchemeSub = new ReplaySubject<keyof ThemeColorSchemes>(1);
   /**
    * Emits events when the color scheme changes.
@@ -34,7 +42,7 @@ export class SiThemeService {
    * The current color scheme. (e.g. light or dark).
    */
   get resolvedColorScheme(): ThemeType | undefined {
-    return this._resolvedColorScheme;
+    return this.colorScheme() ?? this.initialColorScheme;
   }
 
   /**
@@ -78,8 +86,7 @@ export class SiThemeService {
   readonly themeIcons = signal<Record<string, string>>({});
 
   private themes: Map<string, Theme> = new Map();
-  private darkMediaQuery?: MediaQueryList;
-  private mediaQueryListener?: () => void;
+  private breakpointObserver = inject(BreakpointObserver);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private previewTheme?: Theme;
 
@@ -87,23 +94,52 @@ export class SiThemeService {
     inject(SiThemeStore, { optional: true }) ?? new SiDefaultThemeStore(this.isBrowser);
   private document = inject(DOCUMENT);
   private themeTarget = inject(SI_THEME_DOM_TARGET);
+  private readonly initialColorScheme = this.themeTarget.element.classList.contains('app--dark')
+    ? 'dark'
+    : 'light';
+  private readonly themeType = signal<ThemeType | undefined>(undefined);
+  private readonly prefersDark = toSignal(
+    toObservable(this.themeType).pipe(
+      switchMap(type =>
+        type === 'auto' && this.isBrowser
+          ? this.breakpointObserver
+              .observe('(prefers-color-scheme: dark)')
+              .pipe(map(state => state.matches))
+          : of(undefined)
+      )
+    )
+  );
+  private readonly colorScheme = computed(() => {
+    const type = this.themeType();
+    if (type !== 'auto') {
+      return type;
+    }
+    const prefersDark = this.prefersDark();
+    return prefersDark === undefined ? undefined : prefersDark ? 'dark' : 'light';
+  });
 
   constructor() {
-    this._resolvedColorScheme = this.themeTarget.element.classList.contains('app--dark')
-      ? 'dark'
-      : 'light';
-    this.resolvedColorScheme$.subscribe(scheme => (this._resolvedColorScheme = scheme));
     this.themeNames$.subscribe(names => (this._themeNames = names));
 
-    if (this.isBrowser) {
-      this.darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      this.mediaQueryListener = () => this.toggleDark(this.darkMediaQuery!.matches);
-    }
+    effect(() => {
+      const scheme = this.colorScheme();
+      if (!this.isBrowser || !scheme) {
+        return;
+      }
+      this.themeTarget.forEachElement(element =>
+        element.classList.toggle('app--dark', scheme === 'dark')
+      );
+      this.themeTarget.updateColorScheme(scheme);
+      untracked(() => {
+        this.resolvedColorSchemeSub.next(scheme);
+        this.dispatchThemeSwitchEvent();
+      });
+    });
 
     this.getActiveTheme()
       .pipe(take(1))
       .subscribe({
-        next: theme => this.applyThemeStyle(theme, this._resolvedColorScheme),
+        next: theme => this.applyThemeStyle(theme),
         error: error => console.error('Cannot load active theme', error)
       });
 
@@ -165,7 +201,7 @@ export class SiThemeService {
         if (theme) {
           this.activeThemeName = theme.name;
           this.themes.set(theme.name, theme);
-          this.applyTheme(theme, this._resolvedColorScheme);
+          this.applyTheme(theme);
           return theme;
         }
         this.activeThemeName = ELEMENT_THEME_NAME;
@@ -240,7 +276,7 @@ export class SiThemeService {
    * Sets the active theme to the given name. If no name is given, the default element theme is used.
    */
   setActiveTheme(name?: string, type?: ThemeType): Observable<boolean> {
-    const theType = type ?? this._resolvedColorScheme ?? 'auto';
+    const theType = type ?? this.resolvedColorScheme ?? 'auto';
     const theName = name ?? this.activeThemeName ?? ELEMENT_THEME_NAME;
 
     if (theName === this.activeThemeName) {
@@ -286,22 +322,14 @@ export class SiThemeService {
 
   /**
    * Apply `light` or `dark` theme to the configured theme target.
+   * DOM changes are applied during Angular's next synchronization.
    */
   applyThemeType(type: ThemeType): void {
-    if (type === this._resolvedColorScheme || !this.darkMediaQuery || !this.mediaQueryListener) {
+    if (!this.isBrowser || type === (this.themeType() ?? this.initialColorScheme)) {
       return;
     }
 
-    this.darkMediaQuery.removeEventListener('change', this.mediaQueryListener);
-
-    if (type === 'light') {
-      this.toggleDark(false);
-    } else if (type === 'dark') {
-      this.toggleDark(true);
-    } else {
-      this.mediaQueryListener();
-      this.darkMediaQuery.addEventListener('change', this.mediaQueryListener);
-    }
+    this.themeType.set(type);
   }
 
   /**
@@ -374,7 +402,7 @@ export class SiThemeService {
     }
     this.activateTheme(theme);
 
-    if (type && type !== this._resolvedColorScheme) {
+    if (type) {
       this.applyThemeType(type);
     }
 
@@ -447,18 +475,6 @@ export class SiThemeService {
     this.themeTarget.forEachElement(element => element.classList.remove(`theme-${name}`));
   }
 
-  private toggleDark(dark: boolean): void {
-    if (!this.isBrowser) {
-      return;
-    }
-
-    this.themeTarget.forEachElement(element => element.classList.toggle('app--dark', dark));
-    const colorScheme = dark ? 'dark' : 'light';
-    this.themeTarget.updateColorScheme(colorScheme);
-    this.resolvedColorSchemeSub.next(colorScheme);
-    this.dispatchThemeSwitchEvent();
-  }
-
   private cloneTheme(theme: Theme): Theme {
     const clone: Theme = { ...theme, schemes: {} };
     if (theme.schemes.light) {
@@ -474,8 +490,8 @@ export class SiThemeService {
     window.dispatchEvent(
       new CustomEvent('theme-switch', {
         detail: {
-          dark: this._resolvedColorScheme === 'dark',
-          colorScheme: this._resolvedColorScheme
+          dark: this.resolvedColorScheme === 'dark',
+          colorScheme: this.resolvedColorScheme
         }
       })
     );
