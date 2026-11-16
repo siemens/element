@@ -3,13 +3,19 @@
  * SPDX-License-Identifier: MIT
  */
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  createEnvironmentInjector,
+  EnvironmentInjector,
+  inject,
+  ViewEncapsulation
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   SiShadowRootDirective,
   provideShadowRootThemeTarget
 } from '@siemens/element-ng/shadow-root';
-import { BehaviorSubject, firstValueFrom, of, throwError } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, of, Subject, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { type Mock } from 'vitest';
 
@@ -51,14 +57,14 @@ describe('SiThemeService', () => {
     service.resolvedColorScheme$.subscribe(themeSwitchSpy);
   };
 
-  // Restore shared DOM state after each test.
+  // Restore the root class changed by setupTestBed(). Theme changes are cleaned up by the service.
   aroundEach(async runTest => {
     const rootClassName = document.documentElement.className;
     try {
       await runTest();
     } finally {
+      TestBed.resetTestingModule();
       document.documentElement.className = rootClassName;
-      document.querySelectorAll('style[id^="__theme-"]').forEach(style => style.remove());
     }
   });
 
@@ -66,6 +72,92 @@ describe('SiThemeService', () => {
   afterEach(() => localStorage.removeItem(SI_THEME_LOCAL_STORAGE_KEY));
 
   describe('on destruction', () => {
+    it('should remove all generated themes, including inactive and preview styles', () => {
+      setupTestBed();
+      service.applyTheme({ name: 'first', schemes: {} });
+      service.applyTheme({ name: 'second', schemes: {} });
+      service.updateProperty('--element-base-0', '#fff', 'light');
+      expect(document.getElementById('__theme-first')).not.toBeNull();
+      expect(document.getElementById('__theme-second')).not.toBeNull();
+      expect(document.getElementById('__theme-__preview')).not.toBeNull();
+
+      TestBed.resetTestingModule();
+
+      expect(document.getElementById('__theme-first')).toBeNull();
+      expect(document.getElementById('__theme-second')).toBeNull();
+      expect(document.getElementById('__theme-__preview')).toBeNull();
+    });
+
+    it('should restore existing theme classes without discarding unrelated class changes', () => {
+      setupTestBed();
+      const root = document.documentElement;
+      root.classList.add('theme-existing', 'app--dark');
+      const injector = createEnvironmentInjector(
+        [TestService],
+        TestBed.inject(EnvironmentInjector)
+      );
+      const themeService = injector.get(TestService);
+      themeService.applyTheme({ name: 'example', schemes: {} }, 'light');
+      root.classList.add('unrelated-class', 'theme-unrelated');
+
+      try {
+        injector.destroy();
+
+        expect(root.classList).toContain('theme-existing');
+        expect(root.classList).toContain('app--dark');
+        expect(root.classList).toContain('unrelated-class');
+        expect(root.classList).toContain('theme-unrelated');
+        expect(root.classList).not.toContain('theme-example');
+      } finally {
+        if (!injector.destroyed) {
+          injector.destroy();
+        }
+        root.classList.remove('unrelated-class', 'theme-unrelated');
+      }
+    });
+
+    it('should preserve a pre-existing class for the applied theme', () => {
+      setupTestBed();
+      document.documentElement.classList.add('theme-example');
+      service.applyTheme({ name: 'example', schemes: {} });
+      service.applyTheme({ name: 'another', schemes: {} });
+      expect(document.documentElement.classList).toContain('theme-example');
+
+      TestBed.resetTestingModule();
+
+      expect(document.documentElement.classList).toContain('theme-example');
+      expect(document.documentElement.classList).not.toContain('theme-another');
+    });
+
+    it('should not remove a previously applied class added again by another owner', () => {
+      setupTestBed();
+      service.applyTheme({ name: 'first', schemes: {} });
+      service.applyTheme({ name: 'second', schemes: {} });
+      expect(document.documentElement.classList).not.toContain('theme-first');
+      document.documentElement.classList.add('theme-first');
+
+      TestBed.resetTestingModule();
+
+      expect(document.documentElement.classList).toContain('theme-first');
+      expect(document.documentElement.classList).not.toContain('theme-second');
+    });
+
+    it('should preserve theme styles that it did not create', () => {
+      setupTestBed();
+      const style = document.createElement('style');
+      style.id = '__theme-existing';
+      document.body.append(style);
+
+      try {
+        service.applyTheme({ name: 'existing', schemes: {} });
+        TestBed.resetTestingModule();
+
+        expect(document.getElementById('__theme-existing')).toBe(style);
+      } finally {
+        style.remove();
+      }
+    });
+
     it('should unsubscribe from automatic color-scheme changes', () => {
       setupTestBed();
       service.applyThemeType('auto');
@@ -77,6 +169,20 @@ describe('SiThemeService', () => {
       expect(mediaQuery.observed).toBe(false);
       mediaQuery.next({ matches: true, breakpoints: { '(prefers-color-scheme: dark)': true } });
       expect(document.documentElement.classList).not.toContain('app--dark');
+    });
+
+    it('should not apply a theme that finishes loading after destruction', () => {
+      const activeTheme = new Subject<Theme | undefined>();
+      setupTestBed(false, {
+        loadActiveTheme: () => activeTheme,
+        loadThemeNames: () => of([])
+      });
+
+      TestBed.resetTestingModule();
+      activeTheme.next({ name: 'delayed', schemes: {} });
+
+      expect(document.getElementById('__theme-delayed')).toBeNull();
+      expect(document.documentElement.classList).not.toContain('theme-delayed');
     });
   });
 
@@ -138,6 +244,22 @@ describe('SiThemeService', () => {
   });
 
   describe('with a shadow root target', () => {
+    it('should remove its styles and restore the host state when destroyed', () => {
+      setupTestBed();
+      const fixture = TestBed.createComponent(ShadowThemeHostComponent);
+      const host = fixture.nativeElement as HTMLElement;
+      const shadowRoot = host.shadowRoot!;
+      fixture.componentInstance.themeService.applyTheme({ name: 'example', schemes: {} }, 'dark');
+      expect(shadowRoot.getElementById('__theme-example')).not.toBeNull();
+      expect(host.classList).toContain('app--dark');
+
+      fixture.destroy();
+
+      expect(shadowRoot.getElementById('__theme-example')).toBeNull();
+      expect(host.classList).not.toContain('theme-example');
+      expect(host.classList).not.toContain('app--dark');
+    });
+
     it('should apply the color scheme only to the shadow host', () => {
       setupTestBed();
       const fixture = TestBed.createComponent(ShadowThemeHostComponent);

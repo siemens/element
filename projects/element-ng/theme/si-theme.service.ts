@@ -89,6 +89,7 @@ export class SiThemeService {
 
   private themes: Map<string, Theme> = new Map();
   private breakpointObserver = inject(BreakpointObserver);
+  private appliedThemeClass?: string;
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private previewTheme?: Theme;
 
@@ -100,11 +101,17 @@ export class SiThemeService {
     this.themeTarget.element.classList.contains('app--dark') ? 'dark' : 'light'
   );
   private destroyRef = inject(DestroyRef);
+  private themeStyles = new Set<HTMLStyleElement>();
+  private previousThemeClasses = new Map<HTMLElement, Map<string, boolean>>();
 
   constructor() {
     this._resolvedColorScheme = this.themeType.value;
-    this.resolvedColorScheme$.subscribe(scheme => (this._resolvedColorScheme = scheme));
-    this.themeNames$.subscribe(names => (this._themeNames = names));
+    this.resolvedColorScheme$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(scheme => (this._resolvedColorScheme = scheme));
+    this.themeNames$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(names => (this._themeNames = names));
 
     this.themeType
       .pipe(
@@ -119,10 +126,20 @@ export class SiThemeService {
         distinctUntilChanged(),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(dark => this.toggleDark(dark));
+      .subscribe({
+        next: dark => this.toggleDark(dark),
+        complete: () => {
+          this.themeStyles.forEach(style => style.remove());
+          this.previousThemeClasses.forEach((classes, element) => {
+            classes.forEach((wasPresent, className) =>
+              element.classList.toggle(className, wasPresent)
+            );
+          });
+        }
+      });
 
     this.getActiveTheme()
-      .pipe(take(1))
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: theme => this.applyThemeStyle(theme, this._resolvedColorScheme),
         error: error => console.error('Cannot load active theme', error)
@@ -130,7 +147,7 @@ export class SiThemeService {
 
     this.themeStore
       .loadThemeNames()
-      .pipe(take(1))
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: names => {
           names.push(ELEMENT_THEME_NAME);
@@ -203,22 +220,25 @@ export class SiThemeService {
   addOrUpdateTheme(theme: Theme): Observable<boolean> {
     const result = new ReplaySubject<boolean>(1);
 
-    this.themeStore.saveTheme(theme).subscribe({
-      next: saveResult => {
-        if (saveResult) {
-          this.themes.set(theme.name, this.cloneTheme(theme));
-          // Update list of theme names when this is a new one
-          if (!this.hasTheme(theme.name)) {
-            const names = this._themeNames.concat(theme.name);
-            this.themeNamesSub.next(names);
+    this.themeStore
+      .saveTheme(theme)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: saveResult => {
+          if (saveResult) {
+            this.themes.set(theme.name, this.cloneTheme(theme));
+            // Update list of theme names when this is a new one
+            if (!this.hasTheme(theme.name)) {
+              const names = this._themeNames.concat(theme.name);
+              this.themeNamesSub.next(names);
+            }
           }
-        }
-        result.next(saveResult);
-        result.complete();
-      },
-      error: error => result.error(error),
-      complete: () => result.complete()
-    });
+          result.next(saveResult);
+          result.complete();
+        },
+        error: error => result.error(error),
+        complete: () => result.complete()
+      });
     return result;
   }
 
@@ -232,19 +252,22 @@ export class SiThemeService {
       result.complete();
     } else {
       this.removeThemeCSS(name);
-      this.themeStore.deleteTheme(name).subscribe({
-        next: deleteResult => {
-          if (deleteResult) {
-            this.themes.delete(name);
-            const names = this._themeNames.filter(themeName => themeName !== name);
-            this.themeNamesSub.next(names);
-          }
-          result.next(deleteResult);
-          result.complete();
-        },
-        error: error => result.error(error),
-        complete: () => result.complete()
-      });
+      this.themeStore
+        .deleteTheme(name)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: deleteResult => {
+            if (deleteResult) {
+              this.themes.delete(name);
+              const names = this._themeNames.filter(themeName => themeName !== name);
+              this.themeNamesSub.next(names);
+            }
+            result.next(deleteResult);
+            result.complete();
+          },
+          error: error => result.error(error),
+          complete: () => result.complete()
+        });
     }
     return result;
   }
@@ -289,7 +312,8 @@ export class SiThemeService {
           }
         }),
         // Only take one to avoid unsubscription issues
-        take(1)
+        take(1),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         next: theme => {
@@ -323,7 +347,7 @@ export class SiThemeService {
       this.applyThemeStyle(theme, type, overwrite);
     } else {
       this.getActiveTheme()
-        .pipe(take(1))
+        .pipe(take(1), takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: loadedTheme => this.applyThemeStyle(loadedTheme, type),
           error: error => console.error('Cannot load active theme', error)
@@ -340,7 +364,7 @@ export class SiThemeService {
     }
     this.previewTheme!.schemes[type]![name] = value;
     this.createThemeCSS(this.previewTheme!);
-    this.themeTarget.forEachElement(element => element.classList.add('theme-__preview'));
+    this.setThemeClass('theme-__preview', true);
     this.dispatchThemeSwitchEvent();
   }
 
@@ -396,17 +420,13 @@ export class SiThemeService {
   }
 
   private activateTheme(theme?: Theme): void {
-    this.themeTarget.forEachElement(element => {
-      const classList = element.classList;
-      classList.forEach(className => {
-        if (className.startsWith('theme-')) {
-          classList.remove(className);
-        }
-      });
-      if (theme) {
-        classList.add(`theme-${theme.name}`);
-      }
-    });
+    if (this.appliedThemeClass) {
+      this.restoreThemeClass(this.appliedThemeClass);
+    }
+    this.appliedThemeClass = theme ? `theme-${theme.name}` : undefined;
+    if (this.appliedThemeClass) {
+      this.setThemeClass(this.appliedThemeClass, true);
+    }
   }
 
   private hasThemeCSS(theme: Theme): boolean {
@@ -434,6 +454,7 @@ export class SiThemeService {
     cssElement.textContent = css;
 
     this.themeTarget.appendStyleElement(cssElement);
+    this.themeStyles.add(cssElement);
   }
 
   private createThemeSelector(name: string, dark: boolean = false): string {
@@ -454,8 +475,36 @@ export class SiThemeService {
 
   private removeThemeCSS(name: string): void {
     const id = `__theme-${name}`;
-    this.themeTarget.getStyleElement(id)?.remove();
-    this.themeTarget.forEachElement(element => element.classList.remove(`theme-${name}`));
+    const style = this.themeTarget.getStyleElement(id);
+    style?.remove();
+    if (style) {
+      this.themeStyles.delete(style);
+    }
+    this.restoreThemeClass(`theme-${name}`);
+  }
+
+  private setThemeClass(className: string, present: boolean): void {
+    this.themeTarget.forEachElement(element => {
+      const classes = this.previousThemeClasses.get(element) ?? new Map<string, boolean>();
+      if (!classes.has(className)) {
+        classes.set(className, element.classList.contains(className));
+        this.previousThemeClasses.set(element, classes);
+      }
+      element.classList.toggle(className, present);
+    });
+  }
+
+  private restoreThemeClass(className: string): void {
+    this.previousThemeClasses.forEach((classes, element) => {
+      const wasPresent = classes.get(className);
+      if (wasPresent !== undefined) {
+        element.classList.toggle(className, wasPresent);
+        classes.delete(className);
+        if (!classes.size) {
+          this.previousThemeClasses.delete(element);
+        }
+      }
+    });
   }
 
   private toggleDark(dark: boolean): void {
@@ -463,7 +512,7 @@ export class SiThemeService {
       return;
     }
 
-    this.themeTarget.forEachElement(element => element.classList.toggle('app--dark', dark));
+    this.setThemeClass('app--dark', dark);
     const colorScheme = dark ? 'dark' : 'light';
     this.themeTarget.updateColorScheme(colorScheme);
     this.resolvedColorSchemeSub.next(colorScheme);
