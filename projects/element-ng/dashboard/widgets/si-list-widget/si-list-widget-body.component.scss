@@ -3,7 +3,7 @@
 
 :host {
   background-color: variables.$si-sys-color-background-1;
-  border-radius: variables.$element-radius-3;
+  border-radius: variables.$si-sys-sizing-border-radius-sm;
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;

@@ -143,7 +143,7 @@ $box-shadow-lg: si-sys-variables.$si-sys-color-effects-shadow-30 !default;
 // DEPRECATED: There is no replacement.
 $box-shadow-inset: inset 0 1px 1px var(--element-box-shadow-color-2);
 
-$component-active-color: semantic-tokens.$element-ui-5 !default;
+$component-active-color: si-sys-variables.$si-sys-color-text-on-accent !default;
 
 $transition-base: all animations.element-transition-duration(0.2s) ease-in-out !default;
 $transition-fade: opacity animations.element-transition-duration(0.15s) linear !default;
@@ -160,7 +160,7 @@ $aspect-ratios: (
 // Typography
 //
 // Font, line-height, and color for body text, headings, and more.
-$font-family-sans-serif: var(--element-body-font-family);
+$font-family-sans-serif: si-sys-variables.$si-sys-typography-body-font-family;
 $font-family-monospace: si-sys-variables.$si-sys-typography-code-font-family !default;
 
 $font-family-base: $font-family-sans-serif !default;
