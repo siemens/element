@@ -3,13 +3,20 @@
  * SPDX-License-Identifier: MIT
  */
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { ApplicationRef, Component, inject, ViewEncapsulation } from '@angular/core';
+import {
+  ApplicationRef,
+  Component,
+  createEnvironmentInjector,
+  EnvironmentInjector,
+  inject,
+  ViewEncapsulation
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   SiShadowRootDirective,
   provideShadowRootThemeTarget
 } from '@siemens/element-ng/shadow-root';
-import { BehaviorSubject, firstValueFrom, of, throwError } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, of, Subject, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { type Mock } from 'vitest';
 
@@ -66,7 +73,179 @@ describe('SiThemeService', () => {
   beforeEach(() => (themeSwitchSpy = vi.fn()));
   afterEach(() => localStorage.removeItem(SI_THEME_LOCAL_STORAGE_KEY));
 
+  describe('with cached theme styles', () => {
+    it('should notify subscribers after applying the theme class', async () => {
+      setupTestBed();
+      const appliedThemes: (Theme | undefined)[] = [];
+      service.themeChange.subscribe(theme => {
+        if (theme && document.documentElement.classList.contains(`theme-${theme.name}`)) {
+          appliedThemes.push(theme);
+        }
+      });
+      const theme: Theme = { name: 'example', schemes: {} };
+
+      service.applyTheme(theme);
+      await TestBed.inject(ApplicationRef).whenStable();
+
+      expect(appliedThemes).toEqual([theme]);
+    });
+
+    it('should reuse generated styles when switching back to a theme', async () => {
+      setupTestBed();
+      const firstTheme: Theme = { name: 'first', schemes: {} };
+      service.applyTheme(firstTheme);
+      await TestBed.inject(ApplicationRef).whenStable();
+      const firstStyle = document.getElementById('__theme-first');
+      expect(firstStyle).not.toBeNull();
+      expect(document.documentElement.classList).toContain('theme-first');
+
+      service.applyTheme({ name: 'second', schemes: {} });
+      await TestBed.inject(ApplicationRef).whenStable();
+
+      expect(document.getElementById('__theme-first')).toBe(firstStyle);
+      expect(document.documentElement.classList).not.toContain('theme-first');
+      expect(document.documentElement.classList).toContain('theme-second');
+
+      service.applyTheme(firstTheme);
+      await TestBed.inject(ApplicationRef).whenStable();
+
+      expect(document.getElementById('__theme-first')).toBe(firstStyle);
+      expect(document.getElementById('__theme-second')).not.toBeNull();
+      expect(document.documentElement.classList).toContain('theme-first');
+      expect(document.documentElement.classList).not.toContain('theme-second');
+    });
+
+    it('should keep cached styles while changing the color scheme', async () => {
+      setupTestBed();
+      service.applyTheme({ name: 'example', schemes: {} }, 'dark');
+      await TestBed.inject(ApplicationRef).whenStable();
+      const style = document.getElementById('__theme-example');
+      expect(style).not.toBeNull();
+
+      service.applyThemeType('light');
+      await TestBed.inject(ApplicationRef).whenStable();
+
+      expect(document.getElementById('__theme-example')).toBe(style);
+      expect(document.documentElement.classList).toContain('theme-example');
+      expect(document.documentElement.classList).not.toContain('app--dark');
+    });
+
+    it('should replace cached styles only when explicitly overwritten', async () => {
+      setupTestBed();
+      const theme: Theme = { name: 'example', schemes: {} };
+      service.applyTheme(theme);
+      await TestBed.inject(ApplicationRef).whenStable();
+      const originalStyle = document.getElementById('__theme-example');
+      expect(originalStyle).not.toBeNull();
+
+      service.applyTheme(theme, undefined, true);
+      await TestBed.inject(ApplicationRef).whenStable();
+
+      const replacementStyle = document.getElementById('__theme-example');
+      expect(replacementStyle).not.toBeNull();
+      expect(replacementStyle).not.toBe(originalStyle);
+      expect(originalStyle!.isConnected).toBe(false);
+      expect(document.documentElement.classList).toContain('theme-example');
+
+      TestBed.resetTestingModule();
+
+      expect(document.getElementById('__theme-example')).toBeNull();
+      expect(document.documentElement.classList).not.toContain('theme-example');
+    });
+  });
+
   describe('on destruction', () => {
+    it('should remove all generated themes, including inactive styles', async () => {
+      setupTestBed();
+      service.applyTheme({ name: 'first', schemes: {} });
+      await TestBed.inject(ApplicationRef).whenStable();
+      service.applyTheme({ name: 'second', schemes: {} });
+      await TestBed.inject(ApplicationRef).whenStable();
+      expect(document.getElementById('__theme-first')).not.toBeNull();
+      expect(document.getElementById('__theme-second')).not.toBeNull();
+
+      TestBed.resetTestingModule();
+
+      expect(document.getElementById('__theme-first')).toBeNull();
+      expect(document.getElementById('__theme-second')).toBeNull();
+    });
+
+    it('should restore existing theme classes without discarding unrelated class changes', async () => {
+      setupTestBed();
+      const root = document.documentElement;
+      root.classList.add('theme-existing', 'app--dark');
+      const injector = createEnvironmentInjector(
+        [TestService],
+        TestBed.inject(EnvironmentInjector)
+      );
+      const themeService = injector.get(TestService);
+      themeService.applyTheme({ name: 'example', schemes: {} }, 'light');
+      await TestBed.inject(ApplicationRef).whenStable();
+      root.classList.add('unrelated-class', 'theme-unrelated');
+
+      try {
+        injector.destroy();
+
+        expect(root.classList).toContain('theme-existing');
+        expect(root.classList).not.toContain('app--dark');
+        expect(root.classList).toContain('unrelated-class');
+        expect(root.classList).toContain('theme-unrelated');
+        expect(root.classList).not.toContain('theme-example');
+      } finally {
+        if (!injector.destroyed) {
+          injector.destroy();
+        }
+        root.classList.remove('unrelated-class', 'theme-unrelated');
+      }
+    });
+
+    it('should preserve a pre-existing class for the applied theme', async () => {
+      setupTestBed();
+      document.documentElement.classList.add('theme-example');
+      service.applyTheme({ name: 'example', schemes: {} });
+      await TestBed.inject(ApplicationRef).whenStable();
+      service.applyTheme({ name: 'another', schemes: {} });
+      await TestBed.inject(ApplicationRef).whenStable();
+      expect(document.documentElement.classList).toContain('theme-example');
+
+      TestBed.resetTestingModule();
+
+      expect(document.documentElement.classList).toContain('theme-example');
+      expect(document.documentElement.classList).not.toContain('theme-another');
+    });
+
+    it('should not remove a previously applied class added again by another owner', async () => {
+      setupTestBed();
+      service.applyTheme({ name: 'first', schemes: {} });
+      await TestBed.inject(ApplicationRef).whenStable();
+      service.applyTheme({ name: 'second', schemes: {} });
+      await TestBed.inject(ApplicationRef).whenStable();
+      expect(document.documentElement.classList).not.toContain('theme-first');
+      document.documentElement.classList.add('theme-first');
+
+      TestBed.resetTestingModule();
+
+      expect(document.documentElement.classList).toContain('theme-first');
+      expect(document.documentElement.classList).not.toContain('theme-second');
+    });
+
+    it('should preserve theme styles that it did not create', async () => {
+      setupTestBed();
+      const style = document.createElement('style');
+      style.id = '__theme-existing';
+      document.body.append(style);
+
+      try {
+        service.applyTheme({ name: 'existing', schemes: {} });
+        await TestBed.inject(ApplicationRef).whenStable();
+        TestBed.resetTestingModule();
+
+        expect(document.getElementById('__theme-existing')).toBe(style);
+      } finally {
+        style.remove();
+      }
+    });
+
     it('should unsubscribe from automatic color-scheme changes', async () => {
       setupTestBed(true);
       service.applyThemeType('auto');
@@ -80,6 +259,20 @@ describe('SiThemeService', () => {
       expect(mediaQuery.observed).toBe(false);
       mediaQuery.next({ matches: false, breakpoints: { '(prefers-color-scheme: dark)': false } });
       expect(document.documentElement.classList).toContain('app--dark');
+    });
+
+    it('should not apply a theme that finishes loading after destruction', () => {
+      const activeTheme = new Subject<Theme | undefined>();
+      setupTestBed(false, {
+        loadActiveTheme: () => activeTheme,
+        loadThemeNames: () => of([])
+      });
+
+      TestBed.resetTestingModule();
+      activeTheme.next({ name: 'delayed', schemes: {} });
+
+      expect(document.getElementById('__theme-delayed')).toBeNull();
+      expect(document.documentElement.classList).not.toContain('theme-delayed');
     });
   });
 
@@ -161,16 +354,20 @@ describe('SiThemeService', () => {
   });
 
   describe('with a shadow root target', () => {
-    it('should leave the shadow host color scheme unchanged when destroyed', async () => {
+    it('should remove its theme styles and class without changing the color scheme', async () => {
       setupTestBed();
       const fixture = TestBed.createComponent(ShadowThemeHostComponent);
       const host = fixture.nativeElement as HTMLElement;
-      fixture.componentInstance.themeService.applyThemeType('dark');
+      const shadowRoot = host.shadowRoot!;
+      fixture.componentInstance.themeService.applyTheme({ name: 'example', schemes: {} }, 'dark');
       await fixture.whenStable();
+      expect(shadowRoot.getElementById('__theme-example')).not.toBeNull();
       expect(host.classList).toContain('app--dark');
 
       fixture.destroy();
 
+      expect(shadowRoot.getElementById('__theme-example')).toBeNull();
+      expect(host.classList).not.toContain('theme-example');
       expect(host.classList).toContain('app--dark');
     });
 

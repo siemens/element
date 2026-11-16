@@ -5,6 +5,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
 import {
+  DestroyRef,
   DOCUMENT,
   computed,
   effect,
@@ -15,7 +16,7 @@ import {
   signal,
   untracked
 } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
@@ -88,6 +89,7 @@ export class SiThemeService {
   private themes: Map<string, Theme> = new Map();
   private breakpointObserver = inject(BreakpointObserver);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly activeTheme = signal<{ theme?: Theme; overwrite?: boolean }>({});
   private previewTheme?: Theme;
 
   private themeStore =
@@ -117,9 +119,30 @@ export class SiThemeService {
     const prefersDark = this.prefersDark();
     return prefersDark === undefined ? undefined : prefersDark ? 'dark' : 'light';
   });
+  private destroyRef = inject(DestroyRef);
+  private themeStyles = new Set<HTMLStyleElement>();
 
   constructor() {
-    this.themeNames$.subscribe(names => (this._themeNames = names));
+    this.themeNames$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(names => (this._themeNames = names));
+
+    // Cached theme styles outlive individual effect runs, but never the service.
+    this.destroyRef.onDestroy(() => this.themeStyles.forEach(style => style.remove()));
+
+    effect(onCleanup => {
+      const { theme, overwrite } = this.activeTheme();
+      if (!this.isBrowser) {
+        return;
+      }
+      if (theme) {
+        if (theme.name !== ELEMENT_THEME_NAME && (overwrite || !this.hasThemeCSS(theme))) {
+          this.createThemeCSS(theme);
+        }
+        onCleanup(this.applyClass(`theme-${theme.name}`));
+      }
+      untracked(() => this.themeChange.emit(theme));
+    });
 
     effect(() => {
       const scheme = this.colorScheme();
@@ -137,7 +160,7 @@ export class SiThemeService {
     });
 
     this.getActiveTheme()
-      .pipe(take(1))
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: theme => this.applyThemeStyle(theme),
         error: error => console.error('Cannot load active theme', error)
@@ -145,7 +168,7 @@ export class SiThemeService {
 
     this.themeStore
       .loadThemeNames()
-      .pipe(take(1))
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: names => {
           names.push(ELEMENT_THEME_NAME);
@@ -218,22 +241,25 @@ export class SiThemeService {
   addOrUpdateTheme(theme: Theme): Observable<boolean> {
     const result = new ReplaySubject<boolean>(1);
 
-    this.themeStore.saveTheme(theme).subscribe({
-      next: saveResult => {
-        if (saveResult) {
-          this.themes.set(theme.name, this.cloneTheme(theme));
-          // Update list of theme names when this is a new one
-          if (!this.hasTheme(theme.name)) {
-            const names = this._themeNames.concat(theme.name);
-            this.themeNamesSub.next(names);
+    this.themeStore
+      .saveTheme(theme)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: saveResult => {
+          if (saveResult) {
+            this.themes.set(theme.name, this.cloneTheme(theme));
+            // Update list of theme names when this is a new one
+            if (!this.hasTheme(theme.name)) {
+              const names = this._themeNames.concat(theme.name);
+              this.themeNamesSub.next(names);
+            }
           }
-        }
-        result.next(saveResult);
-        result.complete();
-      },
-      error: error => result.error(error),
-      complete: () => result.complete()
-    });
+          result.next(saveResult);
+          result.complete();
+        },
+        error: error => result.error(error),
+        complete: () => result.complete()
+      });
     return result;
   }
 
@@ -247,19 +273,25 @@ export class SiThemeService {
       result.complete();
     } else {
       this.removeThemeCSS(name);
-      this.themeStore.deleteTheme(name).subscribe({
-        next: deleteResult => {
-          if (deleteResult) {
-            this.themes.delete(name);
-            const names = this._themeNames.filter(themeName => themeName !== name);
-            this.themeNamesSub.next(names);
-          }
-          result.next(deleteResult);
-          result.complete();
-        },
-        error: error => result.error(error),
-        complete: () => result.complete()
-      });
+      if (this.activeTheme().theme?.name === name) {
+        this.activeTheme.set({});
+      }
+      this.themeStore
+        .deleteTheme(name)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: deleteResult => {
+            if (deleteResult) {
+              this.themes.delete(name);
+              const names = this._themeNames.filter(themeName => themeName !== name);
+              this.themeNamesSub.next(names);
+            }
+            result.next(deleteResult);
+            result.complete();
+          },
+          error: error => result.error(error),
+          complete: () => result.complete()
+        });
     }
     return result;
   }
@@ -270,6 +302,7 @@ export class SiThemeService {
   resetPreview(): void {
     this.previewTheme = { name: '__preview', schemes: { dark: {}, light: {} } };
     this.removeThemeCSS(this.previewTheme.name);
+    this.themeTarget.forEachElement(element => element.classList.remove('theme-__preview'));
   }
 
   /**
@@ -304,7 +337,8 @@ export class SiThemeService {
           }
         }),
         // Only take one to avoid unsubscription issues
-        take(1)
+        take(1),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         next: theme => {
@@ -328,19 +362,19 @@ export class SiThemeService {
     if (!this.isBrowser || type === (this.themeType() ?? this.initialColorScheme)) {
       return;
     }
-
     this.themeType.set(type);
   }
 
   /**
    * Applies the given theme to the configured theme target. If no theme is given, the active theme is applied.
+   * DOM changes are applied during Angular's next synchronization.
    */
   applyTheme(theme?: Theme, type?: ThemeType, overwrite?: boolean): void {
     if (theme) {
       this.applyThemeStyle(theme, type, overwrite);
     } else {
       this.getActiveTheme()
-        .pipe(take(1))
+        .pipe(take(1), takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: loadedTheme => this.applyThemeStyle(loadedTheme, type),
           error: error => console.error('Cannot load active theme', error)
@@ -397,10 +431,7 @@ export class SiThemeService {
     }
     this.resetPreview();
 
-    if (theme && theme.name !== ELEMENT_THEME_NAME && (overwrite || !this.hasThemeCSS(theme))) {
-      this.createThemeCSS(theme);
-    }
-    this.activateTheme(theme);
+    this.activeTheme.set({ theme, overwrite });
 
     if (type) {
       this.applyThemeType(type);
@@ -409,21 +440,6 @@ export class SiThemeService {
     this.themeIcons.set(
       Object.fromEntries(Object.entries(theme?.icons ?? {}).map(([key, icon]) => [key, icon]))
     );
-    this.themeChange.emit(theme);
-  }
-
-  private activateTheme(theme?: Theme): void {
-    this.themeTarget.forEachElement(element => {
-      const classList = element.classList;
-      classList.forEach(className => {
-        if (className.startsWith('theme-')) {
-          classList.remove(className);
-        }
-      });
-      if (theme) {
-        classList.add(`theme-${theme.name}`);
-      }
-    });
   }
 
   private hasThemeCSS(theme: Theme): boolean {
@@ -431,7 +447,7 @@ export class SiThemeService {
     return !!this.themeTarget.getStyleElement(id);
   }
 
-  private createThemeCSS(theme: Theme): void {
+  private createThemeCSS(theme: Theme): HTMLStyleElement {
     let css = '';
     const themeSelector = this.createThemeSelector(theme.name);
     if (theme.schemes.light) {
@@ -451,6 +467,8 @@ export class SiThemeService {
     cssElement.textContent = css;
 
     this.themeTarget.appendStyleElement(cssElement);
+    this.themeStyles.add(cssElement);
+    return cssElement;
   }
 
   private createThemeSelector(name: string, dark: boolean = false): string {
@@ -471,8 +489,24 @@ export class SiThemeService {
 
   private removeThemeCSS(name: string): void {
     const id = `__theme-${name}`;
-    this.themeTarget.getStyleElement(id)?.remove();
-    this.themeTarget.forEachElement(element => element.classList.remove(`theme-${name}`));
+    const style = this.themeTarget.getStyleElement(id);
+    style?.remove();
+    if (style) {
+      this.themeStyles.delete(style);
+    }
+  }
+
+  private applyClass(className: string, present = true): () => void {
+    const previousClasses = new Map<HTMLElement, boolean>();
+    this.themeTarget.forEachElement(element => {
+      previousClasses.set(element, element.classList.contains(className));
+      element.classList.toggle(className, present);
+    });
+    return () => {
+      previousClasses.forEach((wasPresent, element) => {
+        element.classList.toggle(className, wasPresent);
+      });
+    };
   }
 
   private cloneTheme(theme: Theme): Theme {
