@@ -90,7 +90,7 @@ export class SiThemeService {
   private breakpointObserver = inject(BreakpointObserver);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly activeTheme = signal<{ theme?: Theme; overwrite?: boolean }>({});
-  private previewTheme?: Theme;
+  private readonly previewTheme = signal<Theme | undefined>(undefined);
 
   private themeStore =
     inject(SiThemeStore, { optional: true }) ?? new SiDefaultThemeStore(this.isBrowser);
@@ -142,6 +142,21 @@ export class SiThemeService {
         onCleanup(this.applyClass(`theme-${theme.name}`));
       }
       untracked(() => this.themeChange.emit(theme));
+    });
+
+    effect(onCleanup => {
+      const preview = this.previewTheme();
+      if (!this.isBrowser || !preview) {
+        return;
+      }
+      const style = this.createThemeCSS(preview);
+      const restoreClass = this.applyClass('theme-__preview');
+      onCleanup(() => {
+        restoreClass();
+        style.remove();
+        this.themeStyles.delete(style);
+      });
+      untracked(() => this.dispatchThemeSwitchEvent());
     });
 
     effect(() => {
@@ -300,9 +315,7 @@ export class SiThemeService {
    * Resets the preview theme to the default element theme.
    */
   resetPreview(): void {
-    this.previewTheme = { name: '__preview', schemes: { dark: {}, light: {} } };
-    this.removeThemeCSS(this.previewTheme.name);
-    this.themeTarget.forEachElement(element => element.classList.remove('theme-__preview'));
+    this.previewTheme.set(undefined);
   }
 
   /**
@@ -386,13 +399,13 @@ export class SiThemeService {
    * Updates the given property of the preview theme.
    */
   updateProperty(name: string, value: string, type: keyof ThemeColorSchemes): void {
-    if (!this.previewTheme) {
-      this.resetPreview();
-    }
-    this.previewTheme!.schemes[type]![name] = value;
-    this.createThemeCSS(this.previewTheme!);
-    this.themeTarget.forEachElement(element => element.classList.add('theme-__preview'));
-    this.dispatchThemeSwitchEvent();
+    this.previewTheme.update(preview => ({
+      name: '__preview',
+      schemes: {
+        ...preview?.schemes,
+        [type]: { ...preview?.schemes[type], [name]: value }
+      }
+    }));
   }
 
   /**

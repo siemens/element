@@ -58,7 +58,7 @@ describe('SiThemeService', () => {
     service.resolvedColorScheme$.subscribe(themeSwitchSpy);
   };
 
-  // Restore shared DOM state until all theme state is owned by effects.
+  // Color-scheme classes persist after service destruction; isolate each test's root state.
   aroundEach(async runTest => {
     const rootClassName = document.documentElement.className;
     try {
@@ -66,7 +66,6 @@ describe('SiThemeService', () => {
     } finally {
       TestBed.resetTestingModule();
       document.documentElement.className = rootClassName;
-      document.querySelectorAll('style[id^="__theme-"]').forEach(style => style.remove());
     }
   });
 
@@ -154,20 +153,56 @@ describe('SiThemeService', () => {
     });
   });
 
+  describe('with a preview theme', () => {
+    it('should preserve preview properties across successive updates', async () => {
+      setupTestBed();
+      service.updateProperty('--element-base-0', '#fff', 'light');
+      await TestBed.inject(ApplicationRef).whenStable();
+      service.updateProperty('--element-base-0', '#000', 'dark');
+      await TestBed.inject(ApplicationRef).whenStable();
+
+      const preview = document.getElementById('__theme-__preview');
+      expect(preview?.textContent).toContain('--element-base-0: #fff');
+      expect(preview?.textContent).toContain('--element-base-0: #000');
+      expect(document.querySelectorAll('#__theme-__preview')).toHaveLength(1);
+    });
+
+    it('should reset the preview without discarding the active theme cache', async () => {
+      setupTestBed();
+      service.applyTheme({ name: 'example', schemes: {} });
+      service.updateProperty('--element-base-0', '#fff', 'light');
+      await TestBed.inject(ApplicationRef).whenStable();
+      const themeStyle = document.getElementById('__theme-example');
+      expect(document.getElementById('__theme-__preview')).not.toBeNull();
+      expect(document.documentElement.classList).toContain('theme-__preview');
+
+      service.resetPreview();
+      await TestBed.inject(ApplicationRef).whenStable();
+
+      expect(document.getElementById('__theme-__preview')).toBeNull();
+      expect(document.documentElement.classList).not.toContain('theme-__preview');
+      expect(document.getElementById('__theme-example')).toBe(themeStyle);
+      expect(document.documentElement.classList).toContain('theme-example');
+    });
+  });
+
   describe('on destruction', () => {
-    it('should remove all generated themes, including inactive styles', async () => {
+    it('should remove all generated themes, including inactive and preview styles', async () => {
       setupTestBed();
       service.applyTheme({ name: 'first', schemes: {} });
       await TestBed.inject(ApplicationRef).whenStable();
       service.applyTheme({ name: 'second', schemes: {} });
+      service.updateProperty('--element-base-0', '#fff', 'light');
       await TestBed.inject(ApplicationRef).whenStable();
       expect(document.getElementById('__theme-first')).not.toBeNull();
       expect(document.getElementById('__theme-second')).not.toBeNull();
+      expect(document.getElementById('__theme-__preview')).not.toBeNull();
 
       TestBed.resetTestingModule();
 
       expect(document.getElementById('__theme-first')).toBeNull();
       expect(document.getElementById('__theme-second')).toBeNull();
+      expect(document.getElementById('__theme-__preview')).toBeNull();
     });
 
     it('should restore existing theme classes without discarding unrelated class changes', async () => {
