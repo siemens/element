@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+@use '@siemens/element-ng/element-ng';
+
 $siemens-font-path: '~@simpl/brand/assets/fonts' !default;
 $icon-font-path: '~@siemens/element-icons/fonts' !default;
 

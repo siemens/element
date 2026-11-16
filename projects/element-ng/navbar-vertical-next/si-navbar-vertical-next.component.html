@@ -9,6 +9,15 @@
     [class.text-only]="textOnly()"
   >
     <div class="collapse-toggle ms-auto">
+      @if (inlineCollapse()) {
+        <div
+          class="navigation-action"
+          [resizeThrottle]="0"
+          (siResizeObserver)="actionsWidth.set($event.width)"
+        >
+          <ng-content select="[si-navbar-vertical-next-action]" />
+        </div>
+      }
       <div class="mobile-drawer focus-inside">
         <button
           type="button"

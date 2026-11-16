@@ -43,8 +43,9 @@
   - text: Placeholder for the content of the page, using the fixed height layout.
 - text: Status bar Page title Thank you
 - dialog "Tour completed":
-  - text: 7 of 7 Tour completed
+  - text: ""
   - button "Close"
-  - text: The guided tour is now complete. Thank you.
+  - img "A hand holding a phone displaying a building, with location and fire symbols."
+  - text: The guided tour is now complete. Thank you. 7 of 7
   - button "Back"
   - button "Done"

@@ -43,8 +43,8 @@
   - text: Placeholder for the content of the page, using the fixed height layout.
 - text: Status bar Page title Thank you
 - dialog "Page title":
-  - text: 2 of 7 Page title
+  - text: ""
   - button "Close"
-  - text: Title describing the page content.
+  - text: Title describing the page content. 2 of 7
   - button "Back"
   - button "Next"

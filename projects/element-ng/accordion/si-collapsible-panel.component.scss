@@ -3,7 +3,7 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
-  --__radius: var(--si-accordion-radius, #{variables.$element-button-radius});
+  --__radius: var(--si-accordion-radius, #{variables.$si-sys-sizing-border-radius-xs});
   display: flex;
   flex-direction: column;
   background: variables.$si-sys-color-background-0;

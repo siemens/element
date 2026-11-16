@@ -28,7 +28,7 @@ si-search-bar {
 .btn-search {
   display: none;
   border: 0;
-  border-radius: all-variables.$element-radius-2;
+  border-radius: all-variables.$si-sys-sizing-border-radius-sm;
   block-size: all-variables.$input-height;
   inline-size: calc(1.5rem + 2 * map.get(all-variables.$spacers-inline, 2));
   text-align: start;

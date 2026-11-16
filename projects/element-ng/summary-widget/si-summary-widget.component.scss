@@ -5,7 +5,7 @@
   display: inline-flex;
   align-items: start;
   block-size: 100%;
-  border-radius: variables.$element-radius-1;
+  border-radius: variables.$si-sys-sizing-border-radius-xs;
 
   &.interactive {
     cursor: pointer;

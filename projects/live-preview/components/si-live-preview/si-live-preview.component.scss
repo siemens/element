@@ -125,11 +125,14 @@ $font-size-small: 11px;
   max-block-size: 414px;
   transition: max-block-size 0.5s;
 
+  &:not(.is-mobile) {
+    border-block-start: 1px solid variables.$live-preview-border-color;
+  }
+
   &.is-collapsed {
     max-block-size: 41px;
     overflow: hidden;
     background-color: variables.$live-preview-bar-background-color;
-    border-block-start: 1px solid variables.$live-preview-border-color;
 
     .collapse-icon {
       transform: rotate(180deg);
@@ -330,6 +333,15 @@ fieldset {
 
   ::ng-deep textarea {
     box-shadow: none;
+  }
+}
+
+// Embedded docs size the example independently of the code panel.
+:host(.embedded:not(.editor-fullscreen):not(.is-mobile)) {
+  .example {
+    flex: 0 0 var(--preview-height, 204px);
+    min-block-size: 0;
+    overflow: hidden;
   }
 }
 

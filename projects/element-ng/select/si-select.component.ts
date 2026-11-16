@@ -130,7 +130,6 @@ export class SiSelectComponent<T> implements SiFormItemControl {
   /**
    * Enables the filter input
    * @defaultValue false
-   * @defaultref {@link SiSelectComponent#_hasFilter}
    */
   readonly hasFilter = input(false, { transform: booleanAttribute });
 

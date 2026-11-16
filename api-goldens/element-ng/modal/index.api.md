@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Binding } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { EnvironmentInjector } from '@angular/core';
 import * as i0 from '@angular/core';
@@ -29,6 +30,7 @@ export interface ModalDependencyInjectionOptions {
 export interface ModalOptions<T = Record<string, any>> extends ModalDependencyInjectionOptions {
     animated?: boolean;
     ariaLabelledBy?: string;
+    bindings?: Binding[];
     class?: string;
     ignoreBackdropClick?: boolean;
     inputValues?: Record<string, unknown>;

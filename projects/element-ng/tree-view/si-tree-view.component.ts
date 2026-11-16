@@ -194,7 +194,6 @@ export class SiTreeViewComponent
    * Number of rows per page. Used for the virtualization of rows (number of
    * rows per page).
    * @defaultValue 10
-   * @defaultref {@link SiTreeViewVirtualizationService#pageSize}
    */
   readonly pageSize = input(10, {
     transform: (value: number) => (value < 5 ? 5 : value)
@@ -203,7 +202,6 @@ export class SiTreeViewComponent
   /**
    * Number of pages which are virtualized.
    * @defaultValue 6
-   * @defaultref {@link SiTreeViewVirtualizationService#pagesVirtualized}
    */
   readonly pagesVirtualized = input(6, {
     transform: (value: number) => (value < 5 ? 5 : value)
@@ -227,7 +225,6 @@ export class SiTreeViewComponent
   /**
    * Sets the root tree items of all the trees (Required).
    * @defaultValue []
-   * @defaultref {@link _items}
    */
   readonly items = input<TreeItem[]>([]);
 
@@ -262,7 +259,6 @@ export class SiTreeViewComponent
   /**
    * Shows or hides additional information below the label.
    * @defaultValue false
-   * @defaultref {@link SiTreeViewService#enableDataField2}
    */
   readonly enableDataField2 = input(false, { transform: booleanAttribute });
 
@@ -281,7 +277,6 @@ export class SiTreeViewComponent
   /**
    * Shows or hides context menu button and also controls context menu visibility on right click.
    * @defaultValue true
-   * @defaultref {@link SiTreeViewService#enableContextMenuButton}
    */
   readonly enableContextMenuButton = input(true, { transform: booleanAttribute });
 
@@ -304,7 +299,6 @@ export class SiTreeViewComponent
    * breadcrumb. A flat tree only shows the one level at the time and lists the
    * tree items of the current level as a list.
    * @defaultValue false
-   * @defaultref {@link SiTreeViewService#flatTree}
    */
   readonly flatTree = input(false);
 
@@ -313,14 +307,12 @@ export class SiTreeViewComponent
    * Important: In this mode, only the first two hierarchies of the tree model
    * are considered!
    * @defaultValue false
-   * @defaultref {@link SiTreeViewService#groupedList}
    */
   readonly groupedList = input(false, { transform: booleanAttribute });
 
   /**
    * Sets if the tree items shall show a checkbox.
    * @defaultValue false
-   * @defaultref {@link SiTreeViewService#enableCheckbox}
    */
   readonly enableCheckbox = input(false, { transform: booleanAttribute });
 

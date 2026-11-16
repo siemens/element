@@ -14,11 +14,12 @@
   z-index: 0;
   inset-block-start: layout.$toggle-parked-block-start;
   inset-inline-start: calc(
-    #{layout.$toggle-parked-inline-start} + #{layout.$toggle-size} + #{layout.$segmented-gap}
+    #{layout.$toggle-parked-inline-start} + var(--si-navbar-parked-controls-offset) +
+      #{layout.$toggle-size} + #{layout.$segmented-gap}
   );
   max-inline-size: calc(
     100vi - (2 * #{layout.$toggle-parked-inline-start}) - #{layout.$toggle-size} -
-      #{layout.$segmented-gap}
+      #{layout.$segmented-gap} - var(--si-navbar-parked-controls-offset)
   );
   block-size: layout.$toggle-size;
   min-inline-size: 0;

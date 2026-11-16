@@ -5,9 +5,8 @@
 import { Component, DebugElement, inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { MenuItem } from '@siemens/element-ng/menu';
+import { MenuItemAction } from '@siemens/element-ng/menu';
 
-import { MessageAction } from './message-action.model';
 import { SiAiMessageComponent as TestComponent } from './si-ai-message.component';
 
 @Component({
@@ -23,15 +22,15 @@ describe('SiAiMessageComponent', () => {
   let debugElement: DebugElement;
   let content: WritableSignal<string>;
   let loading: WritableSignal<boolean>;
-  let actions: WritableSignal<MessageAction[]>;
-  let secondaryActions: WritableSignal<MenuItem[]>;
+  let actions: WritableSignal<MenuItemAction[]>;
+  let secondaryActions: WritableSignal<MenuItemAction[]>;
   let actionParam: WritableSignal<unknown>;
 
   beforeEach(() => {
     content = signal('');
     loading = signal(false);
-    actions = signal<MessageAction[]>([]);
-    secondaryActions = signal<MenuItem[]>([]);
+    actions = signal<MenuItemAction[]>([]);
+    secondaryActions = signal<MenuItemAction[]>([]);
     actionParam = signal<unknown>(undefined);
 
     fixture = TestBed.createComponent(TestComponent, {
@@ -82,6 +81,7 @@ describe('SiAiMessageComponent', () => {
   it('should render action buttons when actions are provided', async () => {
     actions.set([
       {
+        type: 'action',
         label: 'Copy',
         icon: 'element-export',
         action: () => {}
@@ -120,11 +120,13 @@ describe('SiAiMessageComponent', () => {
   it('should render all action buttons', async () => {
     actions.set([
       {
+        type: 'action',
         label: 'Thumbs Up',
         icon: 'element-thumbs-up',
         action: () => {}
       },
       {
+        type: 'action',
         label: 'Thumbs Down',
         icon: 'element-thumbs-down',
         action: () => {}
@@ -154,8 +156,9 @@ describe('SiAiMessageComponent', () => {
 
   it('should call action with actionParam', async () => {
     const actionSpy = vi.fn();
-    const testActions: MessageAction[] = [
+    const testActions: MenuItemAction[] = [
       {
+        type: 'action',
         label: 'Copy',
         icon: 'element-export',
         action: actionSpy
@@ -183,6 +186,7 @@ describe('SiAiMessageComponent', () => {
   it('should hide action buttons when loading', async () => {
     actions.set([
       {
+        type: 'action',
         label: 'Copy',
         icon: 'element-export',
         action: () => {}

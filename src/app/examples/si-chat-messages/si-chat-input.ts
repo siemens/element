@@ -3,11 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject, signal } from '@angular/core';
-import {
-  SiChatInputComponent,
-  MessageAction,
-  ChatInputAttachment
-} from '@siemens/element-ng/chat-messages';
+import { SiChatInputComponent, ChatInputAttachment } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItemAction } from '@siemens/element-ng/menu';
@@ -28,8 +24,9 @@ export class SampleComponent {
   readonly disabled = signal(false);
   readonly interruptible = signal(false);
 
-  actions: MessageAction[] = [
+  actions: MenuItemAction[] = [
     {
+      type: 'action',
       label: 'Take photo',
       icon: 'element-camera',
       action: () => this.logEvent('Camera clicked')

@@ -1,4 +1,3 @@
-@use '../variables/semantic-tokens';
 @use '../variables/spacers';
 @use '../variables/si-sys-variables';
 @use '../variables/zindex';
@@ -29,7 +28,7 @@ $si-popover-bg: var(--popover-bg-color, variables.$popover-bg);
   background-color: $si-popover-bg;
   background-clip: padding-box;
   box-shadow: si-sys-variables.$si-sys-color-effects-shadow-30;
-  border-radius: semantic-tokens.$element-radius-2;
+  border-radius: si-sys-variables.$si-sys-sizing-border-radius-sm;
 
   &.auto-width {
     max-inline-size: unset;
@@ -39,7 +38,7 @@ $si-popover-bg: var(--popover-bg-color, variables.$popover-bg);
     .popover-body {
       padding: 0;
       overflow: hidden;
-      border-radius: semantic-tokens.$element-radius-2;
+      border-radius: si-sys-variables.$si-sys-sizing-border-radius-sm;
     }
   }
 

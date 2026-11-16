@@ -87,7 +87,8 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
    * Sets a selected tab index. This will activate the tab of the provided
    * index, activates the tab and fires a notification about the change.
    * If index is passed as -1 i.e. `selectedTabIndex = -1`, this implies to clear all tab selection.
-   * @defaultref {@link _selectedTabIndex}
+   *
+   * @defaultValue 0
    */
   @Input()
   set selectedTabIndex(tabIndex: number) {

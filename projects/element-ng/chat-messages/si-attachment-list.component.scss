@@ -5,7 +5,7 @@ $attachment-list-bg: var(--attachment-list-bg, transparent);
 $attachment-name-color: var(--attachment-name-color, variables.$si-sys-color-text-secondary);
 
 .attachment-item {
-  border-radius: variables.$element-radius-2;
+  border-radius: variables.$si-sys-sizing-border-radius-sm;
   overflow: hidden;
   background-color: $attachment-list-bg;
   color: $attachment-name-color;
@@ -47,5 +47,5 @@ $attachment-name-color: var(--attachment-name-color, variables.$si-sys-color-tex
 }
 
 .expand-button {
-  border-radius: variables.$element-radius-2;
+  border-radius: variables.$si-sys-sizing-border-radius-sm;
 }

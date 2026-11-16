@@ -27,12 +27,12 @@
   background-color: unset;
   padding: 0;
   cursor: pointer;
-  border-radius: variables.$element-button-radius;
+  border-radius: variables.$si-sys-sizing-border-radius-xs;
 }
 
 :host {
   background: variables.$si-sys-color-background-1;
-  border-radius: variables.$element-radius-2;
+  border-radius: variables.$si-sys-sizing-border-radius-sm;
   display: flex;
   flex-direction: column;
 }
@@ -150,7 +150,7 @@
       content: '';
       inset: 1px;
       border: 1px solid variables.$si-sys-color-border-1;
-      border-radius: variables.$element-radius-2;
+      border-radius: variables.$si-sys-sizing-border-radius-sm;
       display: inline-block;
     }
   }
@@ -178,8 +178,8 @@
   }
 
   .range-hover-end {
-    border-start-end-radius: variables.$element-button-radius;
-    border-end-end-radius: variables.$element-button-radius;
+    border-start-end-radius: variables.$si-sys-sizing-border-radius-xs;
+    border-end-end-radius: variables.$si-sys-sizing-border-radius-xs;
   }
 
   td:is(.range-start, .range-end) {
@@ -200,13 +200,13 @@
   }
 
   td.range-start {
-    border-start-start-radius: variables.$element-button-radius;
-    border-end-start-radius: variables.$element-button-radius;
+    border-start-start-radius: variables.$si-sys-sizing-border-radius-xs;
+    border-end-start-radius: variables.$si-sys-sizing-border-radius-xs;
   }
 
   td.range-end {
-    border-start-end-radius: variables.$element-button-radius;
-    border-end-end-radius: variables.$element-button-radius;
+    border-start-end-radius: variables.$si-sys-sizing-border-radius-xs;
+    border-end-end-radius: variables.$si-sys-sizing-border-radius-xs;
   }
 
   .calendar-button {

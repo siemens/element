@@ -11,7 +11,7 @@ import {
   elementThumbsDown,
   elementThumbsUp
 } from '@siemens/element-icons';
-import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
+import { SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
 import { addIcons } from '@siemens/element-ng/icon';
 import { SiMarkdownCitation, SiMarkdownComponent } from '@siemens/element-ng/markdown';
 import { MenuItemAction } from '@siemens/element-ng/menu';
@@ -49,18 +49,21 @@ You can use \`inline code\` and create lists:
 - _Italic text_ for subtle emphasis
 `;
 
-  actions: MessageAction[] = [
+  actions: MenuItemAction[] = [
     {
+      type: 'action',
       label: 'Good response',
       icon: this.icons.elementThumbsUp,
       action: (messageId: string) => this.logEvent(`Thumbs up for message ${messageId}`)
     },
     {
+      type: 'action',
       label: 'Bad response',
       icon: this.icons.elementThumbsDown,
       action: (messageId: string) => this.logEvent(`Thumbs down for message ${messageId}`)
     },
     {
+      type: 'action',
       label: 'Copy response',
       icon: this.icons.elementCopy,
       action: (messageId: string) => this.logEvent(`Copy message ${messageId}`)

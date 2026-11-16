@@ -541,7 +541,9 @@ describe('ListDetailsComponent', () => {
       await routerHarness.fixture.whenStable();
       expect(debugElement.query(By.css('si-details-pane-body'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBe(true);
-      debugElement.query(By.css('.si-details-header-back')).nativeElement.click();
+      debugElement
+        .query(By.css('si-details-pane-header button[aria-label="Back"]'))
+        .nativeElement.click();
       await routerHarness.fixture.whenStable();
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();

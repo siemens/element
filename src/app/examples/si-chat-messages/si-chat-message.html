@@ -10,12 +10,17 @@
       @for (action of actions; track $index) {
         <button
           type="button"
-          class="btn btn-tertiary-ghost btn-icon"
+          class="btn btn-tertiary-ghost"
+          [class.btn-icon]="!!action.icon"
           [disabled]="action.disabled"
           [attr.aria-label]="action.label | translate"
-          (click)="action.action('message-1', action)"
+          (click)="runAction(action, 'message-1')"
         >
-          <si-icon [icon]="action.icon" />
+          @if (action.icon) {
+            <si-icon [icon]="action.icon" />
+          } @else {
+            {{ action.label | translate }}
+          }
         </button>
       }
       <button
@@ -42,12 +47,17 @@
         @for (action of actions; track $index) {
           <button
             type="button"
-            class="btn btn-tertiary-ghost btn-icon"
+            class="btn btn-tertiary-ghost"
+            [class.btn-icon]="!!action.icon"
             [disabled]="action.disabled"
             [attr.aria-label]="action.label | translate"
-            (click)="action.action('message-2', action)"
+            (click)="runAction(action, 'message-2')"
           >
-            <si-icon [icon]="action.icon" />
+            @if (action.icon) {
+              <si-icon [icon]="action.icon" />
+            } @else {
+              {{ action.label | translate }}
+            }
           </button>
         }
       </div>

@@ -65,7 +65,6 @@ test('si-dashboard/si-value-widget', ({ si }) => si.static());
 test('si-datepicker/si-timepicker', ({ si }) => si.static());
 test('si-electron-titlebar/si-electron-titlebar', ({ si }) => si.static());
 test('si-electron-titlebar/si-fixed-height-layout-side-panel', ({ si }) => si.static());
-test('si-empty-state/si-empty-state', ({ si }) => si.static());
 test('si-footer/si-footer', ({ si }) => si.static());
 test('http-error-pages/http-error-pages', async ({ page, si }) => {
   await si.visitExample('http-error-pages/http-error-pages', true);
@@ -147,6 +146,7 @@ test('si-chat-messages/si-chat-history', async ({ page, si }) => {
   await expect(page.locator('.header-title')).toHaveText('Chat history');
   await si.runVisualAndA11yTests('history');
 });
+test('si-chat-messages/si-ai-chat', ({ si }) => si.static());
 test('ag-grid/ag-grid-empty-state', async ({ si }) => {
   await si.static({ disabledA11yRules: ['aria-required-children'] });
 });

@@ -45,13 +45,13 @@
 
   li {
     &:first-child .list-item {
-      border-start-start-radius: variables.$element-radius-1;
-      border-start-end-radius: variables.$element-radius-1;
+      border-start-start-radius: variables.$si-sys-sizing-border-radius-xs;
+      border-start-end-radius: variables.$si-sys-sizing-border-radius-xs;
     }
 
     &:last-child .list-item {
-      border-end-start-radius: variables.$element-radius-1;
-      border-end-end-radius: variables.$element-radius-1;
+      border-end-start-radius: variables.$si-sys-sizing-border-radius-xs;
+      border-end-end-radius: variables.$si-sys-sizing-border-radius-xs;
     }
 
     &:not(:first-child) {

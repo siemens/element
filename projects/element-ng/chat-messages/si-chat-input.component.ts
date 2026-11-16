@@ -15,8 +15,9 @@ import {
   input,
   model,
   output,
+  viewChild,
   signal,
-  viewChild
+  effect
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -31,12 +32,16 @@ import {
   FileUploadError
 } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
+import {
+  MenuItemAction,
+  SiMenuActionService,
+  SiMenuFactoryComponent
+} from '@siemens/element-ng/menu';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
-import { MessageAction } from './message-action.model';
 import { Attachment, SiAttachmentListComponent } from './si-attachment-list.component';
+import { SI_CHAT_INPUT_PARENT, SiChatInputParent } from './si-chat-input-token';
 
 /**
  * Attachment item interface for file attachments in chat messages, extension of {@link Attachment} for {@link SiAttachmentListComponent} to use within {@link SiChatInputComponent}.
@@ -46,7 +51,8 @@ import { Attachment, SiAttachmentListComponent } from './si-attachment-list.comp
  * @see {@link Attachment} for base attachment interface
  * @see {@link SiAttachmentListComponent} for the attachment list component
  * @see {@link SiChatInputComponent} for the chat input component
- * @see {@link SiChatContainerComponent} for the chat container component
+ * @see {@link SiChatContainerComponent} for the base chat container component where this can be used
+ * @see {@link SiAiChatComponent} for the AI chat container where this needs to be used
  *
  * @experimental
  */
@@ -73,6 +79,7 @@ export interface ChatInputAttachment extends Attachment {
  * - Displaying primary and secondary actions.
  *
  * Additionally to the inputs and outputs documented here, the component supports content projection via the following slots:
+ *
  * - Default content: Custom action buttons to display inline, prefer using the `actions` input for buttons, can be used in addition.
  * - `siChatInputDisclaimer` selector: Custom disclaimer content to display below the input area, prefer using the `disclaimer` input for simple text disclaimers.
  *
@@ -108,6 +115,18 @@ export class SiChatInputComponent implements AfterViewInit {
     elementStopFilled
   });
 
+  private readonly parent = inject<SiChatInputParent>(SI_CHAT_INPUT_PARENT, { optional: true });
+
+  constructor() {
+    effect(() => {
+      const parent = this.parent;
+      if (parent) {
+        this.sending.set(parent.inputSending());
+        this.interruptible.set(parent.inputInterruptible());
+      }
+    });
+  }
+
   /**
    * Current input value
    * @defaultValue ''
@@ -136,7 +155,7 @@ export class SiChatInputComponent implements AfterViewInit {
    * Whether a message is currently being sent, also prevent the sending of new ones while still allowing the user to type
    * @defaultValue false
    */
-  readonly sending = input(false, { transform: booleanAttribute });
+  readonly sending = model(false);
 
   /**
    * Whether the input supports interrupting ongoing operations. When active,
@@ -144,7 +163,7 @@ export class SiChatInputComponent implements AfterViewInit {
    * If sending is true, the interrupt button will be disabled.
    * @defaultValue false
    */
-  readonly interruptible = input(false, { transform: booleanAttribute });
+  readonly interruptible = model(false);
 
   /**
    * Maximum number of characters allowed
@@ -163,13 +182,13 @@ export class SiChatInputComponent implements AfterViewInit {
    * Primary actions available in the input. Provide at most one action.
    * @defaultValue []
    */
-  readonly actions = input<MessageAction[]>([]);
+  readonly actions = input<MenuItemAction[]>([]);
 
   /**
    * Secondary actions available in dropdown menu
    * @defaultValue []
    */
-  readonly secondaryActions = input<MenuItem[]>([]);
+  readonly secondaryActions = input<MenuItemAction[]>([]);
 
   /**
    * Whether file attachments are supported
@@ -318,7 +337,7 @@ export class SiChatInputComponent implements AfterViewInit {
   protected readonly hasAttachments = computed(() => this.attachments().length > 0);
   protected readonly hasActions = computed(() => this.actions().length > 0);
   protected readonly hasSecondaryActions = computed(() => this.secondaryActions().length > 0);
-  protected readonly combinedMenuActions = computed<MenuItem[]>(() => [
+  protected readonly combinedMenuActions = computed<MenuItemAction[]>(() => [
     ...(this.allowAttachments()
       ? [
           {
@@ -327,7 +346,7 @@ export class SiChatInputComponent implements AfterViewInit {
             icon: this.icons.elementAttachment,
             disabled: this.disabled(),
             action: () => this.triggerFileInput()
-          } satisfies MenuItem
+          } satisfies MenuItemAction
         ]
       : []),
     ...this.secondaryActions()
@@ -359,6 +378,15 @@ export class SiChatInputComponent implements AfterViewInit {
   protected readonly dragOver = signal(false);
 
   private readonly injector = inject(Injector);
+  private readonly menuActionService = inject(SiMenuActionService, { optional: true });
+
+  protected runAction(action: MenuItemAction): void {
+    if (typeof action.action === 'function') {
+      action.action(this.actionParam(), action);
+    } else {
+      this.menuActionService?.actionTriggered(action, this.actionParam());
+    }
+  }
 
   protected onInputChange(value: string): void {
     this.value.set(value);
@@ -384,6 +412,7 @@ export class SiChatInputComponent implements AfterViewInit {
         content: this.value(),
         attachments: this.attachments()
       });
+      this.parent?.onInputSend();
 
       this.value.set('');
       this.attachments.set([]);

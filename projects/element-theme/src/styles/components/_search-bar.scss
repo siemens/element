@@ -1,5 +1,4 @@
 @use '../variables';
-@use '../variables/semantic-tokens';
 @use '../variables/si-sys-variables';
 @use '../bootstrap/variables' as bootstrap-variables;
 
@@ -20,7 +19,7 @@
 .search-bar-input.form-control {
   transition: none;
   background-color: si-sys-variables.$si-sys-color-background-1 !important; // stylelint-disable-line declaration-no-important
-  border-radius: semantic-tokens.$element-radius-2;
+  border-radius: si-sys-variables.$si-sys-sizing-border-radius-sm;
   border-width: 0;
 
   &::placeholder {

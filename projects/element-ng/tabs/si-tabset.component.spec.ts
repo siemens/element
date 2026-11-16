@@ -6,7 +6,7 @@ import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
+import { provideRouter, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { page } from 'vitest/browser';
 
@@ -516,6 +516,73 @@ describe('SiTabset Routing', () => {
     await fixture.whenStable();
     fixture.detectChanges();
     expect(await (await tabsetHarness.getTabContent()).text()).toBe('Content by routing');
+  });
+});
+
+describe('SiTabset initial routing', () => {
+  @Component({
+    imports: [SiTabsetComponent, SiTabLinkComponent, RouterLink, RouterOutlet],
+    template: `
+      <si-tabset>
+        <a si-tab heading="Overview" routerLink="./"></a>
+        <a si-tab heading="Details" routerLink="./details"></a>
+        <router-outlet />
+      </si-tabset>
+    `
+  })
+  class RoutedTabsComponent {}
+
+  @Component({ imports: [RouterOutlet], template: '<router-outlet />' })
+  class RootComponent {}
+
+  let fixture: ComponentFixture<RootComponent>;
+  let router: Router;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter([
+          {
+            path: 'tabs',
+            component: RoutedTabsComponent,
+            children: [
+              { path: '', component: SiTabRouteComponent },
+              { path: 'details', component: SiTabRouteComponent }
+            ]
+          },
+          { path: 'other', component: SiTabRouteComponent }
+        ])
+      ]
+    });
+    fixture = TestBed.createComponent(RootComponent);
+    fixture.detectChanges();
+    router = TestBed.inject(Router);
+  });
+
+  it('should preserve the child route on initial navigation', async () => {
+    expect(router.navigated).toBe(false);
+
+    await router.navigateByUrl('/tabs/details');
+    await fixture.whenStable();
+
+    expect(router.url).toBe('/tabs/details');
+    await expect
+      .element(page.getByRole('tab', { name: 'Details' }))
+      .toHaveAttribute('aria-selected', 'true');
+  });
+
+  it('should preserve the child route when entering a new tabset after navigation', async () => {
+    await router.navigateByUrl('/other');
+    await fixture.whenStable();
+    expect(router.navigated).toBe(true);
+
+    await router.navigateByUrl('/tabs/details');
+    await fixture.whenStable();
+
+    expect(router.url).toBe('/tabs/details');
+    await expect
+      .element(page.getByRole('tab', { name: 'Details' }))
+      .toHaveAttribute('aria-selected', 'true');
   });
 });
 

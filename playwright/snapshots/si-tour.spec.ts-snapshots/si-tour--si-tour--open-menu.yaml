@@ -49,8 +49,8 @@
   - text: Placeholder for the content of the page, using the fixed height layout.
 - text: Status bar Page title Thank you
 - dialog "Help menu":
-  - text: 6 of 7 Help menu
+  - text: ""
   - button "Close"
-  - text: The help menu provides help in case you need it.
+  - text: The help menu provides help in case you need it. 6 of 7
   - button "Back"
   - button "Next"

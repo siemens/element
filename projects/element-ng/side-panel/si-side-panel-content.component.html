@@ -1,9 +1,16 @@
 <div class="rpanel-header pt-5">
-  <div class="d-flex align-items-center min-width-0 auto-hide">
+  <div class="d-flex align-items-center auto-hide header-title-container">
     <ng-content select="[siSidePanelBackButton]" />
-    <p class="si-h5 my-0 auto-hide text-truncate header-title">
-      {{ heading() | translate }}
-    </p>
+    <div class="header-title">
+      <p class="si-h5 my-0 text-truncate">
+        {{ heading() | translate }}
+      </p>
+      @if (subHeading()) {
+        <p class="si-body text-secondary my-0 pt-2" siTooltipOverflow>
+          {{ subHeading() | translate }}
+        </p>
+      }
+    </div>
   </div>
   @if ((primaryActions().length || secondaryActions().length) && focusable()) {
     <si-content-action-bar

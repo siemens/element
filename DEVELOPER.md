@@ -134,7 +134,8 @@ publish a release.
 ## E2E Tests
 
 Our E2E tests are built with [Playwright](https://playwright.dev/).
-To ensure reliable screenshots, those tests must always be run in a docker container.
+To ensure reliable screenshots, those tests must always be run in a container.
+The local test script uses [Podman](https://podman.io/) by default.
 
 To run the E2E tests, use the following commands:
 
@@ -174,19 +175,20 @@ Available parameters for `e2e-local.sh`:
 .e2e-local.sh [run|a11y|vrt|update|update-all] [test-file-name]
 
 # Environment variables:
-# - DOCKER: Override the docker command (default: docker)
+# - CONTAINER_ENGINE: Override the container engine command (default: podman)
 # - PORT: Override the port for the example application (default: 4200)
 # - LOCAL_ADDRESS: Override the local address for the example application (default: localhost)
 ```
 
-### Use Podman instead of Docker on Linux
+### Use Docker instead of Podman
 
-Docker is causing issues when updating screenshots, as it changes the file owner to root.
-Use [Podman](https://podman.io/) instead:
+To use Docker, override the default container engine:
 
 ```shell
-DOCKER=podman ./e2e-local.sh
+CONTAINER_ENGINE=docker ./e2e-local.sh
 ```
+
+On Linux, Podman avoids the root-owned files that Docker can create when updating screenshots.
 
 ### Using Rancher Desktop on Windows instead of Docker
 
@@ -196,8 +198,12 @@ Setup notes for Rancher Desktop on Windows:
 2. Download and install [Rancher Desktop](https://rancherdesktop.io/)
 3. Start Rancher Desktop and tick the "Enable networking tunnel" checkbox under File > Preferences > Network
 
-Unlike Podman, Rancher allows you to run `./e2e-local.sh` without any additional
-parameters.
+To use Rancher's Docker engine, override the default container engine:
+
+```shell
+CONTAINER_ENGINE=docker ./e2e-local.sh
+```
+
 Note: In case of high CPU usage, there might be an issue with the Remote
 Desktop service or Vmmem using lots of CPU in idle state. If you don't need GUI
 apps then you can disable WSLg which should resolve the issue:

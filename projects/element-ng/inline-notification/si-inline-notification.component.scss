@@ -1,10 +1,10 @@
-@use '@siemens/element-theme/src/styles/variables/semantic-tokens';
+@use '@siemens/element-theme/src/styles/variables/si-sys-variables';
 
 :host {
   display: block;
   overflow: hidden;
   flex-shrink: 0;
-  border-radius: semantic-tokens.$element-button-radius;
+  border-radius: si-sys-variables.$si-sys-sizing-border-radius-xs;
 }
 
 .alert :is(div, a) {

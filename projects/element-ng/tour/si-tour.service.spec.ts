@@ -51,6 +51,7 @@ describe('SiTourService', () => {
 
     const tour = document.querySelector('si-tour');
     expect(tour).not.toBeNull();
+    expect(tour?.querySelector('img')).toBeNull();
 
     const title = tour?.querySelector<HTMLDivElement>('div.si-h4');
     expect(title).toHaveTextContent('Div element');
@@ -61,4 +62,47 @@ describe('SiTourService', () => {
 
     component.tourService.complete();
   });
+
+  it.each([
+    { imgObjectFit: undefined, imgClass: undefined },
+    { imgObjectFit: 'cover', imgClass: 'background-0' }
+  ] as const)(
+    'should display a step image with object fit $imgObjectFit and class $imgClass',
+    async ({ imgObjectFit, imgClass }) => {
+      const imgSrc =
+        'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+      component.tourService.addSteps([
+        {
+          title: 'Image step',
+          text: 'Step with an image',
+          imgSrc,
+          imgAlt: 'Tour illustration',
+          imgObjectFit,
+          imgClass
+        },
+        {
+          title: 'Text step',
+          text: 'Step without an image'
+        }
+      ]);
+      component.tourService.start();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const tour = document.querySelector('si-tour');
+      const image = tour?.querySelector('img');
+      expect(image).toHaveAttribute('src', imgSrc);
+      expect(image).toHaveAttribute('alt', 'Tour illustration');
+      expect(image?.style.objectFit).toBe(imgObjectFit ?? 'scale-down');
+      expect(image?.classList.contains('background-0')).toBe(imgClass === 'background-0');
+
+      tour?.querySelector<HTMLButtonElement>('button.btn-primary')?.click();
+      await fixture.whenStable();
+
+      expect(tour?.querySelector('#__si-tour-step-title')).toHaveTextContent('Text step');
+      expect(tour?.querySelector('img')).toBeNull();
+
+      component.tourService.complete();
+    }
+  );
 });

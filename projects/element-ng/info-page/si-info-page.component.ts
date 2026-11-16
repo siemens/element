@@ -8,8 +8,8 @@ import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 /**
- * The component displays application info messages. A message uses an icon and a title, optionally a copy text,
- * instructions and a link. Replace the integrated icon by content projection of another icon or image with the
+ * The component displays application info messages. A message uses an icon and a title, optionally a description
+ * and a link. Replace the integrated icon by content projection of another icon or image with the
  * CSS class `.si-info-image`. Use content projection with the CSS class `si-info-actions` to inject more buttons
  * and options to interact with the page.
  */
@@ -34,9 +34,21 @@ export class SiInfoPageComponent {
   readonly iconColor = input<string | undefined>('status-warning');
   /** A short and concise title to explain the error. */
   readonly titleText = input.required<TranslatableString>();
-  /** A more detailed explanation of the error, outlining the reasoning for it and how a user can resolve it. */
+  /**
+   * Brief supporting text that explains the situation or the next step.
+   */
+  readonly description = input<TranslatableString>();
+  /**
+   * A more detailed explanation of the error, outlining the reasoning for it and how a user can resolve it.
+   *
+   * @deprecated Use {@link description} instead.
+   */
   readonly copyText = input<TranslatableString>();
-  /** A detailed instruction on how a user can resolve the error. */
+  /**
+   * A detailed instruction on how a user can resolve the error.
+   *
+   * @deprecated Use {@link description} instead.
+   */
   readonly instructions = input<TranslatableString>();
   /**
    * Use the link object if you have one option to follow. A link object

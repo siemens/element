@@ -4,6 +4,7 @@
  */
 import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Link } from '@siemens/element-ng/link';
 
 import { SiTimelineWidgetItem } from './si-timeline-widget-item.component';
 import { SiTimelineWidgetComponent } from './si-timeline-widget.component';
@@ -14,16 +15,19 @@ describe('SiTimelineWidgetComponent', () => {
   let value: WritableSignal<SiTimelineWidgetItem[] | undefined>;
   let numberOfItems: WritableSignal<number | undefined>;
   let showDescription: WritableSignal<boolean>;
+  let link: WritableSignal<Link | undefined>;
 
   beforeEach(() => {
     value = signal(undefined);
     numberOfItems = signal(undefined);
     showDescription = signal(true);
+    link = signal(undefined);
     fixture = TestBed.createComponent(SiTimelineWidgetComponent, {
       bindings: [
         inputBinding('value', value),
         inputBinding('numberOfItems', numberOfItems),
-        inputBinding('showDescription', showDescription)
+        inputBinding('showDescription', showDescription),
+        inputBinding('link', link)
       ]
     });
     element = fixture.nativeElement;
@@ -63,6 +67,48 @@ describe('SiTimelineWidgetComponent', () => {
     fixture.detectChanges();
     expect(element.querySelectorAll('.si-skeleton')).toHaveLength(numItems);
     expect(element.querySelectorAll('.si-link-widget-skeleton')).toHaveLength(numItems * 2);
+  });
+
+  it('should display a footer anchor with the link title, destination and icon', async () => {
+    link.set({ title: 'View all events', href: '/events', target: '_blank' });
+    await fixture.whenStable();
+
+    const anchor = element.querySelector('.card-footer a');
+    expect(anchor).toHaveTextContent('View all events');
+    expect(anchor).toHaveAttribute('href', '/events');
+    expect(anchor).toHaveAttribute('target', '_blank');
+    expect(anchor!.querySelector('si-icon')).toHaveClass('link-icon', 'link-end');
+    expect(element.querySelector('.card-footer button')).toBeNull();
+  });
+
+  it('should display a footer button that invokes the link action', async () => {
+    const action = vi.fn();
+    link.set({ title: 'Load more events', action });
+    await fixture.whenStable();
+
+    const button = element.querySelector<HTMLButtonElement>('.card-footer button')!;
+    expect(button).toHaveTextContent('Load more events');
+    expect(button).toHaveAttribute('type', 'button');
+    expect(button).toHaveClass('btn', 'btn-link');
+    expect(element.querySelector('.card-footer a')).toBeNull();
+    expect(button.querySelector('si-icon')).toBeNull();
+
+    button.click();
+    await fixture.whenStable();
+
+    expect(action).toHaveBeenCalledExactlyOnceWith();
+  });
+
+  it('should remove the footer when the link is removed', async () => {
+    link.set({ title: 'View all events', href: '/events' });
+    await fixture.whenStable();
+
+    expect(element.querySelector('.card-footer a')).toHaveTextContent('View all events');
+
+    link.set(undefined);
+    await fixture.whenStable();
+
+    expect(element.querySelector('.card-footer')).toBeNull();
   });
 
   it('should display timeline items', () => {

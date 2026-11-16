@@ -1,5 +1,4 @@
 @use '../variables/animations';
-@use '../variables/semantic-tokens';
 @use '../variables/si-sys-variables';
 
 @keyframes shimmer {
@@ -19,7 +18,7 @@
   );
   background-size: 200% 100%;
   background-position-x: 100%;
-  border-radius: semantic-tokens.$element-button-radius;
+  border-radius: si-sys-variables.$si-sys-sizing-border-radius-xs;
   animation: shimmer animations.element-transition-duration(1.6s) ease-in-out infinite;
   cursor: wait;
 

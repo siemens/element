@@ -17,10 +17,9 @@
 
 <p></p>
 <p align="center">
-  Siemens Element is a design system of the smart infrastructure domain
-  that implements the Siemens Design Language in Angular. It includes UI
-  components, design tools and resources, human interface guidelines, and a
-  vibrant community of contributors.
+  Siemens Element is a design system that implements the Siemens Design
+  Language in Angular. It includes UI components, design tools and resources,
+  human interface guidelines, and a vibrant community of contributors.
 </p>
 <p></p>
 

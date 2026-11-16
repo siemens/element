@@ -60,7 +60,7 @@ $colorbar-width: map.get(variables.$spacers-inline, 2);
   position: absolute;
   inset: 0;
   z-index: -1;
-  border-radius: variables.$element-radius-2;
+  border-radius: variables.$si-sys-sizing-border-radius-sm;
   pointer-events: none;
 }
 

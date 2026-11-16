@@ -2,16 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { booleanAttribute, Component, input, output } from '@angular/core';
-import { elementOptionsVertical } from '@siemens/element-icons';
-import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
+import { MenuItemAction } from '@siemens/element-ng/menu';
 import { SourceReference, SiSourceChipComponent } from '@siemens/element-ng/source-chip';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { t } from '@siemens/element-translate-ng/translate';
 
-import { MessageAction } from './message-action.model';
 import { SiChatMessageActionDirective } from './si-chat-message-action.directive';
+import { SiChatMessageActionsComponent } from './si-chat-message-actions.component';
 import { SiChatMessageComponent } from './si-chat-message.component';
 
 /**
@@ -36,20 +33,15 @@ import { SiChatMessageComponent } from './si-chat-message.component';
 @Component({
   selector: 'si-ai-message',
   imports: [
-    CdkMenuTrigger,
     SiChatMessageComponent,
-    SiIconComponent,
-    SiMenuFactoryComponent,
     SiChatMessageActionDirective,
-    SiTranslatePipe,
+    SiChatMessageActionsComponent,
     SiSourceChipComponent
   ],
   templateUrl: './si-ai-message.component.html',
   styleUrl: './si-ai-message.component.scss'
 })
 export class SiAiMessageComponent {
-  protected readonly icons = addIcons({ elementOptionsVertical });
-
   /**
    * The AI-generated message content
    * @defaultValue ''
@@ -67,13 +59,13 @@ export class SiAiMessageComponent {
    * All actions displayed inline
    * @defaultValue []
    */
-  readonly actions = input<MessageAction[]>([]);
+  readonly actions = input<MenuItemAction[]>([]);
 
   /**
    * Secondary actions available in dropdown menu, first use primary actions and only add secondary actions additionally
    * @defaultValue []
    */
-  readonly secondaryActions = input<MenuItem[]>([]);
+  readonly secondaryActions = input<MenuItemAction[]>([]);
 
   /** Parameter to pass to action handlers */
   readonly actionParam = input();

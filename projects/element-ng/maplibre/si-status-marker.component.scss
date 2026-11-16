@@ -4,7 +4,7 @@
   display: block;
   inline-size: 42px;
   block-size: 42px;
-  color: variables.$element-ui-3;
+  color: variables.$si-sys-color-text-disabled;
   cursor: pointer;
 
   &[data-status='default'] {
@@ -12,27 +12,27 @@
   }
 
   &[data-status='success'] {
-    color: variables.$element-status-success;
+    color: variables.$si-sys-color-background-success;
   }
 
   &[data-status='info'] {
-    color: variables.$element-status-information;
+    color: variables.$si-sys-color-background-information;
   }
 
   &[data-status='warning'] {
-    color: variables.$element-status-warning;
+    color: variables.$si-sys-color-background-warning;
   }
 
   &[data-status='danger'] {
-    color: variables.$element-status-danger;
+    color: variables.$si-sys-color-background-danger;
   }
 
   &[data-status='caution'] {
-    color: variables.$element-status-caution;
+    color: variables.$si-sys-color-background-caution;
   }
 
   &[data-status='critical'] {
-    color: variables.$element-status-critical;
+    color: variables.$si-sys-color-background-critical;
   }
 
   svg {
@@ -46,10 +46,10 @@
   }
 
   .middle {
-    fill: variables.$element-base-1;
+    fill: variables.$si-sys-color-background-1;
   }
 
   .symbol {
-    fill: variables.$element-text-primary;
+    fill: variables.$si-sys-color-text-primary;
   }
 }

@@ -38,7 +38,7 @@ import { SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
+import { SiTooltipDirective, SiTooltipOverflowDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { timer } from 'rxjs';
 
@@ -81,6 +81,7 @@ export interface StatusItem extends MenuItemLegacy {
     SiSearchBarComponent,
     SiTranslatePipe,
     SiTooltipDirective,
+    SiTooltipOverflowDirective,
     SiLinkDirective
   ],
   templateUrl: './si-side-panel-content.component.html',
@@ -114,6 +115,11 @@ export class SiSidePanelContentComponent implements OnInit {
    * @defaultValue ''
    */
   readonly heading = input<TranslatableString>('');
+
+  /**
+   * Secondary text displayed below the heading.
+   */
+  readonly subHeading = input<TranslatableString>();
 
   /**
    * Input list of primary action items

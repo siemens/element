@@ -29,7 +29,10 @@ button {
 .preview {
   display: flex;
   flex-direction: column;
-  block-size: calc(var(--preview-height, 204px) + 411px);
+}
+
+.placeholder {
+  block-size: var(--preview-height, 204px);
 }
 
 .lp-tabs {

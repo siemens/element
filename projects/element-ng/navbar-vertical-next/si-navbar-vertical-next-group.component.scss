@@ -62,7 +62,7 @@
   align-items: center;
   gap: map.get(variables.$spacers-inline, 4);
   padding-inline: map.get(variables.$spacers-inline, 5);
-  color: variables.$element-text-primary;
+  color: variables.$si-sys-color-text-primary;
   opacity: 1;
   transform: translateY(0);
   transition:
