@@ -34,8 +34,17 @@ const createShadowRootThemeTarget = (): SiThemeDomTarget => {
     },
     getStyleElement: id => getShadowRoot().getElementById(id) as HTMLStyleElement | null,
     appendStyleElement: style => getShadowRoot().append(style),
-    updateColorScheme: colorScheme =>
-      elements.forEach(themeElement => themeElement.style.setProperty('color-scheme', colorScheme))
+    updateColorScheme: colorScheme => {
+      const previousSchemes = new Map(
+        Array.from(elements, themeElement => [themeElement, themeElement.style.colorScheme])
+      );
+      elements.forEach(themeElement => themeElement.style.setProperty('color-scheme', colorScheme));
+      return () => {
+        previousSchemes.forEach((previousScheme, themeElement) => {
+          themeElement.style.colorScheme = previousScheme;
+        });
+      };
+    }
   };
 };
 

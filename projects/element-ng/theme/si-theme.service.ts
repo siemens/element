@@ -103,6 +103,7 @@ export class SiThemeService {
   private destroyRef = inject(DestroyRef);
   private themeStyles = new Set<HTMLStyleElement>();
   private previousThemeClasses = new Map<HTMLElement, Map<string, boolean>>();
+  private restoreColorScheme?: () => void;
 
   constructor() {
     this._resolvedColorScheme = this.themeType.value;
@@ -135,6 +136,7 @@ export class SiThemeService {
               element.classList.toggle(className, wasPresent)
             );
           });
+          this.restoreColorScheme?.();
         }
       });
 
@@ -514,7 +516,8 @@ export class SiThemeService {
 
     this.setThemeClass('app--dark', dark);
     const colorScheme = dark ? 'dark' : 'light';
-    this.themeTarget.updateColorScheme(colorScheme);
+    const restoreColorScheme = this.themeTarget.updateColorScheme(colorScheme);
+    this.restoreColorScheme ??= restoreColorScheme || undefined;
     this.resolvedColorSchemeSub.next(colorScheme);
     this.dispatchThemeSwitchEvent();
   }

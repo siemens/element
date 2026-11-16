@@ -22,7 +22,7 @@ export interface SiThemeDomTarget {
   registerElement?(element: HTMLElement): () => void;
   getStyleElement(id: string): HTMLStyleElement | null;
   appendStyleElement(style: HTMLStyleElement): void;
-  updateColorScheme(colorScheme: ColorScheme): void;
+  updateColorScheme(colorScheme: ColorScheme): void | (() => void);
 }
 
 /**
@@ -41,8 +41,22 @@ export const SI_THEME_DOM_TARGET = new InjectionToken<SiThemeDomTarget>('SI_THEM
       forEachElement: callback => callback(document.documentElement),
       getStyleElement: id => document.getElementById(id) as HTMLStyleElement | null,
       appendStyleElement: style => document.body.append(style),
-      updateColorScheme: colorScheme =>
-        meta.updateTag({ name: 'color-scheme', content: colorScheme })
+      updateColorScheme: colorScheme => {
+        const previousTag = meta.getTag('name="color-scheme"');
+        const previousContent = previousTag?.getAttribute('content') ?? null;
+        const tag = meta.updateTag({ name: 'color-scheme', content: colorScheme });
+        return () => {
+          if (previousTag) {
+            if (previousContent === null) {
+              previousTag.removeAttribute('content');
+            } else {
+              previousTag.setAttribute('content', previousContent);
+            }
+          } else if (tag) {
+            meta.removeTagElement(tag);
+          }
+        };
+      }
     };
   }
 });

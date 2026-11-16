@@ -158,6 +158,17 @@ describe('SiThemeService', () => {
       }
     });
 
+    it('should restore the document color-scheme metadata after multiple changes', () => {
+      setupTestBed();
+      const previousTag = document.querySelector('meta[name="color-scheme"]')?.outerHTML;
+      service.applyThemeType('dark');
+      service.applyThemeType('light');
+
+      TestBed.resetTestingModule();
+
+      expect(document.querySelector('meta[name="color-scheme"]')?.outerHTML).toBe(previousTag);
+    });
+
     it('should unsubscribe from automatic color-scheme changes', () => {
       setupTestBed();
       service.applyThemeType('auto');
@@ -249,6 +260,7 @@ describe('SiThemeService', () => {
       const fixture = TestBed.createComponent(ShadowThemeHostComponent);
       const host = fixture.nativeElement as HTMLElement;
       const shadowRoot = host.shadowRoot!;
+      const previousColorScheme = host.style.colorScheme;
       fixture.componentInstance.themeService.applyTheme({ name: 'example', schemes: {} }, 'dark');
       expect(shadowRoot.getElementById('__theme-example')).not.toBeNull();
       expect(host.classList).toContain('app--dark');
@@ -258,6 +270,7 @@ describe('SiThemeService', () => {
       expect(shadowRoot.getElementById('__theme-example')).toBeNull();
       expect(host.classList).not.toContain('theme-example');
       expect(host.classList).not.toContain('app--dark');
+      expect(host.style.colorScheme).toBe(previousColorScheme);
     });
 
     it('should apply the color scheme only to the shadow host', () => {
