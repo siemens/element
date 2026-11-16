@@ -1,5 +1,4 @@
 @use 'si-sys-variables';
-@use 'semantic-tokens';
 
 // Building focus< with outline
 $focus-style-outline: si-sys-variables.$si-sys-sizing-focus-ring-width solid
@@ -25,7 +24,7 @@ $focus-style-outline-inside-offset: calc(-1 * #{si-sys-variables.$si-sys-sizing-
       si-sys-variables.$si-sys-sizing-focus-ring-offset
   );
   $focus-overlay: 0 0 0 si-sys-variables.$si-sys-sizing-focus-ring-offset
-    semantic-tokens.$element-button-focus-overlay-color;
+    si-sys-variables.$si-sys-color-background-1;
 
   @return $focus-overlay, 0 0 0 $focus-width $focus-color;
 }
@@ -38,7 +37,7 @@ $focus-style-outline-inside-offset: calc(-1 * #{si-sys-variables.$si-sys-sizing-
       si-sys-variables.$si-sys-sizing-focus-ring-offset + $offset
   );
   $focus-overlay: 0 0 0 calc(si-sys-variables.$si-sys-sizing-focus-ring-offset + $offset)
-    semantic-tokens.$element-button-focus-overlay-color;
+    si-sys-variables.$si-sys-color-background-1;
 
   @return $focus-overlay, 0 0 0 $focus-width $focus-color;
 }
