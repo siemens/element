@@ -67,6 +67,27 @@ describe('SiThemeService', () => {
   beforeEach(() => (themeSwitchSpy = vi.fn()));
   afterEach(() => localStorage.removeItem(SI_THEME_LOCAL_STORAGE_KEY));
 
+  it('should remove its custom and preview theme styles and classes on destroy', () => {
+    setupTestBed();
+    const unrelatedStyle = document.createElement('style');
+    unrelatedStyle.id = '__theme-unrelated';
+    document.body.append(unrelatedStyle);
+    service.applyTheme({ name: 'first', schemes: { light: {} } });
+    service.applyTheme({ name: 'second', schemes: { dark: {} } });
+    service.applyTheme({ name: 'second', schemes: { dark: {} } }, undefined, true);
+    service.updateProperty('--element-base-0', '#fff', 'light');
+    expect(document.querySelectorAll('style[id^="__theme-"]')).toHaveLength(4);
+
+    TestBed.resetTestingModule();
+
+    expect(document.getElementById('__theme-first')).toBeNull();
+    expect(document.getElementById('__theme-second')).toBeNull();
+    expect(document.getElementById('__theme-__preview')).toBeNull();
+    expect(document.getElementById('__theme-unrelated')).toBe(unrelatedStyle);
+    expect(document.documentElement.classList).not.toContain('theme-second');
+    expect(document.documentElement.classList).not.toContain('theme-__preview');
+  });
+
   describe('with theme type auto', () => {
     it('should set theme to `light` if preferred', () => {
       setupTestBed();
