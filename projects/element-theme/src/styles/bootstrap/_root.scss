@@ -1,5 +1,6 @@
 @use './variables';
 @use '../selectors';
+@use '../variables/semantic-tokens';
 
 @use 'sass:meta';
 
@@ -22,4 +23,7 @@
   --si-sys-color-effects-shadow-20: var(--si-sys-color-effects-shadow-2);
   --si-sys-color-effects-shadow-30: var(--si-sys-color-effects-shadow-3);
   --si-sys-color-effects-shadow-40: var(--si-sys-color-effects-shadow-4);
+
+  // Support the system opacity token with themes that still define only the legacy token.
+  --si-sys-color-effects-disable-opacity: #{semantic-tokens.$element-action-disabled-opacity};
 }

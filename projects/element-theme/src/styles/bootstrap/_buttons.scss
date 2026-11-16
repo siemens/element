@@ -1,6 +1,5 @@
 @use '../variables';
 @use '../variables/focus';
-@use '../variables/semantic-tokens';
 @use '../variables/spacers';
 @use '../variables/si-sys-variables';
 @use '../variables/typography';
@@ -41,7 +40,7 @@ button {
   &:is(:disabled, .disabled),
   fieldset:disabled & {
     pointer-events: none;
-    opacity: semantic-tokens.$element-action-disabled-opacity;
+    opacity: si-sys-variables.$si-sys-color-effects-disable-opacity;
   }
 
   // If the case of a link looking like a button <a class="btn btn-primary" href="#" target="_blank">Go Back</a>,
