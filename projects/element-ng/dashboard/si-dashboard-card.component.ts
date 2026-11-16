@@ -30,7 +30,7 @@ import { SiDashboardService } from './si-dashboard.service';
   styleUrl: './si-dashboard-card.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
   host: {
-    '[class.shadow-2]': 'isExpanded()',
+    '[class.shadow-3]': 'isExpanded()',
     '[class.expanded]': 'isExpanded()',
     '[class.d-none]': 'hide()'
   }
