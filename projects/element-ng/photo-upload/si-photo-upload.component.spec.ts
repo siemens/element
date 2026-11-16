@@ -60,6 +60,11 @@ describe(`SiPhotoUploadComponent`, () => {
     componentRef = fixture.componentRef;
   });
 
+  // Closes a crop modal left open by a test, which restores the body scroll lock.
+  afterEach(() => {
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+  });
+
   it('should display placeholder', () => {
     componentRef.setInput('placeholderAltText', 'MX');
     fixture.detectChanges();

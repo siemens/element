@@ -10,6 +10,8 @@ describe('SiToastNotificationService', () => {
   let service: SiToastNotificationService;
 
   beforeEach(() => {
+    // The auto-close timeouts must not outlive the test.
+    vi.useFakeTimers();
     TestBed.configureTestingModule({
       providers: [SiToastNotificationService]
     });
@@ -79,7 +81,6 @@ describe('SiToastNotificationService', () => {
   });
 
   it('automatically closes toast after a while', () => {
-    vi.useFakeTimers();
     service.queueToastNotification('success', 'Toast 1', 'Message 1');
     expect(service.activeToasts).toHaveLength(1);
 
@@ -89,7 +90,6 @@ describe('SiToastNotificationService', () => {
   });
 
   it('should respect the disableAutoClose flag', () => {
-    vi.useFakeTimers();
     service.queueToastNotification('success', 'Toast 1', 'Message 1', true);
     expect(service.activeToasts).toHaveLength(1);
 
