@@ -7,15 +7,18 @@ import { isPlatformBrowser } from '@angular/common';
 import {
   DestroyRef,
   DOCUMENT,
+  computed,
+  effect,
   EventEmitter,
   inject,
   Injectable,
   PLATFORM_ID,
-  signal
+  signal,
+  untracked
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { BehaviorSubject, Observable, of, ReplaySubject, throwError } from 'rxjs';
-import { distinctUntilChanged, map, skip, switchMap, take, tap } from 'rxjs/operators';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { Observable, of, ReplaySubject, throwError } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 
 import { SI_THEME_DOM_TARGET } from './si-theme-dom-target';
 import { SiDefaultThemeStore, SiThemeStore } from './si-theme-store';
@@ -29,10 +32,6 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class SiThemeService {
-  /**
-   * The current color scheme. (e.g. light or dark).
-   */
-  private _resolvedColorScheme: ThemeType | undefined = 'light';
   private resolvedColorSchemeSub = new ReplaySubject<keyof ThemeColorSchemes>(1);
   /**
    * Emits events when the color scheme changes.
@@ -44,7 +43,7 @@ export class SiThemeService {
    * The current color scheme. (e.g. light or dark).
    */
   get resolvedColorScheme(): ThemeType | undefined {
-    return this._resolvedColorScheme;
+    return this.colorScheme() ?? this.initialColorScheme;
   }
 
   /**
@@ -89,61 +88,98 @@ export class SiThemeService {
 
   private themes: Map<string, Theme> = new Map();
   private breakpointObserver = inject(BreakpointObserver);
-  private appliedThemeClass?: string;
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-  private previewTheme?: Theme;
+  private readonly activeTheme = signal<{ theme?: Theme; overwrite?: boolean }>({});
+  private readonly previewTheme = signal<Theme | undefined>(undefined);
 
   private themeStore =
     inject(SiThemeStore, { optional: true }) ?? new SiDefaultThemeStore(this.isBrowser);
   private document = inject(DOCUMENT);
   private themeTarget = inject(SI_THEME_DOM_TARGET);
-  private themeType = new BehaviorSubject<ThemeType>(
-    this.themeTarget.element.classList.contains('app--dark') ? 'dark' : 'light'
+  private readonly initialColorScheme = this.themeTarget.element.classList.contains('app--dark')
+    ? 'dark'
+    : 'light';
+  private readonly themeType = signal<ThemeType | undefined>(undefined);
+  private readonly prefersDark = toSignal(
+    toObservable(this.themeType).pipe(
+      switchMap(type =>
+        type === 'auto' && this.isBrowser
+          ? this.breakpointObserver
+              .observe('(prefers-color-scheme: dark)')
+              .pipe(map(state => state.matches))
+          : of(undefined)
+      )
+    )
   );
+  private readonly colorScheme = computed(() => {
+    const type = this.themeType();
+    if (type !== 'auto') {
+      return type;
+    }
+    const prefersDark = this.prefersDark();
+    return prefersDark === undefined ? undefined : prefersDark ? 'dark' : 'light';
+  });
   private destroyRef = inject(DestroyRef);
   private themeStyles = new Set<HTMLStyleElement>();
-  private previousThemeClasses = new Map<HTMLElement, Map<string, boolean>>();
-  private restoreColorScheme?: () => void;
 
   constructor() {
-    this._resolvedColorScheme = this.themeType.value;
-    this.resolvedColorScheme$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(scheme => (this._resolvedColorScheme = scheme));
     this.themeNames$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(names => (this._themeNames = names));
 
-    this.themeType
-      .pipe(
-        skip(1),
-        switchMap(type =>
-          type === 'auto'
-            ? this.breakpointObserver
-                .observe('(prefers-color-scheme: dark)')
-                .pipe(map(state => state.matches))
-            : of(type === 'dark')
-        ),
-        distinctUntilChanged(),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe({
-        next: dark => this.toggleDark(dark),
-        complete: () => {
-          this.themeStyles.forEach(style => style.remove());
-          this.previousThemeClasses.forEach((classes, element) => {
-            classes.forEach((wasPresent, className) =>
-              element.classList.toggle(className, wasPresent)
-            );
-          });
-          this.restoreColorScheme?.();
+    // Cached theme styles outlive individual effect runs, but never the service.
+    this.destroyRef.onDestroy(() => this.themeStyles.forEach(style => style.remove()));
+
+    effect(onCleanup => {
+      const { theme, overwrite } = this.activeTheme();
+      if (!this.isBrowser) {
+        return;
+      }
+      if (theme) {
+        if (theme.name !== ELEMENT_THEME_NAME && (overwrite || !this.hasThemeCSS(theme))) {
+          this.createThemeCSS(theme);
         }
+        onCleanup(this.applyClass(`theme-${theme.name}`));
+      }
+      untracked(() => this.themeChange.emit(theme));
+    });
+
+    effect(onCleanup => {
+      const preview = this.previewTheme();
+      if (!this.isBrowser || !preview) {
+        return;
+      }
+      const style = this.createThemeCSS(preview);
+      const restoreClass = this.applyClass('theme-__preview');
+      onCleanup(() => {
+        restoreClass();
+        style.remove();
+        this.themeStyles.delete(style);
       });
+      untracked(() => this.dispatchThemeSwitchEvent());
+    });
+
+    effect(onCleanup => {
+      const scheme = this.colorScheme();
+      if (!this.isBrowser || !scheme) {
+        return;
+      }
+      const restoreClass = this.applyClass('app--dark', scheme === 'dark');
+      const restoreColorScheme = this.themeTarget.updateColorScheme(scheme);
+      onCleanup(() => {
+        restoreClass();
+        restoreColorScheme?.();
+      });
+      untracked(() => {
+        this.resolvedColorSchemeSub.next(scheme);
+        this.dispatchThemeSwitchEvent();
+      });
+    });
 
     this.getActiveTheme()
       .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: theme => this.applyThemeStyle(theme, this._resolvedColorScheme),
+        next: theme => this.applyThemeStyle(theme),
         error: error => console.error('Cannot load active theme', error)
       });
 
@@ -205,7 +241,7 @@ export class SiThemeService {
         if (theme) {
           this.activeThemeName = theme.name;
           this.themes.set(theme.name, theme);
-          this.applyTheme(theme, this._resolvedColorScheme);
+          this.applyTheme(theme);
           return theme;
         }
         this.activeThemeName = ELEMENT_THEME_NAME;
@@ -254,6 +290,9 @@ export class SiThemeService {
       result.complete();
     } else {
       this.removeThemeCSS(name);
+      if (this.activeTheme().theme?.name === name) {
+        this.activeTheme.set({});
+      }
       this.themeStore
         .deleteTheme(name)
         .pipe(takeUntilDestroyed(this.destroyRef))
@@ -278,15 +317,14 @@ export class SiThemeService {
    * Resets the preview theme to the default element theme.
    */
   resetPreview(): void {
-    this.previewTheme = { name: '__preview', schemes: { dark: {}, light: {} } };
-    this.removeThemeCSS(this.previewTheme.name);
+    this.previewTheme.set(undefined);
   }
 
   /**
    * Sets the active theme to the given name. If no name is given, the default element theme is used.
    */
   setActiveTheme(name?: string, type?: ThemeType): Observable<boolean> {
-    const theType = type ?? this._resolvedColorScheme ?? 'auto';
+    const theType = type ?? this.resolvedColorScheme ?? 'auto';
     const theName = name ?? this.activeThemeName ?? ELEMENT_THEME_NAME;
 
     if (theName === this.activeThemeName) {
@@ -333,16 +371,18 @@ export class SiThemeService {
 
   /**
    * Apply `light` or `dark` theme to the configured theme target.
+   * DOM changes are applied during Angular's next synchronization.
    */
   applyThemeType(type: ThemeType): void {
-    if (!this.isBrowser || type === this.themeType.value) {
+    if (!this.isBrowser || type === (this.themeType() ?? this.initialColorScheme)) {
       return;
     }
-    this.themeType.next(type);
+    this.themeType.set(type);
   }
 
   /**
    * Applies the given theme to the configured theme target. If no theme is given, the active theme is applied.
+   * DOM changes are applied during Angular's next synchronization.
    */
   applyTheme(theme?: Theme, type?: ThemeType, overwrite?: boolean): void {
     if (theme) {
@@ -361,13 +401,13 @@ export class SiThemeService {
    * Updates the given property of the preview theme.
    */
   updateProperty(name: string, value: string, type: keyof ThemeColorSchemes): void {
-    if (!this.previewTheme) {
-      this.resetPreview();
-    }
-    this.previewTheme!.schemes[type]![name] = value;
-    this.createThemeCSS(this.previewTheme!);
-    this.setThemeClass('theme-__preview', true);
-    this.dispatchThemeSwitchEvent();
+    this.previewTheme.update(preview => ({
+      name: '__preview',
+      schemes: {
+        ...preview?.schemes,
+        [type]: { ...preview?.schemes[type], [name]: value }
+      }
+    }));
   }
 
   /**
@@ -406,10 +446,7 @@ export class SiThemeService {
     }
     this.resetPreview();
 
-    if (theme && theme.name !== ELEMENT_THEME_NAME && (overwrite || !this.hasThemeCSS(theme))) {
-      this.createThemeCSS(theme);
-    }
-    this.activateTheme(theme);
+    this.activeTheme.set({ theme, overwrite });
 
     if (type) {
       this.applyThemeType(type);
@@ -418,17 +455,6 @@ export class SiThemeService {
     this.themeIcons.set(
       Object.fromEntries(Object.entries(theme?.icons ?? {}).map(([key, icon]) => [key, icon]))
     );
-    this.themeChange.emit(theme);
-  }
-
-  private activateTheme(theme?: Theme): void {
-    if (this.appliedThemeClass) {
-      this.restoreThemeClass(this.appliedThemeClass);
-    }
-    this.appliedThemeClass = theme ? `theme-${theme.name}` : undefined;
-    if (this.appliedThemeClass) {
-      this.setThemeClass(this.appliedThemeClass, true);
-    }
   }
 
   private hasThemeCSS(theme: Theme): boolean {
@@ -436,7 +462,7 @@ export class SiThemeService {
     return !!this.themeTarget.getStyleElement(id);
   }
 
-  private createThemeCSS(theme: Theme): void {
+  private createThemeCSS(theme: Theme): HTMLStyleElement {
     let css = '';
     const themeSelector = this.createThemeSelector(theme.name);
     if (theme.schemes.light) {
@@ -457,6 +483,7 @@ export class SiThemeService {
 
     this.themeTarget.appendStyleElement(cssElement);
     this.themeStyles.add(cssElement);
+    return cssElement;
   }
 
   private createThemeSelector(name: string, dark: boolean = false): string {
@@ -482,44 +509,19 @@ export class SiThemeService {
     if (style) {
       this.themeStyles.delete(style);
     }
-    this.restoreThemeClass(`theme-${name}`);
   }
 
-  private setThemeClass(className: string, present: boolean): void {
+  private applyClass(className: string, present = true): () => void {
+    const previousClasses = new Map<HTMLElement, boolean>();
     this.themeTarget.forEachElement(element => {
-      const classes = this.previousThemeClasses.get(element) ?? new Map<string, boolean>();
-      if (!classes.has(className)) {
-        classes.set(className, element.classList.contains(className));
-        this.previousThemeClasses.set(element, classes);
-      }
+      previousClasses.set(element, element.classList.contains(className));
       element.classList.toggle(className, present);
     });
-  }
-
-  private restoreThemeClass(className: string): void {
-    this.previousThemeClasses.forEach((classes, element) => {
-      const wasPresent = classes.get(className);
-      if (wasPresent !== undefined) {
+    return () => {
+      previousClasses.forEach((wasPresent, element) => {
         element.classList.toggle(className, wasPresent);
-        classes.delete(className);
-        if (!classes.size) {
-          this.previousThemeClasses.delete(element);
-        }
-      }
-    });
-  }
-
-  private toggleDark(dark: boolean): void {
-    if (!this.isBrowser) {
-      return;
-    }
-
-    this.setThemeClass('app--dark', dark);
-    const colorScheme = dark ? 'dark' : 'light';
-    const restoreColorScheme = this.themeTarget.updateColorScheme(colorScheme);
-    this.restoreColorScheme ??= restoreColorScheme || undefined;
-    this.resolvedColorSchemeSub.next(colorScheme);
-    this.dispatchThemeSwitchEvent();
+      });
+    };
   }
 
   private cloneTheme(theme: Theme): Theme {
@@ -537,8 +539,8 @@ export class SiThemeService {
     window.dispatchEvent(
       new CustomEvent('theme-switch', {
         detail: {
-          dark: this._resolvedColorScheme === 'dark',
-          colorScheme: this._resolvedColorScheme
+          dark: this.resolvedColorScheme === 'dark',
+          colorScheme: this.resolvedColorScheme
         }
       })
     );

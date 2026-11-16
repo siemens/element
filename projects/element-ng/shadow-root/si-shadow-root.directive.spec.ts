@@ -75,18 +75,20 @@ describe('ShadowRootDirective', () => {
     fixture = TestBed.createComponent(TestHostComponent);
   });
 
-  it('should apply the scoped theme to an overlay created later', () => {
-    fixture.detectChanges();
+  it('should apply the scoped theme to an overlay created later', async () => {
+    await fixture.whenStable();
     const component = fixture.debugElement.query(By.directive(WithOverlayComponent))
       .componentInstance as WithOverlayComponent;
     component.themeService.applyThemeType('dark');
+    await fixture.whenStable();
 
     fixture.componentInstance.open.set(true);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const overlayHost = document.querySelector('element-overlay-root')!;
     expect(overlayHost.classList).toContain('app--dark');
     component.themeService.applyThemeType('light');
+    await fixture.whenStable();
     expect(overlayHost.classList).not.toContain('app--dark');
   });
 
