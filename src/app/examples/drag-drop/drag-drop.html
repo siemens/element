@@ -8,7 +8,7 @@
       #cdkListOne="cdkDropList"
       aria-label="List one"
       aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown Cmd+X Cmd+V"
-      class="list-group list-group-flush"
+      class="list list-divider background-1"
       cdkListbox
       cdkDropList
       [class.drop-line-placeholder]="useDropLine()"
@@ -20,7 +20,7 @@
       @for (item of listOne; track $index) {
         <li
           #listOneItem
-          class="list-group-item list-group-item-action"
+          class="list-item list-item-action"
           cdkDrag
           [cdkOption]="item"
           [cdkDragData]="item"
@@ -40,7 +40,7 @@
       #cdkListTwo="cdkDropList"
       aria-label="List two"
       aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown Cmd+X Cmd+V"
-      class="list-group list-group-flush"
+      class="list list-divider background-1"
       cdkListbox
       cdkDropList
       [class.drop-line-placeholder]="useDropLine()"
@@ -51,7 +51,7 @@
       @for (item of listTwo; track $index) {
         <li
           #listTwoItem
-          class="list-group-item list-group-item-action"
+          class="list-item list-item-action"
           cdkDrag
           [cdkOption]="item"
           [cdkContextMenuTriggerFor]="contextMenu"
