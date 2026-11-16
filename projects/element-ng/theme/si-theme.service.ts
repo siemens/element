@@ -2,10 +2,20 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { isPlatformBrowser } from '@angular/common';
-import { DOCUMENT, EventEmitter, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { Observable, of, ReplaySubject, throwError } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import {
+  DestroyRef,
+  DOCUMENT,
+  EventEmitter,
+  inject,
+  Injectable,
+  PLATFORM_ID,
+  signal
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BehaviorSubject, Observable, of, ReplaySubject, throwError } from 'rxjs';
+import { distinctUntilChanged, map, skip, switchMap, take, tap } from 'rxjs/operators';
 
 import { SI_THEME_DOM_TARGET } from './si-theme-dom-target';
 import { SiDefaultThemeStore, SiThemeStore } from './si-theme-store';
@@ -78,8 +88,7 @@ export class SiThemeService {
   readonly themeIcons = signal<Record<string, string>>({});
 
   private themes: Map<string, Theme> = new Map();
-  private darkMediaQuery?: MediaQueryList;
-  private mediaQueryListener?: () => void;
+  private breakpointObserver = inject(BreakpointObserver);
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private previewTheme?: Theme;
 
@@ -87,18 +96,30 @@ export class SiThemeService {
     inject(SiThemeStore, { optional: true }) ?? new SiDefaultThemeStore(this.isBrowser);
   private document = inject(DOCUMENT);
   private themeTarget = inject(SI_THEME_DOM_TARGET);
+  private themeType = new BehaviorSubject<ThemeType>(
+    this.themeTarget.element.classList.contains('app--dark') ? 'dark' : 'light'
+  );
+  private destroyRef = inject(DestroyRef);
 
   constructor() {
-    this._resolvedColorScheme = this.themeTarget.element.classList.contains('app--dark')
-      ? 'dark'
-      : 'light';
+    this._resolvedColorScheme = this.themeType.value;
     this.resolvedColorScheme$.subscribe(scheme => (this._resolvedColorScheme = scheme));
     this.themeNames$.subscribe(names => (this._themeNames = names));
 
-    if (this.isBrowser) {
-      this.darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      this.mediaQueryListener = () => this.toggleDark(this.darkMediaQuery!.matches);
-    }
+    this.themeType
+      .pipe(
+        skip(1),
+        switchMap(type =>
+          type === 'auto'
+            ? this.breakpointObserver
+                .observe('(prefers-color-scheme: dark)')
+                .pipe(map(state => state.matches))
+            : of(type === 'dark')
+        ),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(dark => this.toggleDark(dark));
 
     this.getActiveTheme()
       .pipe(take(1))
@@ -288,20 +309,10 @@ export class SiThemeService {
    * Apply `light` or `dark` theme to the configured theme target.
    */
   applyThemeType(type: ThemeType): void {
-    if (type === this._resolvedColorScheme || !this.darkMediaQuery || !this.mediaQueryListener) {
+    if (!this.isBrowser || type === this.themeType.value) {
       return;
     }
-
-    this.darkMediaQuery.removeEventListener('change', this.mediaQueryListener);
-
-    if (type === 'light') {
-      this.toggleDark(false);
-    } else if (type === 'dark') {
-      this.toggleDark(true);
-    } else {
-      this.mediaQueryListener();
-      this.darkMediaQuery.addEventListener('change', this.mediaQueryListener);
-    }
+    this.themeType.next(type);
   }
 
   /**
@@ -374,7 +385,7 @@ export class SiThemeService {
     }
     this.activateTheme(theme);
 
-    if (type && type !== this._resolvedColorScheme) {
+    if (type) {
       this.applyThemeType(type);
     }
 

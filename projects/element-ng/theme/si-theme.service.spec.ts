@@ -2,15 +2,16 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   SiShadowRootDirective,
   provideShadowRootThemeTarget
 } from '@siemens/element-ng/shadow-root';
-import { firstValueFrom, of, throwError } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { type Mock, type MockInstance } from 'vitest';
+import { type Mock } from 'vitest';
 
 import { SI_THEME_LOCAL_STORAGE_KEY, SiThemeStore } from './si-theme-store';
 import { ELEMENT_THEME_NAME, Theme } from './si-theme.model';
@@ -29,32 +30,29 @@ describe('SiThemeService', () => {
   }
 
   let service: TestService;
-  let matchMediaSpy: MockInstance<typeof window.matchMedia>;
+  let mediaQuery: BehaviorSubject<BreakpointState>;
+  const breakpointObserver = { observe: vi.fn(() => mediaQuery.asObservable()) };
   let themeSwitchSpy: Mock;
 
   const setupTestBed = (prefersDarkColor: boolean = false, store?: Partial<SiThemeStore>): void => {
     document.documentElement.classList.remove('app--dark');
-    matchMediaSpy.mockReturnValue({
+    mediaQuery = new BehaviorSubject<BreakpointState>({
       matches: prefersDarkColor,
-      media: '',
-      onchange: null,
-      addListener: vi.fn(),
-      removeListener: vi.fn(),
-      addEventListener: vi.fn(),
-      removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn()
-    } satisfies MediaQueryList);
+      breakpoints: { '(prefers-color-scheme: dark)': prefersDarkColor }
+    });
     TestBed.configureTestingModule({
-      providers: [TestService, { provide: SiThemeStore, useValue: store }]
+      providers: [
+        TestService,
+        { provide: SiThemeStore, useValue: store },
+        { provide: BreakpointObserver, useValue: breakpointObserver }
+      ]
     });
     service = TestBed.inject(TestService);
     service.resolvedColorScheme$.subscribe(themeSwitchSpy);
   };
 
-  // Keep the `using` spy alive for the test body and always restore shared DOM state afterward.
+  // Restore shared DOM state after each test.
   aroundEach(async runTest => {
-    using spy = vi.spyOn(window, 'matchMedia');
-    matchMediaSpy = spy;
     const rootClassName = document.documentElement.className;
     try {
       await runTest();
@@ -66,6 +64,21 @@ describe('SiThemeService', () => {
 
   beforeEach(() => (themeSwitchSpy = vi.fn()));
   afterEach(() => localStorage.removeItem(SI_THEME_LOCAL_STORAGE_KEY));
+
+  describe('on destruction', () => {
+    it('should unsubscribe from automatic color-scheme changes', () => {
+      setupTestBed();
+      service.applyThemeType('auto');
+      expect(breakpointObserver.observe).toHaveBeenCalledWith('(prefers-color-scheme: dark)');
+      expect(mediaQuery.observed).toBe(true);
+
+      TestBed.resetTestingModule();
+
+      expect(mediaQuery.observed).toBe(false);
+      mediaQuery.next({ matches: true, breakpoints: { '(prefers-color-scheme: dark)': true } });
+      expect(document.documentElement.classList).not.toContain('app--dark');
+    });
+  });
 
   describe('with theme type auto', () => {
     it('should set theme to `light` if preferred', () => {
@@ -80,6 +93,31 @@ describe('SiThemeService', () => {
       service.applyThemeType('auto');
       expect(document.documentElement.classList).toContain('app--dark');
       expect(themeSwitchSpy).toHaveBeenCalledWith('dark');
+    });
+
+    it('should react to changes in the preferred color scheme', () => {
+      setupTestBed();
+      service.applyThemeType('auto');
+
+      mediaQuery.next({ matches: true, breakpoints: {} });
+      expect(document.documentElement.classList).toContain('app--dark');
+      expect(themeSwitchSpy).toHaveBeenLastCalledWith('dark');
+
+      mediaQuery.next({ matches: false, breakpoints: {} });
+      expect(document.documentElement.classList).not.toContain('app--dark');
+      expect(themeSwitchSpy).toHaveBeenLastCalledWith('light');
+    });
+
+    it('should stop observing when selecting the currently resolved fixed scheme', () => {
+      setupTestBed(true);
+      service.applyThemeType('auto');
+      expect(document.documentElement.classList).toContain('app--dark');
+
+      service.applyThemeType('dark');
+      mediaQuery.next({ matches: false, breakpoints: {} });
+
+      expect(mediaQuery.observed).toBe(false);
+      expect(document.documentElement.classList).toContain('app--dark');
     });
   });
 
