@@ -32,92 +32,11 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use `ngStyle`, use `style` bindings instead
 - When using external templates/styles, use paths relative to the component TS file.
 
-## Component Testing
+## Testing
 
-- Test through the component's public API and rendered DOM, not private methods or internal implementation details
-- Prefer creating the component directly with `TestBed`. Use signal `inputBinding` and `outputBinding` bindings instead of test host / wrapper components when wiring inputs and outputs
-- Only introduce a test host / wrapper component when testing content projection, template composition, or integration behavior that cannot be expressed through direct bindings
-- Keep test setup minimal. Mock only the component's direct dependencies and prefer lightweight spies or stubs over large testing modules
-- Prefer assertions on user-observable behavior such as rendered text, attributes, ARIA state, CSS classes that are part of the public contract, and emitted outputs
-- Prefer `await fixture.whenStable()` after interactions or async state changes instead of repeatedly calling `fixture.detectChanges()`. Use `fixture.detectChanges()` deliberately for the initial render or when the change detection boundary itself is under test
-- Keep each test focused on a single behavior with clear arrange / act / assert phases
-- Cover happy paths, boundary conditions, and regression-prone branches. Avoid broad snapshot-style assertions that do not explain the intended behavior
-
-## Async Test Stabilization
-
-- Prefer `await fixture.whenStable()` over repeated `fixture.detectChanges()` calls after interactions or async state changes
-- `whenStable()` waits for pending microtasks, timers, and zone activity to settle, producing more reliable tests than manually pumping change detection
-- Use `fixture.detectChanges()` deliberately for the initial render or when the change detection boundary itself is under test
-- Do NOT chain multiple `detectChanges()` calls hoping to flush async work — use `whenStable()` instead
-
-## Test Assertions
-
-- Prefer Vitest's semantic assertion matchers over generic `.toBe()` with manual property access — they produce clearer failure messages and more readable tests
-- Use `toHaveLength(n)` instead of accessing `.length` manually: `expect(items).toHaveLength(3)` not `expect(items.length).toBe(3)`
-- Use `toContain(item)` instead of `expect(array.includes(item)).toBe(true)`
-- Use `toMatchObject(subset)` to assert on a subset of properties instead of multiple individual `.toBe()` assertions
-
-## Running Tests
-
-Infer the correct test command from the file path being edited. After implementation changes, run the matching unit test command to verify.
-
-### Unit Tests
-
-All unit tests use **Vitest**. Do NOT use `npx ng test` or Karma/Jasmine commands.
-
-Always set `CI=true` when running unit tests. This disables watch mode so tests run once and configures browser tests to run headlessly.
-
-| File path prefix                 | Command                           |
-| -------------------------------- | --------------------------------- |
-| `projects/element-ng/`           | `CI=true pnpm lib:test`           |
-| `projects/charts-ng/`            | `CI=true pnpm charts:test`        |
-| `projects/native-charts-ng/`     | `CI=true pnpm native-charts:test` |
-| `projects/maps-ng/`              | `CI=true pnpm maps:test`          |
-| `projects/dashboards-ng/`        | `CI=true pnpm dashboards:test`    |
-| `projects/element-translate-ng/` | `CI=true pnpm translate:test`     |
-
-To run a specific test file, use `--include`:
-
-```shell
-CI=true pnpm lib:test --include='**/component-name/component-name.component.spec.ts'
-```
-
-Only the `--include` CLI flag (glob filter) is supported for these commands.
-Do NOT use `--watch`, `--no-watch`, `--watch=false`, `--reporter`, or any other flags. Use `CI=true` instead of watch flags.
-
-### Schematics Tests
-
-Run `CI=true npm run schematics:test` (uses Vitest). Config: `projects/element-ng/vitest.config.schematics.ts`.
-
-### E2E Tests
-
-Use `./e2e-local.sh` to run e2e test. If you run a specific test always include the '--project=...' in addition.
-Always check if the DEV server is already running before starting.
-
-```shell
-# 1. Start the dev server, port 4200
-pnpm start -- --allowed-hosts true --host 0.0.0.0
-
-# 2. Only if running dashboards test:
-pnpm dashboards-demo:build-and-run-all       # webpack, port 4201
-pnpm dashboards-demo:build-and-run-all:esm   # ESM, port 4204
-
-# 3. Run e2e tests
-./e2e-local.sh                                          # run all
-./e2e-local.sh run '--project=element-examples/*'       # examples project
-./e2e-local.sh run '--project=dashboards-demo/*'        # dashboards-webpack project
-./e2e-local.sh run '--project=dashboards-demo-esm/*'    # dashboards-esm project
-./e2e-local.sh vrt                                      # visual regression only
-./e2e-local.sh a11y                                     # accessibility only
-
-# Update snapshots
-./e2e-local.sh update                           # changed snapshots
-./e2e-local.sh update-all                       # all snapshots
-./e2e-local.sh update <test-file-name>          # specific test (glob supported)
-
-# Run specific static tests
-./e2e-local.sh run static --grep 'buttons/buttons|badges/badges'
-```
+Load the `testing` skill (`.agents/skills/testing/SKILL.md`) when writing, changing,
+reviewing, or running tests, and when verifying implementation changes. It covers
+test design, assertions, async stabilization, and the repository's test commands.
 
 ## State Management
 
