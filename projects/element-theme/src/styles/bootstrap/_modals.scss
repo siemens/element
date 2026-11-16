@@ -131,7 +131,7 @@
   background-color: variables.$modal-content-bg;
   background-clip: padding-box;
   border-radius: variables.$modal-content-border-radius;
-  box-shadow: si-sys-variables.$si-sys-color-effects-shadow-30;
+  box-shadow: si-sys-variables.$si-sys-color-effects-shadow-40;
   // Remove focus outline from opened modal
   outline: 0;
 }
@@ -191,10 +191,6 @@
 
   .modal-dialog-centered {
     min-block-size: calc(100% - (variables.$modal-dialog-margin-y-sm-up * 2));
-  }
-
-  .modal-content {
-    box-shadow: si-sys-variables.$si-sys-color-effects-shadow-20;
   }
 
   .modal-sm {
