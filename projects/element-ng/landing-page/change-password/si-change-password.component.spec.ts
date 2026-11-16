@@ -2,9 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { inputBinding, outputBinding, signal } from '@angular/core';
+import { inputBinding, outputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PasswordPolicy } from '@siemens/element-ng/password-strength';
+import type { Mock } from 'vitest';
 
 import { ChangePassword } from '../si-landing-page.model';
 import { SiChangePasswordComponent as TestComponent } from './si-change-password.component';
@@ -21,16 +22,16 @@ describe('SiChangePasswordComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;
 
-  const passwordPolicyContent = signal<string>('Policy content');
-  const passwordStrength = signal<PasswordPolicy>(passwordStrengthValue);
-  const newPasswordLabel = signal('');
-  const confirmPasswordLabel = signal('');
-  const changeButtonLabel = signal('');
-  const backButtonLabel = signal('');
-  const disableChange = signal(false);
-  const passwordPolicyTitle = signal('');
-  const changePasswordRequested = vi.fn<(value: ChangePassword) => void>();
-  const back = vi.fn();
+  let passwordPolicyContent: WritableSignal<string>;
+  let passwordStrength: WritableSignal<PasswordPolicy>;
+  let newPasswordLabel: WritableSignal<string>;
+  let confirmPasswordLabel: WritableSignal<string>;
+  let changeButtonLabel: WritableSignal<string>;
+  let backButtonLabel: WritableSignal<string>;
+  let disableChange: WritableSignal<boolean>;
+  let passwordPolicyTitle: WritableSignal<string>;
+  let changePasswordRequested: Mock<(value: ChangePassword) => void>;
+  let back: Mock<() => void>;
 
   const enterValue = (input: HTMLInputElement, value: string): void => {
     input.value = value;
@@ -38,6 +39,17 @@ describe('SiChangePasswordComponent', () => {
   };
 
   beforeEach(async () => {
+    passwordPolicyContent = signal('Policy content');
+    passwordStrength = signal(passwordStrengthValue);
+    newPasswordLabel = signal('');
+    confirmPasswordLabel = signal('');
+    changeButtonLabel = signal('');
+    backButtonLabel = signal('');
+    disableChange = signal(false);
+    passwordPolicyTitle = signal('');
+    changePasswordRequested = vi.fn();
+    back = vi.fn();
+
     fixture = TestBed.createComponent(TestComponent, {
       bindings: [
         inputBinding('passwordPolicyContent', passwordPolicyContent),
