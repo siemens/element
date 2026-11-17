@@ -94,6 +94,22 @@ e.g., event states or severity symbols.
 
 ![Icons composite](images/icon-composite.png)
 
+## Tokens ---
+
+System icon-size tokens define sizes for default and compact density. Use these
+tokens in custom styles when icon dimensions need to adapt to the active density.
+
+--8<-- "si-sys.md:si-sys-sizing-icon"
+
+```scss
+@use '@siemens/element-theme/src/styles/variables';
+
+// Prefer the existing icon size classes; use tokens for custom sizing styles.
+.my-icon {
+  font-size: variables.$si-sys-sizing-icon-md;
+}
+```
+
 ## Code ---
 
 Icons are available as SVGs or as an icon font.
