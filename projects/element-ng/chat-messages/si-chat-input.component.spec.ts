@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  Component,
   DebugElement,
   inputBinding,
   outputBinding,
@@ -21,6 +22,15 @@ import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent
 } from './si-chat-input.component';
+
+@Component({
+  imports: [TestComponent],
+  template: `<si-chat-input>
+    <button type="button">Leading action</button>
+    <button type="button" siChatInputEnd>Trailing action</button>
+  </si-chat-input>`
+})
+class ProjectionTestComponent {}
 
 describe('SiChatInputComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -101,6 +111,21 @@ describe('SiChatInputComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should project trailing actions next to submit without moving default actions', async () => {
+    const projectionFixture = TestBed.createComponent(ProjectionTestComponent);
+    await projectionFixture.whenStable();
+    const projection = page.elementLocator(projectionFixture.nativeElement);
+    const leading = projection.getByRole('button', { name: 'Leading action', exact: true });
+    const trailing = projection.getByRole('button', { name: 'Trailing action', exact: true });
+    const submit = projection.getByRole('button', { name: 'Send', exact: true });
+
+    await expect.element(leading).toBeInTheDocument();
+    await expect.element(trailing).toBeInTheDocument();
+    await expect.element(submit).toBeInTheDocument();
+    expect(trailing.element().nextElementSibling).toBe(submit.element());
+    expect(trailing.element().parentElement).not.toBe(leading.element().parentElement);
   });
 
   it('should resize the textarea when a shared draft changes externally', async () => {
