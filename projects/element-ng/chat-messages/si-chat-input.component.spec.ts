@@ -315,6 +315,31 @@ describe('SiChatInputComponent', () => {
     expect(textarea.element().getBoundingClientRect().height).toBeGreaterThan(initialHeight);
   });
 
+  it('should send the current draft and attachments through the public API', async () => {
+    value.set('Recognized message');
+    await fixture.whenStable();
+
+    component.sendCurrent();
+    await fixture.whenStable();
+
+    expect(sendSpy).toHaveBeenCalledExactlyOnceWith({
+      content: 'Recognized message',
+      attachments: []
+    });
+    expect(value()).toBe('');
+  });
+
+  it.each(['disabled', 'sending'] as const)('should not auto-send when %s', async state => {
+    value.set('Recognized message');
+    (state === 'disabled' ? disabled : sending).set(true);
+    await fixture.whenStable();
+
+    component.sendCurrent();
+
+    expect(sendSpy).not.toHaveBeenCalled();
+    expect(value()).toBe('Recognized message');
+  });
+
   it('should have default empty value', async () => {
     await fixture.whenStable();
     expect(value()).toBe('');
