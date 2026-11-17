@@ -115,15 +115,18 @@
       </div>
     </div>
 
-    <button
-      type="button"
-      class="btn btn-tertiary btn-icon"
-      [disabled]="buttonDisabled()"
-      [attr.aria-label]="buttonLabel() | translate"
-      (click)="onButtonClick()"
-    >
-      <si-icon class="text-accent" [icon]="buttonIcon()" />
-    </button>
+    <div class="d-flex align-items-center flex-shrink-0 gap-0">
+      <ng-content select="[siChatInputEnd]" />
+      <button
+        type="button"
+        class="btn btn-tertiary btn-icon"
+        [disabled]="buttonDisabled()"
+        [attr.aria-label]="buttonLabel() | translate"
+        (click)="onButtonClick()"
+      >
+        <si-icon class="text-accent" [icon]="buttonIcon()" />
+      </button>
+    </div>
   </div>
 </div>
 

@@ -1,0 +1,52 @@
+<div class="p-2">
+  <si-chat-input
+    placeholder="Enter a command, question or topic…"
+    disclaimer="The content is AI generated. Always verify the information for accuracy."
+    [allowAttachments]="true"
+    [disabled]="voiceInput.listening()"
+    [(value)]="value"
+    (send)="sendMessage($event)"
+  >
+    <button
+      #voiceInput="siVoiceInput"
+      type="button"
+      class="btn btn-tertiary-ghost btn-icon"
+      siChatInputEnd
+      siVoiceInput
+      continuous
+      [lang]="language()"
+      [silenceTimeout]="2000"
+      [siTooltip]="voiceInput.listening() ? 'Stop dictation' : 'Start dictation'"
+      [(value)]="value"
+      (listeningChange)="onListeningChange($event)"
+      (errorOccurred)="onVoiceInputError($event)"
+    >
+      <si-icon [icon]="voiceInput.listening() ? icons.elementStopFilled : icons.elementVoice" />
+    </button>
+  </si-chat-input>
+  <span class="visually-hidden" role="status">{{ listening() ? 'Listening…' : '' }}</span>
+  @if (error()) {
+    <p class="text-danger mt-4 mb-0" role="alert">{{ error() }}</p>
+  }
+  <div class="e2e-ignore card mt-6">
+    <div class="card-body">
+      <h3 class="h6 mb-4">Control panel</h3>
+      <div>
+        <label class="form-label" for="voice-language">Recognition language</label>
+        <select
+          #languageSelect
+          id="voice-language"
+          class="form-select"
+          [disabled]="listening()"
+          [value]="language()"
+          (change)="language.set(languageSelect.value)"
+        >
+          <option value="">Browser default</option>
+          <option value="en-US">English (United States)</option>
+          <option value="de-DE">German (Germany)</option>
+          <option value="fr-FR">French (France)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
