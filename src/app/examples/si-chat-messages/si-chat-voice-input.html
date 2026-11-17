@@ -19,6 +19,7 @@
       siSpeechInput
       continuous
       noPermissionHint
+      [mode]="mode()"
       [silenceTimeout]="2000"
       [siTooltip]="speech.listening() ? 'Stop dictation' : 'Start dictation'"
       [(value)]="value"
@@ -47,6 +48,19 @@
           (change)="autoSend.set(!autoSend())"
         />
         <label for="auto-send" class="form-check-label">Send after dictation</label>
+      </div>
+      <div class="mt-4">
+        <label class="form-label" for="voice-mode">Voice input mode</label>
+        <select
+          id="voice-mode"
+          class="form-select"
+          [disabled]="listening()"
+          [value]="mode()"
+          (change)="setMode($event)"
+        >
+          <option value="toggle">Toggle</option>
+          <option value="push-to-talk">Push-to-talk</option>
+        </select>
       </div>
       <div class="form-check form-switch">
         <input

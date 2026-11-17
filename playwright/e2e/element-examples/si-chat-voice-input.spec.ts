@@ -204,6 +204,20 @@ for (const viewport of [
     await expect(textarea).toHaveValue(retainedDraft);
     await checkState('review');
 
+    await page.getByRole('combobox', { name: 'Voice input mode' }).selectOption('push-to-talk');
+    await page.clock.runFor(50);
+    await start.focus();
+    await page.keyboard.down('Space');
+    await page.clock.runFor(1800);
+    await page.keyboard.up('Space');
+    await page.clock.runFor(50);
+    await expect(start).toBeFocused();
+    const draftAfterHold = `${retainedDraft} Show the`;
+    await expect(textarea).toHaveValue(draftAfterHold);
+    await expect(waveform).toHaveCount(0);
+
+    await page.getByRole('combobox', { name: 'Voice input mode' }).selectOption('toggle');
+    await page.clock.runFor(50);
     await autoSend.check();
     await page.clock.pauseAt(await page.evaluate(() => Date.now() + 1000));
     await start.click();
@@ -212,7 +226,7 @@ for (const viewport of [
     await stop.click();
     await page.clock.runFor(50);
     await expect(autoSend).toBeEnabled();
-    await expect(textarea).toHaveValue(retainedDraft);
+    await expect(textarea).toHaveValue(draftAfterHold);
     await page.clock.resume();
 
     await textarea.fill('');

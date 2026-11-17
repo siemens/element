@@ -23,6 +23,7 @@ export class SiSpeechInputDirective implements OnDestroy {
     readonly lang: _angular_core.InputSignal<string>;
     readonly listening: _angular_core.Signal<boolean>;
     readonly listeningChange: _angular_core.OutputEmitterRef<boolean>;
+    readonly mode: _angular_core.InputSignal<"toggle" | "push-to-talk">;
     readonly noPermissionHint: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly noPermissionLabel: _angular_core.InputSignal<TranslatableString>;
     readonly permissionDenied: _angular_core.Signal<boolean>;

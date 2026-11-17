@@ -37,6 +37,7 @@ class RecognitionMock implements SpeechInputRecognition {
     continuous
     noPermissionHint
     [disabled]="disabled()"
+    [mode]="mode()"
     [silenceTimeout]="silenceTimeout()"
     [(value)]="value"
     (listeningChange)="changes($event)"
@@ -48,6 +49,7 @@ class RecognitionMock implements SpeechInputRecognition {
 class TestHostComponent {
   readonly value = signal('Existing draft');
   readonly disabled = signal(false);
+  readonly mode = signal<'toggle' | 'push-to-talk'>('toggle');
   readonly silenceTimeout = signal(0);
   readonly changes = vi.fn();
   readonly errors = vi.fn();
@@ -66,6 +68,7 @@ class TestHostComponent {
       #speech="siSpeechInput"
       type="button"
       siSpeechInput
+      [mode]="mode()"
       [(value)]="value"
       (transcript)="hasTranscript.set(!!$event)"
       (listeningChange)="
@@ -80,6 +83,7 @@ class TestHostComponent {
 class SpeechChatTestComponent {
   readonly value = signal('Existing draft');
   readonly hasTranscript = signal(false);
+  readonly mode = signal<'toggle' | 'push-to-talk'>('toggle');
   readonly send = vi.fn();
 }
 
@@ -166,6 +170,34 @@ describe('SiSpeechInputDirective', () => {
     expect(recognition.abort).toHaveBeenCalledOnce();
   });
 
+  it('stops push-to-talk after release during permission startup', async () => {
+    const { fixture, button, host } = await setup();
+    host.mode.set('push-to-talk');
+    await fixture.whenStable();
+    button.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
+    button.dispatchEvent(new KeyboardEvent('keyup', { key: ' ', bubbles: true }));
+    expect(recognition.stop).not.toHaveBeenCalled();
+    recognition.onstart?.();
+    expect(recognition.stop).toHaveBeenCalledOnce();
+    recognition.onend?.();
+    await fixture.whenStable();
+    expect(host.changes.mock.calls).toEqual([[true], [false]]);
+  });
+
+  it('only stops a keyboard hold when the initiating key is released', async () => {
+    const { fixture, button, host } = await setup();
+    host.mode.set('push-to-talk');
+    await fixture.whenStable();
+    button.dispatchEvent(new KeyboardEvent('keydown', { key: ' ' }));
+    recognition.onstart?.();
+    button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    button.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+    expect(recognition.stop).not.toHaveBeenCalled();
+
+    button.dispatchEvent(new KeyboardEvent('keyup', { key: ' ' }));
+    expect(recognition.stop).toHaveBeenCalledOnce();
+  });
+
   it('aborts recognition when disabled or destroyed', async () => {
     const { fixture, button, host } = await setup();
     button.click();
@@ -201,6 +233,27 @@ describe('SiSpeechInputDirective', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it('starts and stops push-to-talk with pointer capture', async () => {
+    const { fixture, button, host } = await setup();
+    host.mode.set('push-to-talk');
+    await fixture.whenStable();
+    using capture = vi.spyOn(button, 'setPointerCapture').mockImplementation(() => undefined);
+    button.dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 1 }));
+    recognition.onstart?.();
+    button.dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 2 }));
+    button.dispatchEvent(new PointerEvent('pointerup', { button: 0, pointerId: 2 }));
+    expect(recognition.stop).not.toHaveBeenCalled();
+    expect(capture).toHaveBeenCalledExactlyOnceWith(1);
+    button.dispatchEvent(new PointerEvent('pointerup', { button: 0, pointerId: 1 }));
+    button.dispatchEvent(new PointerEvent('lostpointercapture', { pointerId: 1 }));
+    button.dispatchEvent(new MouseEvent('click', { detail: 1 }));
+    expect(recognition.start).toHaveBeenCalledOnce();
+    expect(recognition.stop).toHaveBeenCalledOnce();
+    expect(recognition.abort).not.toHaveBeenCalled();
+    recognition.onend?.();
+    await fixture.whenStable();
   });
 
   it('ignores old callbacks even if an adapter is reused for another attempt', async () => {
@@ -271,6 +324,33 @@ describe('SiSpeechInputDirective', () => {
       expect(fixture.componentInstance.value()).toBe(
         reason === 'completed' ? '' : 'Existing draft'
       );
+    }
+  );
+
+  it.each(['pointercancel', 'lostpointercapture'])(
+    'restores the draft without auto-sending when a hold is interrupted by %s',
+    async event => {
+      const fixture = TestBed.createComponent(SpeechChatTestComponent);
+      const host = fixture.componentInstance;
+      host.mode.set('push-to-talk');
+      await fixture.whenStable();
+      const button: HTMLButtonElement =
+        fixture.nativeElement.querySelector('button[siSpeechInput]');
+      using capture = vi.spyOn(button, 'setPointerCapture').mockImplementation(() => undefined);
+      button.dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 1 }));
+      expect(capture).toHaveBeenCalledWith(1);
+      recognition.onstart?.();
+      recognition.onresult?.({ results: [{ isFinal: true, 0: { transcript: 'Hello' } }] });
+      expect(host.value()).toBe('Existing draft Hello');
+      const lateEnd = recognition.onend;
+
+      button.dispatchEvent(new PointerEvent(event, { pointerId: 1 }));
+      lateEnd?.();
+      await fixture.whenStable();
+
+      expect(recognition.abort).toHaveBeenCalledOnce();
+      expect(host.send).not.toHaveBeenCalled();
+      expect(host.value()).toBe('Existing draft');
     }
   );
 });

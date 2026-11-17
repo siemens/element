@@ -73,7 +73,8 @@ They help users continue the conversation without having to formulate the next m
 Voice input is optional. Place a button with `siSpeechInput` in the `siChatInputEnd` slot
 next to Submit. The directive also works outside chat input.
 
-Click the button or press Enter or Space to start or stop recognition. Escape on the button
+In toggle mode, click the button or press Enter or Space to start or stop recognition. In push-to-talk mode,
+hold the pointer, Space, or Enter to record and release to stop. Escape on the button
 cancels the attempt and restores the previous draft. Stopping retains the final transcript;
 it does not send a message unless the consumer opts in.
 
@@ -204,16 +205,25 @@ failure. Check `completionReason()` to distinguish `completed`, `cancelled`, and
 before auto-sending. The reason resets to undefined at the start of each attempt. A completed
 attempt without transcript text leaves the existing draft unsent.
 
-#### Standalone use
+#### Push-to-talk and standalone use
 
 The same directive can update any signal-backed text field, without a chat component:
 
 ```html
-<button siSpeechInput type="button" class="btn btn-tertiary-ghost btn-icon" [(value)]="message">
+<button
+  siSpeechInput
+  type="button"
+  class="btn btn-tertiary-ghost btn-icon"
+  mode="push-to-talk"
+  [(value)]="message"
+>
   <si-icon [icon]="icons.elementVoice" />
 </button>
 ```
 
+Only the key or pointer that started the hold can release it. Release during permission
+startup requests a stop as soon as recognition starts. Losing focus or pointer capture
+during the hold, or browser pointer cancellation, cancels and restores the previous draft.
 Repeated activation never creates concurrent attempts. `stop()` keeps final results;
 `cancel()` restores the draft saved at startup. Disabling or destroying the directive
 aborts recognition, clears timers, and invalidates late callbacks.
