@@ -17,5 +17,6 @@ export * from './si-chat-message-action.directive';
 export * from './si-chat-message-actions.component';
 export * from './si-chat-message.component';
 export * from './si-user-message.component';
+export * from './si-voice-waveform.component';
 export * from './si-ai-welcome-screen.component';
 export * from './si-ai-chat.component';
