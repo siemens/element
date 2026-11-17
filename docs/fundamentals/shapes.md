@@ -23,9 +23,18 @@ Circle shapes are used in multiple places like lists, notifications, and avatars
 
 ![Circles](images/shapes-circles.png)
 
-## Specification ---
+## Tokens ---
 
-### Tokens
+Use the system border-radius tokens for new styles. The values are the same in
+default and compact density.
+
+--8<-- "si-sys.md:si-sys-sizing-border-radius"
+
+### Radius (deprecated)
+
+The legacy radius tokens are retained for existing styles. Prefer the system
+tokens above for new code. The legacy `8px` radius has no direct system-token
+equivalent.
 
 | Token               | Radius |
 | ------------------- | ------ |
@@ -43,6 +52,19 @@ All Element shape variants are accessible as `rounded-` CSS utility classes, see
 <si-docs-component example="shapes/shapes" height="300"></si-docs-component>
 
 ### Sass variables
+
+System border-radius tokens are available as Sass variables that reference CSS
+custom properties:
+
+```scss
+@use '@siemens/element-theme/src/styles/variables';
+
+.my-element {
+  border-radius: variables.$si-sys-sizing-border-radius-sm;
+}
+```
+
+### Sass variables (deprecated)
 
 The shape tokens for each Element shape can also be alternatively used as SCSS
 variables within stylesheets.
