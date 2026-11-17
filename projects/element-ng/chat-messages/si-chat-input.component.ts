@@ -4,14 +4,13 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import {
-  afterNextRender,
+  afterRenderEffect,
   AfterViewInit,
   booleanAttribute,
   Component,
   computed,
   ElementRef,
   inject,
-  Injector,
   input,
   model,
   output,
@@ -123,6 +122,15 @@ export class SiChatInputComponent implements AfterViewInit {
       if (parent) {
         this.sending.set(parent.inputSending());
         this.interruptible.set(parent.inputInterruptible());
+      }
+    });
+
+    afterRenderEffect(() => {
+      const value = this.value();
+      const textarea = this.textInput()?.nativeElement;
+      if (textarea) {
+        textarea.value = value;
+        this.setTextareaHeight(textarea);
       }
     });
   }
@@ -377,7 +385,6 @@ export class SiChatInputComponent implements AfterViewInit {
 
   protected readonly dragOver = signal(false);
 
-  private readonly injector = inject(Injector);
   private readonly menuActionService = inject(SiMenuActionService, { optional: true });
 
   protected runAction(action: MenuItemAction): void {
@@ -388,22 +395,9 @@ export class SiChatInputComponent implements AfterViewInit {
     }
   }
 
-  protected onInputChange(value: string): void {
-    this.value.set(value);
-  }
-
   protected selectFollowUpPrompt(prompt: string): void {
     this.followUpPromptSelected.emit(prompt);
     this.focus();
-    afterNextRender(
-      () => {
-        const textarea = this.textInput();
-        if (textarea?.nativeElement) {
-          this.setTextareaHeight(textarea.nativeElement);
-        }
-      },
-      { injector: this.injector }
-    );
   }
 
   protected onSend(): void {
@@ -428,8 +422,14 @@ export class SiChatInputComponent implements AfterViewInit {
   }
 
   protected onKeyDown(event: KeyboardEvent): void {
+    if (event.isComposing) {
+      return;
+    }
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
+      if (event.repeat) {
+        return;
+      }
       if (!this.canSend()) {
         return;
       }
@@ -438,6 +438,10 @@ export class SiChatInputComponent implements AfterViewInit {
       }
       this.onSend();
     }
+  }
+
+  protected onInput(event: Event): void {
+    this.setTextareaHeight(event.target as HTMLTextAreaElement);
   }
 
   protected onFilesAdded(uploadFiles: UploadFile[]): void {
@@ -487,8 +491,6 @@ export class SiChatInputComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const textarea = this.textInput();
     if (textarea?.nativeElement) {
-      this.setTextareaHeight(textarea.nativeElement);
-
       if (this.autoFocus()) {
         // Use setTimeout to ensure the element is fully rendered
         setTimeout(() => {
@@ -496,11 +498,6 @@ export class SiChatInputComponent implements AfterViewInit {
         }, 0);
       }
     }
-  }
-
-  protected adjustTextareaHeight(event: Event): void {
-    const textarea = event.target as HTMLTextAreaElement;
-    this.setTextareaHeight(textarea);
   }
 
   /**
