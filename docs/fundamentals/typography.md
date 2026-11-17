@@ -165,6 +165,14 @@ si-docs-color {
 
 See the [Text Colors](colors/ui-colors.md#text) chapter.
 
+## Tokens ---
+
+The system typography tokens define the type styles for default and compact
+density. The tables above describe the default-density styles; the token
+reference below also includes compact values.
+
+--8<-- "si-sys.md:si-sys-typography"
+
 ## Code ---
 
 Most scenarios allow you to use the HTML semantic element(s) (e.g. `h1`, `p`) directly, all the required styles are set by default.
