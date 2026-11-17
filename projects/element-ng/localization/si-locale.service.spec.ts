@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { DOCUMENT } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import {
@@ -14,6 +15,7 @@ import { SiLocaleStore } from './si-locale-store';
 import { SI_LOCALE_CONFIG, SiLocaleConfig, SiLocaleService } from './si-locale.service';
 
 const TRANSLATE_PROVIDERS = [
+  { provide: DOCUMENT, useFactory: () => document.implementation.createHTMLDocument() },
   provideTranslateService({
     missingTranslationHandler: provideMissingTranslationHandlerForElement()
   }),
