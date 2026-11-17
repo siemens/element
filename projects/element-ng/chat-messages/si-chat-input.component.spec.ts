@@ -15,6 +15,7 @@ import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 import { MenuItemAction, SiMenuActionService } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { page } from 'vitest/browser';
 
 import {
   ChatInputAttachment,
@@ -100,6 +101,18 @@ describe('SiChatInputComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should resize the textarea when a shared draft changes externally', async () => {
+    await fixture.whenStable();
+    const textarea = page.elementLocator(fixture.nativeElement).getByRole('textbox');
+    const initialHeight = textarea.element().getBoundingClientRect().height;
+
+    value.set('First line\nSecond line\nThird line\nFourth line');
+    await fixture.whenStable();
+
+    await expect.element(textarea).toHaveValue(value());
+    expect(textarea.element().getBoundingClientRect().height).toBeGreaterThan(initialHeight);
   });
 
   it('should have default empty value', async () => {
@@ -253,6 +266,19 @@ describe('SiChatInputComponent', () => {
     textarea.nativeElement.dispatchEvent(event);
 
     expect(sendSpy).toHaveBeenCalled();
+  });
+
+  it.each([{ isComposing: true }, { repeat: true }])('ignores Enter with %o', async options => {
+    value.set('Test message');
+    interruptible.set(true);
+    await fixture.whenStable();
+
+    const textarea = page.elementLocator(fixture.nativeElement).getByRole('textbox');
+    textarea.element().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', ...options }));
+
+    expect(sendSpy).not.toHaveBeenCalled();
+    expect(interruptSpy).not.toHaveBeenCalled();
+    await expect.element(textarea).toHaveValue('Test message');
   });
 
   it('should not send on Shift+Enter key press', async () => {
