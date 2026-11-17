@@ -79,4 +79,42 @@
       </button>
     </div>
   </div>
+
+  <h4 class="mt-6 mb-4">Action cards (navigation)</h4>
+  <div class="row">
+    <div class="col-12 col-md-4 mb-6">
+      <a
+        si-action-card
+        href="https://element.siemens.io/"
+        target="_blank"
+        rel="noopener noreferrer"
+        heading="Element documentation"
+        subHeading="Opens in a new tab"
+      >
+        <si-icon headerIcon icon="element-link" class="icon me-3" />
+        <p class="card-body card-text" body>Read the Element guides and component documentation.</p>
+      </a>
+    </div>
+    <div class="col-12 col-md-4 mb-6">
+      <a
+        si-action-card
+        class="accent-info"
+        href="https://github.com/siemens/element"
+        target="_blank"
+        rel="noopener noreferrer"
+        heading="Element source code"
+        subHeading="Opens in a new tab"
+      >
+        <si-icon headerIcon icon="element-link" class="icon me-3" />
+        <p class="card-body card-text" body>Browse the source code and contribute on GitHub.</p>
+      </a>
+    </div>
+    <div class="col-12 col-md-4 mb-6">
+      <a si-action-card routerLink="energy-report" heading="Energy report (router link)">
+        <si-icon headerIcon icon="element-report" class="icon me-3" />
+        <p class="card-body card-text" body>Navigate to the energy report using Angular routing.</p>
+      </a>
+    </div>
+  </div>
+  <router-outlet />
 </div>
