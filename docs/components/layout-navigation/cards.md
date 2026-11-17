@@ -115,10 +115,30 @@ is placed on the edge of the card and padding is set internally.
 
 ### Action cards
 
-Action cards function as interactive buttons that can perform actions when clicked.
-Use `si-action-card` when you need cards that trigger specific actions.
+Action cards make the whole card interactive. Apply `si-action-card` to a native
+`<button>` element for actions or an `<a>` element for navigation.
 
-The component includes a `selectable` input that enables selection state on the card.
+- Use `<button si-action-card type="button">` to trigger actions, such as opening a dialog.
+- Use `<a si-action-card>` with `href` for standard links or `routerLink` for Angular routes.
+
+The `selectable` and `selected` inputs are supported only on button cards and must not be used
+on anchor cards. Use a `<button>` for selectable or disabled cards.
+
+Use `routerLinkActive="selected"` to highlight the active route. Add `RouterLink` and
+`RouterLinkActive` from `@angular/router` to your component's `imports`.
+
+```html
+<a
+  si-action-card
+  heading="Energy report"
+  routerLink="/energy-report"
+  routerLinkActive="selected"
+  [routerLinkActiveOptions]="{ exact: true }"
+  ariaCurrentWhenActive="page"
+>
+  <p class="card-body card-text" body>View the energy consumption summary.</p>
+</a>
+```
 
 <si-docs-component example="si-card/si-action-card" height="300"></si-docs-component>
 

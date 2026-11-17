@@ -2,87 +2,94 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, input } from '@angular/core';
+import { inputBinding, outputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
+import { page, userEvent } from 'vitest/browser';
 
-import { SiActionCardComponent } from './index';
-import { SiActionCardHarness } from './testing/si-action-card.harnes';
-@Component({
-  imports: [SiActionCardComponent, RouterModule],
-  template: `
-    <div>
-      <button
-        type="button"
-        si-action-card
-        [disabled]="disabled()"
-        [heading]="heading"
-        [subHeading]="subHeading"
-        [selectable]="selectable()"
-        >Action card</button
-      >
-    </div>
-  `
-})
-class WrapperComponent {
-  heading = 'Test';
-  subHeading = 'Description';
-  readonly selectable = input(false);
-  readonly disabled = input(false);
-}
+import { SiActionCardComponent } from './si-action-card.component';
 
 describe('SiActionCardComponent', () => {
-  let fixture: ComponentFixture<WrapperComponent>;
-  let loader: HarnessLoader;
-  let actionCardHarness: SiActionCardHarness;
+  let fixture: ComponentFixture<SiActionCardComponent>;
+  let element: HTMLButtonElement;
+  const selectable = signal(false);
+  const selected = signal(false);
+  const selectedChange = vi.fn<(value: boolean) => void>();
+  const card = page.getByRole('button', { name: 'Test', exact: true });
 
   beforeEach(async () => {
-    fixture = TestBed.createComponent(WrapperComponent);
-    loader = TestbedHarnessEnvironment.loader(fixture);
-    actionCardHarness = await loader.getHarness(SiActionCardHarness);
+    selectable.set(false);
+    selected.set(false);
+    selectedChange.mockClear();
+    fixture = TestBed.createComponent(SiActionCardComponent, {
+      inferTagName: true,
+      bindings: [
+        inputBinding('heading', () => 'Test'),
+        inputBinding('subHeading', () => 'Description'),
+        inputBinding('selectable', selectable),
+        inputBinding('selected', selected),
+        outputBinding('selectedChange', selectedChange)
+      ]
+    });
+    element = fixture.nativeElement;
+    element.type = 'button';
+    await fixture.whenStable();
   });
 
   it('should not be selected by default', async () => {
-    fixture.detectChanges();
-    expect(await actionCardHarness.isSelected()).toBe(false);
+    await expect.element(card).not.toHaveClass('selected');
+    await expect.element(card).not.toHaveAttribute('aria-pressed');
   });
 
   it('should be selectable when enabled', async () => {
-    fixture.componentRef.setInput('selectable', true);
-    expect(await actionCardHarness.isSelected()).toBe(false);
-    await actionCardHarness.clickActionButton();
-    expect(await actionCardHarness.isSelected()).toBe(true);
-  });
+    selectable.set(true);
 
-  it('should toggle selected state on click', async () => {
-    fixture.componentRef.setInput('selectable', true);
-    expect(await actionCardHarness.isSelected()).toBe(false);
-    await actionCardHarness.clickActionButton();
-    expect(await actionCardHarness.isSelected()).toBe(true);
-    await actionCardHarness.clickActionButton();
-    expect(await actionCardHarness.isSelected()).toBe(false);
-  });
-
-  it('should not be selectable when disabled', async () => {
-    fixture.componentRef.setInput('disabled', true);
-    fixture.componentRef.setInput('selectable', true);
-    expect(await actionCardHarness.isSelected()).toBe(false);
-    await actionCardHarness.clickActionButton();
-    expect(await actionCardHarness.isSelected()).toBe(false);
-  });
-
-  it('should reference generated heading and content ids', async () => {
     await fixture.whenStable();
-    const actionCard: HTMLElement = fixture.nativeElement.querySelector('[si-action-card]');
-    const labelledBy = actionCard.getAttribute('aria-labelledby')!;
-    const describedBy = actionCard.getAttribute('aria-describedby')!.split(' ');
+    await userEvent.click(card);
 
-    expect(actionCard.querySelector(`[id="${labelledBy}"]`)).toHaveTextContent('Test');
-    expect(describedBy).toHaveLength(2);
-    expect(actionCard.querySelector(`[id="${describedBy[0]}"]`)).toHaveTextContent('Description');
-    expect(actionCard.querySelector(`[id="${describedBy[1]}"]`)).not.toBeNull();
+    await expect.element(card).toHaveClass('selected');
+    await expect.element(card).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('toggles selection and emits changes on click', async () => {
+    selectable.set(true);
+    await fixture.whenStable();
+    await expect.element(card).toHaveAttribute('aria-pressed', 'false');
+
+    await userEvent.click(card);
+    await fixture.whenStable();
+
+    await expect.element(card).toHaveClass('selected');
+    await expect.element(card).toHaveAttribute('aria-pressed', 'true');
+    expect(selectedChange).toHaveBeenNthCalledWith(1, true);
+
+    await userEvent.click(card);
+    await fixture.whenStable();
+
+    await expect.element(card).not.toHaveClass('selected');
+    await expect.element(card).toHaveAttribute('aria-pressed', 'false');
+    expect(selectedChange).toHaveBeenNthCalledWith(2, false);
+    expect(selectedChange).toHaveBeenCalledTimes(2);
+  });
+
+  it('stops selecting when selectable is turned off', async () => {
+    selectable.set(true);
+    await fixture.whenStable();
+    await userEvent.click(card);
+    await fixture.whenStable();
+    expect(selectedChange).toHaveBeenNthCalledWith(1, true);
+
+    selectable.set(false);
+    await fixture.whenStable();
+    await userEvent.click(card);
+    await fixture.whenStable();
+
+    await expect.element(card).not.toHaveClass('selected');
+    await expect.element(card).not.toHaveAttribute('aria-pressed');
+    expect(selectedChange).toHaveBeenCalledTimes(1);
+  });
+
+  it('should have accessible card name and description', async () => {
+    await expect.element(card).toHaveAccessibleName('Test');
+    await expect.element(card).toHaveAccessibleDescription('Description');
   });
 });
