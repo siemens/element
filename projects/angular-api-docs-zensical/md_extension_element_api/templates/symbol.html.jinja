@@ -1,0 +1,34 @@
+{% import 'macros.html.jinja' as api with context %}
+{# API declarations are not standalone copyable examples. Avoid the theme
+   inserting duplicate unlabeled navigation landmarks for every signature. #}
+{# Search needs IDs on headings to start separate sections. Keep the target on
+   the wrapper only when the embed deliberately omits its heading. #}
+<section class="si-docs-api no-copy"{% if no_heading %} id="{{ symbol_anchor }}"{% endif %} data-api-symbol="{{ symbol.id }}" data-api-mode="{{ mode }}" data-api-source="{{ source }}" data-api-heading="{{ heading }}" data-api-no-heading="{{ 'true' if no_heading else 'false' }}"{% if mode == 'api' and hide_implicitly_public %} data-api-hide-implicitly-public="true"{% endif %}>
+{% if no_heading %}{{ api.type_target(symbol_anchor) }}{% endif %}
+{% if mode == 'type' %}<div class="api-type-card">{% endif %}
+{% set section_title = heading ~ ' API Documentation' if heading == symbol.name else heading %}
+<div class="{{ 'api-type-header' if mode == 'type' else 'api-symbol-header' }}">
+{% if mode == 'api' and not no_heading %}
+<h3 id="{{ symbol_anchor }}" data-api-toc-label="{{ section_title }}">{{ api.type_target(symbol_anchor) }}{{ section_title }}<a class="headerlink" href="#{{ symbol_anchor | urlencode }}" title="Permanent link">¶</a></h3>
+{% if symbol.sourceUrl %}<a class="api-member-source" href="{{ safe_url(symbol.sourceUrl) }}" aria-label="Source for {{ symbol.name }}">Source</a>{% endif %}
+{% else %}
+{% if no_heading %}<strong>{% else %}<h3 id="{{ symbol_anchor }}">{% endif %}{% if symbol.sourceUrl %}<a href="{{ safe_url(symbol.sourceUrl) }}" title="Source for {{ symbol.name }}">{{ heading }}</a>{% else %}{{ heading }}{% endif %}{% if no_heading %}</strong>{% else %}</h3>{% endif %}
+{% if mode == 'type' %}<div class="api-type-declaration">
+{% if symbol.kind == 'type_alias' and view.declaration %}
+<code>{% if view.declaration[0:2] | map(attribute='text') | join == 'type ' ~ symbol.name ~ ' = ' %}= {{ api.fragments(view.declaration[2:], local, false) }}{% else %}{{ api.fragments(view.declaration, local, false) }}{% endif %}</code>
+{% elif view.declaration[1:] and view.declaration[0].text == symbol.kind ~ ' ' ~ symbol.name %}
+<code>{{ api.fragments(view.declaration[1:], local, false) }}</code>
+{% endif %}
+<a class="headerlink" href="#{{ symbol_anchor | urlencode }}" title="Permanent link to {{ heading }}">¶</a></div>{% endif %}
+<span class="api-kind">{{ symbol.kind.replace('undecorated_', '').replace('_', ' ') }}</span>
+{% endif %}
+</div>
+<div class="{{ 'api-type-body' if mode == 'type' else 'api-symbol-body' }}">
+{% if symbol.metadata %}<dl class="api-metadata">{% for item in symbol.metadata %}<dt>{{ item.label }}</dt><dd><code>{{ item.value }}</code></dd>{% endfor %}</dl>{% endif %}
+{% if symbol.importStatement and (mode != 'type' or source.startswith('api/')) %}<pre class="api-import"><code>{{ symbol.importStatement }}</code></pre>{% endif %}
+{{ api.blocks(view.documentation, local) }}
+{{ api.signatures(view.signatures, local, compact=mode == 'type') }}
+{% for group in view.groups %}{{ api.group(group, local, mode) }}{% endfor %}
+</div>
+{% if mode == 'type' %}</div>{% endif %}
+</section>

@@ -1,7 +1,7 @@
 site_name: Siemens Element Documentation
 
 site_author: 'Siemens'
-site_url: 'https://element.siemens.io/'
+site_url: &site_url 'https://element.siemens.io/'
 site_dir: 'dist/design'
 use_directory_urls: true
 
@@ -12,6 +12,7 @@ edit_uri: 'blob/main/docs/'
 copyright: '&copy; Siemens 2016-2026'
 
 strict: true
+exclude_docs: !ENV [ ELEMENT_DOCS_EXCLUDE, '/api/' ]
 
 nav:
   - Home:
@@ -208,6 +209,7 @@ nav:
       - AI chat history:                  'patterns/ai/ai-chat-history.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
+    - Documentation build:                'architecture/documentation.md'
     - Dynamic forms:                      'architecture/dynamic-forms.md'
     - Motion and animation:               'architecture/motion-animation.md'
     - Resize observer:                    'architecture/resize-observer.md'
@@ -255,12 +257,20 @@ extra_javascript:
   - '//w3.siemens.com/ote/sinet/ote.js'
   - 'https://assets.adobedtm.com/5dfc7d97c6fb/f16b45bec907/launch-af252bb19983.min.js'
   - '_src/version-selector.js'
-  - path: !ENV [ LIVE_PREVIEW_JS, 'http://127.0.0.1:4200/main.js' ]
+  - path: !ENV [ LIVE_PREVIEW_JS, 'http://localhost:4200/main.js' ]
     type: module
     async: true
     defer: true
 extra:
-  element_docs_builder_zensical: !!python/name:mkdocs_element_docs_builder.compat_zensical.compat
+  element_docs_install: !!python/name:siemens_angular_api_docs_zensical.zensical_navigation.install
+  element_docs:
+    api:
+      enabled: &element_docs_api_enabled !ENV [ ELEMENT_DOCS_API, false ]
+      artifact_dir: dist/element-docs
+      pages_dir: api
+      nav_parent: Components
+    export:
+      examples_dir: src/app/examples
   links:
     - name: 'GitHub'
       value: 'https://github.com/siemens/element'
@@ -289,11 +299,33 @@ markdown_extensions:
   - pymdownx.superfences
   - admonition
   - md_in_html
-  - element-docs
+  - element-docs:
+      site_url: *site_url
+  - md_extension_element_api.extension:
+      enabled: *element_docs_api_enabled
   - toc:
       permalink: true
 
 plugins:
+  - llmstxt:
+      enabled: *element_docs_api_enabled
+      # Index paths are relative; site_url remains canonical for HTML/content links.
+      base_url: ''
+      autoclean: true
+      markdown_description: >-
+        Siemens Element design system documentation, examples and complete API reference.
+        Example blocks contain the original Angular component and template source.
+      # Checked-in callback; reads the loaded site config and renders on demand.
+      preprocess: tools/docs/llms_preprocess.py
+      sections:
+        Home: ['README.md', 'get-started/*.md', 'update-guides/*.md', 'CHANGELOG.md']
+        Fundamentals: ['fundamentals/*.md']
+        Components: ['components/*.md']
+        API reference: ['api/*.md']
+        Icons: ['icons.md']
+        Patterns: ['patterns/*.md']
+        Architecture: ['architecture/*.md']
+        Contributing: ['CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'DEVELOPER.md']
   - material/search
   - minify:
       minify_html: true

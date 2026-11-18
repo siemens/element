@@ -223,46 +223,38 @@ We use [Zensical](https://zensical.org/) to build the documentation.
 To have visible example code, run the example application first.
 
 ```shell
-# Serve the documentation locally run
+# Serve the documentation locally (without API documentation)
 pnpm run docs:serve
 ```
 
-Open the documentation at `http://127.0.0.1:8000` so it uses the same loopback
-hostname as the embedded examples and can access browser storage.
+Open the documentation at `http://localhost:8000`. The documentation and embedded
+examples both use `localhost` to avoid cross-site browser storage restrictions.
 
-### API documentation pipeline
+For details on how the documentation is built, see the
+[documentation architecture](https://element.siemens.io/architecture/documentation/).
 
-`docs:build` and `docs:serve` are the fast, API-disabled commands. API-enabled
-builds prepare the API data once, then invoke Zensical with `mkdocs.yml`:
+### API documentation
 
 ```shell
-pnpm run docs:build:api       # API references and Composer structured output
-pnpm run docs:build:generate  # Also exclude generated pages from Composer output
-pnpm run docs:serve:api       # API references without Composer
+# Extract API data and generate reference pages into docs/api/ (gitignored, do not edit)
+pnpm run docs:generate-api
+# Build the site with API documentation
+pnpm run docs:build:api
+# Preview the site with API documentation
+pnpm run docs:serve:api
+# Fast build without API documentation
+pnpm run docs:build
 ```
 
-The package configuration is `.docs-composerrc.mts`. Its `include` list defines
-the package directories. The compiler extractor discovers public entry points
-from each `ng-package.json`; it does not require a bulk `docs.ts` export file or
-manually listed entry points. Composer keeps its existing inputs for structured
-and LLM output. Run
-`pnpm run docs:prepare` to extract the API JSON and reference catalog to their fixed
-paths under `.cache/element-docs/`. TypeScript prepares the display views, member
-selections, related types, reference groups and navigation, and validates the JSON
-before publishing it. Python renders the prepared data with Jinja; only tag
-parsing, page-local anchors and links, and Zensical integration remain there.
+Rerun `docs:generate-api` when library sources change. The preview does not watch the prepared data.
 
-API rendering is enabled only when `ELEMENT_DOCS_API` is exactly `true`; the API
-scripts set it for you. `mkdocs.yml` keeps directory-style URLs enabled. The API
-build scripts preserve the Docs Composer structured-output and `llms.txt` flow.
-
-Restart `docs:serve:api` after TypeScript source or source Markdown changes. Native
-Zensical configuration reloads normally and does not require TypeScript extraction.
-
-The API documentation checks used in CI are:
+### Checks
 
 ```shell
+# Unit tests
 CI=true pnpm run docs:test
+# Python tests
+pnpm run docs:test:py
 ```
 
 ### General writing style guide
@@ -298,11 +290,11 @@ Each chapter must include:
 
 ### Code section
 
-To improve the user experience, mention all relevant components, directives, services, pipes and types
-inline using the tags instead of linking them.
+Embed the API for relevant components, directives, services, pipes, and types
+instead of linking to it. Put API tags on their own lines, outside prose paragraphs.
 Export local APIs through the public entry point declared in `ng-package.json`.
-The compiler extractor discovers those exports automatically; `docs.ts` is only
-used by the legacy Composer flow for structured and LLM output.
+The compiler extractor discovers those exports automatically; no documentation
+barrel or separate documentation tsconfig is needed.
 
 To enhance the docs with live examples and API specs, use these tags in the Markdown files:
 
@@ -328,10 +320,5 @@ To enhance the docs with live examples and API specs, use these tags in the Mark
   file. Can therefore only be used once per file.
   It should always be used to get better types documentation resolution.
 
-### Ignoring
-
-To not parse the extension syntax, just add `DOCS-COMPOSER-IGNORE` somewhere in the file (as a markdown comment so it doesn't get rendered):
-
-```md
-[//]: # 'DOCS-COMPOSER-IGNORE'
-```
+To document these tags literally, put them in fenced or inline code. Literal code
+and comments are not interpreted as active API or example requests.
