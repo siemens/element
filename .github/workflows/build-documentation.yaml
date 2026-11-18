@@ -53,11 +53,9 @@ jobs:
       - run: pnpm run icon-viewer:build-docs
       - run: CI=true pnpm run docs:test
       - run: pnpm exec tsc --project tools/api-docs/tsconfig.json --noEmit
-      - run: uv run python -m unittest discover -s projects/element-docs-builder/tests -p 'test_*.py'
-      - run: pnpm run docs:build:generate
-        if: ${{ github.ref == 'refs/heads/main' }}
+      - run: pnpm run docs:test:py
+      - run: pnpm run docs:generate-api
       - run: pnpm run docs:build:api
-        if: ${{ github.ref != 'refs/heads/main' }}
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
       - run: mv dist/dashboards-demo-esm/ dist/design/
