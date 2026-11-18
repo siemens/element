@@ -145,17 +145,17 @@ $utilities: (
   ),
   // Sizing utilities
   'width': (
-      property: inline-size,
-      class: w,
-      values: (
-        0: 0,
-        25: 25%,
-        50: 50%,
-        75: 75%,
-        100: 100%,
-        auto: auto
-      )
-    ),
+    property: inline-size,
+    class: w,
+    values: (
+      0: 0,
+      25: 25%,
+      50: 50%,
+      75: 75%,
+      100: 100%,
+      auto: auto
+    )
+  ),
   'max-width': (
     property: max-inline-size,
     class: mw,
@@ -211,12 +211,12 @@ $utilities: (
   ),
   // Flex utilities
   'flex': (
-      responsive: true,
-      property: flex,
-      values: (
-        fill: 1 1 auto
-      )
-    ),
+    responsive: true,
+    property: flex,
+    values: (
+      fill: 1 1 auto
+    )
+  ),
   'flex-direction': (
     responsive: true,
     property: flex-direction,
@@ -320,15 +320,15 @@ $utilities: (
   ),
   // Margin utilities
   'margin': (
-      responsive: true,
-      property: margin-block margin-inline,
-      class: m,
-      values: $_margins-block,
-      property-values: (
-        margin-block: $_margins-block,
-        margin-inline: $_margins-inline
-      )
-    ),
+    responsive: true,
+    property: margin-block margin-inline,
+    class: m,
+    values: $_margins-block,
+    property-values: (
+      margin-block: $_margins-block,
+      margin-inline: $_margins-inline
+    )
+  ),
   'margin-x': (
     responsive: true,
     property: margin-inline,
@@ -367,16 +367,16 @@ $utilities: (
   ),
   // Negative margin utilities
   'negative-margin': (
-      responsive: true,
-      negative: true,
-      property: margin-block margin-inline,
-      class: m,
-      values: spacers.$negative-spacers-block,
-      property-values: (
-        margin-block: spacers.$negative-spacers-block,
-        margin-inline: spacers.$negative-spacers-inline
-      )
-    ),
+    responsive: true,
+    negative: true,
+    property: margin-block margin-inline,
+    class: m,
+    values: spacers.$negative-spacers-block,
+    property-values: (
+      margin-block: spacers.$negative-spacers-block,
+      margin-inline: spacers.$negative-spacers-inline
+    )
+  ),
   'negative-margin-x': (
     responsive: true,
     negative: true,
@@ -421,15 +421,15 @@ $utilities: (
   ),
   // Padding utilities
   'padding': (
-      responsive: true,
-      property: padding-block padding-inline,
-      class: p,
-      values: spacers.$spacers-block,
-      property-values: (
-        padding-block: spacers.$spacers-block,
-        padding-inline: spacers.$spacers-inline
-      )
-    ),
+    responsive: true,
+    property: padding-block padding-inline,
+    class: p,
+    values: spacers.$spacers-block,
+    property-values: (
+      padding-block: spacers.$spacers-block,
+      padding-inline: spacers.$spacers-inline
+    )
+  ),
   'padding-x': (
     responsive: true,
     property: padding-inline,
@@ -468,12 +468,12 @@ $utilities: (
   ),
   // Text
   'font-family': (
-      property: font-family,
-      class: font,
-      values: (
-        monospace: var(--#{variables.$variable-prefix}font-monospace)
-      )
-    ),
+    property: font-family,
+    class: font,
+    values: (
+      monospace: var(--#{variables.$variable-prefix}font-monospace)
+    )
+  ),
   'font-size': (
     rfs: true,
     property: font-size,
