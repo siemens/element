@@ -1,3 +1,106 @@
+# [51.7.0](https://github.com/siemens/element/compare/v51.6.0...v51.7.0) (2026-11-18)
+
+
+
+
+### Features
+
+* **chat-messages:** add si-ai-chat higher level component ([7aed64a](https://github.com/siemens/element/commit/7aed64af445c39490d0f39c598b6e3b4e1d5728a))
+* **color-picker:** improve keyboard and screen reader support ([5ba53c0](https://github.com/siemens/element/commit/5ba53c08719abe892de772025f111318e10ae2b6)), closes [#2567](https://github.com/siemens/element/issues/2567) [#1070](https://github.com/siemens/element/issues/1070)
+* **empty-state:** add optional icon and responsive layout with text truncation ([e84cff8](https://github.com/siemens/element/commit/e84cff8e03d43cc06727744489c12c391c503775)), closes [#1479](https://github.com/siemens/element/issues/1479)
+* **formly:** support ngx-formly v11 ([db4aedd](https://github.com/siemens/element/commit/db4aedd3907891bb7882a9c31948f6e22ada13a2))
+* **info-page:** add unified description input ([cf467e8](https://github.com/siemens/element/commit/cf467e8c87f5428afaf860bc4a4b8b112ea83c91)), closes [#3154](https://github.com/siemens/element/issues/3154)
+* **live-preview:** expose embeddable preview elements ([81e7728](https://github.com/siemens/element/commit/81e77284f0c48d9a2619d1db7283fc1815808604))
+* **maplibre:** reveal cluster children on click ([a6c6671](https://github.com/siemens/element/commit/a6c6671f0d3fc8b2f5e8b324c18cb8b32613ccfa))
+* **modal:** support Angular component input and output bindings ([fba39ba](https://github.com/siemens/element/commit/fba39bae94f1c78c1ec5967b74b5b7d45522b7bd))
+* **navbar-vertical-next:** add leading navigation action slot ([5c0b36c](https://github.com/siemens/element/commit/5c0b36cb7f1024f6e500135082a45a2e94149be9))
+* **result-details-list:** support horizontal orientation ([9714956](https://github.com/siemens/element/commit/9714956e1066efb714f8a3b9e96bfe95836a7469))
+* **search-bar:** allow input through content projection ([6363e2b](https://github.com/siemens/element/commit/6363e2b8456bc67646be6ca9e9af38eeeb6cb6df))
+* **select:** custom select support aria-labelledby ([4e88db6](https://github.com/siemens/element/commit/4e88db67bc00c5fc7481e902cd9a7cf23a30ad64))
+* **select:** support explicit Tab dismissal for custom dropdowns ([dad655a](https://github.com/siemens/element/commit/dad655ac137f1e08e774d5db53850995fa14d6e7))
+* **side-panel:** add subHeading input to side panel content ([5c031cd](https://github.com/siemens/element/commit/5c031cde32706899602c03f42bdd20a54bce3484))
+* **tour:** optional image for tour steps ([2a0acd5](https://github.com/siemens/element/commit/2a0acd5e6d4c1d620674883430550cde5f22160a))
+
+
+### Bug Fixes
+
+* **angular:** prevent subscription and focus-monitoring leaks ([1587cce](https://github.com/siemens/element/commit/1587cce70bee4e461a7feaf0bf91ccf50edf9546))
+* **card:** show tooltips for truncated header text ([417b221](https://github.com/siemens/element/commit/417b221427cee9c69b08e8f22218b20f5a0fdb35))
+* **carousel:** settle on the clicked slide when animation frames repeat a timestamp ([f0432c3](https://github.com/siemens/element/commit/f0432c390123044719d395f40fe25986d043c94d))
+* **chat-messages:** use tertiary styling for the send button ([46b5bac](https://github.com/siemens/element/commit/46b5bacd0ac95c2fb615c2e37ed30e5bbd6e56e4))
+* **color-picker:** clear selected color preview when resetting selection ([6dd39fb](https://github.com/siemens/element/commit/6dd39fb72ef7d526f144beed749634c854771337))
+* **dashboard:** preserve document scroll behavior when restoring cards ([c83a9d2](https://github.com/siemens/element/commit/c83a9d2c61d5adc49f35aacd996670382b0e0ed3)), closes [#3166](https://github.com/siemens/element/issues/3166)
+* **density:** align default spacing with design tokens ([c1bdd5a](https://github.com/siemens/element/commit/c1bdd5a34f141b8c26b63405a90f9206d16a9a33)), closes [#3051](https://github.com/siemens/element/issues/3051)
+* **landing-page:** reduce padding below the xxl breakpoint ([f274e53](https://github.com/siemens/element/commit/f274e53329da11ec3afcae460237a0bafae0137a))
+* **list-details:** use an icon-only ghost back button ([dc9309d](https://github.com/siemens/element/commit/dc9309d1f927ccc71e1663dbfb39e16766fc5772))
+* **live-preview:** honor initial root font size in preview URLs ([1605a18](https://github.com/siemens/element/commit/1605a1826ba1ac4d644a0f1e111152f417186b3e))
+* **live-preview:** keep clear log icon visible on hover ([e2bc2b9](https://github.com/siemens/element/commit/e2bc2b95e2805ba770bea88d64da436406ca0786))
+* **maplibre:** increase space between cluster circle and content ([ba0edb4](https://github.com/siemens/element/commit/ba0edb4caf3078c927a6d9cd24eaae179290832e))
+* **modal:** remove dialogs closed during their opening animation ([0ce8116](https://github.com/siemens/element/commit/0ce8116a9863a994bdcabc0f1dfb580d94ef9983)), closes [#3184](https://github.com/siemens/element/issues/3184)
+* **nav:** remove rounded corners from router tabs ([483f26a](https://github.com/siemens/element/commit/483f26aa3fe199a5b320c6b25c796e14697e84e2))
+* **photo-upload:** prevent crop dialogs from opening after destruction ([58e165c](https://github.com/siemens/element/commit/58e165ce37f4b9cfe73b2913faf4151e70309834))
+* **select:** include null in custom select value types ([2f4010a](https://github.com/siemens/element/commit/2f4010afb7b6a18c5495c96a85665fe1e2edc46e))
+* **select:** preserve combobox semantics for readonly selects ([52741f5](https://github.com/siemens/element/commit/52741f554a5486f7789ebb330a4834e484068f42))
+* **select:** reflect values set in valueChange handlers or mutated in place ([a89a208](https://github.com/siemens/element/commit/a89a208a3532104d0231cd23eb5741fefd58b795))
+* **side-panel:** discard pending resize events on destroy ([44fcd9c](https://github.com/siemens/element/commit/44fcd9c4ae172c0a403343ca602f6f3d49471c5f)), closes [#3185](https://github.com/siemens/element/issues/3185)
+* **side-panel:** preserve fullscreen while opening ([db26e02](https://github.com/siemens/element/commit/db26e020b934902a206abf28872c0e102d8686c3))
+* **status-bar:** cancel pending animation timers on destroy and mode changes ([79bd263](https://github.com/siemens/element/commit/79bd2634593b05aa0ab665c4d5e044348c31cfcb))
+* **tabs:** preserve router-link tab routes on page load ([7e57dc5](https://github.com/siemens/element/commit/7e57dc5a81a6513cf57239dd066c67a63274806b)), closes [#3214](https://github.com/siemens/element/issues/3214)
+* **theme:** align overlay and expanded component shadows ([bad21d2](https://github.com/siemens/element/commit/bad21d2412199a4bc77503774046de643189d34e))
+* **theme:** remove generated styles when the theme service is destroyed ([4df486e](https://github.com/siemens/element/commit/4df486ebac58b15e6fd13b75f4132bcc1ac2f259)), closes [#3166](https://github.com/siemens/element/issues/3166)
+* **tour:** align tour step number position with design pattern ([3c4f6f5](https://github.com/siemens/element/commit/3c4f6f50ec31a264c5b4e41faa02a58cdbd00dc8))
+* **tree-view:** keep labels stable when lazy loading completes ([10c8480](https://github.com/siemens/element/commit/10c848022b42b5818234db63c9322fd56c495212)), closes [#3196](https://github.com/siemens/element/issues/3196)
+* **typeahead:** avoid slow and incomplete token matching ([300dda0](https://github.com/siemens/element/commit/300dda0c48374507f6a3f5610689d46631e03f17))
+
+
+### Performance Improvements
+
+* **tree-view:** reduce repeated checks when updating items ([028bf99](https://github.com/siemens/element/commit/028bf99cb0b6a5753d6071e1fc3b36407cebbfee))
+
+
+### NOTES
+
+* **chat-messages:** Migrate chat actions from `MessageAction` to `MenuItemAction`.
+
+    Removed `MessageAction` from `@siemens/element-ng/chat-messages`.
+    Import `MenuItemAction` from `@siemens/element-ng/menu` instead and add
+    `type: 'action'` to each action object. The `actions` and `secondaryActions`
+    inputs of `SiAiMessageComponent`, `SiUserMessageComponent`, and
+    `SiChatInputComponent` now accept `MenuItemAction[]`; `secondaryActions` no
+    longer accepts other menu item types.
+
+    The sending and interruptible inputs of `SiChatInputComponent` are now
+    boolean model signals without attribute coercion. Use boolean property
+    bindings, such as `[sending]="true"`, instead of bare or string-valued
+    attributes.
+
+
+### DEPRECATIONS
+
+* **info-page:** SiInfoPageComponent.copyText and SiInfoPageComponent.instructions are deprecated. Use SiInfoPageComponent.description instead.
+
+* **search-bar:** following inputs and output properties on `si-search-bar` are deprecated in favor of a projected input.
+
+    Project an `<input siSearchBarInput>` into `<si-search-bar>` and migrate
+    the deprecated APIs as follows:
+
+    - placeholder: Set placeholder on the projected input.
+    - value: Set value or bind a form control on the projected input.
+    - readonly: Set readonly on the projected input.
+    - disabled: Set disabled on the projected input or its form control.
+    - maxlength: Set maxlength on the projected input.
+    - prohibitedCharacters: Use reactive form or Signal Forms validation.
+    - debounceTime: Handle debouncing with Signal Forms or apply RxJS
+      debounceTime to a reactive FormControl's valueChanges.
+    - searchChange: Observe FormControl.valueChanges or the field value
+      signal with Signal Forms.
+
+* **typography:** Custom typography SASS variables
+
+    Use $si-sys-typography-<style>-<property> instead of style-specific
+    $si-font-size-*, $si-line-height-*, and $si-font-weight-* variables,
+    and the $si-font-family / $si-font-family-mono variables.
+
 # [51.6.0](https://github.com/siemens/element/compare/v51.5.0...v51.6.0) (2026-10-27)
 
 
