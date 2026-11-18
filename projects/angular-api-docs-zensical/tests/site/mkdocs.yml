@@ -1,0 +1,21 @@
+site_name: Widget documentation
+site_url: https://docs.example/
+nav:
+  - Components:
+      - Widget guide: guide.md
+extra:
+  element_docs_install: !!python/name:siemens_angular_api_docs_zensical.zensical_navigation.install
+  element_docs:
+    api:
+      enabled: true
+      artifact_dir: prepared
+markdown_extensions:
+  - md_extension_element_api.extension:
+      enabled: true
+plugins:
+  - llmstxt:
+      base_url: ''
+      preprocess: llms_preprocess.py
+      sections:
+        Guide: ['guide.md']
+        API reference: ['api/*.md']

@@ -67,9 +67,6 @@
       "path": "./projects/element-ng/tsconfig.schematics.spec.json"
     },
     {
-      "path": "./projects/element-ng/tsconfig.docs.json"
-    },
-    {
       "path": "./projects/element-translate-ng/tsconfig.lib.json"
     },
     {
@@ -88,9 +85,6 @@
       "path": "./projects/native-charts-ng/tsconfig.spec.json"
     },
     {
-      "path": "./projects/native-charts-ng/tsconfig.docs.json"
-    },
-    {
       "path": "./projects/live-preview/tsconfig.lib.json"
     },
     {
@@ -98,9 +92,6 @@
     },
     {
       "path": "./projects/dashboards-ng/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/dashboards-ng/tsconfig.docs.json"
     },
     {
       "path": "./projects/maps-ng/tsconfig.lib.json"

@@ -19,7 +19,7 @@ max_line_length = off
 trim_trailing_whitespace = false
 
 # ignore rules
-[{projects/element-theme/dist/**,src/assets/typedoc/**,playwright/results/**}]
+[{projects/element-theme/dist/**,playwright/results/**}]
 charset = none
 end_of_line = none
 insert_final_newline = none

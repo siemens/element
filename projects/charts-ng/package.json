@@ -22,10 +22,5 @@
     "@angular/common": "22",
     "@angular/core": "22",
     "echarts": "^6.0.0"
-  },
-  "exports": {
-    "./docs.json": {
-      "default": "./docs.json"
-    }
   }
 }

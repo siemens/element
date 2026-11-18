@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Prepared API documentation (v2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "symbols", "index", "members", "memberIndex", "targets"],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "symbols": { "type": "array", "items": { "$ref": "#/$defs/symbol" } },
+    "index": { "$ref": "#/$defs/index" },
+    "members": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["symbolId", "view"],
+        "properties": {
+          "symbolId": { "type": "string" },
+          "view": { "$ref": "#/$defs/view" }
+        }
+      }
+    },
+    "memberIndex": { "$ref": "#/$defs/index" },
+    "targets": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["symbolId", "anchor"],
+        "properties": { "symbolId": { "type": "string" }, "anchor": { "type": "string" } }
+      }
+    }
+  },
+  "$defs": {
+    "index": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" },
+        "uniqueItems": true
+      }
+    },
+    "symbol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "packageName",
+        "importPath",
+        "importStatement",
+        "kind",
+        "referencePath",
+        "sourceUrl",
+        "metadata",
+        "api",
+        "type"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "packageName": { "type": "string" },
+        "importPath": { "type": "string" },
+        "importStatement": { "type": ["string", "null"] },
+        "kind": { "type": "string" },
+        "referencePath": { "type": ["string", "null"] },
+        "sourceUrl": { "type": ["string", "null"] },
+        "metadata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "value"],
+            "properties": { "label": { "type": "string" }, "value": { "type": "string" } }
+          }
+        },
+        "api": { "$ref": "#/$defs/view" },
+        "explicitPublicApi": { "$ref": "#/$defs/view" },
+        "type": { "$ref": "#/$defs/view" }
+      }
+    },
+    "view": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["documentation", "declaration", "groups", "signatures", "relatedTypeIds"],
+      "properties": {
+        "documentation": { "$ref": "#/$defs/blocks" },
+        "declaration": { "$ref": "#/$defs/fragments" },
+        "groups": { "type": "array", "items": { "$ref": "#/$defs/group" } },
+        "signatures": { "$ref": "#/$defs/signatures" },
+        "relatedTypeIds": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      }
+    },
+    "group": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "title", "showDefaults", "rows"],
+      "properties": {
+        "kind": { "type": "string" },
+        "title": { "type": "string" },
+        "showDefaults": { "type": "boolean" },
+        "rows": { "type": "array", "items": { "$ref": "#/$defs/row" } }
+      }
+    },
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "badges",
+        "type",
+        "default",
+        "documentation",
+        "signatures",
+        "sourceUrl"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "badges": { "type": "array", "items": { "type": "string" } },
+        "type": { "$ref": "#/$defs/fragments" },
+        "default": { "type": ["string", "null"] },
+        "defaultLink": { "$ref": "#/$defs/fragment" },
+        "documentation": { "$ref": "#/$defs/blocks" },
+        "signatures": { "$ref": "#/$defs/signatures" },
+        "sourceUrl": { "type": ["string", "null"] }
+      }
+    },
+    "signatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "label", "documentation", "parameters", "returns"],
+        "properties": {
+          "id": { "type": "string" },
+          "label": { "$ref": "#/$defs/fragments" },
+          "documentation": { "$ref": "#/$defs/blocks" },
+          "parameters": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "returns": { "$ref": "#/$defs/fragments" }
+        }
+      }
+    },
+    "blocks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "parts"],
+        "properties": {
+          "kind": { "enum": ["paragraph", "code"] },
+          "language": { "type": "string" },
+          "parts": { "$ref": "#/$defs/fragments" }
+        }
+      }
+    },
+    "fragments": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fragment" }
+    },
+    "fragment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "text", "targetId", "href"],
+      "properties": {
+        "kind": { "enum": ["text", "code", "link"] },
+        "strong": { "const": true },
+        "text": { "type": "string" },
+        "targetId": { "type": ["string", "null"] },
+        "href": { "type": ["string", "null"] }
+      },
+      "if": { "properties": { "kind": { "const": "link" } } },
+      "then": {
+        "oneOf": [
+          { "properties": { "targetId": { "type": "string" }, "href": { "type": "null" } } },
+          { "properties": { "targetId": { "type": "null" }, "href": { "type": "string" } } }
+        ]
+      },
+      "else": { "properties": { "targetId": { "type": "null" }, "href": { "type": "null" } } }
+    }
+  }
+}

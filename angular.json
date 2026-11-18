@@ -305,7 +305,7 @@
           "options": {
             "tsConfig": "projects/charts-ng/tsconfig.spec.json",
             "browsers": ["chromium"],
-            "coverageExclude": [".angular/cache/**", "**/*.module.ts", "docs.ts", "public-api.ts"],
+            "coverageExclude": [".angular/cache/**", "**/*.module.ts", "public-api.ts"],
             "coverageReporters": ["cobertura", "html", "text"]
           }
         },
@@ -344,7 +344,6 @@
               ".angular/cache/**",
               "**/index.ts",
               "**/*.module.ts",
-              "docs.ts",
               "public-api.ts"
             ],
             "coverageReporters": ["cobertura", "html", "text"]

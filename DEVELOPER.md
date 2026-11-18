@@ -246,7 +246,9 @@ pnpm run docs:serve:api
 pnpm run docs:build
 ```
 
-Rerun `docs:generate-api` when library sources change. The preview does not watch the prepared data.
+Rerun `docs:generate-api` when library sources change. The preview does not re-extract APIs or regenerate reference pages.
+The script runs `angular-api-docs extract` with the root `api-docs.config.ts`, and then runs `uv run angular-api-docs-zensical generate-pages` with the settings under `extra.element_docs` in `mkdocs.yml`.
+To regenerate only the JSON artifacts, run `pnpm exec angular-api-docs extract`. If the JSON is already current and you only need to regenerate the reference pages, run `uv run angular-api-docs-zensical generate-pages`.
 
 ### Checks
 

@@ -22,10 +22,5 @@
     "@angular/common": "22",
     "@angular/core": "22",
     "@siemens/element-theme": "workspace:*"
-  },
-  "exports": {
-    "./docs.json": {
-      "default": "./docs.json"
-    }
   }
 }
