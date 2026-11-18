@@ -1,6 +1,8 @@
 """Page-local selection, anchor allocation and templates for prepared API views."""
 
 from copy import deepcopy
+from functools import lru_cache
+import json
 import posixpath
 from pathlib import Path
 from urllib.parse import quote, urlsplit
@@ -8,6 +10,18 @@ from urllib.parse import quote, urlsplit
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
 
 from .adapter import ApiRenderError, ApiSelection, PresentationAdapter, safe_url
+
+
+API_ARTIFACT = Path('dist/element-docs/api-documentation.json')
+
+
+@lru_cache(maxsize=1)
+def load_renderer(path):
+  """Share immutable prepared data between pages in a clean build."""
+  try:
+    return ApiRenderer(json.loads(Path(path).read_text(encoding='utf-8')))
+  except (OSError, ValueError) as error:
+    raise ApiRenderError(f'Cannot load API artifact {path}: {error}. Run pnpm docs:prepare.') from error
 
 
 def reference_path(value):
@@ -20,6 +34,23 @@ def reference_path(value):
   if not value.endswith('.md'):
     raise ApiRenderError(f'Malformed canonical API referencePath {value!r}: expected a docs-relative .md path')
   return value
+
+
+def view_nodes(view):
+  """Yield anchor-bearing prepared nodes in browser rendering order."""
+  def signatures(items):
+    for signature in items:
+      yield signature
+      yield from rows(signature['parameters'])
+
+  def rows(items):
+    for row in items:
+      yield row
+      yield from signatures(row['signatures'])
+
+  yield from signatures(view['signatures'])
+  for group in view['groups']:
+    yield from rows(group['rows'])
 
 
 class ApiRenderer:
@@ -56,7 +87,10 @@ class ApiRenderer:
       for selection in selections:
         symbol = selection.owner
         occurrence = {'symbol': symbol, 'mode': selection.mode, 'member': selection.member, 'view': deepcopy(selection.view), 'local': {},
-                      'heading': request.get('heading') or symbol['name'], 'no_heading': request.get('no_heading', False)}
+                      'source': current_file_path,
+                      'heading': request.get('heading') or symbol['name'], 'no_heading': request.get('no_heading', False),
+                      'member_id': next((key for key, member in self.adapter.data['members'].items()
+                                         if member['view'] is selection.view), '') if selection.member else ''}
         occurrences.append(occurrence)
         embeds.append(occurrence)
       by_request.append(occurrences)
@@ -78,22 +112,11 @@ class ApiRenderer:
       page_targets.setdefault(node_id, anchor)
       return anchor
 
-    def register_signatures(signatures, occurrence):
-      for signature in signatures:
-        signature['anchor'] = allocate(signature['id'], occurrence)
-        register_rows(signature['parameters'], occurrence)
-
-    def register_rows(rows, occurrence):
-      for row in rows:
-        row['anchor'] = allocate(row['id'], occurrence)
-        register_signatures(row['signatures'], occurrence)
-
     for occurrence in embeds:
       if not occurrence['member']:
         occurrence['symbol_anchor'] = allocate(occurrence['symbol']['id'], occurrence)
-      register_signatures(occurrence['view']['signatures'], occurrence)
-      for group in occurrence['view']['groups']:
-        register_rows(group['rows'], occurrence)
+      for node in view_nodes(occurrence['view']):
+        node['anchor'] = allocate(node['id'], occurrence)
 
     def href(fragment, local):
       if fragment['targetId'] is None:
