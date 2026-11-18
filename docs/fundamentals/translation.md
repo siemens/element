@@ -158,8 +158,8 @@ Element defaults take precedence. Keys without an Element default are passed to 
 All keys are members of the `SiTranslatableKeys` type of each package:
 
 - [SiTranslatableKeys in @siemens/element-ng](../../api/siemens/element-ng/types/SiTranslatableKeys/)
-- [SiTranslatableKeys in @siemens/dashboards-ng](../../api/siemens/dashboards-ng/types/SiTranslatableKeys/)
-- [SiTranslatableKeys in @siemens/maps-ng](../../api/siemens/maps-ng/types/SiTranslatableKeys/)
+- [SiTranslatableKeys in @siemens/dashboards-ng](../../api/siemens/dashboards-ng/types/_entrypoints/translate/SiTranslatableKeys/)
+- [SiTranslatableKeys in @siemens/maps-ng](../../api/siemens/maps-ng/types/_entrypoints/translate/SiTranslatableKeys/)
 
 The packages also include a `template-i18n.json` file with their keys and default text.
 It can be used as a starting point for your application's translation files.

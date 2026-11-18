@@ -1,0 +1,9 @@
+{# Included by root.md.jinja and package.md.jinja. Both use the same link list
+   but set their own search metadata before including it. -#}
+# {{ page.title }}
+
+{% for entry in page.entries %}- [{{ entry.name }}]({{ safe_url(entry.href) }})
+{% if not loop.last %}
+{% endif %}{% endfor %}{% if page.readme %}
+
+{{ page.readme }}{% endif %}

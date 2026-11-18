@@ -8,9 +8,12 @@ requires-python = ">=3.11, <4"
 readme = "README.md"
 dependencies = [
     "mkdocs-code-siemens-code-docs-theme[zensical]>=9,<10",
-    "mkdocs-element-docs-builder",
+    "siemens-angular-api-docs-zensical",
     "zensical==0.1.2",
 ]
+
+[dependency-groups]
+dev = ["pytest>=8", "syrupy>=4"]
 
 [project.urls]
 Homepage = "https://element.siemens.io"
@@ -27,7 +30,7 @@ explicit = true
 
 [tool.uv.sources]
 mkdocs-code-siemens-code-docs-theme = { index = "code-docs-theme" }
-mkdocs-element-docs-builder = { workspace = true }
+siemens-angular-api-docs-zensical = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]
@@ -35,5 +38,5 @@ build-backend = "hatchling.build"
 
 [tool.uv.workspace]
 members = [
-    "projects/element-docs-builder",
+    "projects/angular-api-docs-zensical",
 ]

@@ -62,7 +62,7 @@ Test files (`*.spec.ts`) inside these folders are not shipped and are out of sco
 
 Everything else is mainly documentation, demo and build setup and is not part of the shipped libraries, for example:
 
-- `docs/`, `mkdocs.yml` and `projects/element-docs-builder` (documentation site)
+- `docs/`, `mkdocs.yml` and `projects/angular-api-docs-zensical` (documentation site)
 - `src/` (example app and the examples shown in the documentation)
 - `projects/dashboards-demo` and `projects/icon-viewer` (demo applications)
 - `playwright/`, `tools/`, `api-goldens/`, `skills/` and `.github/` (tests, release tooling and CI)

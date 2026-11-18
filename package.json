@@ -45,12 +45,12 @@
     "translate:test": "ng test element-translate-ng",
     "translate:build": "ng build element-translate-ng",
     "docs:build": "uv run zensical build --strict",
-    "docs:build:api": "pnpm run docs:prepare && cross-env ELEMENT_DOCS_API=true DOCS_COMPOSER=true DOCS_COMPOSER_GENERATE=false DOCS_COMPOSER_OPTIONS='{ \"structured\":true,\"structuredRemoveEncoded\":true }' uv run zensical build --strict",
-    "docs:build:generate": "pnpm run docs:prepare && cross-env ELEMENT_DOCS_API=true DOCS_COMPOSER=true DOCS_COMPOSER_GENERATE=true DOCS_COMPOSER_OPTIONS='{ \"structured\":true,\"structuredRemoveEncoded\":true,\"structuredExcludeGenerated\":true }' uv run zensical build --strict",
+    "docs:build:api": "cross-env ELEMENT_DOCS_API=true ELEMENT_DOCS_EXCLUDE= uv run zensical build --clean --strict",
     "docs:serve": "uv run zensical serve",
-    "docs:serve:api": "pnpm run docs:prepare && cross-env ELEMENT_DOCS_API=true DOCS_COMPOSER=false uv run zensical serve",
-    "docs:prepare": "tsx tools/api-docs/index.ts",
+    "docs:serve:api": "cross-env ELEMENT_DOCS_API=true ELEMENT_DOCS_EXCLUDE= uv run zensical serve",
+    "docs:generate-api": "tsx tools/api-docs/index.ts && uv run angular-api-docs-zensical generate-pages",
     "docs:test": "vitest run --config tools/api-docs/vitest.config.ts",
+    "docs:test:py": "uv run pytest projects/angular-api-docs-zensical/tests",
     "icon-viewer:build-docs": "ng build icon-viewer --configuration=production",
     "icon-viewer:serve": "ng serve icon-viewer",
     "live-preview:build": "ng build live-preview",
@@ -140,6 +140,8 @@
     "@commitlint/config-conventional": "21.2.4",
     "@eslint/js": "10.0.1",
     "@microsoft/api-extractor": "7.60.1",
+    "@microsoft/tsdoc": "0.17.1",
+    "@microsoft/tsdoc-config": "0.18.3",
     "@playwright/test": "1.65.1",
     "@schematics/angular": "22.2.7",
     "@semantic-release/changelog": "7.0.0",
@@ -187,7 +189,6 @@
   },
   "optionalDependencies": {
     "@siemens-ux/design-tokens": "0.17.0",
-    "@simpl/brand": "4.2.0",
-    "@simpl/docs-composer": "12.0.5"
+    "@simpl/brand": "4.2.0"
   }
 }
