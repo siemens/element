@@ -27,7 +27,7 @@
     "start": "ng serve",
     "start:prod": "http-server dist/element-examples -s -p 4200 -a 127.0.0.1",
     "format": "prettier --log-level warn --write .",
-    "sync:tokens": "cpy --flat \"node_modules/@siemens-ux/design-tokens/dist/scss/{si-sys-variables,si-sys-{sizing,typography}.{default,compact}.map-flat}.scss\" projects/element-theme/src/styles/variables",
+    "sync:tokens": "cpy --flat \"node_modules/@siemens-ux/design-tokens/dist/siemens/scss/{si-sys-variables,si-sys-{sizing,typography}.{default,compact}.map-flat}.scss\" projects/element-theme/src/styles/variables",
     "lint:format": "prettier --check .",
     "lint:commit": "commitlint --from=origin/main",
     "lint:scss": "stylelint **.scss",
@@ -185,8 +185,8 @@
     "vitest": "5.0.5"
   },
   "optionalDependencies": {
-    "@siemens-ux/design-tokens": "0.16.1",
-    "@simpl/brand": "4.1.0",
+    "@siemens-ux/design-tokens": "0.17.0",
+    "@simpl/brand": "4.2.0",
     "@simpl/docs-composer": "12.0.5"
   }
 }
