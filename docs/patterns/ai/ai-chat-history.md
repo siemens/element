@@ -9,7 +9,7 @@ conversations across longer tasks.
 
 This pattern is a combination of a [list](../../components/lists-tables-trees/list.md) and the [side panel](../../components/layout-navigation/side-panel.md).
 
-![Chat history](images/chat-history.png)
+![Chat history](images/chat-history-pattern.png)
 
 ### Best practices
 
