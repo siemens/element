@@ -1,7 +1,7 @@
 {% import 'macros.html.jinja' as api with context %}
 {# API declarations are not standalone copyable examples. Avoid the theme
    inserting duplicate unlabeled navigation landmarks for every signature. #}
-<section class="si-docs-api no-copy" id="{{ symbol_anchor }}">
+<section class="si-docs-api no-copy" id="{{ symbol_anchor }}" data-api-symbol="{{ symbol.id }}" data-api-mode="{{ mode }}" data-api-source="{{ source }}" data-api-heading="{{ heading }}" data-api-no-heading="{{ 'true' if no_heading else 'false' }}">
 <div class="api-type-card">
 <div class="api-type-header">
 {% if not no_heading %}<h3>{% else %}<strong>{% endif %}{% if symbol.sourceUrl %}<a href="{{ safe_url(symbol.sourceUrl) }}" title="Source for {{ symbol.name }}">{{ heading }}</a>{% else %}{{ heading }}{% endif %}{% if not no_heading %}</h3>{% else %}</strong>{% endif %}
