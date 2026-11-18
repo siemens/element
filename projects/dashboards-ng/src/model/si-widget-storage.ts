@@ -80,7 +80,7 @@ const getStorageKey = (dashboardId?: string): string =>
 /**
  * Injection token to optionally inject the {@link Storage} implementation
  * that will be used by the {@link SiDefaultWidgetStorage}. The default implementation
- * is {@link sessionStorage}.
+ * is {@link Window.sessionStorage | sessionStorage}.
  *
  * @example
  * The following shows how to provide the localStorage.

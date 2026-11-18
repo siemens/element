@@ -19,7 +19,7 @@ def prepare(settings, name):
 
 
 def test_renderer_cache_tracks_artifact_rewrites(tmp_path):
-  with pytest.raises(ApiRenderError, match='Run pnpm docs:generate-api'): load_renderer(tmp_path / 'missing.json')
+  with pytest.raises(ApiRenderError, match='Run angular-api-docs extract'): load_renderer(tmp_path / 'missing.json')
   artifact = tmp_path / 'api.json'
   artifact.write_text(json.dumps(fixture())); original = load_renderer(artifact)
   assert load_renderer(artifact) is original

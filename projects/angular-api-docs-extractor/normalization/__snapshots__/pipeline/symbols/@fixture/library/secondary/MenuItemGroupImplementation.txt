@@ -1,0 +1,28 @@
+# undecorated_class @fixture/library/secondary#MenuItemGroupImplementation
+import: import { MenuItemGroupImplementation } from '@fixture/library/secondary';
+page: api/fixture/library/types/MenuItemGroupImplementation.md
+source: https://github.com/siemens/element/blob/main/library/secondary/heritage.ts#L16-L21
+
+=== api
+declaration: undecorated_class MenuItemGroupImplementation<T extends [MenuItemBase → #@fixture/library/secondary#MenuItemBase] = [MenuItemBase → #@fixture/library/secondary#MenuItemBase]> implements [MenuItemGroup → #@fixture/library/secondary#MenuItemGroup], [MenuItemCollection → #@fixture/library/secondary#MenuItemCollection]<T>
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [MenuItemGroupImplementation → #~]<T> → [MenuItemGroupImplementation → #~]<T>  #~/member/constructor/signature/0
+## propertys "Properties"
+  items: T[] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional]  #~/member/items
+    Implements [MenuItemCollection<T> → #@fixture/library/secondary#MenuItemCollection]
+  label: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional]  #~/member/label
+    Implements [MenuItemBase → #@fixture/library/secondary#MenuItemBase]
+related: @fixture/library/secondary#MenuItemBase, @fixture/library/secondary#MenuItemGroup, @fixture/library/secondary#MenuItemCollection
+
+=== type
+declaration: undecorated_class MenuItemGroupImplementation<T extends [MenuItemBase → #@fixture/library/secondary#MenuItemBase] = [MenuItemBase → #@fixture/library/secondary#MenuItemBase]> implements [MenuItemGroup → #@fixture/library/secondary#MenuItemGroup], [MenuItemCollection → #@fixture/library/secondary#MenuItemCollection]<T>
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [MenuItemGroupImplementation → #~]<T> → [MenuItemGroupImplementation → #~]<T>  #~/member/constructor/signature/0
+## propertys "Properties"
+  items: T[] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional]  #~/member/items
+    Implements [MenuItemCollection<T> → #@fixture/library/secondary#MenuItemCollection]
+  label: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional]  #~/member/label
+    Implements [MenuItemBase → #@fixture/library/secondary#MenuItemBase]
+related: @fixture/library/secondary#MenuItemBase, @fixture/library/secondary#MenuItemGroup, @fixture/library/secondary#MenuItemCollection

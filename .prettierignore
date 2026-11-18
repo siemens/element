@@ -20,6 +20,7 @@ docs/_custom_theme/partials/toc.html
 **/schematics/**/files/**
 
 # Generated test snapshots and fixtures of the API docs tooling
+projects/angular-api-docs-extractor/**/__snapshots__
 projects/angular-api-docs-zensical/tests/__snapshots__
 projects/angular-api-docs-zensical/tests/inputs
 

@@ -7,6 +7,8 @@
 out-tsc/
 # Only exists if Bazel was run
 /bazel-out
+# generated API reference pages
+/docs/api/
 # icon preview documentation
 docs/_src/fonts
 docs/_src/style
@@ -75,6 +77,3 @@ __screenshots__/
 
 # EsLint cache
 .eslintcache
-
-# API documentation tooling dependencies
-/tools/api-docs/node_modules

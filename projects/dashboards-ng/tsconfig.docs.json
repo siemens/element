@@ -1,4 +1,0 @@
-{
-  "extends": "./tsconfig.lib.json",
-  "files": ["./src/public-api.ts"]
-}

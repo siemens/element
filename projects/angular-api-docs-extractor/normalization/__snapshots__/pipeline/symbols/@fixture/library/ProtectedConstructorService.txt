@@ -1,0 +1,21 @@
+# undecorated_class @fixture/library#ProtectedConstructorService
+import: import { ProtectedConstructorService } from '@fixture/library';
+page: api/fixture/library/types/ProtectedConstructorService.md
+source: https://github.com/siemens/element/blob/main/library/constructors.ts#L13-L22
+
+=== api
+declaration: undecorated_class ProtectedConstructorService
+## propertys "Properties"
+  count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] [readonly]  #~/member/count
+
+=== type
+declaration: undecorated_class ProtectedConstructorService
+## constructors "Constructor"
+  constructor [protected]  #~/member/constructor
+    Builds a protected service.
+    constructor(count?: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 5): [ProtectedConstructorService → #~] → [ProtectedConstructorService → #~]  #~/member/constructor/signature/0
+      Builds a protected service.
+      param count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 5 [optional]  #~/member/constructor/signature/0/parameter/0/count
+        The initial count.
+## propertys "Properties"
+  count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] [readonly]  #~/member/count

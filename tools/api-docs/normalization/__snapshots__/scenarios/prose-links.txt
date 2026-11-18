@@ -1,8 +1,0 @@
-declaration: interface Owner
-[Other → #@test/library#Other] [label → #@test/library#Owner/member/value] [full → #@test/library#Owner/member/value] [collapsed → https://example.com/c] [shortcut → guide.md]
-hidden secret [guide → guide.md] anchor
-text missing
-[Promise → https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise] [storage → https://developer.mozilla.org/en-US/docs/Web/API/Storage] [sessionStorage → https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage] [RouterLink → https://angular.dev/api/router/RouterLink]
-[@angular/forms#FormsModule → https://angular.dev/api/forms/FormsModule] [forms → https://angular.dev/api/forms/ReactiveFormsModule]
-## propertys "Properties"
-  value: string  #@test/library#Owner/member/value

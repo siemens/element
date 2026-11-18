@@ -24,6 +24,7 @@ const pnpmPackageRoots = [
   'projects/map-styles',
   'dist/@siemens/map-styles',
   'projects/element-theme',
+  'projects/angular-api-docs-extractor',
   'projects/element-translate-cli',
   'projects/dashboards-demo',
   'projects/icon-viewer'

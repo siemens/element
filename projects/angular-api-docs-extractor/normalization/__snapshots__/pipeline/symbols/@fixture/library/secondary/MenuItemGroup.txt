@@ -1,0 +1,20 @@
+# interface @fixture/library/secondary#MenuItemGroup
+import: import type { MenuItemGroup } from '@fixture/library/secondary';
+page: api/fixture/library/types/MenuItemGroup.md
+source: https://github.com/siemens/element/blob/main/library/secondary/heritage.ts#L5-L7
+
+=== api
+declaration: interface MenuItemGroup extends [MenuItemBase → #@fixture/library/secondary#MenuItemBase]
+## propertys "Properties"
+  children: [MenuItemBase → #@fixture/library/secondary#MenuItemBase][] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional]  #~/member/children
+  label: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional, inherited]  #~/member/label
+    Inherited from [MenuItemBase → #@fixture/library/secondary#MenuItemBase]
+related: @fixture/library/secondary#MenuItemBase
+
+=== type
+declaration: interface MenuItemGroup extends [MenuItemBase → #@fixture/library/secondary#MenuItemBase]
+## propertys "Properties"
+  children: [MenuItemBase → #@fixture/library/secondary#MenuItemBase][] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional]  #~/member/children
+  label: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional, inherited]  #~/member/label
+    Inherited from [MenuItemBase → #@fixture/library/secondary#MenuItemBase]
+related: @fixture/library/secondary#MenuItemBase

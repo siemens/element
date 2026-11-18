@@ -1,0 +1,12 @@
+declaration: interface Owner
+[Other → #@test/library#Other] [label → #@test/library#Owner/member/value] [full → #@test/library#Owner/member/value] [collapsed → https://example.com/c] [shortcut → guide.md]
+hidden secret [guide → guide.md] anchor
+text missing
+[Promise → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise] [storage → https://developer.mozilla.org/docs/Web/API/Storage] [sessionStorage → https://developer.mozilla.org/docs/Web/API/Window/sessionStorage] ambiguous
+[@angular/forms#FormsModule → https://angular.dev/api/forms/FormsModule] [forms → https://angular.dev/api/forms/ReactiveFormsModule]
+[RouterLink → https://angular.dev/api/router/RouterLink] [bare → https://angular.dev/api/router/RouterLink] unmapped
+[@angular/core/rxjs-interop#takeUntilDestroyed → https://angular.dev/api/core/rxjs-interop/takeUntilDestroyed] [trap → https://material.angular.dev/cdk/a11y/api#CdkTrapFocus] [@angular/material/button#MatButton → https://material.angular.dev/components/button/api#MatButton]
+no entrypoint private
+[@angular/core#Component → https://example.com/component] [@angular/core#Directive → https://example.com/directive]
+## propertys "Properties"
+  value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #@test/library#Owner/member/value

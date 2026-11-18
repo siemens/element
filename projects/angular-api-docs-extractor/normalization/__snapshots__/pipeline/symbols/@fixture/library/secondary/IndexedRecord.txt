@@ -1,0 +1,20 @@
+# type_alias @fixture/library/secondary#IndexedRecord
+import: import type { IndexedRecord } from '@fixture/library/secondary';
+page: api/fixture/library/types/IndexedRecord.md
+source: https://github.com/siemens/element/blob/main/library/secondary/index-signatures.ts#L14-L16
+
+=== api
+declaration: type IndexedRecord = {
+  [name: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]]: [ReadonlyValues → #@fixture/library/secondary#ReadonlyValues];
+}
+## index_signatures "Index Signatures"
+  [name: string]: [ReadonlyValues → #@fixture/library/secondary#ReadonlyValues]  #~/member/%5Bname%3A%20string%5D
+related: @fixture/library/secondary#ReadonlyValues
+
+=== type
+declaration: type IndexedRecord = {
+  [name: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]]: [ReadonlyValues → #@fixture/library/secondary#ReadonlyValues];
+}
+## index_signatures "Index Signatures"
+  [name: string]: [ReadonlyValues → #@fixture/library/secondary#ReadonlyValues]  #~/member/%5Bname%3A%20string%5D
+related: @fixture/library/secondary#ReadonlyValues

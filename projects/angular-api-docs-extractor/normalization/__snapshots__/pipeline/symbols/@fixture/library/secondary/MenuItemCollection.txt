@@ -1,0 +1,14 @@
+# interface @fixture/library/secondary#MenuItemCollection
+import: import type { MenuItemCollection } from '@fixture/library/secondary';
+page: api/fixture/library/types/MenuItemCollection.md
+source: https://github.com/siemens/element/blob/main/library/secondary/heritage.ts#L9-L11
+
+=== api
+declaration: interface MenuItemCollection<T>
+## propertys "Properties"
+  items: T[] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional]  #~/member/items
+
+=== type
+declaration: interface MenuItemCollection<T>
+## propertys "Properties"
+  items: T[] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional]  #~/member/items

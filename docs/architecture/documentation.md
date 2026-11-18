@@ -16,10 +16,8 @@ The build has two explicit, independent steps:
 
 ```text
 docs:generate-api (one-shot)
-  library sources ──► Angular compiler extraction ──► normalization ──► dist/element-docs/*.json
-                                                                              │
-                                                     reference page templates ▼
-                                                                         docs/api/**/*.md
+  angular-api-docs extract                 library sources ──► extraction + normalization ──► dist/element-docs/*.json
+  angular-api-docs-zensical generate-pages  reference catalog ──► Jinja templates ──► docs/api/**/*.md
 
 docs:build:api (zensical build --clean)
   docs/ ──► Markdown (snippets, tabs, examples) ──► API rendering ──► browser HTML
@@ -28,34 +26,40 @@ docs:build:api (zensical build --clean)
 
 The responsibilities are split along a strict boundary:
 
-| Part                             | Language   | Responsibility                                                                                              |
-| -------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------- |
-| `tools/api-docs/`                | TypeScript | Extracts, normalizes, links, and validates the API. Decides _what_ is documented and _where_.               |
-| `projects/angular-api-docs-zensical/` | Python     | Renders the prepared data with Jinja inside Zensical. Owns tag parsing, page-local anchors, and the export. |
-| `mkdocs.yml`                     | YAML       | Wires extensions and plugins, and switches between the default and the API mode.                            |
+| Part                                                                           | Language   | Responsibility                                                                                              |
+| ------------------------------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------- |
+| `@siemens/angular-api-docs-extractor` (`projects/angular-api-docs-extractor/`) | TypeScript | Extracts, normalizes, links, and validates the API. Decides _what_ is documented and _where_.               |
+| `siemens-angular-api-docs-zensical` (`projects/angular-api-docs-zensical/`)    | Python     | Renders the prepared data with Jinja inside Zensical. Owns tag parsing, page-local anchors, and the export. |
 
 TypeScript does all semantic work. Python never inspects compiler data and makes no decisions about which members, types, or pages exist.
 No HTML crosses the boundary; only portable, versioned JSON.
 
+### Configuration
+
+- `api-docs.config.ts` configures the producer: library packages, entry-point exclusions, external APIs, output paths, and source and documentation links.
+- `mkdocs.yml` configures Zensical and the renderer. `extra.element_docs.api` controls API enablement, artifact and reference page paths, and the navigation location. `extra.element_docs.export.examples_dir` points to the example sources used in the Markdown export. The renderer also uses Zensical's `docs_dir`, `site_dir`, and `site_url`.
+
+The two configs must agree on the artifact directory (`output.dir` and `extra.element_docs.api.artifact_dir`, both `dist/element-docs` in Element) and the reference page directory (`reference.dir` and `extra.element_docs.api.pages_dir`, both `api` relative to `docs_dir`). The `angular-api-docs extract` and `angular-api-docs-zensical generate-pages` commands accept `--config` to select a different config file.
+
 ## API generation (`docs:generate-api`)
 
-`docs:generate-api` runs `tools/api-docs/index.ts` followed by `uv run angular-api-docs-zensical generate-pages`.
+`docs:generate-api` runs `angular-api-docs extract` to write the JSON artifacts, and then runs `uv run angular-api-docs-zensical generate-pages` to generate the reference Markdown.
 It runs once and exits. It does not watch files or start a build.
 
 ### Extraction
 
-`tools/api-docs/extraction/` uses the Angular compiler to read the public API of every package listed in `tools/api-docs/config.ts`.
+`projects/angular-api-docs-extractor/extraction/` uses the Angular compiler to read the public API of every package listed in the root `api-docs.config.ts`.
 
 - Public entry points are discovered from each package's `ng-package.json`. There is no documentation barrel (`docs.ts`) or separate documentation tsconfig.
   `internal` and `testing` entry points are skipped.
 - Angular metadata such as inputs, outputs, signal-based members, selectors, constructors, and deprecations come from the compiler's API documentation, not from parsing decorators by hand.
-- External APIs (for example from the Angular CDK) are extracted only when listed in `externalApis` in `tools/api-docs/config.ts`, by public import path and export name.
+- External APIs (for example from the Angular CDK) are extracted only when listed in `externalApis` in `api-docs.config.ts`, by public import path and export name.
   Extraction fails if a listed API is not a public export of a module loaded by a documented package.
 - Compiler records are treated as read-only and are never serialized.
 
 ### Normalization
 
-`tools/api-docs/normalization/` converts the compiler output into the presentation model consumed by Python (`normalization/model.ts`).
+`projects/angular-api-docs-extractor/normalization/` converts the compiler output into the presentation model consumed by Python (`normalization/model.ts`).
 
 | Module              | Responsibility                                                                                  |
 | ------------------- | ----------------------------------------------------------------------------------------------- |
@@ -67,11 +71,11 @@ It runs once and exits. It does not watch files or start a build.
 | `reference-plan.ts` | Plans the reference pages and navigation by package and category, and resolves name collisions. |
 
 Default values come from a `@defaultValue` tag or, if there is none, from the source initializer.
-Types listed in `defaultValues.unwrapWrapperFunctionTypes` in `tools/api-docs/config.ts` (`TranslatableString` for Element) show ``t(() => $localize`…`)`` defaults as `` $localize`…` ``.
+Types listed in `defaultValues.unwrapWrapperFunctionTypes` in `api-docs.config.ts` (`TranslatableString` for Element) show ``t(() => $localize`…`)`` defaults as `` $localize`…` ``.
 
 ### Publication
 
-`tools/api-docs/pipeline/artifacts.ts` validates the result and writes two files to `dist/element-docs/`:
+`projects/angular-api-docs-extractor/pipeline/artifacts.ts` validates the result and writes two files to `dist/element-docs/`:
 
 - `api-documentation.json` contains the symbols, members, indexes, and link targets used to render API content.
 - `api-reference-pages.json` contains the reference page catalog and its navigation tree.
@@ -80,11 +84,11 @@ Validation rejects the whole publication on any inconsistency, such as unknown l
 Files are written atomically, so a failed run keeps the previous artifacts.
 Both Python consumers check the `schemaVersion` and refuse mismatching data.
 
-The prepared JSON is an internal schema. It is not compatible with TypeDoc JSON and is not published with the packages.
+The prepared JSON is not compatible with TypeDoc JSON. The versioned JSON Schemas ship with `@siemens/angular-api-docs-extractor` under `schemas/`; the generated artifacts themselves are not published with the package.
 
 ### Reference pages
 
-`siemens_angular_api_docs_zensical/reference_pages.py` renders `api-reference-pages.json` into standalone Markdown pages under `docs/api/` using the Jinja templates in `siemens_angular_api_docs_zensical/templates/`.
+`angular-api-docs-zensical generate-pages` uses `siemens_angular_api_docs_zensical/reference_pages.py` to render `api-reference-pages.json` into standalone Markdown pages under `docs/api/` using the Jinja templates in `siemens_angular_api_docs_zensical/templates/`.
 The generated pages only contain API tags; their content is rendered during the build like any authored page.
 The directory is replaced atomically on every run to remove obsolete pages. It is gitignored and must not be edited.
 
@@ -141,7 +145,7 @@ In API mode the native `llmstxt` plugin publishes a Markdown file next to every 
 Sections and their file patterns are declared in `mkdocs.yml`.
 Index paths are relative to `llms.txt`, so the export works independently of the deployment hostname.
 
-Before conversion, the plugin passes each page's HTML through `siemens_angular_api_docs_zensical/llms_preprocess.py`:
+Before conversion, the plugin passes each page's HTML through `tools/docs/llms_preprocess.py`, a file-based hook that imports the `siemens_angular_api_docs_zensical.llms_preprocess` callback:
 
 | Step                  | Module                   | Result                                                                                         |
 | --------------------- | ------------------------ | ---------------------------------------------------------------------------------------------- |
@@ -169,4 +173,4 @@ CI runs these checks together with `docs:generate-api` and `docs:build:api` in `
 - **One source of truth.** Browser HTML and the Markdown export are rendered from the same prepared JSON.
 - **Deterministic output.** Sorting uses a fixed collation and is independent of extraction order and the local package store layout, so artifacts are identical across runs and machines.
 - **Fail instead of approximating.** Missing public APIs, unresolved requests, and unsafe URLs stop the build. Authored prose links are filtered so they cannot break it.
-- **No documentation barrels.** APIs are documented by exporting them from a public entry point.
+- **No documentation barrels.** APIs are documented by exporting them from a public entry point. The former `docs.ts` files, `tsconfig.docs.json` files, and package `./docs.json` TypeDoc exports have been removed. Consumers discover the published documentation through `llms.txt`.

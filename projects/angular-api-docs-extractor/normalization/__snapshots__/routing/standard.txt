@@ -1,0 +1,6 @@
+Pick https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys
+Error https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error
+PromiseLike https://github.com/microsoft/TypeScript/tree/main/src/lib/es5.d.ts#:~:text=interface%20PromiseLike
+CustomType undefined
+constructor https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor
+__proto__ undefined

@@ -1,0 +1,24 @@
+# interface @fixture/library/secondary#StringOptions
+import: import type { StringOptions } from '@fixture/library/secondary';
+page: api/fixture/library/types/StringOptions.md
+source: https://github.com/siemens/element/blob/main/library/secondary/index-signatures.ts#L7-L7
+
+=== api
+declaration: interface StringOptions extends [IndexedOptions → #@fixture/library/secondary#IndexedOptions]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]>
+## propertys "Properties"
+  known: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional, inherited]  #~/member/known
+    Inherited from [IndexedOptions<string> → #@fixture/library/secondary#IndexedOptions]
+## index_signatures "Index Signatures"
+  [key: string]: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [inherited]  #~/member/%5Bkey%3A%20string%5D
+    Additional options keyed by name.
+related: @fixture/library/secondary#IndexedOptions
+
+=== type
+declaration: interface StringOptions extends [IndexedOptions → #@fixture/library/secondary#IndexedOptions]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]>
+## propertys "Properties"
+  known: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional, inherited]  #~/member/known
+    Inherited from [IndexedOptions<string> → #@fixture/library/secondary#IndexedOptions]
+## index_signatures "Index Signatures"
+  [key: string]: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [inherited]  #~/member/%5Bkey%3A%20string%5D
+    Additional options keyed by name.
+related: @fixture/library/secondary#IndexedOptions

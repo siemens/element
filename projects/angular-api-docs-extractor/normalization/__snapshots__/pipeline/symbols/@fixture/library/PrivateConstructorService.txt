@@ -1,0 +1,14 @@
+# undecorated_class @fixture/library#PrivateConstructorService
+import: import { PrivateConstructorService } from '@fixture/library';
+page: api/fixture/library/types/PrivateConstructorService.md
+source: https://github.com/siemens/element/blob/main/library/constructors.ts#L24-L30
+
+=== api
+declaration: undecorated_class PrivateConstructorService
+## propertys "Properties"
+  count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] [readonly]  #~/member/count
+
+=== type
+declaration: undecorated_class PrivateConstructorService
+## propertys "Properties"
+  count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] [readonly]  #~/member/count

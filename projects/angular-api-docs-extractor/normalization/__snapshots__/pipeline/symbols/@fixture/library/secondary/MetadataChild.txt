@@ -1,0 +1,56 @@
+# undecorated_class @fixture/library/secondary#MetadataChild
+import: import { MetadataChild } from '@fixture/library/secondary';
+page: api/fixture/library/types/MetadataChild.md
+source: https://github.com/siemens/element/blob/main/library/secondary/metadata.ts#L33-L37
+
+=== api
+declaration: undecorated_class MetadataChild extends [GenericParent → #@fixture/library/secondary#GenericParent]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> implements [Contract → #@fixture/library/secondary#Contract]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]>
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [MetadataChild → #~] → [MetadataChild → #~]  #~/member/constructor/signature/0
+## propertys "Properties"
+  value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [inherited]  #~/member/value
+    Inherited from [GenericParent<string> → #@fixture/library/secondary#GenericParent]
+    Implements [Contract<string> → #@fixture/library/secondary#Contract]
+## methods "Methods"
+  convert: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/convert
+    Inherited from [GenericParent<string> → #@fixture/library/secondary#GenericParent]
+    Implements [Contract<string> → #@fixture/library/secondary#Contract]
+    convert(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/convert/signature/0
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/convert/signature/0/parameter/0/value
+  identity: T [inherited]  #~/member/identity
+    Inherited from [GenericParent<string> → #@fixture/library/secondary#GenericParent]
+    identity<T>(value: T): T → T  #~/member/identity/signature/0
+      param value: T  #~/member/identity/signature/0/parameter/0/value
+  inheritedContract: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [inherited]  #~/member/inheritedContract
+    Inherited from [GenericParent<string> → #@fixture/library/secondary#GenericParent]
+    Implements [ParentContract<string> → #@fixture/library/secondary#ParentContract]
+    inheritedContract(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/inheritedContract/signature/0
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/inheritedContract/signature/0/parameter/0/value
+related: @fixture/library/secondary#Contract, @fixture/library/secondary#ParentContract
+
+=== type
+declaration: undecorated_class MetadataChild extends [GenericParent → #@fixture/library/secondary#GenericParent]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> implements [Contract → #@fixture/library/secondary#Contract]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]>
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [MetadataChild → #~] → [MetadataChild → #~]  #~/member/constructor/signature/0
+## propertys "Properties"
+  value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [inherited]  #~/member/value
+    Inherited from [GenericParent<string> → #@fixture/library/secondary#GenericParent]
+    Implements [Contract<string> → #@fixture/library/secondary#Contract]
+## methods "Methods"
+  convert: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/convert
+    Inherited from [GenericParent<string> → #@fixture/library/secondary#GenericParent]
+    Implements [Contract<string> → #@fixture/library/secondary#Contract]
+    convert(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/convert/signature/0
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/convert/signature/0/parameter/0/value
+  identity: T [inherited]  #~/member/identity
+    Inherited from [GenericParent<string> → #@fixture/library/secondary#GenericParent]
+    identity<T>(value: T): T → T  #~/member/identity/signature/0
+      param value: T  #~/member/identity/signature/0/parameter/0/value
+  inheritedContract: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [inherited]  #~/member/inheritedContract
+    Inherited from [GenericParent<string> → #@fixture/library/secondary#GenericParent]
+    Implements [ParentContract<string> → #@fixture/library/secondary#ParentContract]
+    inheritedContract(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/inheritedContract/signature/0
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/inheritedContract/signature/0/parameter/0/value
+related: @fixture/library/secondary#Contract, @fixture/library/secondary#ParentContract

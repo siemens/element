@@ -1,6 +1,6 @@
 # Siemens Angular API Docs for Zensical
 
-Install the locally built `siemens-angular-api-docs-zensical` wheel into the same Python environment as Zensical. The wheel includes the rendering templates and stylesheet. The commands below assume you have already configured `extra.element_docs` and run `pnpm exec tsx tools/api-docs/index.ts` to generate the JSON artifacts.
+Install the locally built `siemens-angular-api-docs-zensical` wheel into the same Python environment as Zensical. The wheel includes the rendering templates and stylesheet. The commands below assume you have already configured `extra.element_docs` and run `angular-api-docs extract` from `@siemens/angular-api-docs-extractor` to generate the JSON artifacts.
 
 ## Markdown export hook
 

@@ -13,7 +13,7 @@ class ApiRenderError(ValueError):
 
 def validate_api_schema(data):
   if not isinstance(data, dict) or data.get('schemaVersion') != SCHEMA_VERSION:
-    raise ApiRenderError(f'API artifact must use schemaVersion {SCHEMA_VERSION}; run pnpm docs:generate-api.')
+    raise ApiRenderError(f'API artifact must use schemaVersion {SCHEMA_VERSION}; regenerate it with angular-api-docs extract.')
 
 
 @dataclass(frozen=True)
