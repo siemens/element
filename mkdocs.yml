@@ -166,9 +166,12 @@ nav:
       - Toast notification:               'components/status-notifications/toast-notification.md'
       - Tooltip:                          'components/status-notifications/tooltip.md'
     - Chat & messages:
+      - AI chat:                          'components/chat-messages/ai-chat.md'
+      - Activity message:                 'components/chat-messages/activity-message.md'
+      - AI welcome screen:                'components/chat-messages/ai-welcome-screen.md'
+      - Chat container:                   'components/chat-messages/chat-container.md'
       - Chat input:                       'components/chat-messages/chat-input.md'
       - Chat message:                     'components/chat-messages/chat-message.md'
-      - Activity message:                 'components/chat-messages/activity-message.md'
       - Markdown:                         'components/chat-messages/markdown.md'
       - Source chips:                     'components/chat-messages/source-chips.md'
     - Charts:
@@ -202,7 +205,6 @@ nav:
     - HTTP error pages:                   'patterns/http-error-pages.md'
     - AI:
       - Overview:                         'patterns/ai/overview.md'
-      - AI chat:                          'patterns/ai/ai-chat.md'
       - AI chat history:                  'patterns/ai/ai-chat-history.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'

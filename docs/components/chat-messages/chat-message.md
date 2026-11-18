@@ -54,7 +54,7 @@ When **attachments** are included in a user message, they should appear above th
 Attachments are arranged horizontally and wrap to the next line when they exceed the available space.
 
 For general attachment errors (e.g., file not supported), display an inline error message above the field,
-following the [AI pattern guidelines](../../patterns/ai/ai-chat.md).
+following the [AI chat guidelines](../chat-messages/ai-chat.md).
 
 ![User message attachments](images/user-message-attachments.png)
 
