@@ -382,6 +382,9 @@ importers:
       '@semantic-release/git':
         specifier: 11.0.1
         version: 11.0.1(semantic-release@26.0.1(supports-color@8.1.1))(supports-color@8.1.1)
+      '@siemens/angular-api-docs-extractor':
+        specifier: workspace:*
+        version: link:projects/angular-api-docs-extractor
       '@siemens/commitlint-config':
         specifier: 5.1.0
         version: 5.1.0(@commitlint/cli@21.2.4(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)(typescript@6.0.3))(@commitlint/config-conventional@21.2.4)
@@ -506,6 +509,27 @@ importers:
       '@simpl/brand':
         specifier: 4.2.0
         version: 4.2.0
+
+  projects/angular-api-docs-extractor:
+    dependencies:
+      '@mdn/browser-compat-data':
+        specifier: 8.1.9
+        version: 8.1.9
+      '@microsoft/tsdoc':
+        specifier: 0.17.1
+        version: 0.17.1
+      mdast-util-gfm-autolink-literal:
+        specifier: 2.0.1
+        version: 2.0.1
+      micromark-extension-gfm-autolink-literal:
+        specifier: 2.1.0
+        version: 2.1.0
+      remark-parse:
+        specifier: 11.0.0
+        version: 11.0.0(supports-color@8.1.1)
+      unified:
+        specifier: 11.0.5
+        version: 11.0.5
 
   projects/charts-ng:
     publishDirectory: ../../dist/@siemens/charts-ng
@@ -2484,6 +2508,9 @@ packages:
 
   '@maplibre/vt-pbf@4.3.3':
     resolution: {integrity: sha512-dEe5XUd64RQbxNxy2OzIkJnwNDWjVmSXjCd0A7zLirm7QJ/WWbmtDFIkfsiM4yt1cplqzG6oSivRYeWx1SM1yg==, tarball: https://registry.npmjs.org/@maplibre/vt-pbf/-/vt-pbf-4.3.3.tgz}
+
+  '@mdn/browser-compat-data@8.1.9':
+    resolution: {integrity: sha512-7d8D9yzVS4ugLbt4clzc5DKU8dq85K0lRebjzpP43GxSr7vYKmczgfuEU+0beimjl5YmnHkcErtolg5t5ttb0A==, tarball: https://registry.npmjs.org/@mdn/browser-compat-data/-/browser-compat-data-8.1.9.tgz}
 
   '@mermaid-js/parser@2.0.1':
     resolution: {integrity: sha512-j37dj/h6p6pots1L7pLPPNuABEEu9WP4OYg9pW1g+nYG331j0+3canE9OagtYdytYvdSAMG+2fKU5cxep6LgjA==, tarball: https://registry.npmjs.org/@mermaid-js/parser/-/parser-2.0.1.tgz}
@@ -10835,6 +10862,8 @@ snapshots:
       '@mapbox/point-geometry': 1.1.0
       '@types/geojson': 7946.0.16
       pbf: 5.1.2
+
+  '@mdn/browser-compat-data@8.1.9': {}
 
   '@mermaid-js/parser@2.0.1':
     dependencies:

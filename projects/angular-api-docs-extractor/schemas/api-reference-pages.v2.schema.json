@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "API reference page catalog (v2)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "referencePages"],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "referencePages": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pages", "navigation"],
+      "properties": {
+        "pages": { "type": "array", "items": { "$ref": "#/$defs/page" } },
+        "navigation": { "$ref": "#/$defs/navigation" }
+      }
+    }
+  },
+  "$defs": {
+    "path": { "type": "string", "pattern": "\\.md$" },
+    "page": {
+      "type": "object",
+      "required": ["kind", "path", "title"],
+      "properties": {
+        "path": { "$ref": "#/$defs/path" },
+        "title": { "type": "string" }
+      },
+      "oneOf": [
+        {
+          "required": ["name", "importPath", "category"],
+          "properties": {
+            "kind": { "const": "symbol" },
+            "name": { "type": "string" },
+            "importPath": { "type": "string" },
+            "category": { "enum": ["components", "directives", "injectables", "pipes", "types"] }
+          }
+        },
+        {
+          "required": ["groups"],
+          "properties": {
+            "kind": { "const": "category" },
+            "groups": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["letter", "entries"],
+                "properties": {
+                  "letter": { "type": "string" },
+                  "entries": { "$ref": "#/$defs/entries" }
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": ["entries", "readme"],
+          "properties": {
+            "kind": { "enum": ["package", "root"] },
+            "entries": { "$ref": "#/$defs/entries" },
+            "readme": { "type": "string" }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "label", "href"],
+        "properties": {
+          "name": { "type": "string" },
+          "path": { "$ref": "#/$defs/path" },
+          "label": { "type": "string" },
+          "href": { "type": "string" }
+        }
+      }
+    },
+    "navigation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "minProperties": 1,
+        "maxProperties": 1,
+        "additionalProperties": {
+          "oneOf": [{ "$ref": "#/$defs/path" }, { "$ref": "#/$defs/navigation" }]
+        }
+      }
+    }
+  }
+}

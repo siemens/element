@@ -37,7 +37,7 @@ def load_renderer(path):
     stat = path.stat()
     return _load_renderer(path, stat.st_mtime_ns, stat.st_ctime_ns, stat.st_size)
   except (OSError, ValueError) as error:
-    raise ApiRenderError(f'Cannot load API artifact {path}: {error}. Run pnpm docs:generate-api.') from error
+    raise ApiRenderError(f'Cannot load API artifact {path}: {error}. Run angular-api-docs extract.') from error
 
 
 @lru_cache(maxsize=1)

@@ -1,0 +1,43 @@
+{
+  "name": "@siemens/angular-api-docs-extractor",
+  "description": "Extract Angular library API documentation as structured JSON.",
+  "version": "51.7.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/siemens/element.git",
+    "directory": "projects/angular-api-docs-extractor"
+  },
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
+  "bin": {
+    "angular-api-docs": "bin/angular-api-docs.ts"
+  },
+  "exports": {
+    ".": "./index.ts",
+    "./schemas/*.schema.json": "./schemas/*.schema.json"
+  },
+  "files": [
+    "bin",
+    "**/*.ts",
+    "!**/*.spec.ts",
+    "!fixtures",
+    "!vitest.config.ts",
+    "schemas"
+  ],
+  "dependencies": {
+    "@mdn/browser-compat-data": "8.1.9",
+    "@microsoft/tsdoc": "0.17.1",
+    "mdast-util-gfm-autolink-literal": "2.0.1",
+    "micromark-extension-gfm-autolink-literal": "2.1.0",
+    "remark-parse": "11.0.0",
+    "unified": "11.0.5"
+  },
+  "peerDependencies": {
+    "@angular/compiler-cli": "^22.0.0",
+    "typescript": "~6.0.0"
+  }
+}

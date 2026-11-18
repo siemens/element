@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["pytest>=8", "syrupy>=4"]
+dev = ["pytest>=8"]
 
 [project.urls]
 Homepage = "https://element.siemens.io"

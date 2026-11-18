@@ -34,18 +34,18 @@ def read_prepared_json(path, label):
   try:
     source = path.read_bytes()
   except FileNotFoundError as error:
-    raise ApiRenderError(f'Missing {label}: {path}. Run pnpm docs:generate-api.') from error
+    raise ApiRenderError(f'Missing {label}: {path}. Run angular-api-docs extract.') from error
   try:
     value = json.loads(source)
   except (ValueError, UnicodeDecodeError) as error:
-    raise ApiRenderError(f'Invalid {label} JSON: {path}. Run pnpm docs:generate-api. {error}') from error
+    raise ApiRenderError(f'Invalid {label} JSON: {path}. Run angular-api-docs extract. {error}') from error
   if not isinstance(value, dict):
-    raise ApiRenderError(f'{label} must be a JSON object: {path}. Run pnpm docs:generate-api.')
+    raise ApiRenderError(f'{label} must be a JSON object: {path}. Run angular-api-docs extract.')
   return source, value
 
 
 def _invalid_catalog(message):
-  raise ApiRenderError(f'Invalid reference catalog: {message}. Run pnpm docs:generate-api.')
+  raise ApiRenderError(f'Invalid reference catalog: {message}. Run angular-api-docs extract.')
 
 
 def validate_reference_pages(references, pages_dir=DEFAULT_PAGES_DIR):
@@ -80,7 +80,7 @@ def validate_reference_pages(references, pages_dir=DEFAULT_PAGES_DIR):
 def load_reference_catalog(path, pages_dir=DEFAULT_PAGES_DIR):
   source, catalog = read_prepared_json(path, 'reference catalog')
   if catalog.get('schemaVersion') != SCHEMA_VERSION:
-    raise ApiRenderError(f'Reference catalog must use schemaVersion {SCHEMA_VERSION}; run pnpm docs:generate-api.')
+    raise ApiRenderError(f'Reference catalog must use schemaVersion {SCHEMA_VERSION}; run angular-api-docs extract.')
   return source, validate_reference_pages(catalog.get('referencePages'), pages_dir)
 
 
