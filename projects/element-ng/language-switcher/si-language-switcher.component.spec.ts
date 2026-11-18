@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, DOCUMENT } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import {
@@ -18,7 +18,9 @@ import { IsoLanguageValue, SiLanguageSwitcherComponent } from './index';
     [translationKey]="translationKey"
     [languageSwitcherLabel]="languageSwitcherLabel"
     [availableLanguages]="availableLanguages"
-  />`
+  />`,
+  // Scope the document override to translation; Angular's renderer still needs the browser document.
+  providers: [{ provide: DOCUMENT, useFactory: () => document.implementation.createHTMLDocument() }]
 })
 class TestHostComponent {
   availableLanguages: string[] | IsoLanguageValue[] = [

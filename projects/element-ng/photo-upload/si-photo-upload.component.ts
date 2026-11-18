@@ -7,6 +7,7 @@ import {
   booleanAttribute,
   Component,
   computed,
+  DestroyRef,
   ElementRef,
   inject,
   input,
@@ -18,6 +19,7 @@ import {
   TemplateRef,
   viewChild
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import {
   elementCancel,
@@ -29,6 +31,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { CropperPosition, ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
+import { fromEvent, take } from 'rxjs';
 
 import { SiImageCropperStyleComponent } from './si-image-cropper-style.component';
 
@@ -361,6 +364,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
   private cropperPosition?: CropperPosition;
 
   private readonly sanitizer = inject(DomSanitizer);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly modalService = inject(SiModalService);
   private readonly autoBackgroundColorDirective = inject(SiAvatarBackgroundColorDirective);
 
@@ -455,15 +459,17 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
       return;
     }
     const reader = new FileReader();
-    reader.addEventListener('loadend', () => {
-      if (typeof reader.result === 'string') {
-        this.cropperPosition = undefined;
-        this.imageCropperPhoto.set(reader.result);
+    fromEvent(reader, 'loadend')
+      .pipe(take(1), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        if (typeof reader.result === 'string') {
+          this.cropperPosition = undefined;
+          this.imageCropperPhoto.set(reader.result);
 
-        // Bring up the editing modal if not already present
-        this.showCroppingDialog();
-      }
-    });
+          // Bring up the editing modal if not already present
+          this.showCroppingDialog();
+        }
+      });
     reader.readAsDataURL(file);
   }
 

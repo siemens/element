@@ -37,8 +37,8 @@ export const elementColorScheme: Part = createPart({
   params: {
     // Typography
     buttonFontWeight: '600',
-    cellFontFamily: 'var(--element-body-font-family)',
-    fontFamily: 'var(--element-body-font-family)',
+    cellFontFamily: 'var(--si-sys-typography-body-font-family)',
+    fontFamily: 'var(--si-sys-typography-body-font-family)',
     fontSize: '14px',
     headerFontWeight: '600',
 

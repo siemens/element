@@ -3,7 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { isPlatformBrowser } from '@angular/common';
-import { DOCUMENT, EventEmitter, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import {
+  DestroyRef,
+  DOCUMENT,
+  EventEmitter,
+  inject,
+  Injectable,
+  PLATFORM_ID,
+  signal
+} from '@angular/core';
 import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
@@ -78,6 +86,7 @@ export class SiThemeService {
   readonly themeIcons = signal<Record<string, string>>({});
 
   private themes: Map<string, Theme> = new Map();
+  private themeStyles = new Map<string, HTMLStyleElement>();
   private darkMediaQuery?: MediaQueryList;
   private mediaQueryListener?: () => void;
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -89,6 +98,10 @@ export class SiThemeService {
   private themeTarget = inject(SI_THEME_DOM_TARGET);
 
   constructor() {
+    inject(DestroyRef).onDestroy(() => {
+      this.themeStyles.forEach((_, name) => this.removeThemeCSS(name));
+    });
+
     this._resolvedColorScheme = this.themeTarget.element.classList.contains('app--dark')
       ? 'dark'
       : 'light';
@@ -399,8 +412,7 @@ export class SiThemeService {
   }
 
   private hasThemeCSS(theme: Theme): boolean {
-    const id = `__theme-${theme.name}`;
-    return !!this.themeTarget.getStyleElement(id);
+    return this.themeStyles.has(theme.name);
   }
 
   private createThemeCSS(theme: Theme): void {
@@ -423,6 +435,7 @@ export class SiThemeService {
     cssElement.textContent = css;
 
     this.themeTarget.appendStyleElement(cssElement);
+    this.themeStyles.set(theme.name, cssElement);
   }
 
   private createThemeSelector(name: string, dark: boolean = false): string {
@@ -442,8 +455,8 @@ export class SiThemeService {
   }
 
   private removeThemeCSS(name: string): void {
-    const id = `__theme-${name}`;
-    this.themeTarget.getStyleElement(id)?.remove();
+    this.themeStyles.get(name)?.remove();
+    this.themeStyles.delete(name);
     this.themeTarget.forEachElement(element => element.classList.remove(`theme-${name}`));
   }
 

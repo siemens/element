@@ -222,8 +222,6 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
     this.expandedPortalOutlet().detach();
     this.hideMenubarInternal.set(false);
     this.toggleCardsHide(false);
-    const scrollBehavior = this.document.documentElement.style.scrollBehavior;
-    this.document.documentElement.style.scrollBehavior = 'auto';
     setTimeout(() => {
       if (this.sticky()) {
         this.dashboardFrame().nativeElement.scrollTo({
@@ -232,8 +230,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
           behavior: 'auto'
         });
       } else {
-        this.scroller.scrollToPosition(this.scrollPosition);
-        this.document.documentElement.style.scrollBehavior = scrollBehavior;
+        this.scroller.scrollToPosition(this.scrollPosition, { behavior: 'instant' });
       }
       this.cdRef.markForCheck();
     });

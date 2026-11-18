@@ -77,3 +77,66 @@ si-icon {
     inset-block-end: 0;
   }
 }
+
+.horizontal {
+  display: flex;
+
+  .result-step {
+    flex: 1 1 0;
+    grid-template:
+      'icon' variables.$si-icon-font-size
+      'description' auto
+      'value' auto / minmax(0, 1fr);
+    align-content: start;
+    padding-inline: map.get(variables.$spacers-inline, 3);
+    overflow-wrap: anywhere;
+    text-align: center;
+
+    .icon {
+      justify-self: center;
+      margin-inline-end: 0;
+    }
+
+    .result-description {
+      margin-block-start: map.get(variables.$spacers-block, 4);
+    }
+
+    .result-label {
+      display: block;
+      max-block-size: 2lh;
+      overflow: hidden;
+      color: variables.$si-sys-color-text-primary;
+    }
+
+    :is(.result-detail, .result-error, .result-value) {
+      margin-block-start: map.get(variables.$spacers-block, 1);
+    }
+
+    .result-value {
+      color: variables.$si-sys-color-text-secondary;
+      white-space: normal;
+    }
+
+    &::before,
+    &::after {
+      inset-block-start: calc(
+        #{map.get(variables.$spacers-block, 5)} + variables.$si-icon-font-size / 2 -
+          #{math.div($si-result-details-list-connector-width, 2)}
+      );
+      block-size: $si-result-details-list-connector-width;
+      margin: 0;
+    }
+
+    &::before {
+      inset-inline-start: 0;
+      inset-inline-end: calc(50% + variables.$si-icon-font-size / 2);
+      inline-size: auto;
+    }
+
+    &::after {
+      inset-inline-start: calc(50% + variables.$si-icon-font-size / 2);
+      inset-inline-end: 0;
+      inline-size: auto;
+    }
+  }
+}

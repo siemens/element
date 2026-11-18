@@ -6,6 +6,7 @@ import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { type MockInstance } from 'vitest';
+import { page, userEvent } from 'vitest/browser';
 
 import { SiPhotoUploadComponent } from './si-photo-upload.component';
 
@@ -16,20 +17,15 @@ describe(`SiPhotoUploadComponent`, () => {
   let component: SiPhotoUploadComponent;
   let componentRef: ComponentRef<SiPhotoUploadComponent>;
   let fixture: ComponentFixture<SiPhotoUploadComponent>;
-  let callback: (e: any) => void;
 
   const mockFileReader = (data: string): MockInstance<typeof window.FileReader> => {
-    const readerSpy = {
-      addEventListener: vi.fn((event: string, cb: (e: any) => void) => (callback = cb)),
-      readAsDataURL: vi.fn(() => callback(data)),
-      result: data
-    };
-
     return vi.spyOn(window, 'FileReader').mockImplementation(
-      class {
-        addEventListener = readerSpy.addEventListener;
-        readAsDataURL = readerSpy.readAsDataURL;
-        result = readerSpy.result;
+      class extends EventTarget {
+        readonly result = data;
+
+        readAsDataURL(): void {
+          this.dispatchEvent(new Event('loadend'));
+        }
       } as unknown as typeof FileReader
     );
   };
@@ -58,6 +54,21 @@ describe(`SiPhotoUploadComponent`, () => {
     fixture = TestBed.createComponent(SiPhotoUploadComponent);
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
+  });
+
+  it('should not open a crop modal if an upload finishes after destruction', async () => {
+    await fixture.whenStable();
+    using readSpy = vi.spyOn(FileReader.prototype, 'readAsDataURL').mockImplementation(() => {});
+
+    const fileInput = fixture.nativeElement.querySelector('input[type="file"]');
+    await userEvent.upload(page.elementLocator(fileInput), 'src/favicon.png');
+    expect(readSpy).toHaveBeenCalledOnce();
+    const reader = readSpy.mock.contexts[0] as FileReader;
+    vi.spyOn(reader, 'result', 'get').mockReturnValue(redPng);
+    fixture.destroy();
+    reader.dispatchEvent(new Event('loadend'));
+
+    await expect.element(page.getByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('should display placeholder', () => {
