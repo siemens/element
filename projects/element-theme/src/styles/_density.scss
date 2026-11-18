@@ -36,10 +36,8 @@
       }
     }
 
-    @if $name ==
-      'si-sys-typography-body-font-family' or
-      $name ==
-      'si-sys-typography-code-font-family'
+    @if $name == 'si-sys-typography-body-font-family' or
+      $name == 'si-sys-typography-code-font-family'
     {
       --#{$name}: #{$value};
     }
