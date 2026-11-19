@@ -20,7 +20,7 @@ Published package: <https://www.npmjs.com/package/@siemens/element-icons>
 GitHub repository: <https://github.com/siemens/element-icons>
 
 <si-icon-viewer 
-icon-set="{'name': 'Element', 'id': '@siemens/element-icons', 'prefix': 'element', 'metaFile': '../_src/element-icon-metadata.json', 'packageName': '@siemens/element-icons', 'stylesFile': '../_src/siemens-element-icons.min.css', 'cdnUrl': '', 'codeUrl': 'https://github.com/siemens/element-icons'}"
+icon-set="{'name': 'Element', 'id': '@siemens/element-icons', 'prefix': 'element', 'metaFile': '../_src/icon-viewer/element-icon-metadata.json', 'packageName': '@siemens/element-icons', 'stylesFile': '../_src/icon-viewer/style/siemens-element-icons.min.css', 'cdnUrl': '', 'codeUrl': 'https://github.com/siemens/element-icons'}"
 light-background-color="var(--md-nav-bg-color)"
 dark-background-color="var(--md-nav-fg-color)"
 page-background-color="var(--md-default-bg-color)"

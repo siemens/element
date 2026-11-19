@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../../../_src/siemens-element-icons.min.css" />
+<link rel="stylesheet" href="../../../_src/icon-viewer/style/siemens-element-icons.min.css" />
 
 # Frequent app functions
 
