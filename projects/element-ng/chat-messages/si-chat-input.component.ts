@@ -4,14 +4,12 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import {
-  afterNextRender,
   AfterViewInit,
   booleanAttribute,
   Component,
   computed,
   ElementRef,
   inject,
-  Injector,
   input,
   model,
   output,
@@ -377,7 +375,6 @@ export class SiChatInputComponent implements AfterViewInit {
 
   protected readonly dragOver = signal(false);
 
-  private readonly injector = inject(Injector);
   private readonly menuActionService = inject(SiMenuActionService, { optional: true });
 
   protected runAction(action: MenuItemAction): void {
@@ -395,15 +392,6 @@ export class SiChatInputComponent implements AfterViewInit {
   protected selectFollowUpPrompt(prompt: string): void {
     this.followUpPromptSelected.emit(prompt);
     this.focus();
-    afterNextRender(
-      () => {
-        const textarea = this.textInput();
-        if (textarea?.nativeElement) {
-          this.setTextareaHeight(textarea.nativeElement);
-        }
-      },
-      { injector: this.injector }
-    );
   }
 
   protected onSend(): void {
@@ -486,21 +474,12 @@ export class SiChatInputComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     const textarea = this.textInput();
-    if (textarea?.nativeElement) {
-      this.setTextareaHeight(textarea.nativeElement);
-
-      if (this.autoFocus()) {
-        // Use setTimeout to ensure the element is fully rendered
-        setTimeout(() => {
-          textarea.nativeElement.focus();
-        }, 0);
-      }
+    if (textarea?.nativeElement && this.autoFocus()) {
+      // Use setTimeout to ensure the element is fully rendered
+      setTimeout(() => {
+        textarea.nativeElement.focus();
+      }, 0);
     }
-  }
-
-  protected adjustTextareaHeight(event: Event): void {
-    const textarea = event.target as HTMLTextAreaElement;
-    this.setTextareaHeight(textarea);
   }
 
   /**
@@ -536,25 +515,5 @@ export class SiChatInputComponent implements AfterViewInit {
     event.preventDefault();
     event.stopPropagation();
     this.dragOver.set(true);
-  }
-
-  private setTextareaHeight(textarea: HTMLTextAreaElement): void {
-    textarea.style.blockSize = 'auto';
-
-    const computedStyle = window.getComputedStyle(textarea);
-    const lineHeight =
-      parseInt(computedStyle.lineHeight, 10) || parseInt(computedStyle.fontSize, 10) * 1.2;
-    const paddingTop = parseInt(computedStyle.paddingBlockStart, 10) || 0;
-    const paddingBottom = parseInt(computedStyle.paddingBlockEnd, 10) || 0;
-    const minHeight = lineHeight + paddingTop + paddingBottom;
-
-    const viewportHeight = window.innerHeight;
-    const maxViewportHeight = viewportHeight * 0.3;
-    const maxLinesHeight = lineHeight * 8;
-    const maxHeight = Math.min(maxViewportHeight, maxLinesHeight) + paddingTop + paddingBottom;
-
-    const scrollHeight = textarea.scrollHeight;
-    const finalHeight = Math.max(Math.min(scrollHeight, maxHeight), minHeight);
-    textarea.style.height = finalHeight + 'px';
   }
 }

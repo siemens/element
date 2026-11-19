@@ -28,8 +28,11 @@
 }
 
 .chat-textarea {
-  // Prevent layout shift on first input
+  field-sizing: content;
+  block-size: auto;
   min-block-size: 1lh;
+  max-block-size: min(8lh, 30vb);
+  overflow-y: auto;
   font-family: inherit;
   padding-block: 0;
   display: block;
