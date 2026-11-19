@@ -170,6 +170,7 @@
   "SI_LOGIN_BASIC.USERNAME": "Benutzername",
   "SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP": "Anmelden / Registrieren",
   "SI_MAIN_DETAIL_CONTAINER.BACK": "Zurück",
+  "SI_MESSAGE_LOADER.LOADING_TEXT": "Auf eine Antwort warten",
   "SI_NAVBAR.OPEN_LAUNCHPAD": "App wechseln",
   "SI_NAVBAR.TOGGLE_NAVIGATION": "Navigation anzeigen",
   "SI_NAVBAR_VERTICAL.COLLAPSE": "Reduzieren",

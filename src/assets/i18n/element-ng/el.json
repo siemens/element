@@ -27,6 +27,7 @@
   "SI_LIST_WIDGET.SEARCH_PLACEHOLDER": "Αναζήτηση…",
   "SI_LOADING_SPINNER.LABEL": "Φόρτωση…",
   "SI_MAIN_DETAIL_CONTAINER.BACK": "Πίσω",
+  "SI_MESSAGE_LOADER.LOADING_TEXT": "Αναμονή για απάντηση",
   "SI_NAVBAR_VERTICAL.COLLAPSE": "Σύμπτυξη",
   "SI_NAVBAR_VERTICAL.EXPAND": "Επέκταση",
   "SI_PAGINATION.BACK": "Πίσω",

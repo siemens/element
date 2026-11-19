@@ -173,6 +173,7 @@ nav:
       - Chat input:                       'components/chat-messages/chat-input.md'
       - Chat message:                     'components/chat-messages/chat-message.md'
       - Markdown:                         'components/chat-messages/markdown.md'
+      - Message loader:                   'components/chat-messages/message-loader.md'
       - Source chips:                     'components/chat-messages/source-chips.md'
     - Charts:
       - Overview:                         'components/charts/index.md'
