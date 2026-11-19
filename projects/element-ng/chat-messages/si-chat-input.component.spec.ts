@@ -15,6 +15,7 @@ import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 import { MenuItemAction, SiMenuActionService } from '@siemens/element-ng/menu';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { page, userEvent } from 'vitest/browser';
 
 import {
   ChatInputAttachment,
@@ -100,6 +101,27 @@ describe('SiChatInputComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('grows with the draft, scrolls long messages and shrinks when cleared', async () => {
+    await fixture.whenStable();
+    const textbox = page.elementLocator(fixture.nativeElement).getByRole('textbox');
+    const textarea = textbox.element();
+    const emptyHeight = textarea.clientHeight;
+
+    await userEvent.fill(textbox, 'First line\nSecond line');
+    expect(textarea.clientHeight).toBeGreaterThan(emptyHeight);
+
+    await userEvent.fill(textbox, Array(20).fill('Another line').join('\n'));
+    expect(textarea.clientHeight).toBeLessThanOrEqual(
+      Math.ceil(Math.min(8 * emptyHeight, 0.3 * window.innerHeight))
+    );
+    expect(textarea.scrollHeight).toBeGreaterThan(textarea.clientHeight);
+
+    value.set('');
+    await fixture.whenStable();
+    await expect.element(textbox).toHaveValue('');
+    expect(textarea.clientHeight).toBe(emptyHeight);
   });
 
   it('should have default empty value', async () => {
