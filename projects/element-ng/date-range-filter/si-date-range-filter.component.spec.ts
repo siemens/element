@@ -9,7 +9,6 @@ import { formatDate } from '@angular/common';
 import { inputBinding, LOCALE_ID, signal, twoWayBinding, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TestScheduler } from 'rxjs/testing';
 import { page, userEvent } from 'vitest/browser';
 
 import { SiCalendarCellHarness } from '../datepicker/testing/si-calendar-cell.harness';
@@ -382,21 +381,12 @@ describe('SiDateRangeFilterComponent', () => {
   it('allows filtering presets', async () => {
     await fixture.whenStable();
 
-    const testScheduler = new TestScheduler((actual, expected) => {
-      expect(actual).toEqual(expected);
-    });
+    await userEvent.fill(page.getByRole('textbox', { name: 'Search', exact: true }), '30');
+    await fixture.whenStable();
 
-    testScheduler.run(({ flush }) => {
-      const searchInput = element.querySelector<HTMLInputElement>('si-search-bar input')!;
-      searchInput.value = '30';
-      searchInput.dispatchEvent(new Event('input'));
-      flush();
-      fixture.detectChanges();
-
-      expect(document.querySelector('.preset-select')).toBeTruthy();
-      const presets = presetItems();
-      expect(presets).toHaveLength(1);
-    });
+    expect(element.querySelector('.preset-select')).toBeInTheDocument();
+    await expect.poll(presetItems).toHaveLength(1);
+    expect(presetItems()[0]).toHaveTextContent('last 30 days');
   });
 
   it('hides the preset list when no presets given', async () => {

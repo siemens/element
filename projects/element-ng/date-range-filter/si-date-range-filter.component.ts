@@ -22,6 +22,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { debounce, form, FormField } from '@angular/forms/signals';
 import { elementDown2 } from '@siemens/element-icons';
 import { defaultConnectedOverlayScrollStrategy } from '@siemens/element-ng/common';
 import {
@@ -35,7 +36,7 @@ import {
 } from '@siemens/element-ng/datepicker';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiDateRangeCalculationService } from './si-date-range-calculation.service';
@@ -71,6 +72,8 @@ export class PresetMatchFilterPipe implements PipeTransform {
     SiIconComponent,
     SiRelativeDateComponent,
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
+    FormField,
     SiTranslatePipe
   ],
   templateUrl: './si-date-range-filter.component.html',
@@ -381,6 +384,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
     return isValid(date) ? date : undefined;
   });
   protected readonly presetFilter = signal('');
+  protected readonly presetFilterField = form(this.presetFilter, path => debounce(path, 400));
   protected readonly presetOpen = signal(false);
   protected readonly inputMode = computed(
     () => this.basicMode() === 'input' || this.enableTimeSelection()

@@ -76,6 +76,7 @@ test.describe('dashboard', () => {
   test(example + 'empty', async ({ page, si }) => {
     await si.visitExample(example, undefined);
     await openWidgetCatalog(page);
+    await expect(page.getByRole('option', { name: /Hello World/ })).toBeVisible();
     const search = page.getByRole('textbox', { name: 'Search…' });
     await expect(search).toBeVisible();
     await search.fill('empty');
