@@ -1,3 +1,16 @@
+# [51.8.0](https://github.com/siemens/element/compare/v51.7.0...v51.8.0) (2026-11-19)
+
+
+### Features
+
+* **card:** support anchor elements for action cards ([3aad6c4](https://github.com/siemens/element/commit/3aad6c4c5a1d0259e9ddc31bf46bc97c037bba55))
+
+
+### Bug Fixes
+
+* **chat-messages:** handle external drafts and input guards ([75dc4f2](https://github.com/siemens/element/commit/75dc4f22a46c631554b252bf078ed566f6820d71))
+* **tree-view:** allow right-click context menu on non-selectable items ([fa4c066](https://github.com/siemens/element/commit/fa4c06693ce6df012963313197fd56e284b6438f))
+
 # [51.7.0](https://github.com/siemens/element/compare/v51.6.0...v51.7.0) (2026-11-18)
 
 
