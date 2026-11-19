@@ -1029,7 +1029,7 @@
               {
                 "glob": "siemens-element-icons.min.css",
                 "input": "node_modules/@siemens/element-icons/dist/style",
-                "output": "/"
+                "output": "/style"
               },
               {
                 "glob": "*",
@@ -1043,7 +1043,6 @@
           },
           "configurations": {
             "production": {
-              "assets": [],
               "outputPath": {
                 "base": "docs/_src/icon-viewer",
                 "browser": ""
