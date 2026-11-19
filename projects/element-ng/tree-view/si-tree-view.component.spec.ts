@@ -655,6 +655,26 @@ describe('SiTreeViewComponent', () => {
       );
     });
 
+    it('should keep context menu open on right click for non-selectable item', async () => {
+      vi.useRealTimers();
+      component.items.set([
+        {
+          label: 'Non-selectable item',
+          selectable: false,
+          state: 'leaf'
+        }
+      ]);
+      await fixture.whenStable();
+
+      const item = page.elementLocator(element).getByRole('treeitem', {
+        name: 'Non-selectable item'
+      });
+      await userEvent.click(item, { button: 'right', delay: 20 });
+      await fixture.whenStable();
+
+      await expect.element(page.getByRole('menuitem', { name: 'Item one' })).toBeVisible();
+    });
+
     it('should have only one context menu open at a time', async () => {
       // Open context menu of tree different items left one menu open
       component.items.set(createTreeItems(3));
