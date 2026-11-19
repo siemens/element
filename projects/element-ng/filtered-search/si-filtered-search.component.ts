@@ -92,6 +92,10 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * selected criteria and additional filter text.
    */
   readonly doSearch = output<SearchCriteria>();
+  /** Emits the current search criteria whenever a search is submitted. */
+  readonly searchCriteriaSubmit = output<SearchCriteria>();
+  /** Emits after the clear button resets the criteria and free text. */
+  readonly searchCriteriaClear = output<void>();
   /**
    * If this is set to `true`, the search triggers for each input (implicit search).
    * By default, the search is triggered when the user submits by pressing the
@@ -561,10 +565,16 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     }
   }
 
+  protected onClearButtonClick(event: MouseEvent): void {
+    this.deleteAllCriteria(event);
+    this.searchCriteriaClear.emit();
+  }
+
   protected submit(): void {
     if (!this.doSearchOnInputChange()) {
       this.doSearch.emit(this.searchCriteria()!);
     }
+    this.searchCriteriaSubmit.emit(this.searchCriteria()!);
   }
 
   protected validateCriterionLabel(criterion: InternalCriterionDefinition): boolean {
