@@ -1,0 +1,14 @@
+# interface @fixture/library#HiddenImplementation
+import: import type { HiddenImplementation } from '@fixture/library';
+page: api/fixture/library/types/HiddenImplementation.md
+source: https://github.com/siemens/element/blob/main/library/internal/reexported.ts#L1-L3
+
+=== api
+declaration: interface HiddenImplementation
+## propertys "Properties"
+  hidden: string  #~/member/hidden
+
+=== type
+declaration: interface HiddenImplementation
+## propertys "Properties"
+  hidden: string  #~/member/hidden

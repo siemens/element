@@ -1,0 +1,17 @@
+# undecorated_class @fixture/library/secondary#UndocumentedAlias
+import: import { UndocumentedAlias } from '@fixture/library/secondary';
+page: api/fixture/library/types/UndocumentedAlias.md
+source: https://github.com/siemens/element/blob/main/library/secondary/aliases.ts#L13-L13
+Alias of: AliasTarget
+
+=== api
+declaration: undecorated_class UndocumentedAlias
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [AliasTarget → #@fixture/library/secondary#AliasTarget] → [AliasTarget → #@fixture/library/secondary#AliasTarget]  #~/member/constructor/signature/0
+
+=== type
+declaration: undecorated_class UndocumentedAlias
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [AliasTarget → #@fixture/library/secondary#AliasTarget] → [AliasTarget → #@fixture/library/secondary#AliasTarget]  #~/member/constructor/signature/0

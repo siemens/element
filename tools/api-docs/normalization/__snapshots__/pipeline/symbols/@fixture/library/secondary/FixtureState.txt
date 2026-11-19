@@ -1,0 +1,24 @@
+# enum @fixture/library/secondary#FixtureState
+import: import { FixtureState } from '@fixture/library/secondary';
+page: api/fixture/library/types/FixtureState.md
+source: https://github.com/siemens/element/blob/main/library/secondary/kinds.ts#L4-L10
+
+=== api
+declaration: enum FixtureState
+Fixture enum with initialized, computed and documented members.
+## members "Members" (defaults)
+  Busy: [FixtureState.Busy → #~/member/Busy] = 'busy'  #~/member/Busy
+  Idle: [FixtureState.Idle → #~/member/Idle] = 'idle'  #~/member/Idle
+    Nothing happened yet.
+  Legacy: [FixtureState.Legacy → #~/member/Legacy] = 'legacy' [deprecated]  #~/member/Legacy
+    Deprecated: Use [FixtureState.Busy → #~/member/Busy].
+
+=== type
+declaration: enum FixtureState
+Fixture enum with initialized, computed and documented members.
+## members "Members" (defaults)
+  Busy: [FixtureState.Busy → #~/member/Busy] = 'busy'  #~/member/Busy
+  Idle: [FixtureState.Idle → #~/member/Idle] = 'idle'  #~/member/Idle
+    Nothing happened yet.
+  Legacy: [FixtureState.Legacy → #~/member/Legacy] = 'legacy' [deprecated]  #~/member/Legacy
+    Deprecated: Use [FixtureState.Busy → #~/member/Busy].

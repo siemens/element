@@ -1,0 +1,15 @@
+declaration: interface Locale
+## methods "Methods"
+  other  #@test/library#Locale/member/other
+    searchValue
+    other(): void → void  #@test/library#Locale/member/other/signature/0
+  replace  #@test/library#Locale/member/replace
+    Replace [searchValue → #@test/library#Locale/member/replace/signature/0/parameter/0/searchValue].
+    replace(searchValue: string): void → void  #@test/library#Locale/member/replace/signature/0
+      Search [searchValue → #@test/library#Locale/member/replace/signature/0/parameter/0/searchValue].
+      param searchValue: string  #@test/library#Locale/member/replace/signature/0/parameter/0/searchValue
+    replace(searchValue: string, replaceValue: string): void → void  #@test/library#Locale/member/replace/signature/1
+      param searchValue: string  #@test/library#Locale/member/replace/signature/1/parameter/0/searchValue
+        With [replaceValue → #@test/library#Locale/member/replace/signature/1/parameter/1/replaceValue].
+      param replaceValue: string  #@test/library#Locale/member/replace/signature/1/parameter/1/replaceValue
+        With [searchValue → #@test/library#Locale/member/replace/signature/1/parameter/0/searchValue].

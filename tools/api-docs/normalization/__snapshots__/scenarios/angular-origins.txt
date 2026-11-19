@@ -1,0 +1,1 @@
+declaration: [TemplateRef → https://angular.dev/api/core/TemplateRef]<unknown> | [OverlayRef → https://material.angular.dev/cdk/overlay/api#OverlayRef] | [MatButton → https://material.angular.dev/components/button/api#MatButton] | ɵPrivate

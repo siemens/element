@@ -1,0 +1,26 @@
+# undecorated_class @fixture/library/secondary#ExternalDeclaration
+import: import { ExternalDeclaration } from '@fixture/library/secondary';
+page: api/fixture/library/types/ExternalDeclaration.md
+source: https://github.com/siemens/element/blob/main/external/framework.d.ts#L6-L10
+
+=== api
+declaration: undecorated_class ExternalDeclaration
+An external declaration using compiler-generated namespace aliases.
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [ExternalDeclaration → #~] → [ExternalDeclaration → #~]  #~/member/constructor/signature/0
+## propertys "Properties"
+  changed: [EventEmitter → https://angular.dev/api/core/EventEmitter]<string>  #~/member/changed
+  move: [CdkDragMove → https://material.angular.dev/cdk/drag-drop/api#CdkDragMove]<string>  #~/member/move
+  stream: [Observable → https://rxjs.dev/api/index/class/Observable]<string>  #~/member/stream
+
+=== type
+declaration: undecorated_class ExternalDeclaration
+An external declaration using compiler-generated namespace aliases.
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [ExternalDeclaration → #~] → [ExternalDeclaration → #~]  #~/member/constructor/signature/0
+## propertys "Properties"
+  changed: [EventEmitter → https://angular.dev/api/core/EventEmitter]<string>  #~/member/changed
+  move: [CdkDragMove → https://material.angular.dev/cdk/drag-drop/api#CdkDragMove]<string>  #~/member/move
+  stream: [Observable → https://rxjs.dev/api/index/class/Observable]<string>  #~/member/stream

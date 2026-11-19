@@ -1,0 +1,14 @@
+# interface @fixture/library/secondary#MenuItemBase
+import: import type { MenuItemBase } from '@fixture/library/secondary';
+page: api/fixture/library/types/MenuItemBase.md
+source: https://github.com/siemens/element/blob/main/library/secondary/heritage.ts#L1-L3
+
+=== api
+declaration: interface MenuItemBase
+## propertys "Properties"
+  label: string | undefined [optional]  #~/member/label
+
+=== type
+declaration: interface MenuItemBase
+## propertys "Properties"
+  label: string | undefined [optional]  #~/member/label

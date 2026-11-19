@@ -9,8 +9,8 @@
   "jsdocTags": [],
   "source": {
     "filePath": "library/secondary/metadata.ts",
-    "startLine": 201,
-    "endLine": 201
+    "startLine": 238,
+    "endLine": 238
   },
   "members": [
     {
@@ -26,8 +26,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 201,
-        "endLine": 201
+        "startLine": 238,
+        "endLine": 238
       },
       "signatures": [
         {
@@ -38,8 +38,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 201,
-            "endLine": 201
+            "startLine": 238,
+            "endLine": 238
           }
         }
       ],
@@ -60,8 +60,8 @@
       "inherited": true,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 193,
-        "endLine": 193
+        "startLine": 230,
+        "endLine": 230
       },
       "references": [],
       "typeReferences": [],
@@ -73,8 +73,8 @@
         "id": "@fixture/library/secondary#CallbackProperties",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 192,
-          "endLine": 199
+          "startLine": 229,
+          "endLine": 236
         },
         "type": "CallbackProperties<string>"
       }
@@ -92,8 +92,8 @@
       "inherited": true,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 194,
-        "endLine": 194
+        "startLine": 231,
+        "endLine": 231
       },
       "references": [],
       "typeReferences": [],
@@ -105,8 +105,8 @@
         "id": "@fixture/library/secondary#CallbackProperties",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 192,
-          "endLine": 199
+          "startLine": 229,
+          "endLine": 236
         },
         "type": "CallbackProperties<string>"
       }
@@ -124,8 +124,8 @@
       "inherited": true,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 195,
-        "endLine": 195
+        "startLine": 232,
+        "endLine": 232
       },
       "references": [],
       "typeReferences": [],
@@ -137,8 +137,8 @@
         "id": "@fixture/library/secondary#CallbackProperties",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 192,
-          "endLine": 199
+          "startLine": 229,
+          "endLine": 236
         },
         "type": "CallbackProperties<string>"
       }
@@ -156,8 +156,8 @@
       "inherited": true,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 196,
-        "endLine": 196
+        "startLine": 233,
+        "endLine": 233
       },
       "references": [],
       "typeReferences": [],
@@ -169,8 +169,8 @@
         "id": "@fixture/library/secondary#CallbackProperties",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 192,
-          "endLine": 199
+          "startLine": 229,
+          "endLine": 236
         },
         "type": "CallbackProperties<string>"
       }
@@ -196,8 +196,8 @@
               "description": "",
               "source": {
                 "filePath": "library/secondary/metadata.ts",
-                "startLine": 198,
-                "endLine": 198
+                "startLine": 235,
+                "endLine": 235
               },
               "optional": false,
               "rest": false,
@@ -210,16 +210,16 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 198,
-            "endLine": 198
+            "startLine": 235,
+            "endLine": 235
           },
           "implementation": true
         }
       ],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 198,
-        "endLine": 198
+        "startLine": 235,
+        "endLine": 235
       },
       "references": [],
       "typeReferences": [],
@@ -231,8 +231,8 @@
         "id": "@fixture/library/secondary#CallbackProperties",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 192,
-          "endLine": 199
+          "startLine": 229,
+          "endLine": 236
         },
         "type": "CallbackProperties<string>"
       }
@@ -250,8 +250,8 @@
       "id": "@fixture/library/secondary#CallbackProperties",
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 192,
-        "endLine": 199
+        "startLine": 229,
+        "endLine": 236
       },
       "type": "CallbackProperties<string>"
     },
@@ -262,8 +262,8 @@
       "id": "@fixture/library/secondary#InheritedCallbacks",
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 201,
-        "endLine": 201
+        "startLine": 238,
+        "endLine": 238
       },
       "type": "InheritedCallbacks"
     }
@@ -287,8 +287,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 201,
-        "endLine": 201
+        "startLine": 238,
+        "endLine": 238
       },
       "signatures": [
         {
@@ -299,8 +299,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 201,
-            "endLine": 201
+            "startLine": 238,
+            "endLine": 238
           }
         }
       ],
@@ -315,8 +315,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 193,
-        "endLine": 193
+        "startLine": 230,
+        "endLine": 230
       },
       "visibility": "public",
       "readonly": false,
@@ -329,8 +329,8 @@
         "id": "@fixture/library/secondary#CallbackProperties",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 192,
-          "endLine": 199
+          "startLine": 229,
+          "endLine": 236
         },
         "type": "CallbackProperties<string>"
       },
@@ -347,8 +347,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 194,
-        "endLine": 194
+        "startLine": 231,
+        "endLine": 231
       },
       "visibility": "public",
       "readonly": false,
@@ -361,8 +361,8 @@
         "id": "@fixture/library/secondary#CallbackProperties",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 192,
-          "endLine": 199
+          "startLine": 229,
+          "endLine": 236
         },
         "type": "CallbackProperties<string>"
       },
@@ -379,8 +379,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 195,
-        "endLine": 195
+        "startLine": 232,
+        "endLine": 232
       },
       "visibility": "public",
       "readonly": false,
@@ -393,8 +393,8 @@
         "id": "@fixture/library/secondary#CallbackProperties",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 192,
-          "endLine": 199
+          "startLine": 229,
+          "endLine": 236
         },
         "type": "CallbackProperties<string>"
       },
@@ -411,8 +411,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 196,
-        "endLine": 196
+        "startLine": 233,
+        "endLine": 233
       },
       "visibility": "public",
       "readonly": true,
@@ -425,8 +425,8 @@
         "id": "@fixture/library/secondary#CallbackProperties",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 192,
-          "endLine": 199
+          "startLine": 229,
+          "endLine": 236
         },
         "type": "CallbackProperties<string>"
       },
@@ -443,8 +443,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 198,
-        "endLine": 198
+        "startLine": 235,
+        "endLine": 235
       },
       "visibility": "public",
       "readonly": false,
@@ -457,8 +457,8 @@
         "id": "@fixture/library/secondary#CallbackProperties",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 192,
-          "endLine": 199
+          "startLine": 229,
+          "endLine": 236
         },
         "type": "CallbackProperties<string>"
       },
@@ -476,8 +476,8 @@
               "description": "",
               "source": {
                 "filePath": "library/secondary/metadata.ts",
-                "startLine": 198,
-                "endLine": 198
+                "startLine": 235,
+                "endLine": 235
               },
               "optional": false,
               "rest": false,
@@ -490,8 +490,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 198,
-            "endLine": 198
+            "startLine": 235,
+            "endLine": 235
           },
           "implementation": true
         }

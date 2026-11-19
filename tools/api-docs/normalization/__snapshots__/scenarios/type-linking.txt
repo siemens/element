@@ -1,0 +1,11 @@
+declaration: interface Generic<T extends [Value → #@test/library#Value] = [Value → #@test/library#Value]>
+related: @test/library#Value
+
+declaration: typeof [ns.Value → #@test/library#Value] | import("p").[Value → #@test/library#Value] | ([Value → #@test/library#Value] extends infer I ? I : never) | Unknown
+related: @test/library#Value
+
+declaration: T | Hidden extends [Base → #@test/library#Base]<[Value → #@test/library#Value][]> implements [Contract → #@test/library#Contract]<T>
+related: @test/library#Base, @test/library#Value, @test/library#Contract
+
+declaration: { Dup: 1; f: (Dup: 2) => [Dup → #@one#Dup] }
+related: @one#Dup

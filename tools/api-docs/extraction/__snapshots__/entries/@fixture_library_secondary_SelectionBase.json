@@ -10,8 +10,8 @@
   "jsdocTags": [],
   "source": {
     "filePath": "library/secondary/metadata.ts",
-    "startLine": 156,
-    "endLine": 160
+    "startLine": 193,
+    "endLine": 197
   },
   "members": [
     {
@@ -27,8 +27,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 156,
-        "endLine": 160
+        "startLine": 193,
+        "endLine": 197
       },
       "signatures": [
         {
@@ -39,8 +39,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 156,
-            "endLine": 160
+            "startLine": 193,
+            "endLine": 197
           }
         }
       ],
@@ -61,8 +61,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 157,
-        "endLine": 157
+        "startLine": 194,
+        "endLine": 194
       },
       "references": [],
       "typeReferences": [],
@@ -83,8 +83,8 @@
       "required": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 158,
-        "endLine": 158
+        "startLine": 195,
+        "endLine": 195
       },
       "references": [],
       "typeReferences": [
@@ -116,8 +116,8 @@
       "outputAlias": "valueChange",
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 159,
-        "endLine": 159
+        "startLine": 196,
+        "endLine": 196
       },
       "references": [],
       "typeReferences": [
@@ -145,8 +145,8 @@
       "id": "@fixture/library/secondary#SelectionBase",
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 156,
-        "endLine": 160
+        "startLine": 193,
+        "endLine": 197
       },
       "type": "SelectionBase<T, IV>"
     },
@@ -192,8 +192,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 156,
-        "endLine": 160
+        "startLine": 193,
+        "endLine": 197
       },
       "signatures": [
         {
@@ -204,8 +204,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 156,
-            "endLine": 160
+            "startLine": 193,
+            "endLine": 197
           }
         }
       ],
@@ -220,8 +220,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 157,
-        "endLine": 157
+        "startLine": 194,
+        "endLine": 194
       },
       "visibility": "public",
       "readonly": false,
@@ -240,8 +240,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 158,
-        "endLine": 158
+        "startLine": 195,
+        "endLine": 195
       },
       "visibility": "public",
       "readonly": true,
@@ -274,8 +274,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 159,
-        "endLine": 159
+        "startLine": 196,
+        "endLine": 196
       },
       "visibility": "public",
       "readonly": true,

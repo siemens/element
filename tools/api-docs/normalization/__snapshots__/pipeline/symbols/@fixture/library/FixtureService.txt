@@ -1,0 +1,37 @@
+# undecorated_class @fixture/library#FixtureService
+import: import { FixtureService } from '@fixture/library';
+page: api/fixture/library/injectables/FixtureService.md
+source: https://github.com/siemens/element/blob/main/library/service.ts#L6-L14
+Provided in: root
+
+=== api
+declaration: undecorated_class FixtureService
+Injectable fixture.
+## members "Attributes and Methods" (defaults)
+  documentToken: [InjectionToken → https://angular.dev/api/core/InjectionToken]<Document> = DOCUMENT [readonly]  #~/member/documentToken
+  greet: string  #~/member/greet
+    Makes a greeting.
+    greet(name?: string = 'world'): string → string  #~/member/greet/signature/0
+      Makes a greeting.
+      param name: string = 'world' [optional]  #~/member/greet/signature/0/parameter/0/name
+        Who to greet.
+
+=== explicitPublicApi
+declaration: undecorated_class FixtureService
+Injectable fixture.
+
+=== type
+declaration: undecorated_class FixtureService
+Injectable fixture.
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [FixtureService → #~] → [FixtureService → #~]  #~/member/constructor/signature/0
+## propertys "Properties" (defaults)
+  documentToken: [InjectionToken → https://angular.dev/api/core/InjectionToken]<Document> = DOCUMENT [readonly]  #~/member/documentToken
+## methods "Methods"
+  greet: string  #~/member/greet
+    Makes a greeting.
+    greet(name?: string = 'world'): string → string  #~/member/greet/signature/0
+      Makes a greeting.
+      param name: string = 'world' [optional]  #~/member/greet/signature/0/parameter/0/name
+        Who to greet.

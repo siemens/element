@@ -54,6 +54,43 @@ export function overloaded(value: string | number, fallback: string | number = 0
   return value ?? fallback;
 }
 
+/** Overloaded operations.
+ * @example
+ * ```ts
+ * const result = '  preserve spacing';
+ * ```
+ *
+ * ```typescript
+ * const value: string = '<literal>&';
+ * ```
+ *
+ * ```html
+ * <test-widget [value]="value" />
+ * ```
+ *
+ * ```css
+ * .example {
+ *   color: red;
+ * }
+ * ```
+ *
+ * ```sh
+ * echo '<literal>&'
+ * ```
+ * @example
+ * ~~~html
+ * <test-widget>
+ *   Tilde fence
+ * </test-widget>
+ * ~~~
+ * @example
+ *
+ * ```
+ * unlabelled <literal>&
+ * ```
+ * @example
+ * bare <literal>&
+ */
 export class MetadataOverloads {
   /** String construction. */
   constructor(value: string);
