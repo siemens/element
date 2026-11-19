@@ -1,0 +1,34 @@
+# undecorated_class @fixture/library/secondary#CallbackProperties
+import: import { CallbackProperties } from '@fixture/library/secondary';
+page: api/fixture/library/types/CallbackProperties.md
+source: https://github.com/siemens/element/blob/main/library/secondary/metadata.ts#L229-L236
+
+=== api
+declaration: undecorated_class CallbackProperties<T>
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [CallbackProperties → #~]<T> → [CallbackProperties → #~]<T>  #~/member/constructor/signature/0
+## propertys "Properties" (defaults)
+  detach: () => void = () => {}  #~/member/detach
+  hide: (reason?: T) => void = () => {}  #~/member/hide
+  isCurrent: () => boolean = () => false  #~/member/isCurrent
+  transform: (value: T) => T = (value: T): T => value [readonly]  #~/member/transform
+## methods "Methods"
+  setInput: void  #~/member/setInput
+    setInput(value: T): void → void  #~/member/setInput/signature/0
+      param value: T  #~/member/setInput/signature/0/parameter/0/value
+
+=== type
+declaration: undecorated_class CallbackProperties<T>
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [CallbackProperties → #~]<T> → [CallbackProperties → #~]<T>  #~/member/constructor/signature/0
+## propertys "Properties" (defaults)
+  detach: () => void = () => {}  #~/member/detach
+  hide: (reason?: T) => void = () => {}  #~/member/hide
+  isCurrent: () => boolean = () => false  #~/member/isCurrent
+  transform: (value: T) => T = (value: T): T => value [readonly]  #~/member/transform
+## methods "Methods"
+  setInput: void  #~/member/setInput
+    setInput(value: T): void → void  #~/member/setInput/signature/0
+      param value: T  #~/member/setInput/signature/0/parameter/0/value

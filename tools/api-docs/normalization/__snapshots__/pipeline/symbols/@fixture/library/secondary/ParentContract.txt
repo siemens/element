@@ -1,0 +1,18 @@
+# interface @fixture/library/secondary#ParentContract
+import: import type { ParentContract } from '@fixture/library/secondary';
+page: api/fixture/library/types/ParentContract.md
+source: https://github.com/siemens/element/blob/main/library/secondary/metadata.ts#L11-L13
+
+=== api
+declaration: interface ParentContract<T>
+## methods "Methods"
+  inheritedContract: T  #~/member/inheritedContract
+    inheritedContract(value: T): T → T  #~/member/inheritedContract/signature/0
+      param value: T  #~/member/inheritedContract/signature/0/parameter/0/value
+
+=== type
+declaration: interface ParentContract<T>
+## methods "Methods"
+  inheritedContract: T  #~/member/inheritedContract
+    inheritedContract(value: T): T → T  #~/member/inheritedContract/signature/0
+      param value: T  #~/member/inheritedContract/signature/0/parameter/0/value

@@ -9,8 +9,8 @@
   "jsdocTags": [],
   "source": {
     "filePath": "library/secondary/metadata.ts",
-    "startLine": 139,
-    "endLine": 153
+    "startLine": 176,
+    "endLine": 190
   },
   "members": [
     {
@@ -26,8 +26,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 139,
-        "endLine": 153
+        "startLine": 176,
+        "endLine": 190
       },
       "signatures": [
         {
@@ -38,8 +38,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 139,
-            "endLine": 153
+            "startLine": 176,
+            "endLine": 190
           }
         }
       ],
@@ -60,8 +60,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 140,
-        "endLine": 140
+        "startLine": 177,
+        "endLine": 177
       },
       "references": [],
       "typeReferences": [],
@@ -78,8 +78,8 @@
       "id": "@fixture/library/secondary#VisibilityMetadata",
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 139,
-        "endLine": 153
+        "startLine": 176,
+        "endLine": 190
       },
       "type": "VisibilityMetadata"
     },
@@ -88,8 +88,8 @@
       "packageName": "@fixture/library",
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 135,
-        "endLine": 137
+        "startLine": 172,
+        "endLine": 174
       },
       "type": "HiddenPayload"
     }
@@ -110,8 +110,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 139,
-        "endLine": 153
+        "startLine": 176,
+        "endLine": 190
       },
       "signatures": [
         {
@@ -122,8 +122,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 139,
-            "endLine": 153
+            "startLine": 176,
+            "endLine": 190
           }
         }
       ],
@@ -138,8 +138,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 140,
-        "endLine": 140
+        "startLine": 177,
+        "endLine": 177
       },
       "visibility": "public",
       "readonly": false,
@@ -163,8 +163,8 @@
       ],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 144,
-        "endLine": 144
+        "startLine": 181,
+        "endLine": 181
       },
       "visibility": "private",
       "readonly": false,
@@ -184,8 +184,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 145,
-        "endLine": 145
+        "startLine": 182,
+        "endLine": 182
       },
       "visibility": "private",
       "readonly": false,
@@ -196,8 +196,8 @@
           "packageName": "@fixture/library",
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 135,
-            "endLine": 137
+            "startLine": 172,
+            "endLine": 174
           },
           "type": "HiddenPayload"
         }
@@ -220,8 +220,8 @@
       ],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 150,
-        "endLine": 152
+        "startLine": 187,
+        "endLine": 189
       },
       "visibility": "public",
       "readonly": false,
@@ -241,8 +241,8 @@
               "description": "",
               "source": {
                 "filePath": "library/secondary/metadata.ts",
-                "startLine": 150,
-                "endLine": 150
+                "startLine": 187,
+                "endLine": 187
               },
               "optional": true,
               "rest": false,
@@ -260,8 +260,8 @@
           ],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 150,
-            "endLine": 152
+            "startLine": 187,
+            "endLine": 189
           },
           "rawComment": "/** Internal implementation.\n   * @internal\n   */",
           "implementation": true
@@ -277,8 +277,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 146,
-        "endLine": 146
+        "startLine": 183,
+        "endLine": 183
       },
       "visibility": "private",
       "readonly": false,

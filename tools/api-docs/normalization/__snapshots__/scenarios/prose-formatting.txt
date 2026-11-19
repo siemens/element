@@ -1,0 +1,13 @@
+declaration: interface Owner
+Bold nested u s
+`<i>input</i>` [Diagram → images/d.svg] [Ref → https://example.com/d.png] [images/e.svg → images/e.svg]
+```html
+<i>select</i>
+```
+<script>alert(1)</script> <img src=x onerror=alert(1)> <i onclick="a()">text
+• One `code`
+• Two
+JS MD Img
+## propertys "Properties"
+  value: string  #@test/library#Owner/member/value
+    Type input, small.

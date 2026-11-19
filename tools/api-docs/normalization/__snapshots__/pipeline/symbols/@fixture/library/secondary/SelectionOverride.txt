@@ -1,0 +1,74 @@
+# undecorated_class @fixture/library/secondary#SelectionOverride
+import: import { SelectionOverride } from '@fixture/library/secondary';
+page: api/fixture/library/types/SelectionOverride.md
+source: https://github.com/siemens/element/blob/main/library/secondary/heritage.ts#L59-L67
+
+=== api
+declaration: undecorated_class SelectionOverride extends [SelectionImplementation → #@fixture/library/secondary#SelectionImplementation]<string>
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [SelectionOverride → #~] → [SelectionOverride → #~]  #~/member/constructor/signature/0
+## propertys "Properties" (defaults)
+  selectedRows: readonly string[] = []  #~/member/selectedRows
+    Implementation-specific selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+## methods "Methods"
+  format: string [inherited]  #~/member/format
+    Formats a string selection.
+    Formats a numeric selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+    format(value: string): string → string  #~/member/format/signature/0
+      Formats a string selection.
+      param value: string  #~/member/format/signature/0/parameter/0/value
+        • String selection.
+    format(value: number): string → string  #~/member/format/signature/1
+      Formats a numeric selection.
+      param value: number  #~/member/format/signature/1/parameter/0/value
+        • Numeric selection.
+  onValueChange: void  #~/member/onValueChange
+    Updates the selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+    onValueChange(value: readonly string[], notify?: boolean = false): void → void  #~/member/onValueChange/signature/0
+      Updates the selection.
+      param value: readonly string[]  #~/member/onValueChange/signature/0/parameter/0/value
+        • Implementation-specific values.
+      param notify: boolean = false [optional]  #~/member/onValueChange/signature/0/parameter/1/notify
+        • Whether to notify listeners.
+
+=== type
+declaration: undecorated_class SelectionOverride extends [SelectionImplementation → #@fixture/library/secondary#SelectionImplementation]<string>
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [SelectionOverride → #~] → [SelectionOverride → #~]  #~/member/constructor/signature/0
+## propertys "Properties" (defaults)
+  selectedRows: readonly string[] = []  #~/member/selectedRows
+    Implementation-specific selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+## methods "Methods"
+  format: string [inherited]  #~/member/format
+    Formats a string selection.
+    Formats a numeric selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+    format(value: string): string → string  #~/member/format/signature/0
+      Formats a string selection.
+      param value: string  #~/member/format/signature/0/parameter/0/value
+        • String selection.
+    format(value: number): string → string  #~/member/format/signature/1
+      Formats a numeric selection.
+      param value: number  #~/member/format/signature/1/parameter/0/value
+        • Numeric selection.
+  onValueChange: void  #~/member/onValueChange
+    Updates the selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+    onValueChange(value: readonly string[], notify?: boolean = false): void → void  #~/member/onValueChange/signature/0
+      Updates the selection.
+      param value: readonly string[]  #~/member/onValueChange/signature/0/parameter/0/value
+        • Implementation-specific values.
+      param notify: boolean = false [optional]  #~/member/onValueChange/signature/0/parameter/1/notify
+        • Whether to notify listeners.

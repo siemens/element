@@ -1,0 +1,37 @@
+# pipe @fixture/library/secondary#FixtureStatePipe
+import: import { FixtureStatePipe } from '@fixture/library/secondary';
+page: api/fixture/library/pipes/FixtureStatePipe.md
+source: https://github.com/siemens/element/blob/main/library/secondary/kinds.ts#L20-L28
+
+=== api
+declaration: pipe FixtureStatePipe implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
+Formats a fixture state.
+## methods "Methods"
+  transform: string  #~/member/transform
+    Implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
+    transform(value: [FixtureState → #@fixture/library/secondary#FixtureState], upper?: boolean = false): string → string  #~/member/transform/signature/0
+      param value: [FixtureState → #@fixture/library/secondary#FixtureState]  #~/member/transform/signature/0/parameter/0/value
+        The state to format.
+      param upper: boolean = false [optional]  #~/member/transform/signature/0/parameter/1/upper
+        Whether to upper-case the result.
+related: @fixture/library/secondary#FixtureState
+
+=== explicitPublicApi
+declaration: pipe FixtureStatePipe implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
+Formats a fixture state.
+
+=== type
+declaration: pipe FixtureStatePipe implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
+Formats a fixture state.
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [FixtureStatePipe → #~] → [FixtureStatePipe → #~]  #~/member/constructor/signature/0
+## methods "Methods"
+  transform: string  #~/member/transform
+    Implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
+    transform(value: [FixtureState → #@fixture/library/secondary#FixtureState], upper?: boolean = false): string → string  #~/member/transform/signature/0
+      param value: [FixtureState → #@fixture/library/secondary#FixtureState]  #~/member/transform/signature/0/parameter/0/value
+        The state to format.
+      param upper: boolean = false [optional]  #~/member/transform/signature/0/parameter/1/upper
+        Whether to upper-case the result.
+related: @fixture/library/secondary#FixtureState

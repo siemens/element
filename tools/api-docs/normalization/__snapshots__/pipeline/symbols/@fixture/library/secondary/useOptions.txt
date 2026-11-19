@@ -1,0 +1,20 @@
+# function @fixture/library/secondary#useOptions
+import: import { useOptions } from '@fixture/library/secondary';
+page: api/fixture/library/types/useOptions.md
+source: https://github.com/siemens/element/blob/main/library/secondary/types.ts#L16-L22
+
+=== api
+declaration: string
+## signature
+  useOptions(options: [LocalOptions → #@fixture/library/secondary#LocalOptions@library/secondary/types.ts], deep: [DeepOptions → #@fixture/library/secondary#DeepOptions@library/secondary/deep.ts]): string → string  #~/signature/0
+    param options: [LocalOptions → #@fixture/library/secondary#LocalOptions@library/secondary/types.ts]  #~/signature/0/parameter/0/options
+    param deep: [DeepOptions → #@fixture/library/secondary#DeepOptions@library/secondary/deep.ts]  #~/signature/0/parameter/1/deep
+related: @fixture/library/secondary#LocalOptions@library/secondary/types.ts, @fixture/library/secondary#DeepOptions@library/secondary/deep.ts
+
+=== type
+declaration: string
+## signature
+  useOptions(options: [LocalOptions → #@fixture/library/secondary#LocalOptions@library/secondary/types.ts], deep: [DeepOptions → #@fixture/library/secondary#DeepOptions@library/secondary/deep.ts]): string → string  #~/signature/0
+    param options: [LocalOptions → #@fixture/library/secondary#LocalOptions@library/secondary/types.ts]  #~/signature/0/parameter/0/options
+    param deep: [DeepOptions → #@fixture/library/secondary#DeepOptions@library/secondary/deep.ts]  #~/signature/0/parameter/1/deep
+related: @fixture/library/secondary#LocalOptions@library/secondary/types.ts, @fixture/library/secondary#DeepOptions@library/secondary/deep.ts

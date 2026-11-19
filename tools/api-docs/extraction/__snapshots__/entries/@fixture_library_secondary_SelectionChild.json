@@ -10,8 +10,8 @@
   "jsdocTags": [],
   "source": {
     "filePath": "library/secondary/metadata.ts",
-    "startLine": 163,
-    "endLine": 163
+    "startLine": 200,
+    "endLine": 200
   },
   "members": [
     {
@@ -27,8 +27,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 163,
-        "endLine": 163
+        "startLine": 200,
+        "endLine": 200
       },
       "signatures": [
         {
@@ -39,8 +39,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 163,
-            "endLine": 163
+            "startLine": 200,
+            "endLine": 200
           }
         }
       ],
@@ -61,8 +61,8 @@
       "inherited": true,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 157,
-        "endLine": 157
+        "startLine": 194,
+        "endLine": 194
       },
       "references": [],
       "typeReferences": [],
@@ -74,8 +74,8 @@
         "id": "@fixture/library/secondary#SelectionBase",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 156,
-          "endLine": 160
+          "startLine": 193,
+          "endLine": 197
         },
         "type": "SelectionBase<T, T>"
       }
@@ -95,8 +95,8 @@
       "required": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 158,
-        "endLine": 158
+        "startLine": 195,
+        "endLine": 195
       },
       "references": [],
       "typeReferences": [
@@ -120,8 +120,8 @@
         "id": "@fixture/library/secondary#SelectionBase",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 156,
-          "endLine": 160
+          "startLine": 193,
+          "endLine": 197
         },
         "type": "SelectionBase<T, T>"
       }
@@ -140,8 +140,8 @@
       "outputAlias": "valueChange",
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 159,
-        "endLine": 159
+        "startLine": 196,
+        "endLine": 196
       },
       "references": [],
       "typeReferences": [
@@ -164,8 +164,8 @@
         "id": "@fixture/library/secondary#SelectionBase",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 156,
-          "endLine": 160
+          "startLine": 193,
+          "endLine": 197
         },
         "type": "SelectionBase<T, T>"
       }
@@ -183,8 +183,8 @@
       "id": "@fixture/library/secondary#SelectionBase",
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 156,
-        "endLine": 160
+        "startLine": 193,
+        "endLine": 197
       },
       "type": "SelectionBase<T, T>"
     },
@@ -195,8 +195,8 @@
       "id": "@fixture/library/secondary#SelectionChild",
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 163,
-        "endLine": 163
+        "startLine": 200,
+        "endLine": 200
       },
       "type": "SelectionChild<T>"
     },
@@ -244,8 +244,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 163,
-        "endLine": 163
+        "startLine": 200,
+        "endLine": 200
       },
       "signatures": [
         {
@@ -256,8 +256,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 163,
-            "endLine": 163
+            "startLine": 200,
+            "endLine": 200
           }
         }
       ],
@@ -272,8 +272,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 157,
-        "endLine": 157
+        "startLine": 194,
+        "endLine": 194
       },
       "visibility": "public",
       "readonly": false,
@@ -286,8 +286,8 @@
         "id": "@fixture/library/secondary#SelectionBase",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 156,
-          "endLine": 160
+          "startLine": 193,
+          "endLine": 197
         },
         "type": "SelectionBase<T, T>"
       },
@@ -304,8 +304,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 158,
-        "endLine": 158
+        "startLine": 195,
+        "endLine": 195
       },
       "visibility": "public",
       "readonly": true,
@@ -329,8 +329,8 @@
         "id": "@fixture/library/secondary#SelectionBase",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 156,
-          "endLine": 160
+          "startLine": 193,
+          "endLine": 197
         },
         "type": "SelectionBase<T, T>"
       },
@@ -350,8 +350,8 @@
       "jsdocTags": [],
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 159,
-        "endLine": 159
+        "startLine": 196,
+        "endLine": 196
       },
       "visibility": "public",
       "readonly": true,
@@ -375,8 +375,8 @@
         "id": "@fixture/library/secondary#SelectionBase",
         "source": {
           "filePath": "library/secondary/metadata.ts",
-          "startLine": 156,
-          "endLine": 160
+          "startLine": 193,
+          "endLine": 197
         },
         "type": "SelectionBase<T, T>"
       },

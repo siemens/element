@@ -1,0 +1,6 @@
+declaration: interface Owner
+[Value → #@pkg/secondary#Value]
+declaration: interface Owner
+[Value → #@pkg#Value]
+declaration: interface Owner
+Value
