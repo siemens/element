@@ -10,7 +10,7 @@
     [class.si-tree-view-item-not-selectable]="!treeItem.selectable"
     [style.padding-inline-start]="biggerPaddingStart"
     [cdkContextMenuTriggerFor]="contextMenu"
-    [cdkContextMenuDisabled]="!isContextMenuButtonVisible() || !treeItem.selectable"
+    [cdkContextMenuDisabled]="!isContextMenuButtonVisible()"
     (cdkContextMenuOpened)="onToggleContextMenuOpen()"
     (cdkContextMenuClosed)="onToggleContextMenuClose()"
     (click)="onItemClicked($event)"
