@@ -1,0 +1,21 @@
+# undecorated_class @fixture/library/secondary#SpecificAlias
+import: import { SpecificAlias } from '@fixture/library/secondary';
+page: api/fixture/library/types/SpecificAlias.md
+source: https://github.com/siemens/element/blob/main/library/secondary/aliases.ts#L22-L22
+Alias of: AliasTarget
+
+=== api
+declaration: undecorated_class SpecificAlias
+Specific alias summary.
+Deprecated: Specific deprecation.
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [AliasTarget → #@fixture/library/secondary#AliasTarget] → [AliasTarget → #@fixture/library/secondary#AliasTarget]  #~/member/constructor/signature/0
+
+=== type
+declaration: undecorated_class SpecificAlias
+Specific alias summary.
+Deprecated: Specific deprecation.
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [AliasTarget → #@fixture/library/secondary#AliasTarget] → [AliasTarget → #@fixture/library/secondary#AliasTarget]  #~/member/constructor/signature/0

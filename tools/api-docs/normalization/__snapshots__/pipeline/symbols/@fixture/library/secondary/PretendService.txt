@@ -1,0 +1,16 @@
+# undecorated_class @fixture/library/secondary#PretendService
+import: import { PretendService } from '@fixture/library/secondary';
+page: api/fixture/library/types/PretendService.md
+source: https://github.com/siemens/element/blob/main/library/secondary/metadata.ts#L130-L130
+
+=== api
+declaration: undecorated_class PretendService
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [PretendService → #~] → [PretendService → #~]  #~/member/constructor/signature/0
+
+=== type
+declaration: undecorated_class PretendService
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [PretendService → #~] → [PretendService → #~]  #~/member/constructor/signature/0

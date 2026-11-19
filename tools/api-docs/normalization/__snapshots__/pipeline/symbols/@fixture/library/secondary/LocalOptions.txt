@@ -1,0 +1,18 @@
+# interface @fixture/library/secondary#LocalOptions@library/secondary/types.ts
+import: -
+page: -
+source: https://github.com/siemens/element/blob/main/library/secondary/types.ts#L26-L29
+
+=== api
+declaration: interface LocalOptions
+A truly local signature type.
+## propertys "Properties"
+  value: string  #~/member/value
+    Local value.
+
+=== type
+declaration: interface LocalOptions
+A truly local signature type.
+## propertys "Properties"
+  value: string  #~/member/value
+    Local value.

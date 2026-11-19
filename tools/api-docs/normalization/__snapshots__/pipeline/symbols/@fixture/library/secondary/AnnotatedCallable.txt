@@ -1,0 +1,16 @@
+# constant @fixture/library/secondary#AnnotatedCallable
+import: import { AnnotatedCallable } from '@fixture/library/secondary';
+page: api/fixture/library/types/AnnotatedCallable.md
+source: https://github.com/siemens/element/blob/main/library/secondary/catalog-facets.ts#L15-L15
+
+=== api
+declaration: (value: string) => string = value => value
+## signature
+  AnnotatedCallable(value: string): string → string  #~/signature/0
+    param value: string  #~/signature/0/parameter/0/value
+
+=== type
+declaration: (value: string) => string = value => value
+## signature
+  AnnotatedCallable(value: string): string → string  #~/signature/0
+    param value: string  #~/signature/0/parameter/0/value

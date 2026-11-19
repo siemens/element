@@ -1,0 +1,42 @@
+# function @fixture/library/secondary#overloaded
+import: import { overloaded } from '@fixture/library/secondary';
+page: api/fixture/library/types/overloaded.md
+source: https://github.com/siemens/element/blob/main/library/secondary/metadata.ts#L53-L55
+
+=== api
+declaration: string
+The implementation.
+## signature
+  overloaded(value: string): string → string  #~/signature/0
+    String overload.
+    param value: string  #~/signature/0/parameter/0/value
+      The string value.
+## signature
+  overloaded(value: number): number → number  #~/signature/1
+    Numeric overload.
+    param value: number  #~/signature/1/parameter/0/value
+      The numeric value.
+## signature
+  overloaded<T extends string | number = string>(value: T, fallback?: T | undefined): T → T  #~/signature/2
+    Generic overload.
+    param value: T  #~/signature/2/parameter/0/value
+    param fallback: T | undefined [optional]  #~/signature/2/parameter/1/fallback
+
+=== type
+declaration: string
+The implementation.
+## signature
+  overloaded(value: string): string → string  #~/signature/0
+    String overload.
+    param value: string  #~/signature/0/parameter/0/value
+      The string value.
+## signature
+  overloaded(value: number): number → number  #~/signature/1
+    Numeric overload.
+    param value: number  #~/signature/1/parameter/0/value
+      The numeric value.
+## signature
+  overloaded<T extends string | number = string>(value: T, fallback?: T | undefined): T → T  #~/signature/2
+    Generic overload.
+    param value: T  #~/signature/2/parameter/0/value
+    param fallback: T | undefined [optional]  #~/signature/2/parameter/1/fallback

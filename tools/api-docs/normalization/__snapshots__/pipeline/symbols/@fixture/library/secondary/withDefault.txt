@@ -1,0 +1,22 @@
+# function @fixture/library/secondary#withDefault
+import: import { withDefault } from '@fixture/library/secondary';
+page: api/fixture/library/types/withDefault.md
+source: https://github.com/siemens/element/blob/main/library/secondary/types.ts#L12-L14
+
+=== api
+declaration: string
+A documented function.
+## signature
+  withDefault(value?: string | undefined): string → string  #~/signature/0
+    A documented function.
+    param value: string | undefined [optional]  #~/signature/0/parameter/0/value
+      The value.
+
+=== type
+declaration: string
+A documented function.
+## signature
+  withDefault(value?: string | undefined): string → string  #~/signature/0
+    A documented function.
+    param value: string | undefined [optional]  #~/signature/0/parameter/0/value
+      The value.

@@ -26,6 +26,11 @@ export interface ApiDocsConfig {
   externalApis?: readonly ExternalApi[];
   output?: { dir?: string };
   reference?: { dir?: string; categories?: readonly ReferenceCategory[] };
+  /**
+   * `unwrapWrapperFunctionTypes`: show defaults like `t(() => value)` as `value` when the
+   * displayed type of the member or parameter is one of these type names.
+   */
+  defaultValues?: { unwrapWrapperFunctionTypes?: readonly string[] };
   links?: {
     sourceBase?: string | null;
     documentationUrls?: Readonly<Record<string, string>>;
@@ -40,6 +45,7 @@ export interface ResolvedApiDocsConfig {
   readonly externalApis: readonly ExternalApi[];
   readonly output: { readonly dir: string };
   readonly reference: { readonly dir: string; readonly categories: readonly ReferenceCategory[] };
+  readonly defaultValues: { readonly unwrapWrapperFunctionTypes: readonly string[] };
   readonly links: {
     readonly sourceBase: string | null;
     readonly documentationUrls: Readonly<Record<string, string>>;
@@ -80,6 +86,9 @@ export function resolveConfig(config: ApiDocsConfig, configFile?: string): Resol
     externalApis: (config.externalApis ?? []).map(api => ({ ...api, names: [...api.names] })),
     output: { dir: path.resolve(root, config.output?.dir ?? 'dist/api-docs') },
     reference: { dir: referenceDir, categories },
+    defaultValues: {
+      unwrapWrapperFunctionTypes: [...(config.defaultValues?.unwrapWrapperFunctionTypes ?? [])]
+    },
     links: {
       sourceBase: sourceBase && !sourceBase.endsWith('/') ? `${sourceBase}/` : sourceBase,
       documentationUrls: { ...config.links?.documentationUrls },

@@ -1,0 +1,10 @@
+@angular/core types/_chrome-chunk.d.ts -> https://angular.dev/api/core/X
+@angular/common types/_chunk.d.ts @angular/common/http -> https://angular.dev/api/common/http/X
+@angular/core types/core.d.ts @siemens/element-ng -> https://angular.dev/api/core/X
+@angular/core ../.pnpm/a@1/node_modules/x.d.ts -> https://angular.dev/api/core/X
+@angular/core types\core.d.ts -> https://angular.dev/api/core/X
+@angular/cdk types/_a11y-module-chunk.d.ts -> https://material.angular.dev/cdk/a11y/api#X
+@angular/cdk types/_portal-chunk.d.ts @angular/cdk/portal -> https://material.angular.dev/cdk/portal/api#X
+@angular/cdk types/_portal-chunk.d.ts -> undefined
+@angular/material button/index.d.ts -> https://material.angular.dev/components/button/api#X
+rxjs dist/types/internal/X.d.ts -> https://rxjs.dev/api/index/class/X

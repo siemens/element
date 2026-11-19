@@ -1,0 +1,31 @@
+import { Mod
+import { Bin
+import { Sem
+import type 
+
+
+declaration: class ModalRef
+## constructors "Constructor"
+  constructor  #@test/library#ModalRef/member/constructor
+## propertys "Properties"
+  shown: string  #@test/library#ModalRef/member/shown
+## accessors "Accessors"
+  active: string  #@test/library#ModalRef/member/active
+  size: string [readonly]  #@test/library#ModalRef/member/size
+
+declaration: component Bindings
+## inputs "Input Properties"
+  g: string  #@test/library#Bindings/member/getter
+  query: Model<string> [protected]  #@test/library#Bindings/member/query
+  value: Model<string> [required]  #@test/library#Bindings/member/value
+## outputs "Output Properties"
+  queryChange: Model<string> [protected]  #@test/library#Bindings/member/query
+  valueChange: Model<string> [required]  #@test/library#Bindings/member/value
+## members "Attributes and Methods"
+  plain: string [readonly]  #@test/library#Bindings/member/plain
+
+declaration: undecorated_class Semantic
+## inputs "Input Properties"
+  in: string  #@test/library#Semantic/member/value
+## outputs "Output Properties"
+  inChange: string  #@test/library#Semantic/member/value

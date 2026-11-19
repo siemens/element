@@ -9,8 +9,8 @@
   "jsdocTags": [],
   "source": {
     "filePath": "library/secondary/metadata.ts",
-    "startLine": 93,
-    "endLine": 93
+    "startLine": 130,
+    "endLine": 130
   },
   "members": [
     {
@@ -26,8 +26,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 93,
-        "endLine": 93
+        "startLine": 130,
+        "endLine": 130
       },
       "signatures": [
         {
@@ -38,8 +38,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 93,
-            "endLine": 93
+            "startLine": 130,
+            "endLine": 130
           }
         }
       ],
@@ -58,8 +58,8 @@
       "id": "@fixture/library/secondary#PretendService",
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 93,
-        "endLine": 93
+        "startLine": 130,
+        "endLine": 130
       },
       "type": "PretendService"
     }
@@ -80,8 +80,8 @@
       "inherited": false,
       "source": {
         "filePath": "library/secondary/metadata.ts",
-        "startLine": 93,
-        "endLine": 93
+        "startLine": 130,
+        "endLine": 130
       },
       "signatures": [
         {
@@ -92,8 +92,8 @@
           "jsdocTags": [],
           "source": {
             "filePath": "library/secondary/metadata.ts",
-            "startLine": 93,
-            "endLine": 93
+            "startLine": 130,
+            "endLine": 130
           }
         }
       ],

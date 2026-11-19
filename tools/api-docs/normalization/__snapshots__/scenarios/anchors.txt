@@ -1,0 +1,12 @@
+@test/library#Owner → Owner
+@test/library#Owner/member/value → Owner.value
+@test/library#Owner/member/scheme%24 → Owner.scheme~
+@test/library#Owner/member/quoted → Owner.quoted
+@test/library#Owner/member/static/value → Owner.value--2
+@test/library#Owner/member/run → Owner.run
+@test/library#Owner/member/run/signature/0 → Owner.run.signature-1
+@test/library#Owner/member/run/signature/0/parameter/0/a → Owner.run.signature-1.a
+@test/library#Owner/member/run/signature/1 → Owner.run.signature-2
+@test/library#Owner/member/run/signature/1/parameter/0/a → Owner.run.signature-2.a
+@test/library#constructor → constructor
+@test/library#__proto__ → __proto__

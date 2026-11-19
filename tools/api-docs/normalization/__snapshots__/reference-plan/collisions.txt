@@ -1,0 +1,17 @@
+{
+  "outline": [
+    "components/index.md G: Gizmo (modern),Gizmo (legacy) / M: Merged",
+    "types/index.md F: Facets / M: Merged / W: Widget (primary),Widget (formly)",
+    "root ./fixture/library/index.md: ## Fixture packages
+
+See [the library](https://github.com/siemens/element/blob/main/library/README.md) and [the dependency](https://github.com/siemens/element/blob/main/dependency/).",
+  ],
+  "paths": {
+    "@fixture/library#Facets": "api/fixture/library/types/Facets.md",
+    "@fixture/library#Merged": "api/fixture/library/types/Merged.md",
+    "@fixture/library#Widget": "api/fixture/library/types/Widget.md",
+    "@fixture/library/formly#Widget": "api/fixture/library/types/_entrypoints/formly/Widget.md",
+    "@fixture/library/legacy#Gizmo": "api/fixture/library/components/Gizmo.md",
+    "@fixture/library/modern#Gizmo": "api/fixture/library/components/_entrypoints/modern/Gizmo.md",
+  },
+}
