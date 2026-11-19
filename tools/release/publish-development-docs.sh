@@ -26,5 +26,5 @@ aws s3 ls "s3://${VERSIONED_BUCKET_NAME}/" | grep "PRE v" | awk '{print $2}' | s
 node tools/release/generate-versions.js "false" "" "$LATEST_VERSION"
 
 # Publish the development documentation and the updated versions.json.
-aws s3 sync --quiet --no-progress --delete "pages/" "s3://${VERSIONED_BUCKET_NAME}/development/"
-aws s3 cp versions.json "s3://${VERSIONED_BUCKET_NAME}/versions.json"
+bash "$(dirname "$0")/sync-docs.sh" "pages/" "s3://${VERSIONED_BUCKET_NAME}/development/"
+aws s3 cp --cache-control "no-cache" versions.json "s3://${VERSIONED_BUCKET_NAME}/versions.json"
