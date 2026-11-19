@@ -138,6 +138,7 @@ nav:
       - Progress bar:                     'components/progress-indication/progress-bar.md'
       - Result details list:              'components/progress-indication/result-details-list.md'
       - Skeleton:                         'components/progress-indication/skeleton.md'
+      - Message loader:                   'components/progress-indication/message-loader.md'
       - Spinner:                          'components/progress-indication/spinner.md'
     - Search, filter & sort:
       - Overview:                         'components/sorting-filtering/index.md'
