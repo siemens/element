@@ -7,13 +7,12 @@ import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModalRef } from '@siemens/element-ng/modal';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
 import { firstValueFrom, NEVER } from 'rxjs';
-import { page } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
 import { createTestingWidget, TestingModule } from '../../../test/testing.module';
@@ -53,8 +52,6 @@ describe('SiWidgetCatalogComponent', () => {
     fixture = TestBed.createComponent(SiWidgetCatalogComponent);
     component = fixture.componentInstance;
   });
-
-  afterEach(() => vi.useRealTimers());
 
   it('should create', () => {
     fixture.detectChanges();
@@ -197,85 +194,69 @@ describe('SiWidgetCatalogComponent', () => {
         fixture.detectChanges();
       });
 
-      it('with undefined should not filter visible widgets', () => {
-        fixture.debugElement
-          .query(By.css('si-search-bar'))
-          .triggerEventHandler('searchChange', 'some');
-        fixture.detectChanges();
+      it('with cleared input should not filter visible widgets', async () => {
+        await fixture.whenStable();
+        await userEvent.fill(page.getByRole('textbox'), 'some');
+        await fixture.whenStable();
 
-        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(0);
+        await expect
+          .poll(() => fixture.nativeElement.querySelectorAll('.list-item'))
+          .toHaveLength(0);
 
-        fixture.debugElement
-          .query(By.css('si-search-bar'))
-          .triggerEventHandler('searchChange', undefined);
-        fixture.detectChanges();
-        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(3);
+        await userEvent.fill(page.getByRole('textbox'), '');
+        await fixture.whenStable();
+        await expect
+          .poll(() => fixture.nativeElement.querySelectorAll('.list-item'))
+          .toHaveLength(3);
       });
 
-      it('with case-insensitive matching string should filter visible widgets', () => {
-        fixture.debugElement
-          .query(By.css('si-search-bar'))
-          .triggerEventHandler('searchChange', 'WEI');
-        fixture.detectChanges();
+      it('with case-insensitive matching string should filter visible widgets', async () => {
+        await fixture.whenStable();
+        await userEvent.fill(page.getByRole('textbox'), 'WEI');
+        await fixture.whenStable();
 
-        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(1);
+        await expect
+          .poll(() => fixture.nativeElement.querySelectorAll('.list-item'))
+          .toHaveLength(1);
+        expect(fixture.nativeElement.querySelector('.list-item')).toHaveTextContent('zwei');
       });
 
-      it('with empty string should not filter visible widgets', () => {
-        fixture.debugElement
-          .query(By.css('si-search-bar'))
-          .triggerEventHandler('searchChange', 'some');
-        fixture.detectChanges();
-        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(0);
+      it('with whitespace-only string should not filter visible widgets', async () => {
+        await fixture.whenStable();
+        await userEvent.fill(page.getByRole('textbox'), 'some');
+        await fixture.whenStable();
+        await expect
+          .poll(() => fixture.nativeElement.querySelectorAll('.list-item'))
+          .toHaveLength(0);
 
-        fixture.debugElement
-          .query(By.css('si-search-bar'))
-          .triggerEventHandler('searchChange', '   ');
-        fixture.detectChanges();
-        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(3);
+        await userEvent.fill(page.getByRole('textbox'), '   ');
+        await fixture.whenStable();
+        await expect
+          .poll(() => fixture.nativeElement.querySelectorAll('.list-item'))
+          .toHaveLength(3);
+        await expect.element(page.getByRole('textbox')).toHaveValue('');
       });
 
       it('shall keep the search term and result after clicking `Next` to widget editor and `Previous` to catalog', async () => {
+        await fixture.whenStable();
         expect(buttonsByName('Next')).toHaveLength(0);
 
-        vi.useFakeTimers();
-        let searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
-        searchInput.value = 'zwei';
-        searchInput.dispatchEvent(new Event('input'));
-        fixture.detectChanges();
-
-        const searchBarEl = fixture.debugElement.query(By.css('si-search-bar'));
-        const searchBarComponent = searchBarEl.componentInstance as SiSearchBarComponent;
-        const debounceTime = searchBarComponent.debounceTime();
-        await vi.advanceTimersByTimeAsync(debounceTime);
-        fixture.detectChanges();
-        vi.useRealTimers();
+        const searchInput = page.getByRole('textbox');
+        await userEvent.fill(searchInput, 'zwei');
+        await fixture.whenStable();
+        await expect
+          .poll(() => fixture.nativeElement.querySelectorAll('.list-item'))
+          .toHaveLength(1);
 
         expect(buttonsByName('Next')).toHaveLength(1);
-        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(1);
 
-        const nextButton = buttonsByName('Next')[0].nativeElement;
-        expect(nextButton.innerHTML).toBe('Next');
+        await userEvent.click(page.getByRole('button', { name: 'Next', exact: true }));
+        await fixture.whenStable();
+        await expect.element(searchInput).not.toBeInTheDocument();
 
-        // Navigate to next page that shows the editor of the widget and not the widget catalog.
-        // Test by verifying the search input is gone.
-        nextButton.click();
-        fixture.detectChanges();
-        searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
-        expect(searchInput).toBeNull();
-
-        // Navigate back to the widget catalog.
-        const previousButton = fixture.nativeElement.querySelectorAll(
-          'button'
-        )[1] as HTMLButtonElement;
-        expect(previousButton.innerHTML).toBe('Previous');
-        previousButton.click();
-        fixture.detectChanges();
-
-        // Verify that the search input is back and includes the value `zwei`
-        searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
-        expect(searchInput).not.toBeNull();
-        expect(searchInput.value).toBe('zwei');
+        await userEvent.click(page.getByRole('button', { name: 'Previous', exact: true }));
+        await fixture.whenStable();
+        await expect.element(searchInput).toHaveValue('zwei');
         expect(buttonsByName('Next')).toHaveLength(1);
         expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(1);
       });
@@ -434,7 +415,7 @@ describe('SiWidgetCatalogComponent', () => {
         ).toHaveTextContent('Translated Widget Description');
       });
 
-      it(`should filter widgets by translated name (${mode})`, () => {
+      it(`should filter widgets by translated name (${mode})`, async () => {
         setWidgets(
           [
             {
@@ -445,16 +426,16 @@ describe('SiWidgetCatalogComponent', () => {
           ],
           mode
         );
-        fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(2);
 
-        fixture.debugElement
-          .query(By.css('si-search-bar'))
-          .triggerEventHandler('searchChange', 'Translated');
-        fixture.detectChanges();
+        await userEvent.fill(page.getByRole('textbox'), 'Translated');
+        await fixture.whenStable();
 
-        expect(fixture.debugElement.queryAll(By.css('.list-item'))).toHaveLength(1);
+        await expect
+          .poll(() => fixture.nativeElement.querySelectorAll('.list-item'))
+          .toHaveLength(1);
         expect(
           fixture.debugElement.query(By.css('.list-item .list-item-title')).nativeElement
         ).toHaveTextContent('Translated Widget Name');

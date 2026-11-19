@@ -6,6 +6,7 @@
 
 import * as _angular_cdk_overlay from '@angular/cdk/overlay';
 import * as _angular_core from '@angular/core';
+import * as _angular_forms_signals from '@angular/forms/signals';
 import { OnChanges } from '@angular/core';
 import { PipeTransform } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';

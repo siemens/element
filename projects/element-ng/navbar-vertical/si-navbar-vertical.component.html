@@ -28,15 +28,15 @@
     </div>
     @if (searchable()) {
       <div class="nav-search">
-        <si-search-bar
-          class="mx-4"
-          colorVariant="base-0"
-          prohibitedCharacters="*?"
-          [placeholder]="searchPlaceholder() | translate"
-          [debounceTime]="searchDebounceTime()"
-          [showIcon]="true"
-          (searchChange)="doSearch($event)"
-        />
+        <si-search-bar class="mx-4" colorVariant="base-0" [showIcon]="true">
+          <input
+            #searchInput
+            siSearchBarInput
+            [formField]="searchField"
+            [placeholder]="searchPlaceholder() | translate"
+            [attr.aria-label]="searchPlaceholder() | translate"
+          />
+        </si-search-bar>
         <button
           type="button"
           class="btn-search background-0 px-3 mx-4 mobile navbar-vertical-no-collapse text-secondary"

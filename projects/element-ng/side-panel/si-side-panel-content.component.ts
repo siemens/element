@@ -15,9 +15,11 @@ import {
   input,
   OnInit,
   output,
-  signal
+  signal,
+  untracked
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { debounce, form, FormField, pattern } from '@angular/forms/signals';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   elementCancel,
@@ -37,7 +39,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiTooltipDirective, SiTooltipOverflowDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { timer } from 'rxjs';
@@ -79,6 +81,8 @@ export interface StatusItem extends MenuItemLegacy {
     SiIconComponent,
     RouterLink,
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
+    FormField,
     SiTranslatePipe,
     SiTooltipDirective,
     SiTooltipOverflowDirective,
@@ -247,6 +251,11 @@ export class SiSidePanelContentComponent implements OnInit {
    */
   readonly searchEvent = output<string>();
 
+  protected readonly searchTerm = signal('');
+  protected readonly searchField = form(this.searchTerm, path => {
+    debounce(path, 400);
+    pattern(path, /^[^*?]*$/);
+  });
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   protected readonly service = inject(SiSidePanelService);
   protected readonly isCollapsed = signal(false);
@@ -316,6 +325,22 @@ export class SiSidePanelContentComponent implements OnInit {
     });
 
     accordionHcollapse.open$.pipe(takeUntilDestroyed()).subscribe(() => this.service.open());
+
+    effect(() => {
+      if (!this.searchable() || !this.focusable()) {
+        untracked(() => this.searchField().reset(''));
+      }
+    });
+
+    effect(() => {
+      const searchTerm = this.searchTerm();
+      untracked(() => {
+        const field = this.searchField();
+        if (this.searchable() && this.focusable() && field.dirty() && field.valid()) {
+          this.searchEvent.emit(searchTerm);
+        }
+      });
+    });
   }
 
   ngOnInit(): void {

@@ -7,6 +7,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
+import * as _angular_forms_signals from '@angular/forms/signals';
 import { ElementRef } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';

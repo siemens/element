@@ -6,6 +6,7 @@
 
 import { AccentLineType } from '@siemens/element-ng/common';
 import * as _angular_core from '@angular/core';
+import * as _angular_forms_signals from '@angular/forms/signals';
 import { BehaviorSubject } from 'rxjs';
 import { ComponentRef } from '@angular/core';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';

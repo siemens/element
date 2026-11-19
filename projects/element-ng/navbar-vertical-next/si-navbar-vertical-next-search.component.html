@@ -1,12 +1,12 @@
-<si-search-bar
-  class="mx-4"
-  colorVariant="base-0"
-  prohibitedCharacters="*?"
-  [placeholder]="placeholder() | translate"
-  [debounceTime]="debounceTime()"
-  [showIcon]="true"
-  (searchChange)="searchChange.emit($event)"
-/>
+<si-search-bar class="mx-4" colorVariant="base-0" [showIcon]="true">
+  <input
+    #searchInput
+    siSearchBarInput
+    [formField]="searchField"
+    [placeholder]="placeholder() | translate"
+    [attr.aria-label]="placeholder() | translate"
+  />
+</si-search-bar>
 <button
   type="button"
   class="btn-search background-0 px-3 mx-4 mobile text-secondary"

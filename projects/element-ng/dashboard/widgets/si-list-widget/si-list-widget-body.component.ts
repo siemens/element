@@ -12,9 +12,9 @@ import {
   OnChanges
 } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { FormsModule } from '@angular/forms';
+import { debounce, form, FormField } from '@angular/forms/signals';
 import { Link } from '@siemens/element-ng/link';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
@@ -35,7 +35,13 @@ export type SortOrder = 'ASC' | 'DSC';
  */
 @Component({
   selector: 'si-list-widget-body',
-  imports: [SiListWidgetItemComponent, SiSearchBarComponent, SiTranslatePipe, FormsModule],
+  imports: [
+    SiListWidgetItemComponent,
+    SiSearchBarComponent,
+    SiSearchBarInputDirective,
+    FormField,
+    SiTranslatePipe
+  ],
   templateUrl: './si-list-widget-body.component.html',
   styleUrl: './si-list-widget-body.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -203,4 +209,5 @@ export class SiListWidgetBodyComponent
    * @defaultValue ''
    */
   protected readonly searchText = model('');
+  protected readonly searchField = form(this.searchText, path => debounce(path, 400));
 }
