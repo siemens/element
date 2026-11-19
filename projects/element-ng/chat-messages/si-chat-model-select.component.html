@@ -1,0 +1,183 @@
+<button
+  type="button"
+  class="model-trigger btn btn-tertiary-ghost fw-normal"
+  [class.btn-icon]="isCompact()"
+  [disabled]="disabled()"
+  [cdkMenuTriggerFor]="modelMenu"
+  [attr.aria-label]="label() | translate: { model: selectedLabel() | translate }"
+  [siTooltip]="isCompact() ? (label() | translate: { model: selectedLabel() | translate }) : ''"
+>
+  @if (isCompact()) {
+    <si-icon [icon]="icons.elementOptions" />
+  } @else {
+    <span class="model-name text-truncate">{{ selectedLabel() | translate }}</span>
+    <si-icon [icon]="icons.elementDown2" />
+  }
+</button>
+
+<ng-template #modelMenu>
+  <si-menu class="model-dropdown">
+    <div cdkMenuGroup>
+      @for (item of options(); track item) {
+        @if (item.type === 'group' && item.label) {
+          <si-menu-header>{{ item.label | translate }}</si-menu-header>
+        }
+        @for (option of item.type === 'group' ? item.options : [item]; track option.value) {
+          <si-menu-item-radio
+            [attr.data-id]="option.value"
+            [disabled]="option.disabled"
+            [checked]="option.value === value()"
+            (triggered)="value.set(option.value)"
+          >
+            <span class="model-option d-flex flex-column gap-2">
+              <span>{{ option.label ?? option.value | translate }}</span>
+              @if (option.description) {
+                <span class="item-description si-body-sm text-secondary">{{
+                  option.description | translate
+                }}</span>
+              }
+            </span>
+          </si-menu-item-radio>
+        }
+      }
+    </div>
+    @if (footerActions().length) {
+      <si-menu-divider />
+      @for (item of footerActions(); track $index) {
+        @switch (item.type) {
+          @case ('group') {
+            <si-menu-item
+              [attr.data-id]="item.id"
+              [disabled]="item.disabled"
+              [icon]="item.icon"
+              [iconBadgeDot]="item.iconBadge"
+              [badge]="item.badge"
+              [badgeColor]="item.badgeColor ?? 'secondary'"
+              [cdkMenuTriggerFor]="submenu"
+              >{{ item.label | translate }}</si-menu-item
+            >
+            <ng-template #submenu>
+              <si-menu-factory [items]="item.children" />
+            </ng-template>
+          }
+          @case ('action') {
+            <si-menu-item
+              [attr.data-id]="item.id"
+              [disabled]="item.disabled"
+              [icon]="item.icon"
+              [iconBadgeDot]="item.iconBadge"
+              [badge]="item.badge"
+              [badgeColor]="item.badgeColor ?? 'secondary'"
+              (triggered)="runAction(item)"
+              >{{ item.label | translate }}</si-menu-item
+            >
+          }
+          @case ('link') {
+            <a
+              si-menu-item
+              [attr.data-id]="item.id"
+              [disabled]="item.disabled"
+              [icon]="item.icon"
+              [iconBadgeDot]="item.iconBadge"
+              [badge]="item.badge"
+              [badgeColor]="item.badgeColor ?? 'secondary'"
+              [href]="item.href"
+              [target]="item.target"
+              >{{ item.label | translate }}</a
+            >
+          }
+          @case ('router-link') {
+            <a
+              si-menu-item
+              [attr.data-id]="item.id"
+              [disabled]="item.disabled"
+              [icon]="item.icon"
+              [iconBadgeDot]="item.iconBadge"
+              [badge]="item.badge"
+              [badgeColor]="item.badgeColor ?? 'secondary'"
+              [routerLink]="item.routerLink"
+              [queryParams]="item.extras?.queryParams"
+              [queryParamsHandling]="item.extras?.queryParamsHandling"
+              [fragment]="item.extras?.fragment"
+              [state]="item.extras?.state"
+              [relativeTo]="item.extras?.relativeTo"
+              [preserveFragment]="item.extras?.preserveFragment"
+              [skipLocationChange]="item.extras?.skipLocationChange"
+              [replaceUrl]="item.extras?.replaceUrl"
+              >{{ item.label | translate }}</a
+            >
+          }
+          @case ('radio') {
+            <si-menu-item-radio
+              [attr.data-id]="item.id"
+              [disabled]="item.disabled"
+              [icon]="item.icon"
+              [iconBadgeDot]="item.iconBadge"
+              [badge]="item.badge"
+              [badgeColor]="item.badgeColor ?? 'secondary'"
+              [checked]="item.checked"
+              (triggered)="runAction(item)"
+              >{{ item.label | translate }}</si-menu-item-radio
+            >
+          }
+          @case ('checkbox') {
+            <si-menu-item-checkbox
+              [attr.data-id]="item.id"
+              [disabled]="item.disabled"
+              [icon]="item.icon"
+              [iconBadgeDot]="item.iconBadge"
+              [badge]="item.badge"
+              [badgeColor]="item.badgeColor ?? 'secondary'"
+              [checked]="item.checked"
+              (triggered)="runAction(item)"
+              >{{ item.label | translate }}</si-menu-item-checkbox
+            >
+          }
+          @case ('radio-group') {
+            <div cdkMenuGroup>
+              @for (child of item.children; track child) {
+                @switch (child.type) {
+                  @case ('radio') {
+                    <si-menu-item-radio
+                      [attr.data-id]="child.id"
+                      [disabled]="child.disabled"
+                      [icon]="child.icon"
+                      [iconBadgeDot]="child.iconBadge"
+                      [badge]="child.badge"
+                      [badgeColor]="child.badgeColor ?? 'secondary'"
+                      [checked]="child.checked"
+                      (triggered)="runAction(child)"
+                      >{{ child.label | translate }}</si-menu-item-radio
+                    >
+                  }
+                  @case ('header') {
+                    <si-menu-header>{{ child.label | translate }}</si-menu-header>
+                  }
+                  @case ('divider') {
+                    <si-menu-divider />
+                  }
+                }
+              }
+            </div>
+          }
+          @case ('header') {
+            <si-menu-header>{{ item.label | translate }}</si-menu-header>
+          }
+          @case ('divider') {
+            <si-menu-divider />
+          }
+        }
+      }
+    }
+  </si-menu>
+</ng-template>
+
+<div
+  class="model-trigger model-trigger-sizer btn btn-tertiary-ghost fw-normal"
+  inert
+  aria-hidden="true"
+  (siResizeObserver)="triggerWidth.set($event.width)"
+>
+  <span class="model-name">{{ selectedLabel() | translate }}</span>
+  <si-icon [icon]="icons.elementDown2" />
+</div>
