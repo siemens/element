@@ -30,6 +30,11 @@ const MAX_LINE_LENGTH = 100;
 
 export interface MigrateSearchBarOptions {
   path?: string;
+  /**
+   * Only migrates search bars that use `siTypeahead` and reports other elements than inputs
+   * that use it, as the typeahead only supports `<input>` elements.
+   */
+  typeaheadOnly?: boolean;
 }
 
 interface ComponentPlan {
@@ -102,7 +107,8 @@ export const migrateSearchBar = (options: MigrateSearchBarOptions): Rule => {
             component: createComponentContext(component, file, false),
             quote: ts.isStringLiteral(template.node)
               ? (sourceFile.text[start - 1] as '"' | "'")
-              : undefined
+              : undefined,
+            typeaheadOnly: options.typeaheadOnly
           });
           migrated += result.migrated;
           skipped += result.skipped;
@@ -119,7 +125,8 @@ export const migrateSearchBar = (options: MigrateSearchBarOptions): Rule => {
               template: content,
               location: offset => formatLocation(templatePath, content, offset),
               warn,
-              component: createComponentContext(component, file, shared)
+              component: createComponentContext(component, file, shared),
+              typeaheadOnly: options.typeaheadOnly
             });
             processedTemplates.set(templatePath, result);
             migrated += result.migrated;
@@ -144,14 +151,15 @@ export const migrateSearchBar = (options: MigrateSearchBarOptions): Rule => {
     }
 
     if (migrated || skipped) {
+      const searchBars = options.typeaheadOnly ? 'search bar(s) with a typeahead' : 'search bar(s)';
       context.logger.info(
-        `Migrated ${migrated} search bar(s) to a projected input.${
+        `Migrated ${migrated} ${searchBars} to a projected input.${
           skipped
-            ? ` ${skipped} search bar(s) need a manual migration, see the warnings above.`
+            ? ` ${skipped} ${searchBars} need a manual migration, see the warnings above.`
             : ''
         }`
       );
-    } else {
+    } else if (!options.typeaheadOnly) {
       context.logger.info('No search bars with deprecated inputs or outputs were found.');
     }
     return tree;

@@ -29,7 +29,9 @@ where users need to input text and select options from a list.
 
 ## Code ---
 
-The typeahead is used as a directive, so you can add it to any HTML input element.
+The typeahead is a directive that you apply to an HTML `<input>` element.
+Other elements are not supported. With the [search bar](../sorting-filtering/search-bar.md),
+apply it to the projected `<input siSearchBarInput>`.
 
 ### Usage
 
