@@ -304,11 +304,13 @@ export type WebComponent = CommonFactoryFields & {
 
 // @public
 export interface Widget {
+    badge?: TranslatableString;
     componentFactory: WidgetComponentFactory;
     defaults?: Pick<WidgetConfig, 'width' | 'height' | 'minWidth' | 'minHeight' | 'heading' | 'headingIcon' | 'expandable' | 'immutable' | 'image' | 'accentLine'>;
     description?: TranslatableString;
     iconClass?: string;
     id: string;
+    maxInstances?: number;
     name: TranslatableString;
     payload?: any;
     version?: string;

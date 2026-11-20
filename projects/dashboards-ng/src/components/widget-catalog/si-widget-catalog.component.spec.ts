@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement } from '@angular/core';
+import { DebugElement, outputBinding } from '@angular/core';
 import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -12,12 +12,13 @@ import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
-import { firstValueFrom, NEVER } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, NEVER } from 'rxjs';
 import { page } from 'vitest/browser';
 
 import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
 import { createTestingWidget, TestingModule } from '../../../test/testing.module';
 import { Widget, WidgetConfig } from '../../model/widgets.model';
+import { SiFlexibleDashboardComponent } from '../flexible-dashboard/si-flexible-dashboard.component';
 import { SiWidgetCatalogComponent } from './si-widget-catalog.component';
 
 type WidgetSetterMode = 'deprecated' | 'signal';
@@ -25,6 +26,14 @@ type WidgetSetterMode = 'deprecated' | 'signal';
 describe('SiWidgetCatalogComponent', () => {
   let component: SiWidgetCatalogComponent;
   let fixture: ComponentFixture<SiWidgetCatalogComponent>;
+  let widgetInstances$: BehaviorSubject<WidgetConfig[]>;
+
+  const dashboardProvider = {
+    provide: SiFlexibleDashboardComponent,
+    useValue: {
+      grid: () => ({ visibleWidgetInstances$: widgetInstances$ })
+    }
+  };
 
   const buttonsByName = (label: string): DebugElement[] => {
     return fixture.debugElement
@@ -43,9 +52,10 @@ describe('SiWidgetCatalogComponent', () => {
   };
 
   beforeEach(async () => {
+    widgetInstances$ = new BehaviorSubject<WidgetConfig[]>([]);
     await TestBed.configureTestingModule({
       imports: [TestingModule, SiWidgetCatalogComponent],
-      providers: [{ provide: ModalRef, useValue: new ModalRef() }]
+      providers: [{ provide: ModalRef, useValue: new ModalRef() }, dashboardProvider]
     }).compileComponents();
   });
 
@@ -63,6 +73,362 @@ describe('SiWidgetCatalogComponent', () => {
     const addButtons = buttonsByName('Add');
     expect(addButtons).toHaveLength(1);
     expect(addButtons[0].attributes.disabled).toBeDefined();
+  });
+
+  it('should render widget options in a scrollable card with divider rows', () => {
+    component.widgetList.set([
+      createTestingWidget('First widget', 'first'),
+      createTestingWidget('Second widget', 'second')
+    ]);
+    fixture.detectChanges();
+
+    const listbox = fixture.debugElement.query(By.css('[role="listbox"]'))
+      .nativeElement as HTMLElement;
+    expect(listbox).toHaveClass('list', 'list-divider');
+    expect(listbox.parentElement).toHaveClass('card', 'overflow-auto');
+    expect(listbox.querySelectorAll('.list-item')).toHaveLength(2);
+  });
+
+  describe('Instance limits', () => {
+    const enabledWidget = createTestingWidget('Enabled widget', 'enabled');
+    const disabledWidget: Widget = {
+      ...createTestingWidget('Disabled widget', 'disabled'),
+      maxInstances: 0,
+      badge: 'Requires license'
+    };
+    const limitedWidget: Widget = {
+      ...createTestingWidget('Limited widget', 'limited'),
+      maxInstances: 1
+    };
+    const options = (): HTMLElement[] =>
+      fixture.debugElement
+        .queryAll(By.css('[role="option"]'))
+        .map(option => option.nativeElement as HTMLElement);
+
+    it('should keep a consumer-disabled widget visible without selecting it', async () => {
+      component.widgetList.set([disabledWidget, enabledWidget]);
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const [disabledOption, enabledOption] = options();
+      expect(disabledOption).toHaveAttribute('aria-disabled', 'true');
+      expect(disabledOption).toHaveAttribute('aria-selected', 'false');
+      expect(disabledOption.querySelector('si-icon')).toHaveClass('text-disabled');
+      expect(enabledOption.querySelector('si-icon')).not.toHaveClass('text-disabled');
+      expect(disabledOption.querySelector('si-badge')).toHaveTextContent('Requires license');
+      expect(disabledOption.querySelector('si-badge')).toHaveClass('bg-info');
+      expect(enabledOption).toHaveAttribute('aria-selected', 'true');
+
+      disabledOption.click();
+      await fixture.whenStable();
+
+      expect(disabledOption).not.toHaveClass('active');
+      expect(enabledOption).toHaveAttribute('aria-selected', 'true');
+    });
+
+    it('should leave a zero-limit widget unchecked even if it is already on the dashboard', () => {
+      component.widgetList.set([disabledWidget]);
+      fixture.componentRef.setInput('multiSelect', true);
+      widgetInstances$.next([{ id: 'disabled-instance', widgetId: disabledWidget.id }]);
+      fixture.detectChanges();
+
+      const [option] = options();
+      expect(option.querySelector('input')).toBeDisabled();
+      expect(option.querySelector('input')).not.toBeChecked();
+      expect(option.querySelector('si-badge')).toHaveTextContent('Requires license');
+    });
+
+    it.each([
+      { maxInstances: 1, instanceCount: 0, added: false },
+      { maxInstances: 1, instanceCount: 1, added: true },
+      { maxInstances: 1, instanceCount: 2, added: true },
+      { maxInstances: 2, instanceCount: 1, added: false },
+      { maxInstances: 2, instanceCount: 2, added: true }
+    ])(
+      'should show added=$added with $instanceCount instances and a limit of $maxInstances',
+      ({ maxInstances, instanceCount, added }) => {
+        component.widgetList.set([{ ...limitedWidget, maxInstances }]);
+        fixture.componentRef.setInput('multiSelect', true);
+        widgetInstances$.next(
+          Array.from({ length: instanceCount }, (_, index) => ({
+            id: `instance-${index}`,
+            widgetId: limitedWidget.id
+          }))
+        );
+        fixture.detectChanges();
+
+        const [option] = options();
+        expect(option).toHaveAttribute('aria-disabled', String(added));
+        expect(option).toHaveAttribute('aria-selected', 'false');
+        expect(option).not.toHaveClass('active');
+        expect(option.querySelector('input')).toMatchObject({
+          checked: false,
+          disabled: added
+        });
+        expect(option.querySelectorAll('si-badge')).toHaveLength(added ? 1 : 0);
+        expect(option.querySelectorAll('si-badge.bg-default')).toHaveLength(added ? 1 : 0);
+        const stateLabel =
+          option.querySelector('si-badge') ?? option.querySelector('.list-item-title');
+        expect(stateLabel).toHaveTextContent(added ? 'Added' : 'Limited widget');
+      }
+    );
+
+    it('should show the added badge instead of a consumer badge at the limit', () => {
+      component.widgetList.set([{ ...limitedWidget, badge: 'Consumer badge' }]);
+      widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+      fixture.detectChanges();
+
+      const badge = options()[0].querySelector('si-badge');
+      expect(badge).toHaveTextContent('Added');
+      expect(badge).not.toHaveTextContent('Consumer badge');
+      expect(badge).toHaveClass('bg-default');
+    });
+
+    it('should allow unlimited widgets with an info badge despite existing instances', () => {
+      component.widgetList.set([{ ...enabledWidget, badge: 'Consumer badge' }]);
+      widgetInstances$.next([
+        { id: 'first-instance', widgetId: enabledWidget.id },
+        { id: 'second-instance', widgetId: enabledWidget.id }
+      ]);
+      fixture.detectChanges();
+
+      const [option] = options();
+      expect(option).toHaveAttribute('aria-disabled', 'false');
+      expect(option).toHaveAttribute('aria-selected', 'true');
+      expect(option.querySelector('si-badge')).toHaveTextContent('Consumer badge');
+      expect(option.querySelector('si-badge')).toHaveClass('bg-info');
+    });
+
+    it('should count instances by widgetId rather than instance id', () => {
+      component.widgetList.set([limitedWidget]);
+      widgetInstances$.next([{ id: limitedWidget.id, widgetId: 'another-widget' }]);
+      fixture.detectChanges();
+
+      expect(options()[0]).toHaveAttribute('aria-disabled', 'false');
+      expect(options()[0]).toHaveAttribute('aria-selected', 'true');
+    });
+
+    it('should initially select the first enabled widget after an added widget', () => {
+      component.widgetList.set([limitedWidget, enabledWidget]);
+      widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+      fixture.detectChanges();
+
+      const [addedOption, enabledOption] = options();
+      expect(addedOption).toHaveAttribute('aria-selected', 'false');
+      expect(enabledOption).toHaveAttribute('aria-selected', 'true');
+    });
+
+    it('should disable Add when only disabled and added widgets exist', () => {
+      component.widgetList.set([disabledWidget, limitedWidget]);
+      widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+      fixture.detectChanges();
+
+      expect(options()).toHaveLength(2);
+      for (const option of options()) {
+        expect(option).toHaveAttribute('aria-selected', 'false');
+        expect(option).not.toHaveClass('active');
+      }
+      expect(buttonsByName('Add')[0].nativeElement).toBeDisabled();
+    });
+
+    it('should select the first enabled widget after filtering', async () => {
+      component.widgetList.set([
+        enabledWidget,
+        { ...disabledWidget, name: 'Matching disabled widget' },
+        { ...limitedWidget, name: 'Matching enabled widget' }
+      ]);
+      fixture.detectChanges();
+
+      fixture.debugElement
+        .query(By.css('si-search-bar'))
+        .triggerEventHandler('searchChange', 'Matching');
+      await fixture.whenStable();
+
+      const [disabledOption, enabledOption] = options();
+      expect(disabledOption).toHaveAttribute('aria-selected', 'false');
+      expect(enabledOption).toHaveAttribute('aria-selected', 'true');
+    });
+
+    it('should clear selection when filtering leaves only disabled widgets', async () => {
+      component.widgetList.set([enabledWidget, disabledWidget]);
+      fixture.detectChanges();
+
+      fixture.debugElement
+        .query(By.css('si-search-bar'))
+        .triggerEventHandler('searchChange', 'Disabled');
+      await fixture.whenStable();
+
+      expect(options()).toHaveLength(1);
+      expect(options()[0]).toHaveAttribute('aria-selected', 'false');
+      expect(buttonsByName('Add')[0].nativeElement).toBeDisabled();
+    });
+
+    it('should ignore disabled options during multi-selection', async () => {
+      component.widgetList.set([disabledWidget, limitedWidget, enabledWidget]);
+      fixture.componentRef.setInput('multiSelect', true);
+      widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+      fixture.detectChanges();
+      const closed = vi.fn();
+      component.closed.subscribe(closed);
+
+      const [disabledOption, addedOption, enabledOption] = options();
+      disabledOption.click();
+      addedOption.click();
+      enabledOption.click();
+      await fixture.whenStable();
+      buttonsByName('Add')[0].nativeElement.click();
+      await fixture.whenStable();
+
+      expect(disabledOption).toHaveAttribute('aria-selected', 'false');
+      expect(addedOption).toHaveAttribute('aria-selected', 'false');
+      expect(enabledOption).toHaveAttribute('aria-selected', 'true');
+      expect(closed).toHaveBeenCalledExactlyOnceWith([
+        expect.objectContaining({ widgetId: enabledWidget.id })
+      ]);
+    });
+
+    it.each([false, true])(
+      'should clear selection at the limit without restoring it on removal with multiSelect=%s',
+      async multiSelect => {
+        component.widgetList.set([limitedWidget]);
+        fixture.componentRef.setInput('multiSelect', multiSelect);
+        fixture.detectChanges();
+        const [option] = options();
+        if (multiSelect) {
+          option.click();
+          await fixture.whenStable();
+        }
+        expect(option.querySelectorAll('input:checked')).toHaveLength(multiSelect ? 1 : 0);
+        expect(option).toHaveAttribute('aria-selected', 'true');
+        expect(buttonsByName('Add')[0].nativeElement).toBeEnabled();
+
+        widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+        await fixture.whenStable();
+
+        expect(option).toHaveAttribute('aria-disabled', 'true');
+        expect(option).toHaveAttribute('aria-selected', 'false');
+        expect(option).not.toHaveClass('active');
+        expect(option.querySelectorAll('input:checked')).toHaveLength(0);
+        expect(buttonsByName('Add')[0].nativeElement).toBeDisabled();
+
+        widgetInstances$.next([]);
+        await fixture.whenStable();
+
+        expect(option).toHaveAttribute('aria-disabled', 'false');
+        expect(option).toHaveAttribute('aria-selected', 'false');
+        expect(option).not.toHaveClass('active');
+        expect(buttonsByName('Add')[0].nativeElement).toBeDisabled();
+      }
+    );
+
+    it('should retain enabled selections when another selected widget reaches its limit', async () => {
+      component.widgetList.set([limitedWidget, enabledWidget]);
+      fixture.componentRef.setInput('multiSelect', true);
+      fixture.detectChanges();
+      const closed = vi.fn();
+      component.closed.subscribe(closed);
+      const [limitedOption, enabledOption] = options();
+      limitedOption.click();
+      await fixture.whenStable();
+      enabledOption.click();
+      await fixture.whenStable();
+      const addButton = buttonsByName('Add')[0].nativeElement as HTMLButtonElement;
+
+      widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+      addButton.click();
+      await fixture.whenStable();
+
+      expect(limitedOption).toHaveAttribute('aria-selected', 'false');
+      expect(enabledOption).toHaveAttribute('aria-selected', 'true');
+      expect(addButton).toBeEnabled();
+      expect(closed).toHaveBeenCalledExactlyOnceWith([
+        expect.objectContaining({ widgetId: enabledWidget.id })
+      ]);
+    });
+
+    it.each([false, true])(
+      'should not add a stale selection after reaching the limit with multiSelect=%s',
+      async multiSelect => {
+        component.widgetList.set([limitedWidget]);
+        fixture.componentRef.setInput('multiSelect', multiSelect);
+        fixture.detectChanges();
+        if (multiSelect) {
+          options()[0].click();
+          await fixture.whenStable();
+        }
+        const closed = vi.fn();
+        component.closed.subscribe(closed);
+        const addButton = buttonsByName('Add')[0].nativeElement as HTMLButtonElement;
+        expect(addButton).not.toBeDisabled();
+
+        widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+        addButton.click();
+        await fixture.whenStable();
+
+        expect(closed).not.toHaveBeenCalled();
+        expect(addButton).toBeDisabled();
+      }
+    );
+
+    it('should enable a limited widget when an instance is removed', async () => {
+      component.widgetList.set([limitedWidget]);
+      widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+      fixture.detectChanges();
+      expect(options()[0]).toHaveAttribute('aria-disabled', 'true');
+
+      widgetInstances$.next([]);
+      await fixture.whenStable();
+
+      expect(options()[0]).toHaveAttribute('aria-disabled', 'false');
+      expect(options()[0].querySelector('si-badge')).toBeNull();
+    });
+
+    it('should reject adding when the widget reaches its limit while its editor is open', async () => {
+      component.widgetList.set([{ ...TEST_WIDGET, maxInstances: 1 }]);
+      fixture.detectChanges();
+      buttonsByName('Next')[0].nativeElement.click();
+      await fixture.whenStable();
+      const closed = vi.fn();
+      component.closed.subscribe(closed);
+      const addButton = buttonsByName('Add')[0].nativeElement as HTMLButtonElement;
+      expect(addButton).toBeEnabled();
+
+      widgetInstances$.next([{ id: 'test-instance', widgetId: TEST_WIDGET.id }]);
+      addButton.click();
+      await fixture.whenStable();
+
+      expect(closed).not.toHaveBeenCalled();
+      expect(addButton).toBeDisabled();
+      expect(fixture.debugElement.query(By.css('si-test-widget-editor'))).not.toBeNull();
+    });
+  });
+
+  it('should detect limits and select an enabled widget with the deprecated catalog setter', async () => {
+    const limitedWidget: Widget = {
+      ...createTestingWidget('Limited widget', 'limited'),
+      maxInstances: 1
+    };
+    const enabledWidget = createTestingWidget('Enabled widget', 'enabled');
+    component.widgetCatalog = [limitedWidget, enabledWidget];
+    widgetInstances$.next([{ id: 'limited-instance', widgetId: limitedWidget.id }]);
+    fixture.detectChanges();
+    const closed = vi.fn();
+    component.closed.subscribe(closed);
+
+    const [limitedOption, enabledOption] = fixture.debugElement
+      .queryAll(By.css('[role="option"]'))
+      .map(option => option.nativeElement as HTMLElement);
+    expect(limitedOption).toHaveAttribute('aria-disabled', 'true');
+    expect(limitedOption).toHaveAttribute('aria-selected', 'false');
+    expect(limitedOption.querySelector('si-badge')).toHaveTextContent('Added');
+    expect(enabledOption).toHaveAttribute('aria-selected', 'true');
+
+    buttonsByName('Add')[0].nativeElement.click();
+    await fixture.whenStable();
+
+    expect(closed).toHaveBeenCalledExactlyOnceWith([
+      expect.objectContaining({ widgetId: enabledWidget.id })
+    ]);
   });
 
   (['deprecated', 'signal'] as const).forEach(mode => {
@@ -385,7 +751,9 @@ describe('SiWidgetCatalogComponent', () => {
   describe('Widget name and description translation', () => {
     const translations: Record<string, string> = {
       'WIDGET.NAME_KEY': 'Translated Widget Name',
-      'WIDGET.DESCRIPTION_KEY': 'Translated Widget Description'
+      'WIDGET.DESCRIPTION_KEY': 'Translated Widget Description',
+      'WIDGET.BADGE_KEY': 'Translated Widget Badge',
+      'DASHBOARD.WIDGET_LIBRARY.ADDED': 'Already added'
     };
 
     beforeEach(() => {
@@ -394,6 +762,7 @@ describe('SiWidgetCatalogComponent', () => {
         imports: [TestingModule, SiWidgetCatalogComponent],
         providers: [
           { provide: ModalRef, useValue: new ModalRef() },
+          dashboardProvider,
           provideMockTranslateServiceBuilder(
             () =>
               ({
@@ -404,20 +773,30 @@ describe('SiWidgetCatalogComponent', () => {
           )
         ]
       });
+      fixture = TestBed.createComponent(SiWidgetCatalogComponent);
+      component = fixture.componentInstance;
+    });
+
+    it('should translate the built-in added badge', () => {
+      component.widgetList.set([
+        { ...createTestingWidget('Limited widget', 'limited'), maxInstances: 1 }
+      ]);
+      widgetInstances$.next([{ id: 'limited-instance', widgetId: 'limited' }]);
+      fixture.detectChanges();
+
+      expect(fixture.debugElement.query(By.css('si-badge')).nativeElement).toHaveTextContent(
+        'Already added'
+      );
     });
 
     (['deprecated', 'signal'] as const).forEach(mode => {
-      beforeEach(() => {
-        fixture = TestBed.createComponent(SiWidgetCatalogComponent);
-        component = fixture.componentInstance;
-      });
-
-      it(`should display translated widget name and description (${mode})`, () => {
+      it(`should display translated widget name, badge and description (${mode})`, () => {
         setWidgets(
           [
             {
               ...createTestingWidget('WIDGET.NAME_KEY', 'translatable-1'),
-              description: 'WIDGET.DESCRIPTION_KEY'
+              description: 'WIDGET.DESCRIPTION_KEY',
+              badge: 'WIDGET.BADGE_KEY'
             }
           ],
           mode
@@ -432,6 +811,9 @@ describe('SiWidgetCatalogComponent', () => {
         expect(
           listItems[0].query(By.css('.list-item-description')).nativeElement
         ).toHaveTextContent('Translated Widget Description');
+        expect(listItems[0].query(By.css('si-badge')).nativeElement).toHaveTextContent(
+          'Translated Widget Badge'
+        );
       });
 
       it(`should filter widgets by translated name (${mode})`, () => {
@@ -460,5 +842,61 @@ describe('SiWidgetCatalogComponent', () => {
         ).toHaveTextContent('Translated Widget Name');
       });
     });
+  });
+});
+
+describe('SiWidgetCatalogComponent without a dashboard', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [TestingModule, SiWidgetCatalogComponent],
+      providers: [{ provide: ModalRef, useValue: new ModalRef() }]
+    });
+  });
+
+  it('should select and add a widget without a dashboard provider', async () => {
+    const closed = vi.fn();
+    const fixture = TestBed.createComponent(SiWidgetCatalogComponent, {
+      bindings: [outputBinding('closed', closed)]
+    });
+    const widget = createTestingWidget('Standalone widget', 'standalone');
+    fixture.componentInstance.widgetList.set([widget]);
+    fixture.detectChanges();
+
+    const option = fixture.nativeElement.querySelector('[role="option"]') as HTMLElement;
+    expect(option).toHaveAttribute('aria-disabled', 'false');
+    expect(option).toHaveAttribute('aria-selected', 'true');
+    const addButton = Array.from(
+      fixture.nativeElement.querySelectorAll('button') as NodeListOf<HTMLButtonElement>
+    ).find(button => button.textContent?.trim() === 'Add')!;
+    expect(addButton).toBeEnabled();
+
+    addButton.click();
+    await fixture.whenStable();
+
+    expect(closed).toHaveBeenCalledExactlyOnceWith([
+      expect.objectContaining({ widgetId: widget.id })
+    ]);
+  });
+
+  it('should use empty instance state without disabling positive-limit widgets', () => {
+    const fixture = TestBed.createComponent(SiWidgetCatalogComponent);
+    fixture.componentInstance.widgetList.set([
+      {
+        ...createTestingWidget('Disabled widget', 'disabled'),
+        maxInstances: 0,
+        badge: 'Requires license'
+      },
+      { ...createTestingWidget('Limited widget', 'limited'), maxInstances: 1 }
+    ]);
+    fixture.detectChanges();
+
+    const [disabledOption, limitedOption] = Array.from(
+      fixture.nativeElement.querySelectorAll('[role="option"]') as NodeListOf<HTMLElement>
+    );
+    expect(disabledOption).toHaveAttribute('aria-disabled', 'true');
+    expect(disabledOption.querySelector('si-badge')).toHaveTextContent('Requires license');
+    expect(limitedOption).toHaveAttribute('aria-disabled', 'false');
+    expect(limitedOption).toHaveAttribute('aria-selected', 'true');
+    expect(limitedOption.querySelector('si-badge')).toBeNull();
   });
 });
