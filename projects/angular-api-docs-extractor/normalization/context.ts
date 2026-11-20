@@ -19,7 +19,6 @@ export interface PresentationContext {
   readonly entries: ApiEntry[];
   readonly byId: ReadonlyMap<string, ApiEntry>;
   readonly result: ApiPresentation;
-  readonly typeMembers: ReadonlyMap<string, ApiMember[]>;
   readonly apiMembers: ReadonlyMap<string, ApiMember[]>;
   readonly homepages: Map<string, string>;
 }
@@ -72,10 +71,8 @@ export const memberId = (entry: ApiEntry, member: ApiMember): string =>
 
 export const angularApi = (entry: ApiEntry): boolean =>
   ['component', 'directive'].includes(entry.angularKind ?? entry.kind);
-export const referenceMembers = (context: PresentationContext, entry: ApiEntry): ApiMember[] => [
-  ...(context.typeMembers.get(entry.id) ?? []),
-  ...(context.apiMembers.get(entry.id) ?? [])
-];
+export const referenceMembers = (context: PresentationContext, entry: ApiEntry): ApiMember[] =>
+  context.apiMembers.get(entry.id) ?? [];
 export const signaturesOf = (item: ApiEntry | ApiMember): ApiSignature[] => {
   const signatures = item.signatures ?? [];
   const overloads = signatures.filter(signature => !signature.implementation);

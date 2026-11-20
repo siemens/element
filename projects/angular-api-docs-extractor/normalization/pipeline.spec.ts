@@ -63,12 +63,21 @@ describe('API documentation pipeline over fixtures', () => {
   it('ignores @defaultref tags', () => {
     const untagged = structuredClone(documentation);
     for (const entry of untagged.entries) {
-      for (const item of [entry, ...entry.members, ...(entry.typeMembers ?? [])]) {
+      for (const item of [entry, ...entry.members]) {
         item.jsdocTags = item.jsdocTags.filter(tag => tag.name.toLowerCase() !== 'defaultref');
         if ('rawComment' in item) item.rawComment = item.rawComment?.replace(/@defaultref.*/gi, '');
       }
     }
     expect(prepare(untagged).presentation).toEqual(prepared.presentation);
+  });
+
+  it('renders the documented default of an inherited property in both views', () => {
+    const group = prepared.presentation.symbols.find(symbol => symbol.name === 'MenuItemGroup')!;
+    for (const view of [group.api, group.type]) {
+      expect(view.groups.flatMap(section => section.rows)).toContainEqual(
+        expect.objectContaining({ name: 'label', default: "''" })
+      );
+    }
   });
 
   it('publishes the artifacts with non-default consumer settings', async () => {

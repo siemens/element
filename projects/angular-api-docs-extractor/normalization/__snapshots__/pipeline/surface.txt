@@ -82,9 +82,6 @@ A signal-backed component.
 === type
 declaration: component FixtureComponent<T extends [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> extends BaseDirective
 A signal-backed component.
-## constructors "Constructor"
-  constructor  #~/member/constructor
-    constructor(): [FixtureComponent → #~]<T> → [FixtureComponent → #~]<T>  #~/member/constructor/signature/0
 ## propertys "Properties" (defaults)
   base: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = 'base' [required, inherited]  #~/member/base
     Inherited input.
@@ -95,15 +92,12 @@ A signal-backed component.
   documentToken: [InjectionToken → https://angular.dev/api/core/InjectionToken]<[Document → https://developer.mozilla.org/docs/Web/API/Document]> = DOCUMENT [readonly]  #~/member/documentToken
   explicit: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 42  #~/member/explicit
     Overrides AST initialization.
-  inheritedProtected: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = true [inherited, protected]  #~/member/inheritedProtected
-    Inherited from `BaseDirective`
   label: [InputSignal → https://angular.dev/api/core/InputSignal]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> = 'forwarded' [required, readonly]  #~/member/label
     The forwarded label.
   labelChange: [EventEmitter → https://angular.dev/api/core/EventEmitter]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> = new EventEmitter<string>() [readonly]  #~/member/labelChange
   literal: "literal" = 'literal' [readonly]  #~/member/literal
   nestedLabel: [InputSignal → https://angular.dev/api/core/InputSignal]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> = 'deep' [readonly]  #~/member/nestedLabel
     A recursively forwarded input.
-  protectedMember: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = false [protected]  #~/member/protectedMember
   title: [InputSignal → https://angular.dev/api/core/InputSignal]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> [required, readonly]  #~/member/title
     Required title.
   transformedCount: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional]  #~/member/transformedCount
@@ -147,9 +141,6 @@ Formats a fixture state.
 === type
 declaration: pipe FixtureStatePipe implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
 Formats a fixture state.
-## constructors "Constructor"
-  constructor  #~/member/constructor
-    constructor(): [FixtureStatePipe → #~] → [FixtureStatePipe → #~]  #~/member/constructor/signature/0
 ## methods "Methods"
   transform: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/transform
     Implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
@@ -197,7 +188,7 @@ unlabelled <literal>&
 bare <literal>&
 ```
 ## constructors "Constructor"
-  constructor  #~/member/constructor
+  constructor: [MetadataOverloads → #~]  #~/member/constructor
     Actual construction.
     constructor(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [MetadataOverloads → #~] → [MetadataOverloads → #~]  #~/member/constructor/signature/0
       String construction.
@@ -250,7 +241,7 @@ unlabelled <literal>&
 bare <literal>&
 ```
 ## constructors "Constructor"
-  constructor  #~/member/constructor
+  constructor: [MetadataOverloads → #~]  #~/member/constructor
     Actual construction.
     constructor(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [MetadataOverloads → #~] → [MetadataOverloads → #~]  #~/member/constructor/signature/0
       String construction.
@@ -289,7 +280,6 @@ declaration: undecorated_class SelectionOverride extends [SelectionImplementatio
 ## methods "Methods"
   format: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [inherited]  #~/member/format
     Formats a string selection.
-    Formats a numeric selection.
     Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
     Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
     format(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/0
@@ -324,7 +314,6 @@ declaration: undecorated_class SelectionOverride extends [SelectionImplementatio
 ## methods "Methods"
   format: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [inherited]  #~/member/format
     Formats a string selection.
-    Formats a numeric selection.
     Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
     Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
     format(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/0
@@ -433,9 +422,6 @@ declaration: undecorated_class TypeOnlyService
 
 === type
 declaration: undecorated_class TypeOnlyService
-## constructors "Constructor"
-  constructor  #~/member/constructor
-    constructor(): [TypeOnlyService → #~] → [TypeOnlyService → #~]  #~/member/constructor/signature/0
 ## propertys "Properties" (defaults)
   version: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 1 [static]  #~/member/static/version
 ## methods "Methods"

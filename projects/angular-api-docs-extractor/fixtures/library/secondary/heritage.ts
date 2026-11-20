@@ -1,5 +1,5 @@
 export interface MenuItemBase {
-  label?: string;
+  /** @default '' */ label?: string;
 }
 
 export interface MenuItemGroup extends MenuItemBase {
