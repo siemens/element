@@ -502,6 +502,14 @@ export class SiChatInputComponent implements AfterViewInit {
   }
 
   /**
+   * Submit the current draft and attachments from a consumer action, such as completed dictation.
+   * Uses the same send guards as the composer without activating the button's interrupt action.
+   */
+  sendCurrent(): void {
+    this.onSend();
+  }
+
+  /**
    * Focus the textarea input
    */
   focus(): void {

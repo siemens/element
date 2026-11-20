@@ -254,6 +254,7 @@ export class SiChatInputComponent implements AfterViewInit {
     }>;
     readonly sendButtonIcon: _angular_core.InputSignal<string>;
     readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString>;
+    sendCurrent(): void;
     readonly sending: _angular_core.ModelSignal<boolean>;
     readonly value: _angular_core.ModelSignal<string>;
 }

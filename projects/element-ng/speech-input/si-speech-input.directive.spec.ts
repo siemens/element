@@ -5,6 +5,7 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { SiChatInputComponent } from '@siemens/element-ng/chat-messages';
 
 import {
   SI_SPEECH_INPUT_RECOGNITION,
@@ -51,6 +52,35 @@ class TestHostComponent {
   readonly changes = vi.fn();
   readonly errors = vi.fn();
   readonly transcripts = vi.fn();
+}
+
+@Component({
+  imports: [SiChatInputComponent, SiSpeechInputDirective],
+  template: `<si-chat-input
+    #chat
+    [disabled]="speech.listening()"
+    [(value)]="value"
+    (send)="send($event)"
+  >
+    <button
+      #speech="siSpeechInput"
+      type="button"
+      siSpeechInput
+      [(value)]="value"
+      (transcript)="hasTranscript.set(!!$event)"
+      (listeningChange)="
+        $event
+          ? hasTranscript.set(false)
+          : speech.completionReason() === 'completed' && hasTranscript() && chat.sendCurrent()
+      "
+      >Dictate</button
+    >
+  </si-chat-input>`
+})
+class SpeechChatTestComponent {
+  readonly value = signal('Existing draft');
+  readonly hasTranscript = signal(false);
+  readonly send = vi.fn();
 }
 
 describe('SiSpeechInputDirective', () => {
@@ -210,4 +240,37 @@ describe('SiSpeechInputDirective', () => {
     button.click();
     expect(speech.completionReason()).toBeUndefined();
   });
+
+  it.each(['completed', 'empty', 'cancelled', 'error'] as const)(
+    'sends the draft only after completion with transcript text (%s)',
+    async reason => {
+      const fixture = TestBed.createComponent(SpeechChatTestComponent);
+      await fixture.whenStable();
+      const button: HTMLButtonElement =
+        fixture.nativeElement.querySelector('button[siSpeechInput]');
+      const speech = fixture.debugElement
+        .query(By.directive(SiSpeechInputDirective))
+        .injector.get(SiSpeechInputDirective);
+      button.click();
+      if (reason !== 'empty') {
+        recognition.onresult?.({ results: [{ isFinal: true, 0: { transcript: 'Hello' } }] });
+      }
+
+      if (reason === 'completed' || reason === 'empty') {
+        recognition.onend?.();
+      } else if (reason === 'cancelled') {
+        speech.cancel();
+      } else {
+        recognition.onerror?.({ error: 'network' });
+      }
+      await fixture.whenStable();
+
+      const expectedCalls =
+        reason === 'completed' ? [[{ content: 'Existing draft Hello', attachments: [] }]] : [];
+      expect(fixture.componentInstance.send.mock.calls).toEqual(expectedCalls);
+      expect(fixture.componentInstance.value()).toBe(
+        reason === 'completed' ? '' : 'Existing draft'
+      );
+    }
+  );
 });

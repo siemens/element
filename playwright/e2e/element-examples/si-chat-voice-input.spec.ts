@@ -91,6 +91,8 @@ for (const viewport of [
     const send = input.getByRole('button', { name: 'Send', exact: true });
     const waveform = input.locator('si-voice-waveform');
 
+    const autoSend = page.getByRole('switch', { name: 'Send after dictation' });
+
     const checkState = async (state: string): Promise<void> => {
       const accessibility = await new AxeBuilder({ page }).include('app-sample').analyze();
       expect(accessibility.violations).toEqual([]);
@@ -117,6 +119,7 @@ for (const viewport of [
     };
 
     await checkState('idle');
+    await expect(autoSend).not.toBeChecked();
     await expect(waveform).toHaveCount(0);
     await textarea.fill('Existing draft');
     await start.focus();
@@ -124,6 +127,7 @@ for (const viewport of [
     await page.clock.runFor(50);
     await expect(stop).toBeFocused();
     await expect(stop).toHaveAttribute('aria-pressed', 'true');
+    await expect(autoSend).toBeDisabled();
     await expect(send).toBeDisabled();
     await expect(textarea).toBeDisabled();
     await expect(start).toHaveCount(0);
@@ -199,6 +203,27 @@ for (const viewport of [
     await page.clock.runFor(6500);
     await expect(textarea).toHaveValue(retainedDraft);
     await checkState('review');
+
+    await autoSend.check();
+    await page.clock.pauseAt(await page.evaluate(() => Date.now() + 1000));
+    await start.click();
+    await page.clock.runFor(800);
+    await expect(autoSend).toBeDisabled();
+    await stop.click();
+    await page.clock.runFor(50);
+    await expect(autoSend).toBeEnabled();
+    await expect(textarea).toHaveValue(retainedDraft);
+    await page.clock.resume();
+
+    await textarea.fill('');
+    await start.click();
+    await expect(autoSend).toBeDisabled();
+    await page.clock.runFor(8500);
+    await expect(start).toBeEnabled();
+    await expect(textarea).toHaveValue('');
+    await expect(send).toBeDisabled();
+    await expect(waveform).toHaveCount(0);
+    await checkState('auto-send');
   });
 
   for (const state of ['listening', 'recording']) {

@@ -30,17 +30,30 @@ export class SampleComponent {
   readonly icons = addIcons({ elementVoice, elementStopFilled });
   readonly value = signal('');
   readonly listening = signal(false);
+  readonly autoSend = signal(false);
   readonly hasTranscript = signal(false);
   readonly measuredLevels = signal(false);
   readonly voiceInputLevel = signal<number | undefined>(undefined);
   readonly error = signal<string | undefined>(undefined);
 
-  onListeningChange(listening: boolean): void {
+  onListeningChange(
+    listening: boolean,
+    chat: SiChatInputComponent,
+    speech: SiSpeechInputDirective
+  ): void {
     this.listening.set(listening);
     if (listening) {
       this.error.set(undefined);
       this.hasTranscript.set(false);
       this.voiceInputLevel.set(this.measuredLevels() ? 0 : undefined);
+    } else if (
+      this.autoSend() &&
+      speech.completionReason() === 'completed' &&
+      this.hasTranscript() &&
+      !this.error() &&
+      this.value().trim()
+    ) {
+      chat.sendCurrent();
     }
     this.logEvent(listening ? 'Dictation started' : 'Dictation ended');
   }

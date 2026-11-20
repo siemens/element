@@ -171,6 +171,39 @@ does not indicate that audio is currently being captured. Use your provider's ca
 lifecycle for `capturing()`. Reduced motion and Element's disabled-animation policy stop
 sampling and movement without discarding existing samples.
 
+#### Auto-send after speaking
+
+Auto-send remains an application decision. The following sends only when a completed attempt
+contributed transcript text. Define `hasTranscript = signal(false)` in the consuming component:
+
+```html
+<si-chat-input #chat [disabled]="speech.listening()" [(value)]="message" (send)="onSend($event)">
+  <button
+    #speech="siSpeechInput"
+    siChatInputEnd
+    siSpeechInput
+    type="button"
+    class="btn btn-tertiary-ghost btn-icon"
+    [(value)]="message"
+    (transcript)="hasTranscript.set(!!$event)"
+    (listeningChange)="
+      $event
+        ? hasTranscript.set(false)
+        : speech.completionReason() === 'completed' && hasTranscript() && chat.sendCurrent()
+    "
+  >
+    <si-icon [icon]="speech.listening() ? icons.elementStopFilled : icons.elementVoice" />
+  </button>
+</si-chat-input>
+```
+
+`sendCurrent()` respects chat's disabled, sending, and empty-draft rules. It does not
+trigger the interrupt action. Completion is emitted after shared draft bindings have rendered,
+so auto-send receives the final transcript. `listeningChange(false)` also occurs on cancellation or
+failure. Check `completionReason()` to distinguish `completed`, `cancelled`, and `error`
+before auto-sending. The reason resets to undefined at the start of each attempt. A completed
+attempt without transcript text leaves the existing draft unsent.
+
 #### Standalone use
 
 The same directive can update any signal-backed text field, without a chat component:

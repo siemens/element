@@ -1,5 +1,6 @@
 <div class="p-2">
   <si-chat-input
+    #chat
     placeholder="Enter a command, question or topic…"
     disclaimer="The content is AI generated. Always verify the information for accuracy."
     [allowAttachments]="true"
@@ -22,7 +23,7 @@
       [siTooltip]="speech.listening() ? 'Stop dictation' : 'Start dictation'"
       [(value)]="value"
       (transcript)="onTranscript($event)"
-      (listeningChange)="onListeningChange($event)"
+      (listeningChange)="onListeningChange($event, chat, speech)"
       (errorOccurred)="onSpeechError($event)"
     >
       <si-icon [icon]="speech.listening() ? icons.elementStopFilled : icons.elementVoice" />
@@ -35,6 +36,18 @@
   <div class="e2e-ignore card mt-6">
     <div class="card-body">
       <h3 class="h6 mb-4">Control panel</h3>
+      <div class="form-check form-switch">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          role="switch"
+          id="auto-send"
+          [checked]="autoSend()"
+          [disabled]="listening()"
+          (change)="autoSend.set(!autoSend())"
+        />
+        <label for="auto-send" class="form-check-label">Send after dictation</label>
+      </div>
       <div class="form-check form-switch">
         <input
           type="checkbox"
