@@ -1,5 +1,10 @@
 <div class="rpanel-header pt-5">
-  <p class="si-h5 my-0 ms-6 auto-hide text-truncate">{{ heading() | translate }}</p>
+  <div class="header-title auto-hide ms-6">
+    <p class="si-h5 my-0 text-truncate">{{ heading() | translate }}</p>
+    @if (subHeading()) {
+      <p class="si-body text-secondary text-truncate my-0 pt-2">{{ subHeading() | translate }}</p>
+    }
+  </div>
   @if ((primaryActions().length || secondaryActions().length) && focusable()) {
     <si-content-action-bar
       class="auto-hide ms-auto"

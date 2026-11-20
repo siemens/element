@@ -90,6 +90,10 @@
   justify-content: space-between;
 }
 
+.header-title {
+  min-inline-size: 0;
+}
+
 .rpanel-wrapper {
   padding-block-start: map.get(all-variables.$spacers, 5);
 }
