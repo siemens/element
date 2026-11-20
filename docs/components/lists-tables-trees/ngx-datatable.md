@@ -158,6 +158,21 @@ Use the `<si-empty-state></si-empty-state>` for an empty table.
 
 <si-docs-component example="datatable/datatable-empty-custom" height="250"></si-docs-component>
 
+### Error handling
+
+When loading data fails, explain the problem and offer a way to resolve it:
+
+- If there are no rows to show, display the error in the `empty-content` slot,
+  e.g. using an [empty state](../status-notifications/empty-state.md) with a matching icon, message and action.
+- If previously loaded rows are still available, e.g. when reloading the current page fails,
+  keep showing them and display the error in an [inline notification](../status-notifications/inline-notification.md) above the table.
+- Adapt the message and action to the error and only offer a retry if it is likely to succeed.
+  See also the guidelines for [error messages](../../fundamentals/ux-text-style-guide/error-messages.md).
+
+Use the settings of the example to simulate different server responses.
+
+<si-docs-component example="datatable/datatable-error-handling" height="600"></si-docs-component>
+
 ### Selection
 
 Datatable with a selection. Use the `datatableInteractionAutoSelect` input of the `siDatatableInteraction`
