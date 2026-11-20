@@ -160,10 +160,10 @@ Browser output and live previews are unaffected by this step.
 
 ## Quality checks
 
-| Check                      | Command        | Scope                                                                                                            |
-| -------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Extraction and preparation | `docs:test`    | Vitest with a fixture library, one text snapshot per symbol, scenario snapshots, and validation mutation tables. |
-| Rendering and export       | `docs:test:py` | Pytest with HTML snapshots of browser and export output, error cases, and publication behavior.                  |
+| Check                      | Command        | Scope                                                                                                                                               |
+| -------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Extraction and preparation | `docs:test`    | Vitest with real compiler fixtures, a compact declaration inventory and representative API golden, and targeted normalization and validation cases. |
+| Rendering and export       | `docs:test:py` | Pytest with focused checks for links, anchors, outlines, errors, and publication, plus one Markdown-to-HTML/export golden.                          |
 
 CI runs these checks together with `docs:generate-api` and `docs:build:api` in `.github/workflows/build-documentation.yaml`.
 

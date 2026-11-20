@@ -1,0 +1,446 @@
+# component @fixture/library/secondary#FixtureComponent
+import: import { FixtureComponent } from '@fixture/library/secondary';
+page: api/fixture/library/components/FixtureComponent.md
+source: https://github.com/siemens/element/blob/main/library/secondary/component.ts#L66-L97
+Selector: fixture-component
+Exported as: fixture
+
+=== api
+declaration: component FixtureComponent<T extends [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> extends BaseDirective
+A signal-backed component.
+## inputs "Input Properties" (defaults)
+  baseAlias: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = 'base' [required, inherited]  #~/member/base
+    Inherited input.
+    Inherited from `BaseDirective`
+  count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = DEFAULT_COUNT  #~/member/count
+    Number of items.
+  current: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 3  #~/member/value
+    Current value.
+  heading: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [required]  #~/member/title
+    Required title.
+  label: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = 'forwarded' [required]  #~/member/label
+    The forwarded label.
+  nestedLabel: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = 'deep'  #~/member/nestedLabel
+    A recursively forwarded input.
+  transformedCount: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] [optional]  #~/member/transformedCount
+## outputs "Output Properties"
+  currentChange: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/value
+    Current value.
+  labelChange: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/labelChange
+## members "Attributes and Methods" (defaults)
+  consume: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined]  #~/member/consume
+    consume(contract: [ExternalContract → #@fixture/library/secondary#ExternalContract]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined]  #~/member/consume/signature/0
+      param contract: [ExternalContract → #@fixture/library/secondary#ExternalContract]  #~/member/consume/signature/0/parameter/0/contract
+  documentedPublic: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = true  #~/member/documentedPublic
+  documentToken: [InjectionToken → https://angular.dev/api/core/InjectionToken]<[Document → https://developer.mozilla.org/docs/Web/API/Document]> = DOCUMENT [readonly]  #~/member/documentToken
+  explicit: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 42  #~/member/explicit
+    Overrides AST initialization.
+  format: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format
+    A method.
+    format(text: T, count?: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 2): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/0
+      A method.
+      param text: T  #~/member/format/signature/0/parameter/0/text
+        The text.
+      param count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 2 [optional]  #~/member/format/signature/0/parameter/1/count
+  literal: "literal" = 'literal' [readonly]  #~/member/literal
+related: @fixture/library/secondary#ExternalContract
+
+=== explicitPublicApi
+declaration: component FixtureComponent<T extends [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> extends BaseDirective
+A signal-backed component.
+## inputs "Input Properties" (defaults)
+  baseAlias: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = 'base' [required, inherited]  #~/member/base
+    Inherited input.
+    Inherited from `BaseDirective`
+  count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = DEFAULT_COUNT  #~/member/count
+    Number of items.
+  current: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 3  #~/member/value
+    Current value.
+  heading: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [required]  #~/member/title
+    Required title.
+  label: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = 'forwarded' [required]  #~/member/label
+    The forwarded label.
+  nestedLabel: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = 'deep'  #~/member/nestedLabel
+    A recursively forwarded input.
+  transformedCount: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] [optional]  #~/member/transformedCount
+## outputs "Output Properties"
+  currentChange: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/value
+    Current value.
+  labelChange: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/labelChange
+## members "Attributes and Methods" (defaults)
+  documentedPublic: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = true  #~/member/documentedPublic
+  explicit: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 42  #~/member/explicit
+    Overrides AST initialization.
+  format: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format
+    A method.
+    format(text: T, count?: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 2): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/0
+      A method.
+      param text: T  #~/member/format/signature/0/parameter/0/text
+        The text.
+      param count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 2 [optional]  #~/member/format/signature/0/parameter/1/count
+
+=== type
+declaration: component FixtureComponent<T extends [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> extends BaseDirective
+A signal-backed component.
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [FixtureComponent → #~]<T> → [FixtureComponent → #~]<T>  #~/member/constructor/signature/0
+## propertys "Properties" (defaults)
+  base: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] = 'base' [required, inherited]  #~/member/base
+    Inherited input.
+    Inherited from `BaseDirective`
+  count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = DEFAULT_COUNT  #~/member/count
+    Number of items.
+  documentedPublic: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = true  #~/member/documentedPublic
+  documentToken: [InjectionToken → https://angular.dev/api/core/InjectionToken]<[Document → https://developer.mozilla.org/docs/Web/API/Document]> = DOCUMENT [readonly]  #~/member/documentToken
+  explicit: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 42  #~/member/explicit
+    Overrides AST initialization.
+  inheritedProtected: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = true [inherited, protected]  #~/member/inheritedProtected
+    Inherited from `BaseDirective`
+  label: [InputSignal → https://angular.dev/api/core/InputSignal]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> = 'forwarded' [required, readonly]  #~/member/label
+    The forwarded label.
+  labelChange: [EventEmitter → https://angular.dev/api/core/EventEmitter]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> = new EventEmitter<string>() [readonly]  #~/member/labelChange
+  literal: "literal" = 'literal' [readonly]  #~/member/literal
+  nestedLabel: [InputSignal → https://angular.dev/api/core/InputSignal]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> = 'deep' [readonly]  #~/member/nestedLabel
+    A recursively forwarded input.
+  protectedMember: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = false [protected]  #~/member/protectedMember
+  title: [InputSignal → https://angular.dev/api/core/InputSignal]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]> [required, readonly]  #~/member/title
+    Required title.
+  transformedCount: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] [optional]  #~/member/transformedCount
+  value: [ModelSignal → https://angular.dev/api/core/ModelSignal]<[number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]> = 3 [readonly]  #~/member/value
+    Current value.
+## methods "Methods"
+  consume: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined]  #~/member/consume
+    consume(contract: [ExternalContract → #@fixture/library/secondary#ExternalContract]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined]  #~/member/consume/signature/0
+      param contract: [ExternalContract → #@fixture/library/secondary#ExternalContract]  #~/member/consume/signature/0/parameter/0/contract
+  format: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format
+    A method.
+    format(text: T, count?: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 2): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/0
+      A method.
+      param text: T  #~/member/format/signature/0/parameter/0/text
+        The text.
+      param count: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 2 [optional]  #~/member/format/signature/0/parameter/1/count
+related: @fixture/library/secondary#ExternalContract
+
+# pipe @fixture/library/secondary#FixtureStatePipe
+import: import { FixtureStatePipe } from '@fixture/library/secondary';
+page: api/fixture/library/pipes/FixtureStatePipe.md
+source: https://github.com/siemens/element/blob/main/library/secondary/kinds.ts#L20-L28
+
+=== api
+declaration: pipe FixtureStatePipe implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
+Formats a fixture state.
+## methods "Methods"
+  transform: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/transform
+    Implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
+    transform(value: [FixtureState → #@fixture/library/secondary#FixtureState], upper?: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = false): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/transform/signature/0
+      param value: [FixtureState → #@fixture/library/secondary#FixtureState]  #~/member/transform/signature/0/parameter/0/value
+        The state to format.
+      param upper: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = false [optional]  #~/member/transform/signature/0/parameter/1/upper
+        Whether to upper-case the result.
+related: @fixture/library/secondary#FixtureState
+
+=== explicitPublicApi
+declaration: pipe FixtureStatePipe implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
+Formats a fixture state.
+
+=== type
+declaration: pipe FixtureStatePipe implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
+Formats a fixture state.
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [FixtureStatePipe → #~] → [FixtureStatePipe → #~]  #~/member/constructor/signature/0
+## methods "Methods"
+  transform: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/transform
+    Implements [PipeTransform → https://angular.dev/api/core/PipeTransform]
+    transform(value: [FixtureState → #@fixture/library/secondary#FixtureState], upper?: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = false): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/transform/signature/0
+      param value: [FixtureState → #@fixture/library/secondary#FixtureState]  #~/member/transform/signature/0/parameter/0/value
+        The state to format.
+      param upper: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = false [optional]  #~/member/transform/signature/0/parameter/1/upper
+        Whether to upper-case the result.
+related: @fixture/library/secondary#FixtureState
+
+# undecorated_class @fixture/library/secondary#MetadataOverloads
+import: import { MetadataOverloads } from '@fixture/library/secondary';
+page: api/fixture/library/types/MetadataOverloads.md
+source: https://github.com/siemens/element/blob/main/library/secondary/metadata.ts#L94-L120
+
+=== api
+declaration: undecorated_class MetadataOverloads
+Overloaded operations.
+```ts
+const result = '  preserve spacing';
+```
+```typescript
+const value: string = '<literal>&';
+```
+```html
+<test-widget [value]="value" />
+```
+```css
+.example {
+  color: red;
+}
+```
+```sh
+echo '<literal>&'
+```
+```html
+<test-widget>
+  Tilde fence
+</test-widget>
+```
+```
+unlabelled <literal>&
+```
+```
+bare <literal>&
+```
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    Actual construction.
+    constructor(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [MetadataOverloads → #~] → [MetadataOverloads → #~]  #~/member/constructor/signature/0
+      String construction.
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/constructor/signature/0/parameter/0/value
+    constructor(value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]): [MetadataOverloads → #~] → [MetadataOverloads → #~]  #~/member/constructor/signature/1
+      Numeric construction.
+      param value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/constructor/signature/1/parameter/0/value
+## methods "Methods"
+  convert: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/convert
+    Actual method.
+    ```ts
+    const result = '  preserve spacing';
+    ```
+    convert(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/convert/signature/0
+      String method.
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/convert/signature/0/parameter/0/value
+    convert(value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]): [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] → [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/convert/signature/1
+      Numeric method.
+      param value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/convert/signature/1/parameter/0/value
+
+=== type
+declaration: undecorated_class MetadataOverloads
+Overloaded operations.
+```ts
+const result = '  preserve spacing';
+```
+```typescript
+const value: string = '<literal>&';
+```
+```html
+<test-widget [value]="value" />
+```
+```css
+.example {
+  color: red;
+}
+```
+```sh
+echo '<literal>&'
+```
+```html
+<test-widget>
+  Tilde fence
+</test-widget>
+```
+```
+unlabelled <literal>&
+```
+```
+bare <literal>&
+```
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    Actual construction.
+    constructor(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [MetadataOverloads → #~] → [MetadataOverloads → #~]  #~/member/constructor/signature/0
+      String construction.
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/constructor/signature/0/parameter/0/value
+    constructor(value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]): [MetadataOverloads → #~] → [MetadataOverloads → #~]  #~/member/constructor/signature/1
+      Numeric construction.
+      param value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/constructor/signature/1/parameter/0/value
+## methods "Methods"
+  convert: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/convert
+    Actual method.
+    ```ts
+    const result = '  preserve spacing';
+    ```
+    convert(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/convert/signature/0
+      String method.
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/convert/signature/0/parameter/0/value
+    convert(value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]): [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] → [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/convert/signature/1
+      Numeric method.
+      param value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/convert/signature/1/parameter/0/value
+
+# undecorated_class @fixture/library/secondary#SelectionOverride
+import: import { SelectionOverride } from '@fixture/library/secondary';
+page: api/fixture/library/types/SelectionOverride.md
+source: https://github.com/siemens/element/blob/main/library/secondary/heritage.ts#L59-L67
+
+=== api
+declaration: undecorated_class SelectionOverride extends [SelectionImplementation → #@fixture/library/secondary#SelectionImplementation]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]>
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [SelectionOverride → #~] → [SelectionOverride → #~]  #~/member/constructor/signature/0
+## propertys "Properties" (defaults)
+  selectedRows: readonly [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String][] = []  #~/member/selectedRows
+    Implementation-specific selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+## methods "Methods"
+  format: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [inherited]  #~/member/format
+    Formats a string selection.
+    Formats a numeric selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+    format(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/0
+      Formats a string selection.
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/0/parameter/0/value
+        • String selection.
+    format(value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/1
+      Formats a numeric selection.
+      param value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/format/signature/1/parameter/0/value
+        • Numeric selection.
+  onValueChange: [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #~/member/onValueChange
+    Updates the selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+    onValueChange(value: readonly [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String][], notify?: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = false): [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void] → [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #~/member/onValueChange/signature/0
+      Updates the selection.
+      param value: readonly [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String][]  #~/member/onValueChange/signature/0/parameter/0/value
+        • Implementation-specific values.
+      param notify: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = false [optional]  #~/member/onValueChange/signature/0/parameter/1/notify
+        • Whether to notify listeners.
+
+=== type
+declaration: undecorated_class SelectionOverride extends [SelectionImplementation → #@fixture/library/secondary#SelectionImplementation]<[string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]>
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [SelectionOverride → #~] → [SelectionOverride → #~]  #~/member/constructor/signature/0
+## propertys "Properties" (defaults)
+  selectedRows: readonly [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String][] = []  #~/member/selectedRows
+    Implementation-specific selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+## methods "Methods"
+  format: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [inherited]  #~/member/format
+    Formats a string selection.
+    Formats a numeric selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+    format(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/0
+      Formats a string selection.
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/0/parameter/0/value
+        • String selection.
+    format(value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/format/signature/1
+      Formats a numeric selection.
+      param value: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number]  #~/member/format/signature/1/parameter/0/value
+        • Numeric selection.
+  onValueChange: [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #~/member/onValueChange
+    Updates the selection.
+    Inherited from [SelectionImplementation<string> → #@fixture/library/secondary#SelectionImplementation]
+    Implements [SelectionContract<string> → #@fixture/library/secondary#SelectionContract]
+    onValueChange(value: readonly [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String][], notify?: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = false): [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void] → [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #~/member/onValueChange/signature/0
+      Updates the selection.
+      param value: readonly [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String][]  #~/member/onValueChange/signature/0/parameter/0/value
+        • Implementation-specific values.
+      param notify: [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] = false [optional]  #~/member/onValueChange/signature/0/parameter/1/notify
+        • Whether to notify listeners.
+
+# constant @fixture/library/secondary#FacetedValue
+import: import { FacetedValue } from '@fixture/library/secondary';
+page: api/fixture/library/types/FacetedValue.md
+source: https://github.com/siemens/element/blob/main/library/secondary/catalog-facets.ts#L8-L8
+
+=== api
+declaration: typeof [RuntimeTarget → #@fixture/library/secondary#RuntimeTarget] = RuntimeTarget
+Runtime facet summary.
+Deprecated: Runtime facet deprecation.
+## declarations "Declarations" (defaults)
+  FacetedValue: typeof [RuntimeTarget → #@fixture/library/secondary#RuntimeTarget] = RuntimeTarget [constant]  #~/declaration/0
+    Runtime facet summary.
+    Deprecated: Runtime facet deprecation.
+  FacetedValue: [RuntimeTarget → #@fixture/library/secondary#RuntimeTarget] [type_alias]  #~/declaration/1
+    Type facet summary.
+    Deprecated: Type facet deprecation.
+
+=== type
+declaration: typeof [RuntimeTarget → #@fixture/library/secondary#RuntimeTarget] = RuntimeTarget
+Runtime facet summary.
+Deprecated: Runtime facet deprecation.
+## declarations "Declarations" (defaults)
+  FacetedValue: typeof [RuntimeTarget → #@fixture/library/secondary#RuntimeTarget] = RuntimeTarget [constant]  #~/declaration/0
+    Runtime facet summary.
+    Deprecated: Runtime facet deprecation.
+  FacetedValue: [RuntimeTarget → #@fixture/library/secondary#RuntimeTarget] [type_alias]  #~/declaration/1
+    Type facet summary.
+    Deprecated: Type facet deprecation.
+
+# interface @fixture/library/secondary#ReadonlyValues
+import: import type { ReadonlyValues } from '@fixture/library/secondary';
+page: api/fixture/library/types/ReadonlyValues.md
+source: https://github.com/siemens/element/blob/main/library/secondary/index-signatures.ts#L9-L12
+
+=== api
+declaration: interface ReadonlyValues
+## index_signatures "Index Signatures"
+  [position: number]: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [readonly]  #~/member/%5Bposition%3A%20number%5D
+    Values addressed by numeric position.
+
+=== type
+declaration: interface ReadonlyValues
+## index_signatures "Index Signatures"
+  [position: number]: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] [readonly]  #~/member/%5Bposition%3A%20number%5D
+    Values addressed by numeric position.
+
+# function @fixture/library/secondary#useOptions
+import: import { useOptions } from '@fixture/library/secondary';
+page: api/fixture/library/types/useOptions.md
+source: https://github.com/siemens/element/blob/main/library/secondary/types.ts#L16-L22
+
+=== api
+declaration: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]
+## signature
+  useOptions(options: [LocalOptions → #@fixture/library/secondary#LocalOptions@library/secondary/types.ts], deep: [DeepOptions → #@fixture/library/secondary#DeepOptions@library/secondary/deep.ts]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/signature/0
+    param options: [LocalOptions → #@fixture/library/secondary#LocalOptions@library/secondary/types.ts]  #~/signature/0/parameter/0/options
+    param deep: [DeepOptions → #@fixture/library/secondary#DeepOptions@library/secondary/deep.ts]  #~/signature/0/parameter/1/deep
+related: @fixture/library/secondary#LocalOptions@library/secondary/types.ts, @fixture/library/secondary#DeepOptions@library/secondary/deep.ts
+
+=== type
+declaration: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]
+## signature
+  useOptions(options: [LocalOptions → #@fixture/library/secondary#LocalOptions@library/secondary/types.ts], deep: [DeepOptions → #@fixture/library/secondary#DeepOptions@library/secondary/deep.ts]): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/signature/0
+    param options: [LocalOptions → #@fixture/library/secondary#LocalOptions@library/secondary/types.ts]  #~/signature/0/parameter/0/options
+    param deep: [DeepOptions → #@fixture/library/secondary#DeepOptions@library/secondary/deep.ts]  #~/signature/0/parameter/1/deep
+related: @fixture/library/secondary#LocalOptions@library/secondary/types.ts, @fixture/library/secondary#DeepOptions@library/secondary/deep.ts
+
+# undecorated_class @fixture/library/secondary#TypeOnlyService
+import: import type { TypeOnlyService } from '@fixture/library/secondary';
+page: api/fixture/library/types/TypeOnlyService.md
+source: https://github.com/siemens/element/blob/main/library/secondary/catalog-facets.ts#L19-L33
+
+=== api
+declaration: undecorated_class TypeOnlyService
+## members "Attributes and Methods" (defaults)
+  load: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/load
+    load(): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/load/signature/0
+  save: [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #~/member/save
+    save(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void] → [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #~/member/save/signature/0
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/save/signature/0/parameter/0/value
+  version: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 1 [static]  #~/member/static/version
+
+=== explicitPublicApi
+declaration: undecorated_class TypeOnlyService
+
+=== type
+declaration: undecorated_class TypeOnlyService
+## constructors "Constructor"
+  constructor  #~/member/constructor
+    constructor(): [TypeOnlyService → #~] → [TypeOnlyService → #~]  #~/member/constructor/signature/0
+## propertys "Properties" (defaults)
+  version: [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number] = 1 [static]  #~/member/static/version
+## methods "Methods"
+  load: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/load
+    load(): [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] → [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/load/signature/0
+  save: [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #~/member/save
+    save(value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void] → [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #~/member/save/signature/0
+      param value: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #~/member/save/signature/0/parameter/0/value

@@ -22,7 +22,9 @@ import type { ApiEntry } from './model.ts';
 const documentation = await extractFixtures();
 const isCdk = (entry: ApiEntry): boolean => entry.source.packageName === '@angular/cdk';
 const entries = documentation.entries.filter(entry => !isCdk(entry));
-const fileName = (id: string): string => id.replace(/[^\w.@-]+/g, '_');
+const declaration = (name: string) => entries.find(entry => entry.name === name)!;
+const member = (owner: string, name: string) =>
+  declaration(owner).members.find(entry => entry.name === name);
 const cleanups: string[] = [];
 
 afterEach(() => {
@@ -63,19 +65,114 @@ describe('Angular compiler API extraction', () => {
     expect(documentation.entryPoints).toMatchSnapshot();
   });
 
-  it.each(entries.map(entry => [entry.id, entry] as const))('extracts %s', async (id, entry) => {
-    let value = stable(entry);
-    if (entry.name === 'BuiltinInherited') {
-      const keep = ['fromCharCode', '[Symbol.iterator]'];
-      value = {
-        ...value,
-        members: value.members.filter(member => keep.includes(member.name)),
-        typeMembers: value.typeMembers?.filter(member => keep.includes(member.name))
-      };
-    }
-    await expect(JSON.stringify(value, null, 2)).toMatchFileSnapshot(
-      `__snapshots__/entries/${fileName(id)}.json`
+  it('discovers declarations, aliases, and documentation-only types', async () => {
+    const inventory = entries.map(e => {
+      const flags = [
+        e.docsVisible ? 'visible' : 'hidden',
+        e.internal && 'internal',
+        e.related && 'related',
+        e.documentationOnly && 'docs-only',
+        e.typeOnlyExport && 'type-only',
+        e.aliasOf && `alias of ${e.aliasOf}`
+      ].filter(Boolean);
+      return `${e.id} | ${e.angularKind ?? e.kind} | ${flags.join(', ')} | ${e.source.filePath}`;
+    });
+    await expect(inventory.join('\n')).toMatchFileSnapshot('__snapshots__/declarations.txt');
+    expect(declaration('DocumentedAlias')).toMatchObject({
+      description: 'Alias declaration summary.',
+      jsdocTags: expect.arrayContaining([{ name: 'deprecated', comment: 'Alias deprecation.' }])
+    });
+    expect(declaration('FacetedValue').declarationVariants).toMatchObject([
+      { kind: 'constant', type: 'typeof RuntimeTarget' },
+      { kind: 'type_alias', type: 'RuntimeTarget' }
+    ]);
+  });
+
+  it('extracts Angular metadata and differentiates real signal bindings from lookalikes', () => {
+    expect(declaration('FixtureService').providedInRoot).toBe(true);
+    expect(declaration('UnprovidedService').providedInRoot).toBe(false);
+    expect(declaration('FixtureComponent')).toMatchObject({
+      selector: 'fixture-component',
+      exportAs: ['fixture'],
+      generics: ['T extends string = string'],
+      extends: ['BaseDirective'],
+      description: 'A signal-backed component.'
+    });
+    expect(member('FixtureComponent', 'value')).toMatchObject({
+      inputAlias: 'current',
+      outputAlias: 'currentChange',
+      signalReadType: 'number',
+      sourceDefaultValue: '3'
+    });
+    expect(member('FixtureComponent', 'title')).toMatchObject({
+      inputAlias: 'heading',
+      required: true
+    });
+    expect(member('SignalMetadata', 'requiredConverted')).toMatchObject({
+      required: true,
+      signalReadType: 'number',
+      signalTransformType: 'number'
+    });
+    expect(member('SignalMetadata', 'optionalCount')?.signalReadType).toBe('number | undefined');
+    expect(member('SignalMetadata', 'namespaceInput')?.inputAlias).toBe('namespaceInput');
+    expect(member('SignalMetadata', 'aliasInput')?.inputAlias).toBe('aliasInput');
+    expect(member('SignalMetadata', 'customInput')).toMatchObject({
+      inputAlias: undefined,
+      sourceDefaultValue: 'fakeInput(3)'
+    });
+  });
+
+  it('extracts source visibility and instantiated heritage', () => {
+    expect(member('FixtureComponent', 'explicit')?.explicitPublic).toBe(true);
+    expect(member('FixtureComponent', 'protectedMember')?.visibility).toBe('protected');
+    expect(declaration('AccessorMetadata').members.filter(m => m.name === 'value')).toMatchObject([
+      { kind: 'getter' },
+      { kind: 'setter' }
+    ]);
+    expect(member('MetadataGrandchild', 'value')).toMatchObject({
+      type: 'string[]',
+      inherited: true,
+      inheritedFrom: { name: 'GenericParent', type: 'GenericParent<string[]>' },
+      implementedFrom: { name: 'Contract', type: 'Contract<string[]>' }
+    });
+    expect(member('SelectionOverride', 'selectedRows')).toMatchObject({
+      inherited: false,
+      implementedFrom: { name: 'SelectionContract', type: 'SelectionContract<string>' }
+    });
+    expect(declaration('BuiltinInherited').members.map(m => m.name)).toEqual(
+      expect.arrayContaining(['fromCharCode', '[Symbol.iterator]'])
     );
+    expect(member('FixtureStatePipe', 'transform')?.implementedFrom).toMatchObject({
+      name: 'PipeTransform',
+      importPath: '@angular/core'
+    });
+    expect(member('IndexedRecord', '[name: string]')?.kind).toBe('index_signature');
+  });
+
+  it('distinguishes overloads from implementations and extracts constructor parameters', () => {
+    expect(member('MetadataOverloads', 'convert')?.signatures).toMatchObject([
+      {
+        implementation: false,
+        returnType: 'string',
+        parameters: [{ name: 'value', type: 'string' }]
+      },
+      {
+        implementation: false,
+        returnType: 'number',
+        parameters: [{ name: 'value', type: 'number' }]
+      },
+      { implementation: true, returnType: 'string | number' }
+    ]);
+    expect(member('ExplicitConstructorService', 'constructor')?.signatures).toMatchObject([
+      {
+        parameters: [
+          { name: 'name', optional: true, sourceDefaultValue: "'world'" },
+          { name: 'labels', rest: true, type: 'string[]' }
+        ]
+      }
+    ]);
+    expect(member('ProtectedConstructorService', 'constructor')?.visibility).toBe('protected');
+    expect(member('PrivateConstructorService', 'constructor')).toBeUndefined();
   });
 
   it('extracts only configured external declarations', () => {

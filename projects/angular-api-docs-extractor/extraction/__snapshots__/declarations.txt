@@ -1,0 +1,73 @@
+@fixture/dependency#SourceOnly | interface | visible | dependency/index.ts
+@fixture/library/secondary#AccessorMetadata | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#AliasTarget | undecorated_class | visible | library/secondary/aliases.ts
+@fixture/library/secondary#AnnotatedCallable | constant | visible | library/secondary/catalog-facets.ts
+@fixture/library/secondary#BareInternalAlias | undecorated_class | visible, alias of InternalAliasTarget | library/secondary/aliases.ts
+@fixture/library/secondary#BuiltinInherited | undecorated_class | visible | library/secondary/builtin.ts
+@fixture/library/secondary#CallbackProperties | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#Contract | interface | visible | library/secondary/metadata.ts
+@fixture/library/secondary#DeepOptions@library/secondary/deep.ts | interface | visible, related, docs-only | library/secondary/deep.ts
+@fixture/library/secondary#DocsComponentAlias | component | visible, alias of FixtureComponent | library/secondary/index.ts
+@fixture/library/secondary#DocsOnly | type_alias | visible | library/docs-only.ts
+@fixture/library/secondary#DocumentedAlias | undecorated_class | hidden, internal, alias of AliasTarget | library/secondary/aliases.ts
+@fixture/library/secondary#ExtendedMenuItemGroup | interface | visible | library/secondary/heritage.ts
+@fixture/library/secondary#ExtendedSelectionContract | interface | visible | library/secondary/heritage.ts
+@fixture/library/secondary#ExternalContract | interface | visible | external/contract.ts
+@fixture/library/secondary#ExternalDeclaration | undecorated_class | visible | external/framework.d.ts
+@fixture/library/secondary#FacetedValue | constant | visible | library/secondary/catalog-facets.ts
+@fixture/library/secondary#FixtureComponent | component | visible | library/secondary/component.ts
+@fixture/library/secondary#FixtureModule | ng_module | visible | library/secondary/kinds.ts
+@fixture/library/secondary#FixturePriority | enum | visible | library/secondary/kinds.ts
+@fixture/library/secondary#FixtureState | enum | visible | library/secondary/kinds.ts
+@fixture/library/secondary#FixtureStatePipe | pipe | visible | library/secondary/kinds.ts
+@fixture/library/secondary#GenericParent | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#helpers | namespace | visible | library/secondary/types.ts
+@fixture/library/secondary#IndexedOptions | interface | visible | library/secondary/index-signatures.ts
+@fixture/library/secondary#IndexedRecord | type_alias | visible | library/secondary/index-signatures.ts
+@fixture/library/secondary#InferredCallable | constant | visible | library/secondary/catalog-facets.ts
+@fixture/library/secondary#InheritedAccessors | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#InheritedCallbacks | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#InternalAliasTarget | undecorated_class | hidden, internal | library/secondary/aliases.ts
+@fixture/library/secondary#InternalDirective | directive | hidden, internal | library/secondary/metadata.ts
+@fixture/library/secondary#internalFunction | function | hidden, internal | library/secondary/metadata.ts
+@fixture/library/secondary#LocalOptions@library/secondary/types.ts | interface | visible, related, docs-only | library/secondary/types.ts
+@fixture/library/secondary#MenuItemBase | interface | visible | library/secondary/heritage.ts
+@fixture/library/secondary#MenuItemCollection | interface | visible | library/secondary/heritage.ts
+@fixture/library/secondary#MenuItemGroup | interface | visible | library/secondary/heritage.ts
+@fixture/library/secondary#MenuItemGroupImplementation | undecorated_class | visible | library/secondary/heritage.ts
+@fixture/library/secondary#MetadataChild | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#MetadataGrandchild | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#MetadataMiddle | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#MetadataOverloads | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#overloaded | function | visible | library/secondary/metadata.ts
+@fixture/library/secondary#ParentContract | interface | visible | library/secondary/metadata.ts
+@fixture/library/secondary#PretendService | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#ReadonlyAccessors | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#ReadonlyValues | interface | visible | library/secondary/index-signatures.ts
+@fixture/library/secondary#ReferencedTransformMetadata | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#RuntimeTarget | undecorated_class | visible | library/secondary/catalog-facets.ts
+@fixture/library/secondary#SelectionBase | directive | visible | library/secondary/metadata.ts
+@fixture/library/secondary#SelectionChild | directive | visible | library/secondary/metadata.ts
+@fixture/library/secondary#SelectionContract | interface | visible | library/secondary/heritage.ts
+@fixture/library/secondary#SelectionImplementation | undecorated_class | visible | library/secondary/heritage.ts
+@fixture/library/secondary#SelectionOverride | undecorated_class | visible | library/secondary/heritage.ts
+@fixture/library/secondary#SharedAlias | undecorated_class | visible, alias of AliasTarget | library/secondary/aliases.ts
+@fixture/library/secondary#SignalMetadata | directive | visible | library/secondary/metadata.ts
+@fixture/library/secondary#SourceOnly | interface | visible | dependency/index.ts
+@fixture/library/secondary#SpecificAlias | undecorated_class | visible, alias of AliasTarget | library/secondary/aliases.ts
+@fixture/library/secondary#StringOptions | interface | visible | library/secondary/index-signatures.ts
+@fixture/library/secondary#TypeOnlyService | injectable | visible, type-only | library/secondary/catalog-facets.ts
+@fixture/library/secondary#UndocumentedAlias | undecorated_class | visible, alias of AliasTarget | library/secondary/aliases.ts
+@fixture/library/secondary#UnprovidedService | injectable | visible | library/secondary/metadata.ts
+@fixture/library/secondary#useOptions | function | visible | library/secondary/types.ts
+@fixture/library/secondary#VisibilityMetadata | undecorated_class | visible | library/secondary/metadata.ts
+@fixture/library/secondary#withDefault | function | visible | library/secondary/types.ts
+@fixture/library#ExplicitConstructorService | undecorated_class | visible | library/constructors.ts
+@fixture/library#FixtureService | injectable | visible | library/service.ts
+@fixture/library#HiddenImplementation | interface | visible | library/internal/reexported.ts
+@fixture/library#InheritedConstructorService | undecorated_class | visible | library/constructors.ts
+@fixture/library#InternalType | interface | hidden, internal | library/internal-type.ts
+@fixture/library#PrivateConstructorService | undecorated_class | visible | library/constructors.ts
+@fixture/library#ProtectedConstructorService | undecorated_class | visible | library/constructors.ts
+@fixture/library#RootAlias | component | visible, alias of FixtureComponent | library/public-api.ts
+@fixture/library#TestOnly | constant | hidden, internal | library/testing/index.ts

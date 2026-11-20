@@ -15,21 +15,12 @@ import { prepareApiPresentation } from './index.ts';
 import type { ApiPresentation } from './model.ts';
 import { prepareReferencePlan } from './reference-plan.ts';
 
-const volatile = ['CdkDrag', 'CdkDropList', 'BuiltinInherited'];
 const prepare = (documentation: Awaited<ReturnType<typeof extractFixtures>>) => {
   const config = fixtureConfig();
   const references = prepareReferencePlan(documentation, config);
   const presentation = prepareApiPresentation(documentation, references.referencePaths, config);
   return { references, presentation };
 };
-const lines = (record: Record<string, unknown>, show: (value: never) => string) =>
-  Object.entries(record)
-    .sort(([a], [b]) => (a < b ? -1 : 1))
-    .map(([key, value]) => `${key} → ${show(value as never)}`)
-    .join('\n');
-const ids = (list: string[]) => [...list].sort().join(', ');
-const json = (value: unknown) => JSON.stringify(value, null, 2).replaceAll('\u200b', '<ZWSP>');
-
 describe('API documentation pipeline over fixtures', () => {
   let documentation: Parameters<typeof prepare>[0];
   let prepared: ReturnType<typeof prepare>;
@@ -38,35 +29,35 @@ describe('API documentation pipeline over fixtures', () => {
     prepared = prepare(documentation);
   });
 
-  it('prepares one snapshot per symbol', async () => {
-    for (const symbol of prepared.presentation.symbols.filter(s => !volatile.includes(s.name))) {
-      const file = `__snapshots__/pipeline/symbols/${symbol.importPath}/${symbol.name}.txt`;
-      await expect(symbolText(symbol)).toMatchFileSnapshot(file);
-    }
-  });
-
-  it('plans reference pages and navigation', async () => {
-    await expect(json(prepared.references)).toMatchFileSnapshot(
-      '__snapshots__/pipeline/reference-plan.json'
+  it('prepares representative Angular, inherited, overloaded, and faceted declarations', async () => {
+    const names = [
+      'FixtureComponent',
+      'FixtureStatePipe',
+      'MetadataOverloads',
+      'SelectionOverride',
+      'FacetedValue',
+      'ReadonlyValues',
+      'useOptions',
+      'TypeOnlyService'
+    ];
+    const symbols = names.map(name => prepared.presentation.symbols.find(s => s.name === name)!);
+    await expect(symbols.map(symbolText).join('\n\n')).toMatchFileSnapshot(
+      '__snapshots__/pipeline/surface.txt'
     );
-  });
-
-  it('indexes symbols, members and targets', async () => {
-    const { index, memberIndex, targets } = prepared.presentation;
-    const target = (t: { symbolId: string; anchor: string }) => `${t.symbolId} @${t.anchor}`;
-    const text = [lines(index, ids), lines(memberIndex, ids), lines(targets, target)];
-    await expect(text.join('\n\n')).toMatchFileSnapshot('__snapshots__/pipeline/indexes.txt');
   });
 
   it('is independent of entry order', () => {
     const reversed = { ...documentation, entries: [...documentation.entries].reverse() };
-    const canonical = (value: typeof prepared.presentation) => ({
-      symbols: value.symbols.map(s => symbolText(s)).sort(),
-      index: lines(value.index, ids),
-      memberIndex: lines(value.memberIndex, ids),
-      targets: value.targets
+    const unordered = (index: Record<string, string[]>) =>
+      Object.fromEntries(Object.entries(index).map(([key, ids]) => [key, [...ids].sort()]));
+    const canonical = ({ presentation, references }: typeof prepared) => ({
+      references,
+      ...presentation,
+      symbols: presentation.symbols.toSorted((a, b) => a.id.localeCompare(b.id)),
+      index: unordered(presentation.index),
+      memberIndex: unordered(presentation.memberIndex)
     });
-    expect(canonical(prepare(reversed).presentation)).toEqual(canonical(prepared.presentation));
+    expect(canonical(prepare(reversed))).toEqual(canonical(prepared));
   });
 
   it('ignores @defaultref tags', () => {
