@@ -4,7 +4,7 @@
  */
 import { CdkMenuBar, CdkMenuModule } from '@angular/cdk/menu';
 import {
-  AfterViewInit,
+  afterNextRender,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -13,6 +13,7 @@ import {
   inject,
   input,
   linkedSignal,
+  signal,
   viewChild
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -54,7 +55,9 @@ import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.mode
     '[class]': 'viewType()'
   }
 })
-export class SiContentActionBarComponent implements AfterViewInit {
+export class SiContentActionBarComponent {
+  private readonly menuActionService = inject(SiMenuActionService, { optional: true });
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   /**
    * List of primary actions. Supports up to **4** actions and omits additional ones.
    */
@@ -146,17 +149,10 @@ export class SiContentActionBarComponent implements AfterViewInit {
   });
   protected readonly icons = addIcons({ elementCancel, elementOptionsVertical });
   protected readonly expanded = linkedSignal(() => this.viewType() === 'expanded');
-  protected parentElement?: HTMLElement | null;
+  protected readonly parentElement = signal<HTMLElement | null>(null);
 
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
-  private menuActionService = inject(SiMenuActionService, { optional: true });
-
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      if (this.parentElement !== this.elementRef.nativeElement.parentElement) {
-        this.parentElement = this.elementRef.nativeElement.parentElement;
-      }
-    });
+  constructor() {
+    afterNextRender(() => this.parentElement.set(this.elementRef.nativeElement.parentElement));
   }
 
   protected expand(): void {

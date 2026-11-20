@@ -5,6 +5,5 @@
 export * from './si-auto-collapsable-list-item.directive';
 export * from './si-auto-collapsable-list.directive';
 export * from './si-auto-collapsable-list-overflow-item.directive';
-export * from './si-auto-collapsable-list-measurable.class';
 export * from './si-auto-collapsable-list-additional-content.directive';
 export * from './si-auto-collapsable-list.module';
