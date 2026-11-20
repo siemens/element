@@ -18,7 +18,7 @@ dependencies = [
 [project.urls]
 Homepage = "https://github.com/siemens/element"
 Repository = "https://github.com/siemens/element.git"
-Documentation = "https://github.com/siemens/element/blob/main/docs/architecture/documentation.md"
+Documentation = "https://github.com/siemens/element/blob/main/docs/contributing/documentation.md"
 
 [project.scripts]
 angular-api-docs-zensical = "siemens_angular_api_docs_zensical.cli:main"

@@ -209,18 +209,18 @@ nav:
       - AI chat history:                  'patterns/ai/ai-chat-history.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
-    - Documentation build:                'architecture/documentation.md'
     - Dynamic forms:                      'architecture/dynamic-forms.md'
     - Motion and animation:               'architecture/motion-animation.md'
     - Resize observer:                    'architecture/resize-observer.md'
     - Theming:                            'architecture/theming.md'
-    - Translation abstraction:            'architecture/translation.md'
     - UI state:                           'architecture/ui-state.md'
     - Zoneless:                           'architecture/zoneless.md'
   - Contributing:
     - Guidelines:                         'CONTRIBUTING.md'
     - Code of conduct:                    'CODE_OF_CONDUCT.md'
     - Developer guide:                    'DEVELOPER.md'
+    - Documentation build:                'contributing/documentation.md'
+    - Translation abstraction:            'contributing/translation.md'
 
 theme:
   name: code-siemens-code-docs-theme
@@ -326,7 +326,7 @@ plugins:
         Icons: ['icons.md']
         Patterns: ['patterns/*.md']
         Architecture: ['architecture/*.md']
-        Contributing: ['CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'DEVELOPER.md']
+        Contributing: ['CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'DEVELOPER.md', 'contributing/*.md']
   - material/search
   - minify:
       minify_html: true
