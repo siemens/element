@@ -3,11 +3,11 @@
 !!! warning "For Element contributors only"
 
     This guide is only for developing Element itself, not for applications using Element.
-    Application developers should follow the [translation guide](../fundamentals/translation.md) and must not use the internal APIs described here.
+    Application developers should follow the [translation guide](../../fundamentals/translation.md) and must not use the internal APIs described here.
 
 Element uses `@siemens/element-translate-ng` to support different translation frameworks without depending on one within its components.
 This guide describes the abstraction and how to add translatable text when developing Element components.
-For application configuration, see [translation](../fundamentals/translation.md).
+For application configuration, see [translation](../../fundamentals/translation.md).
 
 ## Building blocks
 
@@ -57,7 +57,7 @@ No translation files are needed.
 5. The pipe updates the rendered text when the stream emits, including on language changes.
 
 Overrides replace the key before translation. The default text remains registered under the original key.
-For fallback-language and missing-translation configuration, see [default text with ngx-translate](../fundamentals/translation.md#default-text-with-ngx-translatecore).
+For fallback-language and missing-translation configuration, see [default text with ngx-translate](../../fundamentals/translation.md#default-text-with-ngx-translatecore).
 
 ### With Angular localize
 

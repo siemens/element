@@ -209,14 +209,15 @@ nav:
       - AI chat history:                  'patterns/ai/ai-chat-history.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
-    - Documentation build:                'architecture/documentation.md'
     - Dynamic forms:                      'architecture/dynamic-forms.md'
     - Motion and animation:               'architecture/motion-animation.md'
     - Resize observer:                    'architecture/resize-observer.md'
     - Theming:                            'architecture/theming.md'
-    - Translation abstraction:            'architecture/translation.md'
     - UI state:                           'architecture/ui-state.md'
     - Zoneless:                           'architecture/zoneless.md'
+    - Internal:
+      - Documentation build:              'architecture/internal/documentation.md'
+      - Translation abstraction:          'architecture/internal/translation.md'
   - Contributing:
     - Guidelines:                         'CONTRIBUTING.md'
     - Code of conduct:                    'CODE_OF_CONDUCT.md'
@@ -324,7 +325,7 @@ plugins:
         API reference: ['api/*.md']
         Icons: ['icons.md']
         Patterns: ['patterns/*.md']
-        Architecture: ['architecture/*.md']
+        Architecture: ['architecture/*.md', 'architecture/internal/*.md']
         Contributing: ['CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'DEVELOPER.md']
   - material/search
   - minify:

@@ -4,7 +4,7 @@
 
     This guide describes how the Element documentation site is built.
     It is not relevant for applications using Element.
-    For the commands, see the [developer guide](../DEVELOPER.md#documentation).
+    For the commands, see the [developer guide](../../DEVELOPER.md#documentation).
 
 The documentation is a [Zensical](https://zensical.org/) site built from the authored Markdown in `docs/`.
 API documentation is extracted from the library sources with the Angular compiler, prepared as JSON, and rendered into the site by Python-Markdown extensions.

@@ -46,7 +46,7 @@ pnpm run translate:build
 
 ## Translatable component text
 
-See the [translation abstraction](https://element.siemens.io/architecture/translation/) guide
+See the [translation abstraction](https://element.siemens.io/architecture/internal/translation/) guide
 for declaring and rendering translatable text, extracting keys, and testing translation behavior.
 
 ## Running the example application
@@ -231,7 +231,7 @@ Open the documentation at `http://localhost:8000`. The documentation and embedde
 examples both use `localhost` to avoid cross-site browser storage restrictions.
 
 For details on how the documentation is built, see the
-[documentation architecture](https://element.siemens.io/architecture/documentation/).
+[documentation architecture](https://element.siemens.io/architecture/internal/documentation/).
 
 ### API documentation
 
