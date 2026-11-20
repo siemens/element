@@ -7,6 +7,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Link } from '@siemens/element-ng/link';
+import { page, userEvent } from 'vitest/browser';
 
 import { LicenseInfo } from './si-about-data.model';
 import { SiAboutComponent } from './si-about.component';
@@ -161,6 +162,20 @@ describe('SiAboutComponent', () => {
     expect(links).not.toContain('More information about stuff');
   });
 
+  it('should show empty state when no license text, iframe, or api is provided', async () => {
+    const root = page.elementLocator(element);
+    licenseInfo.set({ title: 'License' });
+    await fixture.whenStable();
+
+    await expect.element(root.getByText('No licenses available.')).toBeVisible();
+
+    licenseInfo.set({ title: 'License', text: '   ' });
+    await fixture.whenStable();
+
+    await expect.element(root.getByText('No licenses available.')).toBeVisible();
+    expect(element.querySelector('pre')).not.toBeInTheDocument();
+  });
+
   describe('logoAlt', () => {
     it('should use custom logoAlt with appName interpolated', async () => {
       appName.set('The');
@@ -284,6 +299,312 @@ describe('SiAboutComponent', () => {
 
       httpMock.expectNone('/component1.txt');
       expect(element.querySelector('.license-api-file-content')).toHaveTextContent('License');
+    });
+
+    it('should show loading skeleton with aria-busy and status announcement while license index loads', async () => {
+      const root = page.elementLocator(element);
+      const section = element.querySelector<HTMLElement>('.license-api-section')!;
+      const status = root.getByRole('status');
+
+      expect(section).toHaveAttribute('aria-busy', 'true');
+      expect(section.querySelectorAll('.si-skeleton').length).toBeGreaterThan(0);
+      expect(status.element().closest('[aria-busy="true"]')).toBeNull();
+      await expect.element(status).toHaveTextContent('Loading licenses…');
+
+      httpMock.expectOne('/licenses.json').flush([
+        { name: 'Module 1', href: '/module1.json' },
+        { name: 'Module 2', href: '/module2.json' }
+      ]);
+      await fixture.whenStable();
+
+      expect(section).not.toHaveAttribute('aria-busy');
+      expect(section.querySelectorAll('.si-skeleton')).toHaveLength(0);
+      await expect.element(status).toHaveTextContent('');
+      await expect.element(root.getByRole('button', { name: 'Module 1' })).toBeVisible();
+    });
+
+    it('should preserve Retry button focus across keyboard retries, second failure, and success', async () => {
+      const root = page.elementLocator(element);
+
+      httpMock
+        .expectOne('/licenses.json')
+        .flush('Error', { status: 500, statusText: 'Server Error' });
+      await fixture.whenStable();
+
+      await expect.element(root.getByRole('alert')).toHaveTextContent('Could not load licenses.');
+
+      const retryButton = element.querySelector<HTMLButtonElement>('.license-api-error button')!;
+      retryButton.focus();
+      await userEvent.keyboard('{Enter}');
+      await fixture.whenStable();
+
+      // Same button stays mounted, visibly focused, and aria-disabled while retrying
+      expect(document.activeElement).toBe(retryButton);
+      expect(retryButton).toHaveAttribute('aria-disabled', 'true');
+      expect(element.querySelector('.license-api-section')).toHaveAttribute('aria-busy', 'true');
+      await expect.element(root.getByRole('status')).toHaveTextContent('Loading licenses…');
+
+      const retryReq1 = httpMock.expectOne('/licenses.json');
+      // Repeated keyboard activation while pending does not fire duplicate request
+      await userEvent.keyboard(' ');
+      await fixture.whenStable();
+      httpMock.expectNone('/licenses.json');
+
+      // Second failure keeps the exact same Retry button focused and re-renders the alert
+      retryReq1.flush('Error', { status: 500, statusText: 'Server Error' });
+      await fixture.whenStable();
+
+      expect(document.activeElement).toBe(retryButton);
+      expect(retryButton).not.toHaveAttribute('aria-disabled');
+      await expect.element(root.getByRole('alert')).toHaveTextContent('Could not load licenses.');
+
+      // Space retries again; on success focus moves to a visible fallback (first category button)
+      await userEvent.keyboard(' ');
+      await fixture.whenStable();
+
+      httpMock.expectOne('/licenses.json').flush([
+        { name: 'Module 1', href: '/module1.json' },
+        { name: 'Module 2', href: '/module2.json' }
+      ]);
+      await fixture.whenStable();
+
+      await expect.element(root.getByRole('alert')).not.toBeInTheDocument();
+      await expect.element(root.getByRole('button', { name: 'Module 1' })).toHaveFocus();
+    });
+
+    it('should announce empty state when license index returns no items', async () => {
+      const root = page.elementLocator(element);
+      const section = page.elementLocator(element.querySelector('.license-api-section')!);
+
+      httpMock.expectOne('/licenses.json').flush([]);
+      await fixture.whenStable();
+
+      await expect.element(section.getByText('No licenses available.')).toBeVisible();
+      await expect.element(root.getByRole('status')).toHaveTextContent('No licenses available.');
+    });
+
+    it('should fetch empty inline content with valid href while caching empty HTTP responses', async () => {
+      const root = page.elementLocator(element);
+      const section = page.elementLocator(element.querySelector('.license-api-section')!);
+
+      httpMock.expectOne('/licenses.json').flush([
+        {
+          name: 'Module',
+          href: '/module.json',
+          files: [
+            { name: 'Component 1', href: '/component1.txt', content: '' },
+            { name: 'Component 2', href: '/component2.txt', content: '' }
+          ]
+        }
+      ]);
+      await fixture.whenStable();
+
+      await userEvent.click(root.getByRole('button', { name: 'Module' }));
+      await fixture.whenStable();
+
+      // Empty inline content with valid href still triggers fetch
+      await userEvent.click(root.getByRole('button', { name: 'Component 1' }));
+      await fixture.whenStable();
+
+      httpMock.expectOne('/component1.txt').flush('Apache 2.0 License');
+      await fixture.whenStable();
+
+      await expect.element(root.getByText('Apache 2.0 License')).toBeVisible();
+
+      // Empty HTTP response is cached and not re-fetched on subsequent toggle
+      const component2Button = root.getByRole('button', { name: 'Component 2' });
+      await userEvent.click(component2Button);
+      await fixture.whenStable();
+
+      httpMock.expectOne('/component2.txt').flush('');
+      await fixture.whenStable();
+
+      await expect.element(section.getByText('No license text available.')).toBeVisible();
+      await expect
+        .element(root.getByRole('status'))
+        .toHaveTextContent('No license text available.');
+
+      await userEvent.click(component2Button);
+      await fixture.whenStable();
+      await userEvent.click(component2Button);
+      await fixture.whenStable();
+      httpMock.expectNone('/component2.txt');
+    });
+
+    it('should show loading state for component list without duplicate requests on toggle', async () => {
+      const root = page.elementLocator(element);
+
+      httpMock.expectOne('/licenses.json').flush([
+        { name: 'Module 1', href: '/module1.json' },
+        { name: 'Module 2', href: '/module2.json' }
+      ]);
+      await fixture.whenStable();
+
+      const moduleButton = root.getByRole('button', { name: 'Module 1' });
+      await userEvent.click(moduleButton);
+      await fixture.whenStable();
+
+      const req = httpMock.expectOne('/module1.json');
+      const region = element.querySelector<HTMLElement>('.license-api .license-api-panel-content')!;
+      expect(region).toHaveAttribute('aria-busy', 'true');
+      expect(region.querySelectorAll('.si-skeleton').length).toBeGreaterThan(0);
+
+      // Collapse and re-expand while request is still in-flight
+      await userEvent.click(moduleButton);
+      await fixture.whenStable();
+      await userEvent.click(moduleButton);
+      await fixture.whenStable();
+      httpMock.expectNone('/module1.json');
+
+      req.flush([{ name: 'Component 1', href: '/component1.txt' }]);
+      await fixture.whenStable();
+
+      expect(
+        element.querySelector<HTMLElement>('.license-api .license-api-panel-content')
+      ).not.toHaveAttribute('aria-busy');
+      await expect.element(root.getByRole('button', { name: 'Component 1' })).toBeVisible();
+    });
+
+    it('should show error state with retry when component list fails', async () => {
+      const root = page.elementLocator(element);
+
+      httpMock.expectOne('/licenses.json').flush([
+        { name: 'Module 1', href: '/module1.json' },
+        { name: 'Module 2', href: '/module2.json' }
+      ]);
+      await fixture.whenStable();
+
+      await userEvent.click(root.getByRole('button', { name: 'Module 1' }));
+      await fixture.whenStable();
+
+      httpMock
+        .expectOne('/module1.json')
+        .flush('Error', { status: 500, statusText: 'Server Error' });
+      await fixture.whenStable();
+
+      await expect.element(root.getByRole('alert')).toHaveTextContent('Could not load licenses.');
+
+      await userEvent.click(root.getByRole('button', { name: 'Retry' }));
+      await fixture.whenStable();
+
+      httpMock.expectOne('/module1.json').flush([{ name: 'Component 1', href: '/component1.txt' }]);
+      await fixture.whenStable();
+
+      await expect.element(root.getByRole('alert')).not.toBeInTheDocument();
+      await expect.element(root.getByRole('button', { name: 'Component 1' })).toBeVisible();
+    });
+
+    it('should show error state and allow retry when single-module prefetch fails', async () => {
+      const root = page.elementLocator(element);
+
+      httpMock.expectOne('/licenses.json').flush([{ name: 'Module 1', href: '/module1.json' }]);
+      httpMock
+        .expectOne('/module1.json')
+        .flush('Error', { status: 500, statusText: 'Server Error' });
+      await fixture.whenStable();
+
+      // Alert is not rendered while panel is collapsed
+      await expect.element(root.getByRole('alert')).not.toBeInTheDocument();
+
+      await userEvent.click(root.getByRole('button', { name: 'Module 1' }));
+      await fixture.whenStable();
+
+      await expect.element(root.getByRole('alert')).toHaveTextContent('Could not load licenses.');
+
+      await userEvent.click(root.getByRole('button', { name: 'Retry' }));
+      await fixture.whenStable();
+
+      httpMock.expectOne('/module1.json').flush([{ name: 'Component 1', href: '/component1.txt' }]);
+      await fixture.whenStable();
+
+      await expect.element(root.getByRole('button', { name: 'Component 1' })).toBeVisible();
+    });
+
+    it('should show empty state when component list returns no items', async () => {
+      const root = page.elementLocator(element);
+      const section = page.elementLocator(element.querySelector('.license-api-section')!);
+
+      httpMock.expectOne('/licenses.json').flush([
+        { name: 'Module 1', href: '/module1.json' },
+        { name: 'Module 2', href: '/module2.json' }
+      ]);
+      await fixture.whenStable();
+
+      await userEvent.click(root.getByRole('button', { name: 'Module 1' }));
+      await fixture.whenStable();
+
+      httpMock.expectOne('/module1.json').flush([]);
+      await fixture.whenStable();
+
+      await expect.element(section.getByText('No licenses available.')).toBeVisible();
+      await expect.element(root.getByRole('status')).toHaveTextContent('No licenses available.');
+    });
+
+    it('should show loading, error with retry, and empty states for license text', async () => {
+      const root = page.elementLocator(element);
+      const section = page.elementLocator(element.querySelector('.license-api-section')!);
+
+      httpMock.expectOne('/licenses.json').flush([
+        {
+          name: 'Module',
+          href: '/module.json',
+          files: [
+            { name: 'Component 1', href: '/component1.txt' },
+            { name: 'Component 2', href: '/component2.txt' }
+          ]
+        }
+      ]);
+      await fixture.whenStable();
+
+      await userEvent.click(root.getByRole('button', { name: 'Module' }));
+      await fixture.whenStable();
+
+      // Loading -> Error -> Retry -> Success
+      await userEvent.click(root.getByRole('button', { name: 'Component 1' }));
+      await fixture.whenStable();
+
+      const fileReq1 = httpMock.expectOne('/component1.txt');
+      const fileContentRegion = element.querySelector<HTMLElement>(
+        '.license-api-file .license-api-panel-content'
+      )!;
+      expect(fileContentRegion).toHaveAttribute('aria-busy', 'true');
+      expect(fileContentRegion.querySelectorAll('.si-skeleton').length).toBeGreaterThan(0);
+      await expect.element(root.getByRole('status')).toHaveTextContent('Loading license text…');
+
+      fileReq1.flush('Error', { status: 404, statusText: 'Not Found' });
+      await fixture.whenStable();
+
+      await expect
+        .element(root.getByRole('alert'))
+        .toHaveTextContent('Could not load license text.');
+
+      await userEvent.click(root.getByRole('button', { name: 'Retry' }));
+      await fixture.whenStable();
+
+      httpMock.expectOne('/component1.txt').flush('MIT License');
+      await fixture.whenStable();
+
+      await expect.element(root.getByRole('alert')).not.toBeInTheDocument();
+      await expect.element(root.getByText('MIT License')).toBeVisible();
+
+      // Empty / whitespace-only license text does not re-fetch on subsequent toggle
+      const component2Button = root.getByRole('button', { name: 'Component 2' });
+      await userEvent.click(component2Button);
+      await fixture.whenStable();
+
+      httpMock.expectOne('/component2.txt').flush('   \n');
+      await fixture.whenStable();
+
+      await expect.element(section.getByText('No license text available.')).toBeVisible();
+      await expect
+        .element(root.getByRole('status'))
+        .toHaveTextContent('No license text available.');
+
+      await userEvent.click(component2Button);
+      await fixture.whenStable();
+      await userEvent.click(component2Button);
+      await fixture.whenStable();
+      httpMock.expectNone('/component2.txt');
     });
   });
 });

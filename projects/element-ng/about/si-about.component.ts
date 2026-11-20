@@ -4,16 +4,45 @@
  */
 import { NgTemplateOutlet } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  Injector,
+  input,
+  OnInit,
+  signal
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { elementDocument } from '@siemens/element-icons';
 import { SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
-import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { Subscription } from 'rxjs';
 
 import { ApiInfo, LicenseInfo } from './si-about-data.model';
+
+type ApiLoadState = 'idle' | 'loading' | 'retrying' | 'loaded' | 'error';
+
+interface LicenseFileState {
+  name: string;
+  href: string;
+  content?: string;
+  isOpen: boolean;
+  state: ApiLoadState;
+}
+
+interface LicenseCategoryState {
+  name: string;
+  href: string;
+  files?: LicenseFileState[];
+  isOpen: boolean;
+  state: ApiLoadState;
+}
 
 @Component({
   selector: 'si-about',
@@ -23,14 +52,20 @@ import { ApiInfo, LicenseInfo } from './si-about-data.model';
     SiCopyrightNoticeComponent,
     SiIconComponent,
     SiLinkDirective,
+    SiStatusIconComponent,
     SiTranslatePipe
   ],
   templateUrl: './si-about.component.html',
   styleUrl: './si-about.component.scss'
 })
 export class SiAboutComponent implements OnInit {
-  private http = inject(HttpClient);
-  private sanitizer = inject(DomSanitizer);
+  private readonly http = inject(HttpClient);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly injector = inject(Injector);
+
+  private indexSubscription?: Subscription;
+  private readonly itemSubscriptions = new Map<object, Subscription>();
 
   /**
    * Alt text for the application logo. Supports `{{appName}}` placeholder for interpolation.
@@ -104,43 +139,263 @@ export class SiAboutComponent implements OnInit {
       : undefined;
   });
 
-  protected readonly licenseApi = signal<ApiInfo[]>([]);
+  protected readonly licenseApi = signal<LicenseCategoryState[]>([]);
+  protected readonly licenseIndexState = signal<ApiLoadState>('idle');
+  protected readonly statusAnnouncement = signal<TranslatableString | undefined>(undefined);
   protected readonly icons = addIcons({ elementDocument });
 
+  protected readonly loadingLicensesText = t(
+    () => $localize`:@@SI_ABOUT.LOADING_LICENSES:Loading licenses…`
+  );
+  protected readonly loadingLicenseText = t(
+    () => $localize`:@@SI_ABOUT.LOADING_LICENSE_TEXT:Loading license text…`
+  );
+  protected readonly loadErrorText = t(
+    () => $localize`:@@SI_ABOUT.LOAD_ERROR:Could not load licenses.`
+  );
+  protected readonly loadTextErrorText = t(
+    () => $localize`:@@SI_ABOUT.LOAD_TEXT_ERROR:Could not load license text.`
+  );
+  protected readonly retryText = t(() => $localize`:@@SI_ABOUT.RETRY:Retry`);
+  protected readonly noLicensesText = t(
+    () => $localize`:@@SI_ABOUT.NO_LICENSES:No licenses available.`
+  );
+  protected readonly noLicenseText = t(
+    () => $localize`:@@SI_ABOUT.NO_LICENSE_TEXT:No license text available.`
+  );
+
+  protected readonly retryLicenseIndex = (_item: unknown, event: Event): void => {
+    this.loadLicenseIndex(true, this.getRetryButton(event));
+  };
+
+  protected readonly retryCategoryFiles = (category: LicenseCategoryState, event: Event): void => {
+    this.loadCategoryFiles(category, true, this.getRetryButton(event));
+  };
+
+  protected readonly retryFileContent = (file: LicenseFileState, event: Event): void => {
+    this.loadFileContent(file, true, this.getRetryButton(event));
+  };
+
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.indexSubscription?.unsubscribe();
+      this.itemSubscriptions.forEach(subscription => subscription.unsubscribe());
+      this.itemSubscriptions.clear();
+    });
+  }
+
   ngOnInit(): void {
-    const licenseInfo = this.licenseInfo();
-    if (licenseInfo.api) {
-      this.http.get<ApiInfo[]>(licenseInfo.api, { responseType: 'json' }).subscribe(data => {
-        this.licenseApi.set(data);
-        if (this.licenseApi().length === 1) {
-          data[0].isOpen = false;
-          this.licenseApi.set([...data]);
-          this.toggleLoadLicenseApi(this.licenseApi()[0]);
+    this.loadLicenseIndex();
+  }
+
+  protected toggleLoadLicenseApi(category: LicenseCategoryState, opened: boolean): void {
+    category.isOpen = opened;
+    if (!opened) {
+      return;
+    }
+
+    if (category.state === 'idle') {
+      this.loadCategoryFiles(category);
+    } else if (category.state === 'loading' || category.state === 'retrying') {
+      this.statusAnnouncement.set(this.loadingLicensesText);
+    } else if (category.state === 'loaded' && !category.files?.length) {
+      this.statusAnnouncement.set(this.noLicensesText);
+    }
+  }
+
+  protected toggleLoadLicenseContent(file: LicenseFileState, opened: boolean): void {
+    file.isOpen = opened;
+    if (!opened) {
+      return;
+    }
+
+    if (file.state === 'idle') {
+      this.loadFileContent(file);
+    } else if (file.state === 'loading' || file.state === 'retrying') {
+      this.statusAnnouncement.set(this.loadingLicenseText);
+    } else if (file.state === 'loaded' && !file.content?.trim()) {
+      this.statusAnnouncement.set(this.noLicenseText);
+    }
+  }
+
+  private loadLicenseIndex(retrying = false, retryButton?: HTMLButtonElement): void {
+    const apiUrl = this.licenseInfo().api;
+    if (!apiUrl || this.isBusy(this.licenseIndexState())) {
+      return;
+    }
+
+    this.indexSubscription?.unsubscribe();
+    this.licenseIndexState.set(retrying ? 'retrying' : 'loading');
+    this.statusAnnouncement.set(this.loadingLicensesText);
+    this.indexSubscription = this.http.get<ApiInfo[]>(apiUrl, { responseType: 'json' }).subscribe({
+      next: data => {
+        const section = this.isRetryFocused(retryButton)
+          ? retryButton.closest<HTMLElement>('.license-api-section')
+          : null;
+        const items = (data ?? []).map(item => this.toCategoryState(item));
+        this.licenseApi.set(items);
+        this.licenseIndexState.set('loaded');
+        this.statusAnnouncement.set(items.length === 0 ? this.noLicensesText : undefined);
+        if (section) {
+          this.focusAfterRender(() =>
+            section.querySelector<HTMLElement>(
+              '.license-api .collapsible-header, .license-api-empty'
+            )
+          );
+        }
+        if (items.length === 1 && items[0].state === 'idle') {
+          this.loadCategoryFiles(items[0]);
+        }
+      },
+      error: () => {
+        this.licenseIndexState.set('error');
+        this.statusAnnouncement.set(undefined);
+      }
+    });
+  }
+
+  private loadCategoryFiles(
+    category: LicenseCategoryState,
+    retrying = false,
+    retryButton?: HTMLButtonElement
+  ): void {
+    if (this.isBusy(category.state)) {
+      return;
+    }
+
+    this.itemSubscriptions.get(category)?.unsubscribe();
+    category.state = retrying ? 'retrying' : 'loading';
+    if (category.isOpen || retrying) {
+      this.statusAnnouncement.set(this.loadingLicensesText);
+    }
+    this.licenseApi.update(items => [...items]);
+
+    const subscription = this.http
+      .get<ApiInfo[]>(category.href, { responseType: 'json' })
+      .subscribe({
+        next: files => {
+          const panel = this.isRetryFocused(retryButton)
+            ? retryButton.closest<HTMLElement>('si-collapsible-panel')
+            : null;
+          category.files = (files ?? []).map(file => this.toFileState(file));
+          category.state = 'loaded';
+          this.itemSubscriptions.delete(category);
+          this.licenseApi.update(items => [...items]);
+          if (category.isOpen || retrying) {
+            this.statusAnnouncement.set(
+              category.files.length === 0 ? this.noLicensesText : undefined
+            );
+          }
+          if (panel) {
+            this.focusAfterRender(
+              () =>
+                panel.querySelector<HTMLElement>('.license-api-file .collapsible-header') ??
+                panel.querySelector<HTMLElement>(':scope > .collapsible-header')
+            );
+          }
+        },
+        error: () => {
+          category.state = 'error';
+          this.itemSubscriptions.delete(category);
+          this.licenseApi.update(items => [...items]);
+          if (category.isOpen || retrying) {
+            this.statusAnnouncement.set(undefined);
+          }
         }
       });
+
+    if (!subscription.closed) {
+      this.itemSubscriptions.set(category, subscription);
     }
   }
 
-  protected toggleLoadLicenseApi(apiInfo: ApiInfo): void {
-    const licenseApi = this.licenseApi();
-    if (!apiInfo.isOpen && !apiInfo.files) {
-      this.http.get<ApiInfo[]>(apiInfo.href, { responseType: 'json' }).subscribe(files => {
-        apiInfo.files = files;
-        this.licenseApi.set([...licenseApi]);
-      });
+  private loadFileContent(
+    file: LicenseFileState,
+    retrying = false,
+    retryButton?: HTMLButtonElement
+  ): void {
+    if (this.isBusy(file.state)) {
+      return;
     }
-    apiInfo.isOpen = !apiInfo.isOpen;
-    this.licenseApi.set([...licenseApi]);
+
+    this.itemSubscriptions.get(file)?.unsubscribe();
+    file.state = retrying ? 'retrying' : 'loading';
+    if (file.isOpen || retrying) {
+      this.statusAnnouncement.set(this.loadingLicenseText);
+    }
+    this.licenseApi.update(items => [...items]);
+
+    const subscription = this.http.get(file.href, { responseType: 'text' }).subscribe({
+      next: content => {
+        const panel = this.isRetryFocused(retryButton)
+          ? retryButton.closest<HTMLElement>('si-collapsible-panel')
+          : null;
+        file.content = content ?? '';
+        file.state = 'loaded';
+        this.itemSubscriptions.delete(file);
+        this.licenseApi.update(items => [...items]);
+        if (file.isOpen || retrying) {
+          this.statusAnnouncement.set(file.content.trim() ? undefined : this.noLicenseText);
+        }
+        if (panel) {
+          this.focusAfterRender(() =>
+            panel.querySelector<HTMLElement>(':scope > .collapsible-header')
+          );
+        }
+      },
+      error: () => {
+        file.state = 'error';
+        this.itemSubscriptions.delete(file);
+        this.licenseApi.update(items => [...items]);
+        if (file.isOpen || retrying) {
+          this.statusAnnouncement.set(undefined);
+        }
+      }
+    });
+
+    if (!subscription.closed) {
+      this.itemSubscriptions.set(file, subscription);
+    }
   }
 
-  protected toggleLoadLicenseContent(apiInfo: ApiInfo): void {
-    const licenseApi = this.licenseApi();
-    apiInfo.isOpen = !apiInfo.isOpen;
-    if (!apiInfo.content) {
-      this.http.get(apiInfo.href, { responseType: 'text' }).subscribe((content: string) => {
-        apiInfo.content = content;
-        this.licenseApi.set([...licenseApi]);
-      });
-    }
+  private toCategoryState(item: ApiInfo): LicenseCategoryState {
+    return {
+      name: item.name,
+      href: item.href,
+      files: item.files?.map(file => this.toFileState(file)),
+      isOpen: false,
+      state: item.files !== undefined ? 'loaded' : 'idle'
+    };
+  }
+
+  private toFileState(item: ApiInfo): LicenseFileState {
+    return {
+      name: item.name,
+      href: item.href,
+      content: item.content,
+      isOpen: false,
+      state: item.content || !item.href ? 'loaded' : 'idle'
+    };
+  }
+
+  private isBusy(state: ApiLoadState): boolean {
+    return state === 'loading' || state === 'retrying';
+  }
+
+  private getRetryButton(event: Event): HTMLButtonElement | undefined {
+    return event.currentTarget instanceof HTMLButtonElement ? event.currentTarget : undefined;
+  }
+
+  private isRetryFocused(button?: HTMLButtonElement): button is HTMLButtonElement {
+    return !!button && button.isConnected && button.ownerDocument.activeElement === button;
+  }
+
+  private focusAfterRender(getTarget: () => HTMLElement | null): void {
+    afterNextRender(
+      () => {
+        getTarget()?.focus({ preventScroll: true });
+      },
+      { injector: this.injector }
+    );
   }
 }
