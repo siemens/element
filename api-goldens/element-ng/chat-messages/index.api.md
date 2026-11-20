@@ -302,6 +302,13 @@ export class SiUserMessageComponent {
 }
 
 // @public
+export class SiVoiceWaveformComponent {
+    constructor();
+    readonly active: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly level: _angular_core.InputSignal<number | undefined>;
+}
+
+// @public
 export interface TemplateChatMessage {
     template: TemplateRef<any>;
     templateContext?: any;

@@ -79,7 +79,8 @@ it does not send a message unless the consumer opts in.
 
 The consumer controls the icon, contextual actions, and chat state. The directive supplies
 translated start/stop labels and the pressed state. It preserves button focus, including
-when recognition finishes. No audio waveform is rendered.
+when recognition finishes. Consumers can optionally project a provider-independent audio
+waveform beside the button without adding waveform behavior to chat or speech input.
 
 ## Code ---
 
@@ -146,6 +147,30 @@ defines how those edits should interact with recognition updates.
 
 `listening()` includes both permission startup and the wait for final results.
 
+#### Audio waveform
+
+Import `SiVoiceWaveformComponent` from `@siemens/element-ng/chat-messages` and place it
+before the speech button in the same `siChatInputEnd` slot:
+
+```html
+@if (speech.listening()) {
+<si-voice-waveform siChatInputEnd [active]="capturing()" [level]="audioLevel()" />
+}
+```
+
+The waveform is decorative (`aria-hidden="true"`) and occupies a fixed 120 by 16 pixel
+viewport. Supply normalized audio levels from 0 to 1; zero represents silence, while
+undefined uses simulated speech-like levels. Non-finite values become silence and values
+outside the range are clamped. The example uses simulated levels, not microphone audio.
+
+`active` controls sampling independently of the recognition attempt. Keep the waveform
+mounted with `active` false while collecting final results to preserve its history, and
+remove it when the attempt ends. A new mount starts at the silent baseline. The speech
+directive's `listening()` includes permission startup and final-result collection; it
+does not indicate that audio is currently being captured. Use your provider's capture
+lifecycle for `capturing()`. Reduced motion and Element's disabled-animation policy stop
+sampling and movement without discarding existing samples.
+
 #### Standalone use
 
 The same directive can update any signal-backed text field, without a chat component:
@@ -186,5 +211,7 @@ of typing and sending. Other failures emit their Web Speech API error code and r
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
 
 <si-docs-api directive="SiSpeechInputDirective"></si-docs-api>
+
+<si-docs-api component="SiVoiceWaveformComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>

@@ -1,0 +1,11 @@
+- textbox "Chat input" [disabled]:
+  - /placeholder: Enter a command, question or topic…
+- group:
+  - button "Attach file" [disabled]
+- button "Stop dictation" [pressed]
+- button "Send" [disabled]
+- text: The content is AI generated. Always verify the information for accuracy.
+- status: Listening…
+- heading "Control panel" [level=3]
+- switch "Simulated audio levels" [checked] [disabled]
+- text: Simulated audio levels

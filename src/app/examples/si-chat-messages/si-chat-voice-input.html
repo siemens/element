@@ -7,6 +7,9 @@
     [(value)]="value"
     (send)="sendMessage($event)"
   >
+    @if (speech.listening()) {
+      <si-voice-waveform siChatInputEnd [active]="hasTranscript()" [level]="voiceInputLevel()" />
+    }
     <button
       #speech="siSpeechInput"
       type="button"
@@ -18,6 +21,7 @@
       [silenceTimeout]="2000"
       [siTooltip]="speech.listening() ? 'Stop dictation' : 'Start dictation'"
       [(value)]="value"
+      (transcript)="onTranscript($event)"
       (listeningChange)="onListeningChange($event)"
       (errorOccurred)="onSpeechError($event)"
     >
@@ -28,4 +32,21 @@
   @if (error()) {
     <p class="text-danger mt-4 mb-0" role="alert">{{ error() }}</p>
   }
+  <div class="e2e-ignore card mt-6">
+    <div class="card-body">
+      <h3 class="h6 mb-4">Control panel</h3>
+      <div class="form-check form-switch">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          role="switch"
+          id="measured-levels"
+          [checked]="measuredLevels()"
+          [disabled]="listening()"
+          (change)="measuredLevels.set(!measuredLevels())"
+        />
+        <label for="measured-levels" class="form-check-label">Simulated audio levels</label>
+      </div>
+    </div>
+  </div>
 </div>
