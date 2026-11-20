@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { AccordionGroup } from '@angular/aria/accordion';
 import {
   AfterContentInit,
   booleanAttribute,
@@ -31,7 +32,8 @@ const PANEL_MIN_HEIGHT = 100;
   host: {
     '[class.full-height]': 'fullHeight()',
     '[class.hcollapsed]': 'collapsed()'
-  }
+  },
+  hostDirectives: [AccordionGroup]
 })
 export class SiAccordionComponent implements AfterContentInit, OnChanges {
   /**
