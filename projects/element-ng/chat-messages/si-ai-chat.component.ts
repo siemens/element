@@ -100,7 +100,7 @@ export class SiAiChatComponent implements SiChatInputParent {
 
   constructor() {
     effect(() => {
-      if (this.isEmpty()) {
+      if (this.shouldShowWelcomeScreen()) {
         this.chatContainer()?.scrollToTop();
       }
     });
@@ -178,6 +178,12 @@ export class SiAiChatComponent implements SiChatInputParent {
    * ```
    */
   readonly markdownOptions = input<SiMarkdownOptions>(makeSiMarkdownOptions());
+
+  /**
+   * Whether to hide the welcome screen, even when messages is explicitly empty and loading is false.
+   * @defaultValue false
+   */
+  readonly hideWelcomeScreen = input(false, { transform: booleanAttribute });
 
   /**
    * The greeting text for the welcome screen
@@ -311,6 +317,10 @@ export class SiAiChatComponent implements SiChatInputParent {
   });
 
   protected readonly isEmpty = computed(() => this.messages()?.length === 0 && !this.loading());
+
+  protected readonly shouldShowWelcomeScreen = computed(
+    () => this.isEmpty() && !this.hideWelcomeScreen()
+  );
 
   readonly inputInterruptible = computed(() => {
     return this.interrupting() || (this.loading() && !this.disableInterrupt() && !this.sending());
