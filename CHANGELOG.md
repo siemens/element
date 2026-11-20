@@ -1,3 +1,10 @@
+# [49.20.0](https://github.com/siemens/element/compare/v49.19.0...v49.20.0) (2026-11-20)
+
+
+### Features
+
+* **side-panel:** add subHeading input to side panel content ([ec73161](https://github.com/siemens/element/commit/ec7316108840fc009b23a1dea3e014e3814f3c09)), closes [#3211](https://github.com/siemens/element/issues/3211)
+
 # [49.19.0](https://github.com/siemens/element/compare/v49.18.1...v49.19.0) (2026-10-30)
 
 
