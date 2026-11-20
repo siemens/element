@@ -99,11 +99,19 @@ layout does not provide one.
 
 ### Welcome screen
 
-The built-in [AI welcome screen](ai-welcome-screen.md) appears when `messages` is explicitly an
-empty array (`[]`) and `loading` is `false`. Leaving `messages` undefined does not show it.
+By default, the built-in [AI welcome screen](ai-welcome-screen.md) appears when there are no
+messages and `loading` is `false`.
 
 The example starts with a conversation. Use **Clear messages** in the chat input to see the
 welcome screen.
+
+Set `[hideWelcomeScreen]="true"` to disable the welcome screen.
+
+```html
+<si-ai-chat [messages]="messages()" [hideWelcomeScreen]="true">
+  <si-chat-input (send)="onMessageSent($event)" />
+</si-ai-chat>
+```
 
 ### Activity messages and traces
 
