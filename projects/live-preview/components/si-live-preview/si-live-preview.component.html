@@ -113,7 +113,7 @@
           }
         </select>
       }
-      @if (!!localeApi && showEditor()) {
+      @if (availableLocales.length && showEditor()) {
         <select
           name="selectLocale"
           aria-label="Select locale"
