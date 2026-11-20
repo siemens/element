@@ -115,6 +115,11 @@ export class SiSidePanelContentComponent implements OnInit {
   readonly heading = input<TranslatableString>('');
 
   /**
+   * Secondary text displayed below the heading.
+   */
+  readonly subHeading = input<TranslatableString>();
+
+  /**
    * Input list of primary action items
    *
    * @defaultValue []
