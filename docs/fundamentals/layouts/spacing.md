@@ -93,6 +93,21 @@ following CSS code is enabling this behavior.
 box-sizing: border-box;
 ```
 
+## Tokens ---
+
+System spacing tokens provide separate horizontal (`spacing-x`) and vertical
+(`spacing-y`) scales. Their values adapt to default and compact density. Use
+them for custom styles that need density-aware spacing; the existing spacing
+scale and utility classes remain available.
+
+### Horizontal spacing
+
+--8<-- "si-sys.md:si-sys-sizing-spacing-x"
+
+### Vertical spacing
+
+--8<-- "si-sys.md:si-sys-sizing-spacing-y"
+
 ## Code ---
 
 The classes are named using the format `{property}{sides}-{size}` for `xs` and
@@ -133,6 +148,20 @@ Where size is one of:
 <si-docs-component example="spacing/spacing" height="250"></si-docs-component>
 
 ### Sass variables
+
+System spacing tokens are available as Sass variables that reference CSS custom
+properties:
+
+```scss
+@use '@siemens/element-theme/src/styles/variables';
+
+.my-element {
+  padding-inline: variables.$si-sys-sizing-spacing-x-60;
+  padding-block: variables.$si-sys-sizing-spacing-y-40;
+}
+```
+
+### Spacing map
 
 All spacing values can also be accessed via SASS within the `$spacers` map.
 Use the accessor function `map.get($spacers, SIZE)` where `SIZE` is on of the
