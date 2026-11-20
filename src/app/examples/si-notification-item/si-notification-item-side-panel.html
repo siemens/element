@@ -107,12 +107,9 @@
     <div class="d-flex flex-column h-100">
       <div style="flex: 0 0 auto">
         <div class="px-6 py-4">
-          <si-search-bar
-            placeholder="Search..."
-            showIcon
-            colorVariant="base-0"
-            [debounceTime]="400"
-          />
+          <si-search-bar showIcon colorVariant="base-0">
+            <input siSearchBarInput placeholder="Search..." aria-label="Search..." />
+          </si-search-bar>
         </div>
         <form class="px-6 py-4 d-flex flex-row gap-4" [formGroup]="notificationFilters">
           <si-summary-chip

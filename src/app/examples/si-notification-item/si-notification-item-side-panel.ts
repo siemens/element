@@ -27,7 +27,7 @@ import {
   type NotificationItemQuickAction,
   type NotificationItemRouterLink
 } from '@siemens/element-ng/notification-item';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiSidePanelComponent, SiSidePanelContentComponent } from '@siemens/element-ng/side-panel';
 import { SiSummaryChipComponent } from '@siemens/element-ng/summary-chip';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -62,6 +62,7 @@ interface Notification {
     SiSidePanelContentComponent,
     SiNotificationItemComponent,
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
     SiSummaryChipComponent
   ],
   templateUrl: './si-notification-item-side-panel.html',

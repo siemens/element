@@ -12,13 +12,14 @@
 >
   <si-list-pane class="card">
     <si-list-pane-header>
-      <si-search-bar
-        class="flex-grow-1"
-        placeholder="Search"
-        colorVariant="base-0"
-        [showIcon]="true"
-        (searchChange)="searchTermChanged($event)"
-      />
+      <si-search-bar class="flex-grow-1" colorVariant="base-0" [showIcon]="true">
+        <input
+          siSearchBarInput
+          placeholder="Search"
+          aria-label="Search"
+          [formField]="searchField"
+        />
+      </si-search-bar>
       <button
         type="button"
         class="btn btn-icon btn-tertiary"

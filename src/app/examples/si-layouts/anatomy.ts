@@ -30,7 +30,7 @@ import {
 } from '@siemens/element-ng/header-dropdown';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiSidePanelComponent, SiSidePanelContentComponent } from '@siemens/element-ng/side-panel';
 import { SiStatusBarComponent, StatusBarItem } from '@siemens/element-ng/status-bar';
 import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
@@ -56,6 +56,7 @@ import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
     SiLaunchpadFactoryComponent,
     SiNavbarVerticalComponent,
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
     SiSidePanelComponent,
     SiSidePanelContentComponent,
     SiStatusBarComponent,

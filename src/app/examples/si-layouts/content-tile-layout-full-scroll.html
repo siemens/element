@@ -36,7 +36,9 @@
     </div>
 
     <div class="row gy-6 mb-6">
-      <si-search-bar placeholder="Search" class="col-12 col-md" [showIcon]="true" />
+      <si-search-bar class="col-12 col-md" [showIcon]="true">
+        <input siSearchBarInput placeholder="Search" aria-label="Search" />
+      </si-search-bar>
       <div class="col-auto">
         <select aria-label="number" class="form-select">
           <option value="0">No filter</option>

@@ -22,7 +22,7 @@ import {
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
 import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiSidePanelComponent, SiSidePanelContentComponent } from '@siemens/element-ng/side-panel';
 import { SiStatusBarComponent, StatusBarItem } from '@siemens/element-ng/status-bar';
 import { SiTourService, TourStep } from '@siemens/element-ng/tour';
@@ -35,6 +35,7 @@ import { SiTourService, TourStep } from '@siemens/element-ng/tour';
     SiCollapsiblePanelComponent,
     SiNavbarVerticalComponent,
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
     SiSidePanelComponent,
     SiSidePanelContentComponent,
     SiStatusBarComponent,

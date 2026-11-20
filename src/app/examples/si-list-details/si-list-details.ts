@@ -4,7 +4,8 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject, signal, untracked } from '@angular/core';
+import { debounce, form, FormField } from '@angular/forms/signals';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateModule } from '@siemens/element-ng/empty-state';
 import { Filter, SiFilterBarComponent } from '@siemens/element-ng/filter-bar';
@@ -30,7 +31,7 @@ import {
   BOOTSTRAP_BREAKPOINTS,
   SiResizeObserverDirective
 } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiTabComponent, SiTabPortalComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 import { LOG_EVENT } from '@siemens/live-preview';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
@@ -53,6 +54,8 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     SiMenuBarDirective,
     SiMenuItemComponent,
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
+    FormField,
     SiFilterBarComponent,
     NgxDatatableModule,
     SiDatatableModule,
@@ -129,7 +132,10 @@ export class SampleComponent {
   selectedEntities: CorporateEmployee[] = [];
   tableConfig = SI_DATATABLE_CONFIG;
   totalElements = 0;
-  searchTerm?: string;
+  protected readonly searchTerm = signal('');
+  protected readonly searchField = form(this.searchTerm, path => {
+    debounce(path, 400);
+  });
 
   /**
    * Details data
@@ -141,6 +147,17 @@ export class SampleComponent {
       action: () => this.logEvent('Edit triggered')
     }
   ];
+
+  constructor() {
+    let previousSearchTerm = this.searchTerm();
+    effect(() => {
+      const searchTerm = this.searchTerm();
+      if (searchTerm !== previousSearchTerm) {
+        previousSearchTerm = searchTerm;
+        untracked(() => this.searchTermChanged(searchTerm));
+      }
+    });
+  }
 
   onDiscard(): void {
     this.logEvent('Discard');
@@ -157,7 +174,6 @@ export class SampleComponent {
   }
 
   searchTermChanged(searchTerm: string): void {
-    this.searchTerm = searchTerm;
     this.cache = {};
     this.totalElements = 0;
     this.rows = [];
@@ -165,7 +181,7 @@ export class SampleComponent {
   }
 
   setPage(pageRequest: PageRequest): void {
-    pageRequest.filter = this.searchTerm;
+    pageRequest.filter = this.searchTerm();
     // current page number is determined by last call to setPage
     this.pageNumber = pageRequest.offset;
 
