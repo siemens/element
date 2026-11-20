@@ -19,7 +19,7 @@ $btn-width-normal: map.get(sizing.$sizing, 120);
 // Component styling
 
 $si-application-header-height: calc(map.get(sizing.$sizing, 100) + 1px);
-$si-navbar-vertical-width: 240px;
+$si-navbar-vertical-width: map.get(sizing.$sizing, 160);
 $si-navbar-vertical-collapsed-width: calc(1.5rem + 2 * map.get(spacers.$spacers-inline, 5));
 $si-titlebar-padding-y: map.get(spacers.$spacers-block, 3);
 $si-titlebar-height: calc(1.5rem + 2 * $si-titlebar-padding-y);
