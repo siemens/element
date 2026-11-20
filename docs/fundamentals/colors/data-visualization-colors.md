@@ -286,77 +286,77 @@ used as values for color tokens.
 
 <div markdown>
 ### Brand
---8<-- "si-ref.md:si-ref-color-data-brand"
+--8<-- "si-ref.md:si-ref-color-data-brand-colors"
 </div>
 
 <div markdown>
 ### Deep-blue
---8<-- "si-ref.md:si-ref-color-data-deep-blue"
+--8<-- "si-ref.md:si-ref-color-data-deep-blue-colors"
 </div>
 
 <div markdown>
 ### Turquoise
---8<-- "si-ref.md:si-ref-color-data-turquoise"
+--8<-- "si-ref.md:si-ref-color-data-turquoise-colors"
 </div>
 
 <div markdown>
 ### Sand
---8<-- "si-ref.md:si-ref-color-data-sand"
+--8<-- "si-ref.md:si-ref-color-data-sand-colors"
 </div>
 
 <div markdown>
 ### Royal-blue
---8<-- "si-ref.md:si-ref-color-data-royal-blue"
+--8<-- "si-ref.md:si-ref-color-data-royal-blue-colors"
 </div>
 
 <div markdown>
 ### Blue
---8<-- "si-ref.md:si-ref-color-data-blue"
+--8<-- "si-ref.md:si-ref-color-data-blue-colors"
 </div>
 
 <div markdown>
 ### Interactive-coral
---8<-- "si-ref.md:si-ref-color-data-interactive-coral"
+--8<-- "si-ref.md:si-ref-color-data-interactive-coral-colors"
 </div>
 
 <div markdown>
 ### Plum
---8<-- "si-ref.md:si-ref-color-data-plum"
+--8<-- "si-ref.md:si-ref-color-data-plum-colors"
 </div>
 
 <div markdown>
 ### Purple
---8<-- "si-ref.md:si-ref-color-data-purple"
+--8<-- "si-ref.md:si-ref-color-data-purple-colors"
 </div>
 
 <div markdown>
 ### Orchid
---8<-- "si-ref.md:si-ref-color-data-orchid"
+--8<-- "si-ref.md:si-ref-color-data-orchid-colors"
 </div>
 
 <div markdown>
 ### Orange
---8<-- "si-ref.md:si-ref-color-data-orange"
+--8<-- "si-ref.md:si-ref-color-data-orange-colors"
 </div>
 
 <div markdown>
 ### Yellow
---8<-- "si-ref.md:si-ref-color-data-yellow"
+--8<-- "si-ref.md:si-ref-color-data-yellow-colors"
 </div>
 
 <div markdown>
 ### Red
---8<-- "si-ref.md:si-ref-color-data-red"
+--8<-- "si-ref.md:si-ref-color-data-red-colors"
 </div>
 
 <div markdown>
 ### Green
---8<-- "si-ref.md:si-ref-color-data-green"
+--8<-- "si-ref.md:si-ref-color-data-green-colors"
 </div>
 
 <div markdown>
 ### Avocado
---8<-- "si-ref.md:si-ref-color-data-avocado"
+--8<-- "si-ref.md:si-ref-color-data-avocado-colors"
 </div>
 
 </div>
