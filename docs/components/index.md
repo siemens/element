@@ -114,6 +114,7 @@ documentation.
 - [Side Panel](layout-navigation/side-panel.md)
 - [Skeleton](progress-indication/skeleton.md)
 - [Slider](forms-inputs/slider.md)
+- [Message loader](progress-indication/message-loader.md)
 - [Spinner](progress-indication/spinner.md)
 - [Split](layout-navigation/split.md)
 - [Status Bar](status-notifications/status-bar.md)

@@ -97,6 +97,7 @@ test('si-language-switcher/si-language-switcher', ({ si }) => si.static());
 test('si-layouts/content-full-layout-fixed-height', ({ si }) => si.static());
 test('si-layouts/content-tile-layout-full-scroll', ({ si }) => si.static());
 test('si-loading-spinner/si-loading-spinner', ({ si }) => si.static());
+test('si-message-loader/si-message-loader', ({ si }) => si.static());
 test('si-navbar-vertical/si-navbar-vertical-text', ({ si }) => si.static());
 test('si-navbar-vertical-next/si-navbar-vertical-next-text', ({ si }) => si.static());
 test('si-ncharts/si-micro-charts', ({ si }) => si.static());
