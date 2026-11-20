@@ -36,6 +36,7 @@ import { applyTextEdits, TextEdit } from './text-edits.js';
 
 const SEARCH_BAR = 'si-search-bar';
 const INPUT_DIRECTIVE_ATTRIBUTE = 'siSearchBarInput';
+const TYPEAHEAD_INPUT = 'siTypeahead';
 const DEFAULT_DEBOUNCE_TIME = 400;
 const MAX_LINE_LENGTH = 100;
 const DEPRECATED_INPUTS = ['placeholder', 'maxlength', 'readonly', 'disabled', 'value'];
@@ -53,6 +54,8 @@ const CLASSIC_FORM_INPUTS = [
 ];
 const MANUAL_MIGRATION_HINT =
   'Migrate it manually by projecting an `<input siSearchBarInput>` and binding a form field to it.';
+const TYPEAHEAD_MANUAL_MIGRATION_HINT =
+  'Migrate it manually by projecting an `<input siSearchBarInput>`, moving the typeahead bindings to it, and binding a form field to it.';
 
 /** Answers questions about the component class that owns a template. */
 export interface ComponentContext {
@@ -101,6 +104,11 @@ export interface TemplateMigrationOptions {
   component?: ComponentContext;
   /** Quote of the string literal that contains an inline template. Template literals have none. */
   quote?: '"' | "'";
+  /**
+   * Only migrates search bars that use `siTypeahead` and reports other elements than inputs
+   * that use it, as the typeahead only supports `<input>` elements.
+   */
+  typeaheadOnly?: boolean;
 }
 
 export interface TemplateMigrationResult {
@@ -158,6 +166,8 @@ type Outcome =
 
 class SearchBarCollector extends RecursiveVisitor {
   readonly searchBars: SearchBarUsage[] = [];
+  /** Elements other than inputs and search bars that use `siTypeahead`. */
+  readonly typeaheadHosts: Element[] = [];
   readonly localNames = new Set<string>();
   private readonly ancestors: (Block | Element)[] = [];
 
@@ -165,6 +175,11 @@ class SearchBarCollector extends RecursiveVisitor {
     element.attrs.forEach(attribute => this.collectAttributeNames(attribute));
     if (element.name === SEARCH_BAR) {
       this.searchBars.push({ element, ancestors: [...this.ancestors] });
+    } else if (
+      element.name !== 'input' &&
+      element.attrs.some(attribute => isInput(parseAttributeName(attribute.name), TYPEAHEAD_INPUT))
+    ) {
+      this.typeaheadHosts.push(element);
     }
 
     this.ancestors.push(element);
@@ -232,7 +247,7 @@ export const migrateSearchBarTemplate = (
     skipped: 0,
     fields: []
   };
-  if (!options.template.includes(SEARCH_BAR)) {
+  if (!options.template.includes(options.typeaheadOnly ? TYPEAHEAD_INPUT : SEARCH_BAR)) {
     return result;
   }
 
@@ -273,6 +288,13 @@ export const migrateSearchBarTemplate = (
       }
     }
   }
+  if (options.typeaheadOnly) {
+    for (const element of collector.typeaheadHosts) {
+      options.warn(
+        `${options.location(element.startSourceSpan.start.offset)}: \`siTypeahead\` only supports \`<input>\` elements. Move it and the other typeahead bindings of \`<${element.name}>\` to an input manually.`
+      );
+    }
+  }
 
   if (edits.length) {
     result.content = applyTextEdits(options.template, edits);
@@ -303,7 +325,10 @@ const migrateSearchBar = (usage: SearchBarUsage, context: MigrationContext): Out
         )
       ? 'classic'
       : 'none';
-  const hasTypeahead = attributes.some(attribute => isInput(attribute, 'siTypeahead'));
+  const hasTypeahead = attributes.some(attribute => isInput(attribute, TYPEAHEAD_INPUT));
+  if (context.typeaheadOnly && !hasTypeahead) {
+    return { kind: 'none' };
+  }
   const movable = attributes.filter(attribute =>
     isMovableAttribute(attribute, formKind, hasTypeahead)
   );
@@ -311,6 +336,7 @@ const migrateSearchBar = (usage: SearchBarUsage, context: MigrationContext): Out
     !!searchChange ||
     deprecatedInputs.length > 0 ||
     attributes.some(attribute => isInput(attribute, ...BEHAVIOR_INPUTS));
+  const manualMigrationHint = getManualMigrationHint(attributes);
 
   const projectsInput = element.children.some(
     child =>
@@ -319,6 +345,13 @@ const migrateSearchBar = (usage: SearchBarUsage, context: MigrationContext): Out
       child.attrs.some(attribute => attribute.name === INPUT_DIRECTIVE_ATTRIBUTE)
   );
   if (projectsInput) {
+    if (hasTypeahead) {
+      return {
+        kind: 'skip',
+        reason:
+          'It already projects an input with `siSearchBarInput`. Move `siTypeahead` and the other typeahead bindings to that input manually.'
+      };
+    }
     return hasDeprecatedUsage
       ? {
           kind: 'skip',
@@ -333,13 +366,13 @@ const migrateSearchBar = (usage: SearchBarUsage, context: MigrationContext): Out
   if (context.component?.directiveImportBlocker) {
     return {
       kind: 'skip',
-      reason: `\`SiSearchBarInputDirective\` cannot be added to the component imports because ${context.component.directiveImportBlocker}. ${MANUAL_MIGRATION_HINT}`
+      reason: `\`SiSearchBarInputDirective\` cannot be added to the component imports because ${context.component.directiveImportBlocker}. ${manualMigrationHint}`
     };
   }
   if (element.comments?.length || element.directives?.length) {
     return {
       kind: 'skip',
-      reason: `Its start tag contains comments or selectorless directives. ${MANUAL_MIGRATION_HINT}`
+      reason: `Its start tag contains comments or selectorless directives. ${manualMigrationHint}`
     };
   }
 
@@ -347,7 +380,7 @@ const migrateSearchBar = (usage: SearchBarUsage, context: MigrationContext): Out
     if (formKind !== 'none') {
       return {
         kind: 'skip',
-        reason: `It uses \`(searchChange)\` together with a form binding. ${MANUAL_MIGRATION_HINT}`
+        reason: `It uses \`(searchChange)\` together with a form binding. ${manualMigrationHint}`
       };
     }
     return migrateToSignalForm(usage, attributes, movable, searchChange, context);
@@ -360,7 +393,7 @@ const migrateSearchBar = (usage: SearchBarUsage, context: MigrationContext): Out
   ) {
     return {
       kind: 'skip',
-      reason: `It uses \`prohibitedCharacters\` together with a form binding. Add a pattern validator to the form control and ignore invalid values instead. ${MANUAL_MIGRATION_HINT}`
+      reason: `It uses \`prohibitedCharacters\` together with a form binding. Add a pattern validator to the form control and ignore invalid values instead. ${manualMigrationHint}`
     };
   }
   if (formKind === 'signal') {
@@ -370,7 +403,7 @@ const migrateSearchBar = (usage: SearchBarUsage, context: MigrationContext): Out
       const names = restricted.map(attribute => `\`${attribute.key}\``).join(', ');
       return {
         kind: 'skip',
-        reason: `Signal Forms do not allow ${names} on an input with \`[formField]\`. Configure them in the form schema instead. ${MANUAL_MIGRATION_HINT}`
+        reason: `Signal Forms do not allow ${names} on an input with \`[formField]\`. Configure them in the form schema instead. ${manualMigrationHint}`
       };
     }
   }
@@ -411,7 +444,7 @@ const migrateToSignalForm = (
 ): Outcome => {
   const skip = (reason: string): Outcome => ({
     kind: 'skip',
-    reason: `${reason} ${MANUAL_MIGRATION_HINT}`
+    reason: `${reason} ${getManualMigrationHint(attributes)}`
   });
   const component = context.component;
   if (!component || component.generationBlocker) {
@@ -563,11 +596,16 @@ const reserveFieldNames = (
   }
 };
 
-const isInput = (attribute: TemplateAttribute, ...keys: string[]): boolean =>
+const isInput = (attribute: Pick<TemplateAttribute, 'kind' | 'key'>, ...keys: string[]): boolean =>
   (attribute.kind === 'static' || attribute.kind === 'property') && keys.includes(attribute.key);
 
 const findInput = (attributes: TemplateAttribute[], key: string): TemplateAttribute | undefined =>
   attributes.find(attribute => isInput(attribute, key));
+
+const getManualMigrationHint = (attributes: TemplateAttribute[]): string =>
+  attributes.some(attribute => isInput(attribute, TYPEAHEAD_INPUT))
+    ? TYPEAHEAD_MANUAL_MIGRATION_HINT
+    : MANUAL_MIGRATION_HINT;
 
 const toInputAttribute = (attribute: TemplateAttribute): InputAttribute => ({
   text: attribute.text,
@@ -594,7 +632,7 @@ const isMovableAttribute = (
   }
   if (
     (kind === 'static' || kind === 'property' || kind === 'event') &&
-    (key === 'siTypeahead' || key.startsWith('typeahead'))
+    (key === TYPEAHEAD_INPUT || key.startsWith('typeahead'))
   ) {
     return true;
   }
