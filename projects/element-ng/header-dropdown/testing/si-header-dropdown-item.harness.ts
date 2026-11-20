@@ -6,7 +6,7 @@ import { ComponentHarness, HarnessPredicate } from '@angular/cdk/testing';
 
 export class SiHeaderDropdownItemHarness extends ComponentHarness {
   static readonly hostSelector =
-    'si-header-dropdown-item, a[si-header-dropdown-item], button[si-header-dropdown-item]';
+    'si-header-dropdown-item, a[si-header-dropdown-item], button[si-header-dropdown-item], si-header-dropdown-radio-item, a[si-header-dropdown-radio-item], button[si-header-dropdown-radio-item], si-header-dropdown-check-item, a[si-header-dropdown-check-item], button[si-header-dropdown-check-item]';
 
   static withText(text: string): HarnessPredicate<SiHeaderDropdownItemHarness> {
     return new HarnessPredicate(SiHeaderDropdownItemHarness, {}).addOption(

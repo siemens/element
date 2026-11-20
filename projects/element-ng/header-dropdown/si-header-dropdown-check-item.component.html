@@ -1,0 +1,20 @@
+@if (icon()) {
+  <si-icon class="icon" [icon]="icon()!" />
+}
+@if (iconBadge()) {
+  <div class="badge-text">{{ iconBadge() }}</div>
+}
+<span class="item-title text-truncate">
+  <ng-content />
+</span>
+<div class="item-end ps-2 d-flex me-n3 ms-auto gap-1">
+  @if (badge()) {
+    <span class="mx-0 me-1 ms-2 badge" [class]="`bg-${badgeColor() || 'default'}`">{{ badge() }}</span>
+  }
+  @if (checked()) {
+    <si-icon class="icon" [icon]="icons.elementOk" />
+  }
+  @if (ownTrigger) {
+    <si-icon class="dropdown-caret m-0 ps-0" [icon]="icons.elementDown2" />
+  }
+</div>
