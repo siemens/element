@@ -117,6 +117,57 @@ The correct approach is to use the full page height as explained at
 </div>
 ```
 
+### Configure the toolbar
+
+The dashboard includes a toolbar by default. The recommended way to configure the
+toolbar is to project `SiDashboardToolbarComponent` into the dashboard. Import it from
+`@siemens/dashboards-ng` alongside `SiFlexibleDashboardComponent`. It is also included
+in `SiDashboardsNgModule`.
+
+```html
+<si-flexible-dashboard heading="Sample Dashboard" [widgetCatalog]="widgetCatalog">
+  <si-dashboard-toolbar
+    [showEditButtonLabel]="true"
+    [primaryEditActions]="editActions"
+    editButtonLabel="Customize"
+    saveButtonLabel="Apply changes"
+  >
+    <div filters-slot><button type="button" class="btn btn-secondary">My filters</button></div>
+  </si-dashboard-toolbar>
+</si-flexible-dashboard>
+```
+
+The projected toolbar replaces the default toolbar. Configure `hideEditButton`,
+`showEditButtonLabel`, `hideAddWidgetInstanceButton`, `primaryEditActions` and
+`secondaryEditActions` on the toolbar. The corresponding inputs on
+`si-flexible-dashboard` are deprecated and configure only the default toolbar.
+To migrate, move these bindings to the projected `si-dashboard-toolbar` and place
+filter content inside it using `filters-slot`. Filters are shown outside edit mode.
+Keep `editable` and non-toolbar settings on the dashboard.
+
+The toolbar combines its configured actions with globally provided actions, in that
+order. When either combined action list is empty, the toolbar uses that side's
+storage-provided actions as a fallback. The built-in Add widget action is prepended
+to the primary actions unless `hideAddWidgetInstanceButton` is enabled. Action callbacks
+receive the dashboard grid automatically.
+
+The dashboard manages editing, loading and disabled states, save enablement, and
+toolbar visibility while adding or editing widgets. No grid or state bindings are
+needed. Control edit mode through the dashboard's `editable` model. Saving and
+cancelling remain automatic. An optional toolbar `(save)` handler is an additional
+save-request notification, not a persistence-success event or a replacement for saving.
+The toolbar is intended for use inside `si-flexible-dashboard`.
+
+Override built-in labels using `editButtonLabel`, `cancelButtonLabel`, `saveButtonLabel`,
+`addWidgetButtonLabel` and `toggleItemLabel`. All accept `TranslatableString` values
+through the existing translation system and retain their defaults when omitted.
+`editButtonLabel` also supplies the Edit button's tooltip and accessible name;
+`toggleItemLabel` supplies the overflow toggle's accessible name.
+
+Existing dashboards without a projected toolbar continue to use their dashboard-level
+toolbar settings and filter content unchanged for backward compatibility. Use content
+projection for new toolbar configuration.
+
 ### Translations
 
 The dashboard comes with a couple of components with i18n support.

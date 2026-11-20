@@ -3,11 +3,14 @@
   [heading]="'Demo Dashboard ' + dashboardId"
   [dashboardId]="dashboardId"
   [widgetCatalog]="widgetCatalog"
-  [primaryEditActions]="primaryActions()"
-  [secondaryEditActions]="secondaryActions()"
   (isModified)="appStateService.editable$.next($event)"
 >
-  <app-dashboard-filters menubar filters-slot />
+  <si-dashboard-toolbar
+    [primaryEditActions]="primaryActions()"
+    [secondaryEditActions]="secondaryActions()"
+  >
+    <app-dashboard-filters filters-slot />
+  </si-dashboard-toolbar>
   <si-empty-state
     empty-state
     icon="element-dashboard"

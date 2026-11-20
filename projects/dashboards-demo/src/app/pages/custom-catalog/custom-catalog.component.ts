@@ -6,6 +6,7 @@ import { Component, inject } from '@angular/core';
 import {
   DashboardToolbarItem,
   SI_WIDGET_STORE,
+  SiDashboardToolbarComponent,
   SiFlexibleDashboardComponent,
   SiGridComponent,
   Widget
@@ -23,7 +24,7 @@ const EMPTY_TEXT_EDIT = 'Use the widget catalog to add widgets.';
 
 @Component({
   selector: 'app-custom-catalog',
-  imports: [SiFlexibleDashboardComponent, SiEmptyStateComponent],
+  imports: [SiFlexibleDashboardComponent, SiDashboardToolbarComponent, SiEmptyStateComponent],
   templateUrl: './custom-catalog.component.html',
   styleUrl: './custom-catalog.component.scss'
 })

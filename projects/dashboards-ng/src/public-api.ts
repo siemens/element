@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+export * from './components/dashboard-toolbar/si-dashboard-toolbar.component';
 export * from './components/flexible-dashboard/si-flexible-dashboard.component';
 export * from './components/grid/si-grid.component';
 export * from './components/widget-catalog/si-widget-catalog.component';

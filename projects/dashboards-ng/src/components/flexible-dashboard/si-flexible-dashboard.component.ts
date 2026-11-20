@@ -2,19 +2,18 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   booleanAttribute,
   Component,
   computed,
+  contentChild,
   inject,
   input,
   inputBinding,
   model,
   OnChanges,
-  OnDestroy,
-  OnInit,
   output,
   outputBinding,
   signal,
@@ -26,17 +25,15 @@ import {
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
-import { BehaviorSubject, combineLatest, of, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
-import {
-  Config,
-  SI_DASHBOARD_CONFIGURATION,
-  SI_DASHBOARD_TOOLBAR_ITEMS
-} from '../../model/configuration';
+import { Config, SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
 import { DashboardToolbarItem } from '../../model/si-dashboard-toolbar.model';
-import { SI_WIDGET_STORE } from '../../model/si-widget-storage';
 import { Widget, WidgetConfig } from '../../model/widgets.model';
+import {
+  DashboardToolbarContext,
+  SI_DASHBOARD_TOOLBAR_CONTEXT
+} from '../dashboard-toolbar/si-dashboard-toolbar-context';
 import { SiDashboardToolbarComponent } from '../dashboard-toolbar/si-dashboard-toolbar.component';
 import { SiGridComponent } from '../grid/si-grid.component';
 import { SiWidgetCatalogComponent } from '../widget-catalog/si-widget-catalog.component';
@@ -59,15 +56,20 @@ type ViewState = 'dashboard' | 'catalog' | 'editor';
     SiDashboardComponent,
     SiDashboardToolbarComponent,
     SiGridComponent,
-    AsyncPipe,
     NgTemplateOutlet,
     SiTranslatePipe
   ],
   templateUrl: './si-flexible-dashboard.component.html',
   styleUrl: './si-flexible-dashboard.component.scss',
+  providers: [
+    {
+      provide: SI_DASHBOARD_TOOLBAR_CONTEXT,
+      useFactory: () => inject(SiFlexibleDashboardComponent).toolbarContext
+    }
+  ],
   changeDetection: ChangeDetectionStrategy.Eager
 })
-export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestroy {
+export class SiFlexibleDashboardComponent implements OnChanges {
   /**
    * Input to change the dashboard editable state.
    *
@@ -111,21 +113,30 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
 
   /**
    * Option to remove the add widget instance button from the primary toolbar.
+   * Configures the default toolbar.
    *
+   * @deprecated Project {@link SiDashboardToolbarComponent} into the dashboard and set
+   * {@link SiDashboardToolbarComponent.hideAddWidgetInstanceButton} on it instead.
    * @defaultValue false
    */
   readonly hideAddWidgetInstanceButton = input(false);
 
   /**
    * Option to hide the dashboard edit button.
+   * Configures the default toolbar.
    *
+   * @deprecated Project {@link SiDashboardToolbarComponent} into the dashboard and set
+   * {@link SiDashboardToolbarComponent.hideEditButton} on it instead.
    * @defaultValue false
    */
   readonly hideEditButton = input(false);
 
   /**
    *  Option to display the edit button as a text button instead, only if the window is larger than xs {@link SiResponsiveContainerDirective}.
+   * Configures the default toolbar.
    *
+   * @deprecated Project {@link SiDashboardToolbarComponent} into the dashboard and set
+   * {@link SiDashboardToolbarComponent.showEditButtonLabel} on it instead.
    * @defaultValue false
    */
   readonly showEditButtonLabel = input(false);
@@ -159,12 +170,20 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
 
   /**
    * Primary action menu items shown in the edit mode of the dashboard.
+   * Configures the default toolbar.
+   *
+   * @deprecated Project {@link SiDashboardToolbarComponent} into the dashboard and set
+   * {@link SiDashboardToolbarComponent.primaryEditActions} on it instead.
    * @defaultValue []
    */
   readonly primaryEditActions = input<DashboardToolbarItem[]>([]);
 
   /**
    * Secondary action menu items shown in the edit mode of the dashboard.
+   * Configures the default toolbar.
+   *
+   * @deprecated Project {@link SiDashboardToolbarComponent} into the dashboard and set
+   * {@link SiDashboardToolbarComponent.secondaryEditActions} on it instead.
    * @defaultValue []
    */
   readonly secondaryEditActions = input<DashboardToolbarItem[]>([]);
@@ -200,24 +219,15 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
    */
   readonly isModified = output<boolean>();
 
-  protected labelAddWidget = t(() => $localize`:@@DASHBOARD.ADD_WIDGET:Add widget`);
   protected labelEditor = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.TITLE:Edit`);
   protected labelCatalog = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.TITLE:Add widget`);
 
-  protected addWidgetInstanceAction: DashboardToolbarItem = {
-    type: 'action',
-    label: this.labelAddWidget,
-    action: () => this.showWidgetCatalog()
-  };
-
   /**
-   * The primary action menu items shown in the edit mode of the dashboard.
+   * The primary action menu items resolved by the active dashboard toolbar.
    */
-  readonly primaryEditActions$ = new BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>([
-    this.addWidgetInstanceAction
-  ]);
+  readonly primaryEditActions$ = new BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>([]);
   /**
-   * The secondary action menu items shown in the edit mode of the dashboard. When all menu items are more than
+   * The secondary action menu items resolved by the active dashboard toolbar. When all menu items are more than
    * three, they will be placed in the secondary menu of the content action bar.
    */
   readonly secondaryEditActions$ = new BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>([]);
@@ -245,13 +255,27 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   });
 
   private readonly viewState = signal<ViewState>('dashboard');
-  private widgetStorage = inject(SI_WIDGET_STORE);
-  private hideAddWidgetInstanceButton$ = new BehaviorSubject(this.hideAddWidgetInstanceButton());
-  private dashboardId$ = new Subject<string | undefined>();
-  private readonly toolbar = viewChild.required<SiDashboardToolbarComponent>('toolbar');
-  private readonly globalEditActions = inject(SI_DASHBOARD_TOOLBAR_ITEMS, { optional: true }) ?? {
-    primary: [],
-    secondary: []
+  private readonly modified = signal(false);
+  private readonly projectedToolbar = contentChild(SiDashboardToolbarComponent, {
+    descendants: false
+  });
+  private readonly defaultToolbar = viewChild<SiDashboardToolbarComponent>('toolbar');
+  private readonly toolbar = computed(() => this.projectedToolbar() ?? this.defaultToolbar());
+
+  /** @internal */
+  readonly toolbarContext: DashboardToolbarContext = {
+    dashboardId: this.dashboardId,
+    grid: this.grid,
+    editable: this.editable,
+    modified: this.modified,
+    isDashboardVisible: this.isDashboardVisible,
+    toolbar: this.toolbar,
+    primaryEditActions$: this.primaryEditActions$,
+    secondaryEditActions$: this.secondaryEditActions$,
+    edit: () => this.editable.set(true),
+    cancel: () => this.editable.set(false),
+    save: () => this.grid().save(),
+    addWidget: () => this.showWidgetCatalog()
   };
 
   ngOnChanges(changes: SimpleChanges<this>): void {
@@ -265,21 +289,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
         this.viewState.set('dashboard');
         this.catalogHost().clear();
       }
-      this.dashboardId$.next(changes.dashboardId.currentValue);
-      this.setupMenuItems();
     }
-
-    if (changes.hideAddWidgetInstanceButton) {
-      this.hideAddWidgetInstanceButton$.next(changes.hideAddWidgetInstanceButton.currentValue);
-    }
-  }
-
-  ngOnInit(): void {
-    this.setupMenuItems();
-  }
-
-  ngOnDestroy(): void {
-    this.dashboardId$.next(undefined);
   }
 
   /**
@@ -311,47 +321,8 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   }
 
   protected onModified(event: boolean): void {
+    this.modified.set(event);
     this.isModified.emit(event);
-    this.toolbar().disableSaveButton.set(!event);
-  }
-
-  private setupMenuItems(): void {
-    const primaryEditActions = [...this.primaryEditActions(), ...this.globalEditActions.primary];
-    const secondaryEditActions = [
-      ...this.secondaryEditActions(),
-      ...this.globalEditActions.secondary
-    ];
-    const storageMenuItems =
-      primaryEditActions.length && secondaryEditActions.length
-        ? undefined
-        : this.widgetStorage.getToolbarMenuItems?.(this.dashboardId());
-    const primaryMenuItems = primaryEditActions.length
-      ? of(primaryEditActions)
-      : (storageMenuItems?.primary ?? of([]));
-    combineLatest([primaryMenuItems, this.hideAddWidgetInstanceButton$])
-      .pipe(takeUntil(this.dashboardId$))
-      .subscribe(([items, hideAddButton]) => this.setupPrimaryMenuItems(items, hideAddButton));
-
-    const secondaryMenuItems = secondaryEditActions.length
-      ? of(secondaryEditActions)
-      : storageMenuItems?.secondary;
-
-    if (secondaryMenuItems) {
-      secondaryMenuItems
-        .pipe(takeUntil(this.dashboardId$))
-        .subscribe(items => this.secondaryEditActions$.next(items));
-    }
-  }
-
-  private setupPrimaryMenuItems(
-    items: (MenuItem | DashboardToolbarItem)[],
-    hideAddWidgetInstanceButton: boolean
-  ): void {
-    const next: (MenuItem | DashboardToolbarItem)[] = hideAddWidgetInstanceButton
-      ? []
-      : [this.addWidgetInstanceAction];
-    next.push(...items);
-    this.primaryEditActions$.next(next);
   }
 
   protected editWidgetInstance(widgetConfig: WidgetConfig): void {

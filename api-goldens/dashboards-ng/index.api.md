@@ -5,6 +5,7 @@
 ```ts
 
 import { AccentLineType } from '@siemens/element-ng/common';
+import { ActivatedRoute } from '@angular/router';
 import * as _angular_core from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ComponentRef } from '@angular/core';
@@ -30,6 +31,7 @@ import { OutputRefSubscription } from '@angular/core';
 import { Provider } from '@angular/core';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { Signal } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Subscription } from 'rxjs';
@@ -175,6 +177,22 @@ export class SiDashboardsNgModule {
 }
 
 // @public
+export class SiDashboardToolbarComponent {
+    constructor();
+    readonly addWidgetButtonLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly cancelButtonLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly editButtonLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly hideAddWidgetInstanceButton: _angular_core.InputSignal<boolean>;
+    readonly hideEditButton: _angular_core.InputSignal<boolean>;
+    readonly primaryEditActions: _angular_core.InputSignal<(MenuItem | DashboardToolbarItem)[]>;
+    readonly save: _angular_core.OutputEmitterRef<void>;
+    readonly saveButtonLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly secondaryEditActions: _angular_core.InputSignal<(MenuItem | DashboardToolbarItem)[]>;
+    readonly showEditButtonLabel: _angular_core.InputSignal<boolean>;
+    readonly toggleItemLabel: _angular_core.InputSignal<TranslatableString>;
+}
+
+// @public
 export class SiDefaultWidgetStorage extends SiWidgetStorage {
     constructor();
     // (undocumented)
@@ -190,14 +208,16 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
 }
 
 // @public
-export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestroy {
+export class SiFlexibleDashboardComponent implements OnChanges {
     readonly config: _angular_core.InputSignal<Config | undefined>;
     readonly dashboard: _angular_core.Signal<SiDashboardComponent>;
     readonly dashboardId: _angular_core.InputSignal<string | undefined>;
     readonly editable: _angular_core.ModelSignal<boolean>;
     readonly grid: _angular_core.Signal<SiGridComponent>;
     readonly heading: _angular_core.InputSignal<string | undefined>;
+    // @deprecated
     readonly hideAddWidgetInstanceButton: _angular_core.InputSignal<boolean>;
+    // @deprecated
     readonly hideEditButton: _angular_core.InputSignal<boolean>;
     readonly hideProgressIndicator: _angular_core.InputSignal<boolean>;
     // (undocumented)
@@ -206,10 +226,13 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     readonly multiSelect: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly pageTitle: _angular_core.Signal<string | undefined>;
     readonly primaryEditActions$: BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>;
+    // @deprecated
     readonly primaryEditActions: _angular_core.InputSignal<DashboardToolbarItem[]>;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly secondaryEditActions$: BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>;
+    // @deprecated
     readonly secondaryEditActions: _angular_core.InputSignal<DashboardToolbarItem[]>;
+    // @deprecated
     readonly showEditButtonLabel: _angular_core.InputSignal<boolean>;
     showWidgetCatalog(): void;
     readonly widgetCatalog: _angular_core.InputSignal<Widget[]>;

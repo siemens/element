@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, inject, input, model, output, viewChild } from '@angular/core';
+import { Component, computed, effect, inject, input, output, viewChild } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { elementEdit } from '@siemens/element-icons';
 import { MenuItem } from '@siemens/element-ng/common';
@@ -12,17 +13,18 @@ import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { combineLatest, of, startWith, switchMap } from 'rxjs';
 
+import { SI_DASHBOARD_TOOLBAR_ITEMS } from '../../model/configuration';
 import { DashboardToolbarItem } from '../../model/si-dashboard-toolbar.model';
-import { SiGridComponent } from '../grid/si-grid.component';
+import { SI_WIDGET_STORE } from '../../model/si-widget-storage';
+import { SI_DASHBOARD_TOOLBAR_CONTEXT } from './si-dashboard-toolbar-context';
 
 /**
- * The toolbar of the flexible dashboard is either `editable` or not. When not
- * `editable`, it supports content projection for applications to inject toolbar
- * controls for e.g. filtering. Use the attribute `filters-slot` to inject the filters.
- * In addition it shows the button to switch to the `editable`. When `editable`, it support
- * the cancel and save buttons, as well as displaying primary and secondary actions.
+ * Project into {@link SiFlexibleDashboardComponent} to configure its toolbar.
+ * The dashboard manages editing, loading, saving and toolbar visibility automatically.
+ * Project controls using `filters-slot` to display them outside edit mode.
  */
 @Component({
   selector: 'si-dashboard-toolbar',
@@ -38,7 +40,8 @@ import { SiGridComponent } from '../grid/si-grid.component';
   ],
   templateUrl: './si-dashboard-toolbar.component.html',
   host: {
-    class: 'd-flex flex-column flex-grow-1'
+    class: 'd-flex flex-column flex-grow-1',
+    '[class.d-none]': 'hidden()'
   }
 })
 export class SiDashboardToolbarComponent {
@@ -60,28 +63,6 @@ export class SiDashboardToolbarComponent {
   readonly secondaryEditActions = input<(MenuItem | DashboardToolbarItem)[]>([]);
 
   /**
-   * Input to disable the save button. Note, the input `disabled` disables all
-   * actions and the save button of the toolbar.
-   *
-   * @defaultValue true
-   */
-  readonly disableSaveButton = model(true);
-
-  /**
-   * Input to disable all actions and buttons of the toolbar.
-   *
-   * @defaultValue false */
-  readonly disabled = input(false);
-
-  /**
-   * Input option to set the `editable` mode. When editable
-   * the toolbar shows a cancel and save button. Otherwise,
-   * it displays an edit button.
-   *
-   * @defaultValue false */
-  readonly editable = model(false);
-
-  /**
    * Option to hide the dashboard edit button.
    *
    * @defaultValue false
@@ -95,51 +76,177 @@ export class SiDashboardToolbarComponent {
    */
   readonly showEditButtonLabel = input(false);
 
-  readonly grid = input.required<SiGridComponent>();
+  /**
+   * Hide the built-in Add widget action.
+   *
+   * @defaultValue false
+   */
+  readonly hideAddWidgetInstanceButton = input(false);
 
   /**
-   * Emits on save button click.
+   * Text, tooltip and accessible name of the Edit button.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@DASHBOARD.EDIT:Edit`)
+   * ```
+   */
+  readonly editButtonLabel = input<TranslatableString>(t(() => $localize`:@@DASHBOARD.EDIT:Edit`));
+
+  /**
+   * Text of the Cancel button.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@DASHBOARD.CANCEL:Cancel`)
+   * ```
+   */
+  readonly cancelButtonLabel = input<TranslatableString>(
+    t(() => $localize`:@@DASHBOARD.CANCEL:Cancel`)
+  );
+
+  /**
+   * Text of the Save button.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@DASHBOARD.SAVE:Save`)
+   * ```
+   */
+  readonly saveButtonLabel = input<TranslatableString>(t(() => $localize`:@@DASHBOARD.SAVE:Save`));
+
+  /**
+   * Text of the built-in Add widget action.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@DASHBOARD.ADD_WIDGET:Add widget`)
+   * ```
+   */
+  readonly addWidgetButtonLabel = input<TranslatableString>(
+    t(() => $localize`:@@DASHBOARD.ADD_WIDGET:Add widget`)
+  );
+
+  /**
+   * Accessible name of the overflow menu toggle.
+   *
+   * @defaultValue 'toggle'
+   */
+  readonly toggleItemLabel = input<TranslatableString>('toggle');
+
+  /**
+   * Emits when saving is requested. The dashboard saves automatically;
+   * this event does not indicate that persistence has succeeded.
    */
   readonly save = output<void>();
 
-  protected labelEdit = t(() => $localize`:@@DASHBOARD.EDIT:Edit`);
-  protected labelCancel = t(() => $localize`:@@DASHBOARD.CANCEL:Cancel`);
-  protected labelSave = t(() => $localize`:@@DASHBOARD.SAVE:Save`);
-
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
 
+  private readonly dashboard = inject(SI_DASHBOARD_TOOLBAR_CONTEXT);
+  private readonly widgetStorage = inject(SI_WIDGET_STORE);
+  private readonly globalEditActions = inject(SI_DASHBOARD_TOOLBAR_ITEMS, { optional: true }) ?? {
+    primary: [],
+    secondary: []
+  };
   private readonly dashboardToolbarContainer = viewChild.required(SiResponsiveContainerDirective);
 
+  private readonly managed = computed(() => this.dashboard.toolbar() === this);
+  private readonly loading = toSignal(
+    toObservable(this.dashboard.grid).pipe(switchMap(grid => grid.isLoading)),
+    { initialValue: false }
+  );
+
+  protected readonly grid = this.dashboard.grid;
+  protected readonly editable = computed(() => this.managed() && this.dashboard.editable());
+  protected readonly disabled = computed(() => !this.managed() || this.loading());
+  protected readonly disableSaveButton = computed(
+    () => !this.managed() || !this.dashboard.modified()
+  );
+  protected readonly hidden = computed(
+    () => this.managed() && !this.dashboard.isDashboardVisible()
+  );
+
+  private readonly actionSources = computed(() => {
+    if (!this.managed()) {
+      return { primary: of([]), secondary: of([]) };
+    }
+
+    const primary = [...this.primaryEditActions(), ...this.globalEditActions.primary];
+    const secondary = [...this.secondaryEditActions(), ...this.globalEditActions.secondary];
+    const dashboardId = this.dashboard.dashboardId();
+    const storageActions =
+      primary.length && secondary.length
+        ? undefined
+        : this.widgetStorage.getToolbarMenuItems?.(dashboardId);
+
+    return {
+      primary: primary.length ? of(primary) : (storageActions?.primary ?? of([])),
+      secondary: secondary.length ? of(secondary) : (storageActions?.secondary ?? of([]))
+    };
+  });
+
+  private readonly resolvedActions = toSignal(
+    toObservable(this.actionSources).pipe(
+      switchMap(({ primary, secondary }) =>
+        combineLatest({
+          primary: primary.pipe(startWith([])),
+          secondary: secondary.pipe(startWith([]))
+        })
+      )
+    ),
+    { initialValue: { primary: [], secondary: [] } }
+  );
+
+  private readonly addWidgetInstanceAction = computed<DashboardToolbarItem>(() => ({
+    type: 'action',
+    label: this.addWidgetButtonLabel(),
+    action: () => this.dashboard.addWidget()
+  }));
+
+  protected readonly primaryMenuItems = computed(() => {
+    if (!this.managed()) {
+      return [];
+    }
+    const items = this.resolvedActions().primary;
+    return this.hideAddWidgetInstanceButton() ? items : [this.addWidgetInstanceAction(), ...items];
+  });
+
+  protected readonly secondaryMenuItems = computed(() => this.resolvedActions().secondary);
+
   protected readonly showContentActionBar = computed(
-    () => this.primaryEditActions()?.length + this.secondaryEditActions()?.length > 3
+    () => this.primaryMenuItems().length + this.secondaryMenuItems().length > 3
   );
 
   protected readonly editActions = computed(() => [
-    ...this.primaryEditActions(),
-    ...this.secondaryEditActions()
+    ...this.primaryMenuItems(),
+    ...this.secondaryMenuItems()
   ]);
 
-  protected readonly primaryEditActionsComputed = computed(() => {
-    return this.primaryEditActions().map(item => this.proxyMenuItemAction(item));
-  });
-
-  protected readonly secondaryEditActionsComputed = computed(() => {
-    return this.secondaryEditActions().map(item => this.proxyMenuItemAction(item));
-  });
+  constructor() {
+    effect(() => {
+      if (this.managed()) {
+        this.dashboard.primaryEditActions$.next(this.primaryMenuItems());
+        this.dashboard.secondaryEditActions$.next(this.secondaryMenuItems());
+      }
+    });
+  }
 
   protected onEdit(): void {
-    this.editable.set(true);
+    if (!this.disabled()) {
+      this.dashboard.edit();
+    }
   }
 
   protected onSave(): void {
-    if (this.editable()) {
+    if (this.editable() && !this.disabled() && !this.disableSaveButton()) {
+      this.dashboard.save();
       this.save.emit();
     }
   }
 
   protected onCancel(): void {
-    if (this.editable()) {
-      this.editable.set(false);
+    if (this.editable() && !this.disabled()) {
+      this.dashboard.cancel();
     }
   }
 
@@ -150,13 +257,4 @@ export class SiDashboardToolbarComponent {
   protected readonly showEditButtonLabelDesktop = computed(() => {
     return this.showEditButtonLabel() && !this.dashboardToolbarContainer()?.xs();
   });
-
-  private proxyMenuItemAction(
-    item: MenuItem | DashboardToolbarItem
-  ): MenuItem | DashboardToolbarItem {
-    if (item.type === 'action' && typeof item.action === 'function') {
-      item.action = item.action.bind(this, this.grid());
-    }
-    return item;
-  }
 }

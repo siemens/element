@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
   DashboardToolbarItem,
   SI_WIDGET_STORE,
+  SiDashboardToolbarComponent,
   SiFlexibleDashboardComponent,
   Widget
 } from '@siemens/dashboards-ng';
@@ -27,7 +28,12 @@ import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors'
 
 @Component({
   selector: 'app-routed-dashboard',
-  imports: [SiFlexibleDashboardComponent, DashboardFiltersComponent, SiEmptyStateComponent],
+  imports: [
+    SiFlexibleDashboardComponent,
+    SiDashboardToolbarComponent,
+    DashboardFiltersComponent,
+    SiEmptyStateComponent
+  ],
   templateUrl: './routed-dashboard.component.html',
   styleUrl: './routed-dashboard.component.scss'
 })

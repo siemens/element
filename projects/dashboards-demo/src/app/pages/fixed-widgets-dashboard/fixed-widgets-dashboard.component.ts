@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
-import { Config, SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
+import {
+  Config,
+  SiDashboardToolbarComponent,
+  SiFlexibleDashboardComponent,
+  Widget
+} from '@siemens/dashboards-ng';
 
 import { AppStateService } from '../../app-state.service';
 import { DashboardFiltersComponent } from '../../components/dashboard-filters/dashboard-filters.component';
@@ -16,17 +21,18 @@ import {
 
 @Component({
   selector: 'app-fixed-widgets-dashboard',
-  imports: [SiFlexibleDashboardComponent, DashboardFiltersComponent],
+  imports: [SiFlexibleDashboardComponent, SiDashboardToolbarComponent, DashboardFiltersComponent],
   template: `
     <si-flexible-dashboard
       heading="Fixed number of widgets (no adding, no removing)"
       dashboardId="fixed-widgets"
-      [hideAddWidgetInstanceButton]="true"
       [config]="config"
       [widgetCatalog]="widgetCatalog"
       (isModified)="appStateService.editable$.next($event)"
     >
-      <app-dashboard-filters menubar filters-slot />
+      <si-dashboard-toolbar [hideAddWidgetInstanceButton]="true">
+        <app-dashboard-filters filters-slot />
+      </si-dashboard-toolbar>
     </si-flexible-dashboard>
   `,
   styleUrl: './fixed-widgets-dashboard.component.scss'
