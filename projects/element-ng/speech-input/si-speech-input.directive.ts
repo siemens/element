@@ -100,8 +100,14 @@ export const SI_SPEECH_INPUT_RECOGNITION = new InjectionToken<
     '[attr.aria-disabled]': '!supported() || disabled()',
     '[attr.aria-pressed]': 'listening()',
     '[attr.aria-label]': 'buttonLabel()',
-    '(click)': 'onClick()',
-    '(keydown)': 'onKeyDown($event)'
+    '(click)': 'onClick($event)',
+    '(pointerdown)': 'onPointerDown($event)',
+    '(pointerup)': 'onPointerUp($event)',
+    '(pointercancel)': 'onPointerCancel($event)',
+    '(lostpointercapture)': 'onPointerCancel($event)',
+    '(keydown)': 'onKeyDown($event)',
+    '(keyup)': 'onKeyUp($event)',
+    '(blur)': 'onBlur()'
   },
   exportAs: 'siSpeechInput'
 })
@@ -119,6 +125,7 @@ export class SiSpeechInputDirective implements OnDestroy {
   private savedDraft = '';
   private started = false;
   private stopping = false;
+  private hold?: { key: string } | { pointerId: number };
   private speaking = false;
   private attempt = 0;
   private destroyed = false;
@@ -128,6 +135,8 @@ export class SiSpeechInputDirective implements OnDestroy {
   readonly value = model('');
   /** Disable recognition without disabling surrounding controls. @defaultValue false */
   readonly disabled = input(false, { transform: booleanAttribute });
+  /** Recognition interaction. @defaultValue 'toggle' */
+  readonly mode = input<'toggle' | 'push-to-talk'>('toggle');
   /** Keep recognizing after an utterance. @defaultValue false */
   readonly continuous = input(false, { transform: booleanAttribute });
   /** Stop after this many milliseconds of silence; zero disables it. @defaultValue 0 */
@@ -318,11 +327,47 @@ export class SiSpeechInputDirective implements OnDestroy {
     }
   }
 
-  protected onClick(): void {
+  protected onClick(event: MouseEvent): void {
+    if (this.hold || (this.mode() === 'push-to-talk' && event.detail > 0)) {
+      return;
+    }
     if (this.listening()) {
       this.stop();
     } else {
       this.start();
+    }
+  }
+
+  protected onPointerDown(event: PointerEvent): void {
+    if (
+      this.mode() !== 'push-to-talk' ||
+      event.button !== 0 ||
+      this.disabled() ||
+      !this.supported() ||
+      this.listening()
+    ) {
+      return;
+    }
+    this.element.setPointerCapture(event.pointerId);
+    this.hold = { pointerId: event.pointerId };
+    this.start();
+  }
+
+  protected onPointerUp(event: PointerEvent): void {
+    if (
+      event.button === 0 &&
+      this.hold &&
+      'pointerId' in this.hold &&
+      this.hold.pointerId === event.pointerId
+    ) {
+      this.hold = undefined;
+      this.stop();
+    }
+  }
+
+  protected onPointerCancel(event: PointerEvent): void {
+    if (this.hold && 'pointerId' in this.hold && this.hold.pointerId === event.pointerId) {
+      this.cancel();
     }
   }
 
@@ -331,6 +376,29 @@ export class SiSpeechInputDirective implements OnDestroy {
       event.preventDefault();
       this.cancel();
       return;
+    }
+    if (this.mode() === 'push-to-talk' && (event.key === ' ' || event.key === 'Enter')) {
+      event.preventDefault();
+      if (!event.repeat && !this.disabled() && this.supported() && !this.listening()) {
+        this.hold = { key: event.code || event.key };
+        this.start();
+      }
+    }
+  }
+
+  protected onKeyUp(event: KeyboardEvent): void {
+    if (this.mode() === 'push-to-talk' && (event.key === ' ' || event.key === 'Enter')) {
+      event.preventDefault();
+      if (this.hold && 'key' in this.hold && this.hold.key === (event.code || event.key)) {
+        this.hold = undefined;
+        this.stop();
+      }
+    }
+  }
+
+  protected onBlur(): void {
+    if (this.hold) {
+      this.cancel();
     }
   }
 
@@ -381,6 +449,7 @@ export class SiSpeechInputDirective implements OnDestroy {
     this.detach();
     this.started = false;
     this.stopping = false;
+    this.hold = undefined;
     this.reason.set(reason);
     this.listeningState.set(false);
     const attempt = this.attempt;

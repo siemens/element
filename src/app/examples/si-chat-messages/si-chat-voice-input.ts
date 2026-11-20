@@ -31,6 +31,7 @@ export class SampleComponent {
   readonly value = signal('');
   readonly listening = signal(false);
   readonly autoSend = signal(false);
+  readonly mode = signal<'toggle' | 'push-to-talk'>('toggle');
   readonly hasTranscript = signal(false);
   readonly measuredLevels = signal(false);
   readonly voiceInputLevel = signal<number | undefined>(undefined);
@@ -68,6 +69,13 @@ export class SampleComponent {
   onSpeechError(error: string): void {
     this.error.set(`Voice input failed: ${error}`);
     this.logEvent(`Voice input failed: ${error}`);
+  }
+
+  setMode(event: Event): void {
+    const mode = (event.target as HTMLSelectElement).value;
+    if (mode === 'toggle' || mode === 'push-to-talk') {
+      this.mode.set(mode);
+    }
   }
 
   sendMessage(event: { content: string; attachments: ChatInputAttachment[] }): void {
