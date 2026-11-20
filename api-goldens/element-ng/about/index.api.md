@@ -31,6 +31,7 @@ export interface LicenseInfo {
 
 // @public (undocumented)
 export class SiAboutComponent implements OnInit {
+    constructor();
     readonly aboutTitle: _angular_core.InputSignal<string>;
     readonly acceptableUsePolicyLink: _angular_core.InputSignal<Link | undefined>;
     readonly appName: _angular_core.InputSignal<string>;
