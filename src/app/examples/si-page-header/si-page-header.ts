@@ -19,7 +19,7 @@ import {
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiSidePanelComponent, SiSidePanelContentComponent } from '@siemens/element-ng/side-panel';
 import { SiStatusBarComponent, StatusBarItem } from '@siemens/element-ng/status-bar';
 
@@ -36,6 +36,7 @@ import { SiStatusBarComponent, StatusBarItem } from '@siemens/element-ng/status-
     SiHeaderBrandDirective,
     SiNavbarVerticalComponent,
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
     SiSidePanelComponent,
     SiSidePanelContentComponent,
     SiStatusBarComponent,

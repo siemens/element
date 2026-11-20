@@ -3,8 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  effect,
+  inject,
+  signal,
+  untracked,
+  viewChild
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { debounce, form, FormField } from '@angular/forms/signals';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
@@ -14,7 +23,7 @@ import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiMainDetailContainerComponent } from '@siemens/element-ng/main-detail-container';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarModule } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { LOG_EVENT } from '@siemens/live-preview';
 import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
 
@@ -26,7 +35,9 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     CommonModule,
     FormsModule,
     SiMainDetailContainerComponent,
-    SiSearchBarModule,
+    SiSearchBarComponent,
+    SiSearchBarInputDirective,
+    FormField,
     SiContentActionBarComponent,
     NgxDatatableModule,
     SiDatatableModule,
@@ -86,7 +97,10 @@ export class SampleComponent {
   selectedEntities: CorporateEmployee[] = [];
   tableConfig = SI_DATATABLE_CONFIG;
   totalElements = 0;
-  searchTerm?: string;
+  protected readonly searchTerm = signal('');
+  protected readonly searchField = form(this.searchTerm, path => {
+    debounce(path, 400);
+  });
 
   /**
    * Detail data
@@ -101,6 +115,17 @@ export class SampleComponent {
   ];
   private readonly table = viewChild.required(DatatableComponent);
 
+  constructor() {
+    let previousSearchTerm = this.searchTerm();
+    effect(() => {
+      const searchTerm = this.searchTerm();
+      if (searchTerm !== previousSearchTerm) {
+        previousSearchTerm = searchTerm;
+        untracked(() => this.searchTermChanged(searchTerm));
+      }
+    });
+  }
+
   datatableOnSelect(): void {
     this.selectedEntity = this.selectedEntities[0];
     this.detailsActive = true;
@@ -108,7 +133,6 @@ export class SampleComponent {
   }
 
   searchTermChanged(searchTerm: string): void {
-    this.searchTerm = searchTerm;
     this.cache = {};
     this.totalElements = 0;
     this.rows = [];
@@ -116,7 +140,7 @@ export class SampleComponent {
   }
 
   setPage(pageRequest: PageRequest): void {
-    pageRequest.filter = this.searchTerm;
+    pageRequest.filter = this.searchTerm();
     // current page number is determined by last call to setPage
     this.pageNumber = pageRequest.offset;
 

@@ -87,7 +87,9 @@
 
         <div class="mb-6">
           <div class="row gy-6">
-            <si-search-bar placeholder="Search" class="col-12 col-md" [showIcon]="true" />
+            <si-search-bar class="col-12 col-md" [showIcon]="true">
+              <input siSearchBarInput placeholder="Search" aria-label="Search" />
+            </si-search-bar>
             <div class="col-auto">
               <button type="button" class="btn btn-secondary">Toolbar item</button>
             </div>

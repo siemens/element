@@ -6,12 +6,12 @@ import { Component, inject } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiCardComponent, SiLinkDirective, SiSearchBarComponent],
+  imports: [SiCardComponent, SiLinkDirective, SiSearchBarComponent, SiSearchBarInputDirective],
   templateUrl: './si-list-widget-css.html',
   host: { class: 'p-5' }
 })
