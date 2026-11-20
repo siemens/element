@@ -100,7 +100,7 @@ export class SiAiChatComponent implements SiChatInputParent {
 
   constructor() {
     effect(() => {
-      if (this.isEmpty()) {
+      if (this.shouldShowWelcomeScreen()) {
         this.chatContainer()?.scrollToTop();
       }
     });
@@ -316,8 +316,10 @@ export class SiAiChatComponent implements SiChatInputParent {
     return keys.length > 0 ? suggestions[keys[0]] : [];
   });
 
-  protected readonly isEmpty = computed(
-    () => !this.hideWelcomeScreen() && this.messages()?.length === 0 && !this.loading()
+  protected readonly isEmpty = computed(() => this.messages()?.length === 0 && !this.loading());
+
+  protected readonly shouldShowWelcomeScreen = computed(
+    () => this.isEmpty() && !this.hideWelcomeScreen()
   );
 
   readonly inputInterruptible = computed(() => {
