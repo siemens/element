@@ -180,6 +180,12 @@ export class SiAiChatComponent implements SiChatInputParent {
   readonly markdownOptions = input<SiMarkdownOptions>(makeSiMarkdownOptions());
 
   /**
+   * Whether to hide the welcome screen, even when messages is explicitly empty and loading is false.
+   * @defaultValue false
+   */
+  readonly hideWelcomeScreen = input(false, { transform: booleanAttribute });
+
+  /**
    * The greeting text for the welcome screen
    * @defaultValue
    * ```
@@ -310,7 +316,9 @@ export class SiAiChatComponent implements SiChatInputParent {
     return keys.length > 0 ? suggestions[keys[0]] : [];
   });
 
-  protected readonly isEmpty = computed(() => this.messages()?.length === 0 && !this.loading());
+  protected readonly isEmpty = computed(
+    () => !this.hideWelcomeScreen() && this.messages()?.length === 0 && !this.loading()
+  );
 
   readonly inputInterruptible = computed(() => {
     return this.interrupting() || (this.loading() && !this.disableInterrupt() && !this.sending());

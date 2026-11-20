@@ -148,6 +148,7 @@ export class SiAiChatComponent implements SiChatInputParent {
     readonly disableInterrupt: _angular_core.InputSignalWithTransform<boolean, unknown>;
     focus(): void;
     readonly greeting: _angular_core.InputSignal<TranslatableString>;
+    readonly hideWelcomeScreen: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly inputInterruptible: Signal<boolean>;
     // (undocumented)

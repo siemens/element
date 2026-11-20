@@ -105,6 +105,14 @@ empty array (`[]`) and `loading` is `false`. Leaving `messages` undefined does n
 The example starts with a conversation. Use **Clear messages** in the chat input to see the
 welcome screen.
 
+Set `[hideWelcomeScreen]="true"` to disable it, even when there are no messages.
+
+```html
+<si-ai-chat [messages]="messages()" [hideWelcomeScreen]="true">
+  <si-chat-input (send)="onMessageSent($event)" />
+</si-ai-chat>
+```
+
 ### Activity messages and traces
 
 Use `type: 'activity'` for an individual step, such as a tool call or a progress update. Use
