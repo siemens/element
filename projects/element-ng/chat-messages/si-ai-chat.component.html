@@ -1,5 +1,8 @@
-<si-chat-container [colorVariant]="colorVariant()" [noAutoScroll]="noAutoScroll() || isEmpty()">
-  @if (isEmpty()) {
+<si-chat-container
+  [colorVariant]="colorVariant()"
+  [noAutoScroll]="noAutoScroll() || shouldShowWelcomeScreen()"
+>
+  @if (shouldShowWelcomeScreen()) {
     <si-ai-welcome-screen
       [categories]="promptCategories()"
       [selectedCategory]="selectedCategory()"

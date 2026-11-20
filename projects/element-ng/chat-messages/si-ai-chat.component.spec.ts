@@ -23,7 +23,7 @@ describe('SiAiChatComponent', () => {
     fixture = TestBed.createComponent(SiAiChatComponent);
     debugElement = fixture.debugElement;
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {
@@ -50,10 +50,6 @@ describe('SiAiChatComponent', () => {
     expect(component.noAutoScroll()).toBe(false);
   });
 
-  it('should have default empty messages array', () => {
-    expect(component.messages()).toBeUndefined();
-  });
-
   it('should have default colorVariant of base-0', () => {
     expect(component.colorVariant()).toBe('base-0');
   });
@@ -67,15 +63,54 @@ describe('SiAiChatComponent', () => {
     expect(component.show()).toBe('auto');
   });
 
-  it('should render empty state when no messages', () => {
-    fixture.componentRef.setInput('messages', []);
-    fixture.detectChanges();
-
-    const welcomeScreen = debugElement.query(By.css('si-ai-welcome-screen'));
-    expect(welcomeScreen).toBeTruthy();
+  it('should show the welcome screen by default when messages is omitted', async () => {
+    await expect
+      .element(fixture.nativeElement.querySelector('si-ai-welcome-screen'))
+      .toBeInTheDocument();
   });
 
-  it('should not render empty state when messages exist', () => {
+  it.each([{ messages: undefined }, { messages: [] }])(
+    'should hide the welcome screen when disabled with messages=$messages',
+    async ({ messages }) => {
+      fixture.componentRef.setInput('hideWelcomeScreen', true);
+      fixture.componentRef.setInput('messages', messages);
+      await fixture.whenStable();
+
+      await expect
+        .element(fixture.nativeElement.querySelector('si-ai-welcome-screen'))
+        .not.toBeInTheDocument();
+    }
+  );
+
+  it('should update the welcome screen when toggled for an empty conversation', async () => {
+    fixture.componentRef.setInput('messages', []);
+    await fixture.whenStable();
+
+    const welcomeScreen = (): HTMLElement | null =>
+      fixture.nativeElement.querySelector('si-ai-welcome-screen');
+    await expect.element(welcomeScreen()).toBeInTheDocument();
+
+    fixture.componentRef.setInput('hideWelcomeScreen', true);
+    await fixture.whenStable();
+    await expect.element(welcomeScreen()).not.toBeInTheDocument();
+
+    fixture.componentRef.setInput('hideWelcomeScreen', false);
+    await fixture.whenStable();
+    await expect.element(welcomeScreen()).toBeInTheDocument();
+  });
+
+  it('should not show the enabled welcome screen while loading', async () => {
+    fixture.componentRef.setInput('messages', []);
+    fixture.componentRef.setInput('loading', true);
+    await fixture.whenStable();
+
+    await expect
+      .element(fixture.nativeElement.querySelector('si-ai-welcome-screen'))
+      .not.toBeInTheDocument();
+    await expect.element(fixture.nativeElement.querySelector('si-ai-message')).toBeInTheDocument();
+  });
+
+  it('should not render empty state when messages exist', async () => {
     const messages: ChatMessage[] = [
       {
         type: 'user',
@@ -84,7 +119,7 @@ describe('SiAiChatComponent', () => {
     ];
 
     fixture.componentRef.setInput('messages', messages);
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const welcomeScreen = debugElement.query(By.css('si-ai-welcome-screen'));
     expect(welcomeScreen).toBeFalsy();
@@ -124,9 +159,7 @@ describe('SiAiChatComponent', () => {
     expect(markdown.componentInstance.markdown()).toBe('Hello there!');
   });
 
-  it('should show the welcome screen only for an explicitly empty messages array', async () => {
-    expect(debugElement.query(By.css('si-ai-welcome-screen'))).toBeNull();
-
+  it('should show the welcome screen for both empty and undefined messages', async () => {
     fixture.componentRef.setInput('messages', []);
     await fixture.whenStable();
 
@@ -135,7 +168,7 @@ describe('SiAiChatComponent', () => {
     fixture.componentRef.setInput('messages', undefined);
     await fixture.whenStable();
 
-    expect(debugElement.query(By.css('si-ai-welcome-screen'))).toBeNull();
+    expect(debugElement.query(By.css('si-ai-welcome-screen'))).toBeTruthy();
   });
 
   it('should render and clear a loading placeholder without a messages input', async () => {
@@ -143,11 +176,13 @@ describe('SiAiChatComponent', () => {
     await fixture.whenStable();
 
     expect(debugElement.queryAll(By.css('si-ai-message'))).toHaveLength(1);
+    expect(debugElement.query(By.css('si-ai-welcome-screen'))).toBeNull();
 
     fixture.componentRef.setInput('loading', false);
     await fixture.whenStable();
 
     expect(debugElement.queryAll(By.css('si-ai-message'))).toHaveLength(0);
+    expect(debugElement.query(By.css('si-ai-welcome-screen'))).toBeTruthy();
   });
 
   it('should render loading AI message when loading is true', () => {
