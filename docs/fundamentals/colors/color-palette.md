@@ -28,51 +28,51 @@ used as values for color tokens.
 
 <div markdown>
 ## Brand
---8<-- "si-ref.md:si-ref-color-main-brand"
+--8<-- "si-ref.md:si-ref-color-main-brand-colors"
 </div>
 
 <div markdown>
 ## Deep-blue
---8<-- "si-ref.md:si-ref-color-main-deep-blue"
+--8<-- "si-ref.md:si-ref-color-main-deep-blue-colors"
 </div>
 
 <div markdown>
 ## Sand
---8<-- "si-ref.md:si-ref-color-main-sand"
+--8<-- "si-ref.md:si-ref-color-main-sand-colors"
 </div>
 
 <div markdown>
 ## Interactive-blue
---8<-- "si-ref.md:si-ref-color-main-interactive-blue"
+--8<-- "si-ref.md:si-ref-color-main-interactive-blue-colors"
 </div>
 
 <div markdown>
 ## Bold-green
---8<-- "si-ref.md:si-ref-color-main-bold-green"
+--8<-- "si-ref.md:si-ref-color-main-bold-green-colors"
 </div>
 
 <div markdown>
 ## Green
---8<-- "si-ref.md:si-ref-color-main-green"
+--8<-- "si-ref.md:si-ref-color-main-green-colors"
 </div>
 
 <div markdown>
 ## Blue
---8<-- "si-ref.md:si-ref-color-main-blue"
+--8<-- "si-ref.md:si-ref-color-main-blue-colors"
 </div>
 
 <div markdown>
 ## Yellow
---8<-- "si-ref.md:si-ref-color-main-yellow"
+--8<-- "si-ref.md:si-ref-color-main-yellow-colors"
 </div>
 
 <div markdown>
 ## Orange
---8<-- "si-ref.md:si-ref-color-main-orange"
+--8<-- "si-ref.md:si-ref-color-main-orange-colors"
 </div>
 
 <div markdown>
 ## Red
---8<-- "si-ref.md:si-ref-color-main-red"
+--8<-- "si-ref.md:si-ref-color-main-red-colors"
 </div>
 </div>
