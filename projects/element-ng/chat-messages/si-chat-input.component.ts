@@ -80,6 +80,7 @@ export interface ChatInputAttachment extends Attachment {
  * Additionally to the inputs and outputs documented here, the component supports content projection via the following slots:
  *
  * - Default content: Custom action buttons to display inline, prefer using the `actions` input for buttons, can be used in addition.
+ * - `siChatInputEnd` selector: Custom action buttons to display immediately before the submit button.
  * - `siChatInputDisclaimer` selector: Custom disclaimer content to display below the input area, prefer using the `disclaimer` input for simple text disclaimers.
  *
  * @see {@link SiAttachmentListComponent} for the base attachment component

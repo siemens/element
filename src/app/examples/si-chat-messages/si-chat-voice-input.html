@@ -1,0 +1,31 @@
+<div class="p-2">
+  <si-chat-input
+    placeholder="Enter a command, question or topic…"
+    disclaimer="The content is AI generated. Always verify the information for accuracy."
+    [allowAttachments]="true"
+    [disabled]="speech.listening()"
+    [(value)]="value"
+    (send)="sendMessage($event)"
+  >
+    <button
+      #speech="siSpeechInput"
+      type="button"
+      class="btn btn-tertiary-ghost btn-icon"
+      siChatInputEnd
+      siSpeechInput
+      continuous
+      noPermissionHint
+      [silenceTimeout]="2000"
+      [siTooltip]="speech.listening() ? 'Stop dictation' : 'Start dictation'"
+      [(value)]="value"
+      (listeningChange)="onListeningChange($event)"
+      (errorOccurred)="onSpeechError($event)"
+    >
+      <si-icon [icon]="speech.listening() ? icons.elementStopFilled : icons.elementVoice" />
+    </button>
+  </si-chat-input>
+  <span class="visually-hidden" role="status">{{ listening() ? 'Listening…' : '' }}</span>
+  @if (error()) {
+    <p class="text-danger mt-4 mb-0" role="alert">{{ error() }}</p>
+  }
+</div>

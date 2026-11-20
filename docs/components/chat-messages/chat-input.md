@@ -68,6 +68,19 @@ They help users continue the conversation without having to formulate the next m
 - Selecting a prompt inserts its text into the input field so the user can review or edit before sending.
 - The prompt list is cleared when the user sends a message.
 
+### Voice input
+
+Voice input is optional. Place a button with `siSpeechInput` in the `siChatInputEnd` slot
+next to Submit. The directive also works outside chat input.
+
+Click the button or press Enter or Space to start or stop recognition. Escape on the button
+cancels the attempt and restores the previous draft. Stopping retains the final transcript;
+it does not send a message unless the consumer opts in.
+
+The consumer controls the icon, contextual actions, and chat state. The directive supplies
+translated start/stop labels and the pressed state. It preserves button focus, including
+when recognition finishes. No audio waveform is rendered.
+
 ## Code ---
 
 <si-docs-component example="si-chat-messages/si-chat-input"></si-docs-component>
@@ -87,6 +100,91 @@ Clear the list (set to `[]`) on send and repopulate it after each AI response.
 />
 ```
 
+### Voice input
+
+<si-docs-component example="si-chat-messages/si-chat-voice-input"></si-docs-component>
+
+Import `SiSpeechInputDirective` from `@siemens/element-ng/speech-input` alongside the chat
+and icon components. Recognition uses the browser's `SpeechRecognition` or
+`webkitSpeechRecognition` implementation. The browser requests microphone permission on
+the first start; unsupported browsers disable the button. Browser support and language
+availability vary, and some implementations send audio to the browser vendor's service.
+Assess privacy and consent requirements before enabling recognition.
+
+The example uses the default browser adapter and requests microphone access when dictation
+starts. The injectable `SI_SPEECH_INPUT_RECOGNITION` factory also supports other providers
+and deterministic tests.
+Place the button in the `siChatInputEnd` projection slot to keep it next to Submit.
+
+```html
+<si-chat-input [sending]="sending()" [(value)]="message" (send)="onSend($event)">
+  <button
+    #speech="siSpeechInput"
+    siChatInputEnd
+    siSpeechInput
+    continuous
+    type="button"
+    class="btn btn-tertiary-ghost btn-icon"
+    startLabel="APP.DICTATE"
+    [disabled]="sending()"
+    [silenceTimeout]="2000"
+    [(value)]="message"
+    (errorOccurred)="onSpeechError($event)"
+    (listeningChange)="onListeningChange($event)"
+    (transcript)="onTranscript($event)"
+  >
+    <si-icon [icon]="speech.listening() ? icons.elementStopFilled : icons.elementVoice" />
+  </button>
+</si-chat-input>
+```
+
+`value` is the complete draft, including text present before recognition began. Partial
+results replace previous partial results rather than appending duplicates. `transcript`
+emits only the current attempt's recognized text. Chat input resizes for external updates.
+Do not edit or send the shared draft while recognition is active unless your application
+defines how those edits should interact with recognition updates.
+
+`listening()` includes both permission startup and the wait for final results.
+
+#### Standalone use
+
+The same directive can update any signal-backed text field, without a chat component:
+
+```html
+<button siSpeechInput type="button" class="btn btn-tertiary-ghost btn-icon" [(value)]="message">
+  <si-icon [icon]="icons.elementVoice" />
+</button>
+```
+
+Repeated activation never creates concurrent attempts. `stop()` keeps final results;
+`cancel()` restores the draft saved at startup. Disabling or destroying the directive
+aborts recognition, clears timers, and invalidates late callbacks.
+
+#### Permission denied
+
+```html
+<si-chat-input [(value)]="message" (send)="onSend($event)">
+  <button
+    siChatInputEnd
+    siSpeechInput
+    noPermissionHint
+    type="button"
+    class="btn btn-tertiary-ghost btn-icon"
+    [(value)]="message"
+    (errorOccurred)="onSpeechError($event)"
+  >
+    <si-icon [icon]="icons.elementVoice" />
+  </button>
+</si-chat-input>
+```
+
+`noPermissionHint` shows a focusable recovery popover for `not-allowed` and
+`service-not-allowed` errors. After restoring microphone access in browser settings, the
+user can retry without losing the draft. The application can disable dictation independently
+of typing and sending. Other failures emit their Web Speech API error code and restore the draft.
+
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
+
+<si-docs-api directive="SiSpeechInputDirective"></si-docs-api>
 
 <si-docs-types></si-docs-types>
