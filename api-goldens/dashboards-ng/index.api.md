@@ -34,6 +34,7 @@ import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { TemplateRef } from '@angular/core';
+import { Theme } from '@siemens/element-ng/theme';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Type } from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
@@ -165,6 +166,9 @@ export const SI_DASHBOARD_TOOLBAR_ITEMS: InjectionToken<{
 }>;
 
 // @public
+export const SI_EVENT_BUS_SOURCE: InjectionToken<string>;
+
+// @public
 export const SI_WIDGET_ID_PROVIDER: InjectionToken<SiWidgetIdProvider>;
 
 // @public
@@ -188,6 +192,48 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
     // (undocumented)
     protected update(widgetConfigs: WidgetConfig[], dashboardId?: string): void;
 }
+
+// @public
+export interface SiEmitOptions {
+    source?: string;
+    subject?: string;
+}
+
+// @public
+export type SiEvent<T extends SiEventType = SiEventType> = T extends SiEventType ? {
+    readonly specversion: '1.0';
+    readonly id: string;
+    readonly type: T;
+    readonly source: string;
+    readonly time: string;
+    readonly subject?: string;
+    readonly data: SiResolvedEventMap[T];
+} : never;
+
+// @public
+export class SiEventBus implements SiEventBusApi {
+    readonly emit: SiEventBusApi['emit'];
+    readonly on: SiEventBusApi['on'];
+    readonly snapshot: SiEventBusApi['snapshot'];
+}
+
+// @public
+export interface SiEventBusApi {
+    emit<T extends SiEventType>(type: T, data: SiResolvedEventMap[T], options?: SiEmitOptions): void;
+    emit(events: Partial<SiResolvedEventMap>, options?: SiEmitOptions): void;
+    on<P extends SiEventPattern>(pattern: P | readonly P[]): Observable<SiEvent<SiEventTypeOf<P>>>;
+    snapshot<T extends SiEventType>(type: T): SiEvent<T> | undefined;
+}
+
+// @public
+export interface SiEventMap {
+}
+
+// @public
+export type SiEventPattern = SiEventType | `${Prefixes<SiEventType>}.*` | '*';
+
+// @public
+export type SiEventType = keyof SiResolvedEventMap & string;
 
 // @public
 export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestroy {
