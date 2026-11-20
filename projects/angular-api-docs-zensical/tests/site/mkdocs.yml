@@ -3,6 +3,7 @@ site_url: https://docs.example/
 nav:
   - Components:
       - Widget guide: guide.md
+      - Refreshing a widget: refresh.md
 extra:
   element_docs_install: !!python/name:siemens_angular_api_docs_zensical.zensical_navigation.install
   element_docs:
@@ -17,5 +18,5 @@ plugins:
       base_url: ''
       preprocess: llms_preprocess.py
       sections:
-        Guide: ['guide.md']
+        Guide: ['guide.md', 'refresh.md']
         API reference: ['api/*.md']

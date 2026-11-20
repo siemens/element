@@ -219,7 +219,7 @@ export const prepareView = (
   context: PresentationContext,
   entry: ApiEntry,
   viewKind: 'api' | 'type',
-  members = (viewKind === 'type' ? context.typeMembers : context.apiMembers).get(entry.id) ?? []
+  members = context.apiMembers.get(entry.id) ?? []
 ): PresentationView => {
   const scope: Scope = { entry, generics: entry.generics, relatedTypeIds: new Set() };
   const angular = angularApi(entry) && viewKind === 'api';

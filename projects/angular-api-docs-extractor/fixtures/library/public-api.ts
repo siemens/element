@@ -1,5 +1,11 @@
+/** Shared presentation options. */
+export interface WidgetAppearance {
+  /** @default '' */
+  label?: string;
+}
+
 /** Configuration for a widget. */
-export interface WidgetOptions {
+export interface WidgetOptions extends WidgetAppearance {
   /** Whether to show the widget. */
   visible: boolean;
 }
