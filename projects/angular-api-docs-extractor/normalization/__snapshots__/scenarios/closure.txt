@@ -1,5 +1,5 @@
 Root | Options,Branch | Options,Branch | -
-Base |  | Detail | -
+Base |  |  | -
 Branch | Root,Options | Root,Options | -
 Alias | Constraint,Default,Arm,Param,Ret,Deep | Constraint,Default,Arm,Param,Ret,Deep | -
 Options |  |  | -

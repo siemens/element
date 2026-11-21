@@ -94,7 +94,7 @@ describe('normalization scenarios', () => {
     await snap(imports.join('\n') + '\n\n' + shown, 'grouping');
   });
 
-  it('filters Angular lifecycle, CVA, validator and compiler helpers from the API only', async () => {
+  it('filters Angular lifecycle, CVA, validator and compiler helpers from the API', async () => {
     const inheritedFrom = { name: 'Base', packageName: '@test/library', source: entry('B').source };
     const members = [
       from('OnInit', '@angular/core', 'ngOnInit'),
@@ -114,7 +114,7 @@ describe('normalization scenarios', () => {
     const [component, injectable] = (['component', 'injectable'] as const).map(
       kind => prepare(d(entry('W', { kind, members }))).symbols[0]
     );
-    const views = [component.api, injectable.api, component.type].map(view => names(view));
+    const views = [component.api, injectable.api].map(view => names(view));
     await snap(views.join(' | '), 'lifecycle');
   });
 
@@ -124,10 +124,9 @@ describe('normalization scenarios', () => {
       members: [
         bind('value', 'current', 'currentChange', { type: 'Model<number>' }),
         member('plain'),
-        member("'SI.LOGO'"),
+        member("'SI.LOGO'", { type: 'number', description: 'Source.' }),
         member('hidden', { visibility: 'private' })
-      ],
-      typeMembers: [member('SI.LOGO', { type: 'number', description: 'Source.' })]
+      ]
     });
     const path = '@test/library/secondary';
     const { memberIndex, members } = prepare(
@@ -425,7 +424,7 @@ describe('normalization scenarios', () => {
         .join('\n')
         .replaceAll('@test/library#', '');
     await snap(related({ '@test/library#Base': 'api/Base.md' }), 'closure');
-    expect(related()).toContain('Root | Options,Branch,Base,Detail');
+    expect(related()).toContain('Root | Options,Branch,Base');
     const { members: m, memberIndex: i, symbols } = prepare(data);
     expect(m[i['Root.branch'][0]].view.relatedTypeIds).toEqual(symbols[0].api.relatedTypeIds);
   });

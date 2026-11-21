@@ -88,8 +88,6 @@ export interface ApiEntry {
   jsdocTags: ApiJsDocTag[];
   source: ApiSource;
   members: ApiMember[];
-  /** Source-complete class/interface view for explicitly requested type tables. */
-  typeMembers?: ApiMember[];
   type?: string;
   selector?: string;
   exportAs?: string[];
