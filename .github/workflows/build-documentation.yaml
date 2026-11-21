@@ -51,10 +51,11 @@ jobs:
           UV_INDEX_CODE_DOCS_THEME_USERNAME: ${{ secrets.SIEMENS_NPM_USER }}
           UV_INDEX_CODE_DOCS_THEME_PASSWORD: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: pnpm run icon-viewer:build-docs
-      - run: pnpm run docs:build:generate
-        if: ${{ github.ref == 'refs/heads/main' }}
+      - run: CI=true pnpm run docs:test
+      - run: pnpm exec tsc --project projects/angular-api-docs-extractor/tsconfig.json --noEmit
+      - run: pnpm run docs:test:py
+      - run: pnpm run docs:generate-api
       - run: pnpm run docs:build:api
-        if: ${{ github.ref != 'refs/heads/main' }}
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
       - run: mv dist/dashboards-demo-esm/ dist/design/

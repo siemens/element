@@ -7,10 +7,9 @@
 out-tsc/
 # Only exists if Bazel was run
 /bazel-out
-# generated typedoc documentation
-/src/assets/typedoc
+# generated API reference pages
+/docs/api/
 # icon preview documentation
-docs/api
 docs/_src/fonts
 docs/_src/style
 docs/_src/icon-viewer
@@ -52,6 +51,7 @@ testem.log
 /typings
 messages.json
 __pycache__
+.cache
 
 # Environment variables
 /src/environments/environment.local*

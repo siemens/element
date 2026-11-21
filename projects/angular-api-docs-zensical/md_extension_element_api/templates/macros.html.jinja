@@ -1,0 +1,70 @@
+{% macro type_target(anchor) -%}
+{% if anchor in type_targets %}<span id="{{ type_targets[anchor] }}" data-api-type-target-for="{{ anchor }}"></span>{% endif %}
+{%- endmacro %}
+
+{% macro fragments(parts, local, inline_code=true, optional=false) -%}
+{%- for part in parts -%}
+{%- set text = part.text.removesuffix(' | undefined') if optional and loop.last and part.kind != 'link' else part.text -%}
+{%- if part.kind == 'link' -%}{% set url = href(part, local) %}{% if url is not none %}<a href="{{ url }}">{{ text }}</a>{% else %}{{ text }}{% endif %}
+{%- elif part.kind == 'code' and inline_code -%}<code>{{ text }}</code>
+{%- else -%}{{ text }}{%- endif -%}
+{%- endfor -%}
+{%- endmacro %}
+
+{% macro blocks(items, local) -%}
+{%- for block in items -%}
+{%- if block.kind == 'code' -%}
+{%- set code = block.parts | map(attribute='text') | join -%}
+{%- set language = block.language | default(none) -%}
+{%- set highlighted = highlight_example(code, language) if highlight_example | default(none) else none -%}
+{% if highlighted %}{{ highlighted | safe }}{% else %}<pre><code{% if language %} class="language-{{ language }}"{% endif %}>{{ code }}</code></pre>{% endif %}
+{%- else -%}<p>{{ fragments(block.parts, local) }}</p>{%- endif -%}
+{%- endfor -%}
+{%- endmacro %}
+
+{% macro signatures(items, local, shared_documentation=[], compact=false) -%}
+{% for signature in items %}<section id="{{ signature.anchor }}">{{ type_target(signature.anchor) }}
+{% if compact %}<p class="api-type-signature"><code>{{ fragments(signature.label, local, false) }}</code></p>
+{% else %}<pre class="api-signature"><code>{{ fragments(signature.label, local, false) }}</code></pre>{% endif %}
+{% for block in signature.documentation %}{% if block not in shared_documentation %}{{ blocks([block], local) }}{% endif %}{% endfor %}
+{% if signature.parameters %}{% if compact %}{{ type_rows(signature.parameters, 'Parameters', local) }}{% else %}{{ rows(signature.parameters, true, 'Parameters', local) }}{% endif %}{% endif %}
+{% if signature.returns %}<p><strong>Returns: </strong>{{ fragments(signature.returns, local) }}</p>{% endif %}
+</section>{% endfor %}
+{%- endmacro %}
+
+{% macro group(group, local, mode) -%}
+{% if mode == 'type' %}{{ type_rows(group.rows, group.title, local, group.anchor) }}
+{% else %}
+<h4 id="{{ group.anchor }}" data-api-toc-label="{{ group.title }}">{{ group.title }}<a class="headerlink" href="#{{ group.anchor | urlencode }}" title="Permanent link to {{ group.title }}">¶</a></h4>
+{{ rows(group.rows, group.showDefaults, group.title, local) }}{% endif %}
+{%- endmacro %}
+
+{% macro type_rows(items, title, local, anchor=none) -%}
+<div{% if anchor %} id="{{ anchor }}"{% endif %} class="api-type-group" role="group" aria-label="{{ title }}">
+<strong>{{ title }}</strong>{% if anchor %}<a class="headerlink" href="#{{ anchor | urlencode }}" title="Permanent link to {{ title }}">¶</a>{% endif %}
+<ul class="api-type-list" role="list">{% for row in items %}
+<li id="{{ row.anchor }}"{% if row.signatures %} class="api-type-callable"{% endif %}>{{ type_target(row.anchor) }}
+{% set optional = 'optional' in row.badges %}
+{% set notes = namespace(description=[], origins=[]) %}
+{% for block in row.documentation %}
+{% if not row.signatures and block.kind == 'paragraph' and block.parts and block.parts[0].text in ('Inherited from ', 'Implements ') %}
+{% set notes.origins = notes.origins + [block] %}
+{% else %}{% set notes.description = notes.description + [block] %}{% endif %}
+{% endfor %}
+{% if notes.description and not row.signatures %}<div class="api-type-notes">{{ blocks(notes.description, local) }}</div>{% endif %}
+<p class="api-type-member">{% if row.sourceUrl %}<a href="{{ safe_url(row.sourceUrl) }}" title="Source for {{ row.name }}">{{ row.name }}</a>{% else %}<strong>{{ row.name }}</strong>{% endif %}{% if optional %}?{% endif %}{% if row.type and not row.signatures %}: <code>{{ fragments(row.type, local, false, optional) }}</code>{% endif %}{% if row.default is not none %} = <code>{{ row.default }}</code>{% endif %}{% for origin in notes.origins %} <span class="api-type-origin">{{ fragments(origin.parts, local) }}</span>{% endfor %}<a class="headerlink" href="#{{ row.anchor | urlencode }}" title="Permanent link to {{ row.name }}">¶</a></p>
+{% for badge in row.badges if badge != 'optional' and not (badge == 'inherited' and notes.origins) %}<span class="api-badge" data-badge="{{ badge }}">{{ badge }}</span>{% endfor %}
+{% if row.documentation and row.signatures %}<div class="api-type-notes">{{ blocks(row.documentation, local) }}</div>{% endif %}
+{{ signatures(row.signatures, local, row.documentation, compact=true) }}
+</li>{% endfor %}</ul></div>
+{%- endmacro %}
+
+{% macro rows(items, show_defaults, title, local) -%}
+<div class="api-table" tabindex="0" role="group" aria-label="{{ title }}"><table aria-label="{{ title }}">
+<thead><tr><th scope="col">Name</th><th scope="col">Type</th>{% if show_defaults %}<th scope="col">Default</th>{% endif %}<th scope="col">Description</th></tr></thead>
+<tbody>{% for row in items %}<tr id="{{ row.anchor }}">
+<th scope="row">{{ type_target(row.anchor) }}<a href="{{ safe_url(row.sourceUrl) if row.sourceUrl else '#' ~ (row.anchor | urlencode) }}"{% if row.sourceUrl %} title="Source for {{ row.name }}"{% endif %}>{% if 'readonly' in row.badges %}(readonly) {% endif %}<strong>{{ row.name }}{% if row.signatures %}(){% endif %}</strong></a>{% if row.badges %}<span class="api-badges">{% for badge in row.badges if badge != 'readonly' %}<span class="api-badge" data-badge="{{ badge }}">{{ badge }}</span>{% endfor %}</span>{% endif %}<br><a class="headerlink" href="#{{ row.anchor | urlencode }}" title="Permanent link to {{ row.name }}">¶</a></th>
+<td>{% for signature in row.signatures %}<div><code>{{ fragments(callable_type(signature, row.name), local, false) }}</code></div>{% else %}<code>{{ fragments(row.type, local, false) }}</code>{% endfor %}</td>{% if show_defaults %}<td>{% if row.default is not none %}<code>{{ row.default }}</code>{% endif %}</td>{% endif %}
+<td>{{ blocks(row.documentation, local) }}{% for signature in row.signatures %}<section id="{{ signature.anchor }}">{{ type_target(signature.anchor) }}{% for block in signature.documentation %}{% if block not in row.documentation %}{{ blocks([block], local) }}{% endif %}{% endfor %}{% if signature.parameters %}{{ type_rows(signature.parameters, 'Parameters', local) }}{% endif %}</section>{% endfor %}</td>
+</tr>{% endfor %}</tbody></table></div>
+{%- endmacro %}

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "siemens-angular-api-docs-zensical"
+version = "1.0.0"
+description = "Generate and render Angular API documentation in Zensical."
+readme = "README.md"
+authors = [{ name = "Siemens AG", email = "info@siemens.com" }]
+requires-python = ">=3.11, <4"
+license = "MIT"
+dependencies = [
+    "Jinja2>=3.1.2",
+    "zensical>=0.1.2,<0.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/siemens/element"
+Repository = "https://github.com/siemens/element.git"
+Documentation = "https://github.com/siemens/element/blob/main/docs/architecture/internal/documentation.md"
+
+[project.scripts]
+angular-api-docs-zensical = "siemens_angular_api_docs_zensical.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["md_extension_element_docs", "md_extension_element_api", "siemens_angular_api_docs_zensical"]
+
+[project.entry-points."markdown.extensions"]
+element-docs = "md_extension_element_docs.extension:ElementDocsExtension"

@@ -18,7 +18,7 @@ export default defineConfig(
     languageOptions: {
       parserOptions: {
         project: [
-          'projects/dashboards-ng/tsconfig.docs.json',
+          'projects/dashboards-ng/tsconfig.lib.json',
           'projects/dashboards-ng/tsconfig.spec.json'
         ]
       }

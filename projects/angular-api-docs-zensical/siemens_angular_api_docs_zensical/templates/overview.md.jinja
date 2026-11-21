@@ -1,0 +1,7 @@
+# {{ page.title }}
+
+{% for entry in page.entries %}- [{{ entry.name }}]({{ safe_url(entry.href) }})
+{% if not loop.last %}
+{% endif %}{% endfor %}{% if page.readme %}
+
+{{ page.readme }}{% endif %}

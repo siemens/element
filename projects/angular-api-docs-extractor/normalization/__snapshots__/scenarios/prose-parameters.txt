@@ -1,0 +1,15 @@
+declaration: interface Locale
+## methods "Methods"
+  other  #@test/library#Locale/member/other
+    searchValue
+    other(): [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void] → [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #@test/library#Locale/member/other/signature/0
+  replace  #@test/library#Locale/member/replace
+    Replace [searchValue → #@test/library#Locale/member/replace/signature/0/parameter/0/searchValue].
+    replace(searchValue: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void] → [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #@test/library#Locale/member/replace/signature/0
+      Search [searchValue → #@test/library#Locale/member/replace/signature/0/parameter/0/searchValue].
+      param searchValue: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #@test/library#Locale/member/replace/signature/0/parameter/0/searchValue
+    replace(searchValue: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String], replaceValue: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]): [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void] → [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void]  #@test/library#Locale/member/replace/signature/1
+      param searchValue: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #@test/library#Locale/member/replace/signature/1/parameter/0/searchValue
+        With [replaceValue → #@test/library#Locale/member/replace/signature/1/parameter/1/replaceValue].
+      param replaceValue: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String]  #@test/library#Locale/member/replace/signature/1/parameter/1/replaceValue
+        With [searchValue → #@test/library#Locale/member/replace/signature/1/parameter/0/searchValue].

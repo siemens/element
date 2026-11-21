@@ -158,12 +158,12 @@ Element defaults take precedence. Keys without an Element default are passed to 
 All keys are members of the `SiTranslatableKeys` type of each package:
 
 - [SiTranslatableKeys in @siemens/element-ng](../../api/siemens/element-ng/types/SiTranslatableKeys/)
-- [SiTranslatableKeys in @siemens/dashboards-ng](../../api/siemens/dashboards-ng/types/SiTranslatableKeys/)
-- [SiTranslatableKeys in @siemens/maps-ng](../../api/siemens/maps-ng/types/SiTranslatableKeys/)
+- [SiTranslatableKeys in @siemens/dashboards-ng](../../api/siemens/dashboards-ng/types/_entrypoints/translate/SiTranslatableKeys/)
+- [SiTranslatableKeys in @siemens/maps-ng](../../api/siemens/maps-ng/types/_entrypoints/translate/SiTranslatableKeys/)
 
 The packages also include a `template-i18n.json` file with their keys and default text.
 It can be used as a starting point for your application's translation files.
-To extract keys when developing an Element component or library, see [extracting translatable keys](../architecture/translation.md#extracting-translatable-keys).
+To extract keys when developing an Element component or library, see [extracting translatable keys](../architecture/internal/translation.md#extracting-translatable-keys).
 
 ## Caching translation files
 
@@ -186,4 +186,4 @@ This only changes requests for translation files.
 
 - [Localization and locale configuration](localization.md)
 - [Language switcher](../components/forms-inputs/language-switcher.md)
-- [Translation abstraction for Element contributors](../architecture/translation.md)
+- [Translation abstraction for Element contributors](../architecture/internal/translation.md)

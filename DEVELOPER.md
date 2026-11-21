@@ -46,7 +46,7 @@ pnpm run translate:build
 
 ## Translatable component text
 
-See the [translation abstraction](https://element.siemens.io/architecture/translation/) guide
+See the [translation abstraction](https://element.siemens.io/architecture/internal/translation/) guide
 for declaring and rendering translatable text, extracting keys, and testing translation behavior.
 
 ## Running the example application
@@ -223,12 +223,41 @@ We use [Zensical](https://zensical.org/) to build the documentation.
 To have visible example code, run the example application first.
 
 ```shell
-# Serve the documentation locally run
+# Serve the documentation locally (without API documentation)
 pnpm run docs:serve
 ```
 
-Open the documentation at `http://127.0.0.1:8000` so it uses the same loopback
-hostname as the embedded examples and can access browser storage.
+Open the documentation at `http://localhost:8000`. The documentation and embedded
+examples both use `localhost` to avoid cross-site browser storage restrictions.
+
+For details on how the documentation is built, see the
+[documentation architecture](https://element.siemens.io/architecture/internal/documentation/).
+
+### API documentation
+
+```shell
+# Extract API data and generate reference pages into docs/api/ (gitignored, do not edit)
+pnpm run docs:generate-api
+# Build the site with API documentation
+pnpm run docs:build:api
+# Preview the site with API documentation
+pnpm run docs:serve:api
+# Fast build without API documentation
+pnpm run docs:build
+```
+
+Rerun `docs:generate-api` when library sources change. The preview does not re-extract APIs or regenerate reference pages.
+The script runs `angular-api-docs extract` with the root `api-docs.config.ts`, and then runs `uv run angular-api-docs-zensical generate-pages` with the settings under `extra.element_docs` in `mkdocs.yml`.
+To regenerate only the JSON artifacts, run `pnpm exec angular-api-docs extract`. If the JSON is already current and you only need to regenerate the reference pages, run `uv run angular-api-docs-zensical generate-pages`.
+
+### Checks
+
+```shell
+# Unit tests
+CI=true pnpm run docs:test
+# Python tests
+pnpm run docs:test:py
+```
 
 ### General writing style guide
 
@@ -263,9 +292,11 @@ Each chapter must include:
 
 ### Code section
 
-To improve the user experience, mention all relevant components, directives, services, pipes and types
-inline using the tags instead of linking them.
-Components (and their types) can be documented by re-exporting them in `docs.ts`.
+Embed the API for relevant components, directives, services, pipes, and types
+instead of linking to it. Put API tags on their own lines, outside prose paragraphs.
+Export local APIs through the public entry point declared in `ng-package.json`.
+The compiler extractor discovers those exports automatically; no documentation
+barrel or separate documentation tsconfig is needed.
 
 To enhance the docs with live examples and API specs, use these tags in the Markdown files:
 
@@ -291,10 +322,5 @@ To enhance the docs with live examples and API specs, use these tags in the Mark
   file. Can therefore only be used once per file.
   It should always be used to get better types documentation resolution.
 
-### Ignoring
-
-To not parse the extension syntax, just add `DOCS-COMPOSER-IGNORE` somewhere in the file (as a markdown comment so it doesn't get rendered):
-
-```md
-[//]: # 'DOCS-COMPOSER-IGNORE'
-```
+To document these tags literally, put them in fenced or inline code. Literal code
+and comments are not interpreted as active API or example requests.

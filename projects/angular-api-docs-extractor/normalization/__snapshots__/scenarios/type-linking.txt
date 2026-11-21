@@ -1,0 +1,13 @@
+declaration: interface Generic<T extends [Value → #@test/library#Value] = [Value → #@test/library#Value]>
+related: @test/library#Value
+
+declaration: typeof [ns.Value → #@test/library#Value] | import("p").[Value → #@test/library#Value] | ([Value → #@test/library#Value] extends infer I ? I : [never → https://www.typescriptlang.org/docs/handbook/2/functions.html#never]) | Unknown | [Promise → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise]<[Storage → https://developer.mozilla.org/docs/Web/API/Storage]> | [URLSearchParams → https://developer.mozilla.org/docs/Web/API/URLSearchParams]
+related: @test/library#Value
+
+declaration: [string → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String] | [number → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number][] | [boolean → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean] | [bigint → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/BigInt] | [symbol → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol] | [undefined → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined] | [null → https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/null] | 'x' | [any → https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any] | [unknown → https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown] | [void → https://www.typescriptlang.org/docs/handbook/2/functions.html#void] | [never → https://www.typescriptlang.org/docs/handbook/2/functions.html#never] | [object → https://www.typescriptlang.org/docs/handbook/2/functions.html#object]
+
+declaration: T | Hidden extends [Base → #@test/library#Base]<[Value → #@test/library#Value][]> implements [Contract → #@test/library#Contract]<T>
+related: @test/library#Base, @test/library#Value, @test/library#Contract
+
+declaration: { Dup: 1; f: (Dup: 2) => [Dup → #@one#Dup] }
+related: @one#Dup
