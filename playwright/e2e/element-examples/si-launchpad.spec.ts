@@ -29,10 +29,35 @@ test.describe('launchpad', () => {
     await si.visitExample(example);
     await page.getByLabel('Launchpad').press('Enter');
     await page.getByRole('button', { name: 'Show more' }).press('Enter');
-    await page.getByRole('link', { name: /This is a really long name/ }).first().focus();
+    await page
+      .getByRole('link', { name: /This is a really long name/ })
+      .first()
+      .focus();
     const tooltip = page.getByRole('tooltip');
     await expect(tooltip).toBeVisible();
     await expect(tooltip).toContainText('This is a really long name');
     await expect(tooltip).toContainText('System name');
   });
+
+  for (const mobile of [false, true]) {
+    test(`with wrapped app labels on ${mobile ? 'a small' : 'a large'} screen`, async ({
+      page,
+      si
+    }) => {
+      await si.visitExample(example);
+      if (mobile) {
+        await page.setViewportSize({ width: 320, height: 660 });
+      }
+      await page.getByRole('checkbox', { name: 'Wrap app labels' }).check();
+      await page.getByRole('button', { name: 'Launchpad', exact: true }).click();
+      await page.getByRole('button', { name: 'Show more' }).click();
+
+      const longLabel = page.getByRole('link', { name: /This is a really long name/ }).first();
+      const shortLabel = page.getByRole('link', { name: 'Assets System name' }).last();
+      await expect(longLabel).toBeVisible();
+      const longTile = await longLabel.boundingBox();
+      const shortTile = await shortLabel.boundingBox();
+      expect(longTile!.height).toBeCloseTo(shortTile!.height);
+    });
+  }
 });

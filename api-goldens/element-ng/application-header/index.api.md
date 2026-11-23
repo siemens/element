@@ -143,6 +143,7 @@ export class SiLaunchpadFactoryComponent {
     readonly showMoreAppsText: _angular_core.InputSignal<TranslatableString>;
     readonly subtitleText: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly titleText: _angular_core.InputSignal<TranslatableString>;
+    readonly wrapAppLabels: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // (No @packageDocumentation comment for this package)
