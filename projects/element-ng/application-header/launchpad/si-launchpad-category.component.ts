@@ -13,6 +13,7 @@ import { App, AppCategory, FavoriteChangeEvent } from './si-launchpad.model';
   selector: 'si-launchpad-category',
   imports: [SiLaunchpadAppComponent, SiTranslatePipe, RouterLinkActive, RouterLink],
   templateUrl: './si-launchpad-category.component.html',
+  styleUrl: './si-launchpad-category.component.scss',
   host: {
     class: 'd-block',
     '[class.has-title]': '!!category().name'

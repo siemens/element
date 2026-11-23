@@ -31,4 +31,23 @@ test.describe('launchpad', () => {
     await page.getByText('More').click();
     await si.runVisualAndA11yTests('mobile');
   });
+
+  for (const mobile of [false, true]) {
+    test(`with wrapped app labels on ${mobile ? 'a small' : 'a large'} screen`, async ({
+      page,
+      si
+    }) => {
+      await si.visitExample(example);
+      if (mobile) {
+        await page.setViewportSize({ width: 380, height: 660 });
+      }
+      await page.getByRole('checkbox', { name: 'Wrap app labels' }).check();
+      await page.getByRole('button', { name: 'Launchpad', exact: true }).click();
+      const more = page.getByRole('button', { name: 'More', exact: true });
+      await more.click();
+      await expect(more).toHaveAttribute('aria-expanded', 'true');
+
+      await si.runVisualAndA11yTests(mobile ? 'wrapped-mobile' : 'wrapped');
+    });
+  }
 });
