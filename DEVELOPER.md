@@ -227,7 +227,7 @@ To have visible example code, run the example application first.
 pnpm run docs:serve
 ```
 
-Open the documentation at `http://127.0.0.1:8000` so it uses the same loopback
+Open the documentation at `http://localhost:8000` so it uses the same loopback
 hostname as the embedded examples and can access browser storage.
 
 ### General writing style guide
