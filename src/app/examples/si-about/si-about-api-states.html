@@ -1,0 +1,105 @@
+@for (version of [reloadVersion()]; track version) {
+  <si-about
+    aboutTitle="About"
+    icon="./assets/images/element-logo.svg"
+    appName="Application title"
+    [licenseInfo]="{ title: 'License', api: 'mock-licenses/licenses.json' }"
+    [subheading]="['app version v0.1.2.alpha4']"
+    [acceptableUsePolicyLink]="{
+      title: 'Acceptable Use Policy',
+      href: 'https://www.examples.org/sw-terms/aup'
+    }"
+    [imprintLink]="{
+      title: 'Corporate Information',
+      href: 'http://www.examples.org/corporate-information'
+    }"
+    [privacyLink]="{
+      title: 'Privacy Notice',
+      href: 'http://www.examples.org/privacy-notice'
+    }"
+    [cookieNoticeLink]="{
+      title: 'Cookie Notice',
+      href: 'https://www.examples.org/cookie-notice'
+    }"
+    [termsLink]="{
+      title: 'Terms of Use',
+      href: 'http://www.examples.org/terms-of-use'
+    }"
+    [copyrightDetails]="{
+      startYear: 2016,
+      lastUpdateYear: 2026
+    }"
+  />
+}
+
+<div class="mx-8 mb-6 e2e-ignore">
+  <div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between">
+      <span>Control panel</span>
+      <button type="button" class="btn btn-secondary btn-sm" (click)="reload()">Reload</button>
+    </div>
+    <div class="card-body">
+      <div class="row g-6">
+        <div class="col-md-4">
+          <label class="form-label" for="license-index-state">License index</label>
+          <select
+            id="license-index-state"
+            class="form-select"
+            [formField]="settingsForm.indexState"
+          >
+            <option value="loaded">Loaded</option>
+            <option value="loading">Loading</option>
+            <option value="error">Error</option>
+            <option value="empty">Empty</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="component-list-state">Component lists</label>
+          <select
+            id="component-list-state"
+            class="form-select"
+            [formField]="settingsForm.categoryState"
+          >
+            <option value="loaded">Loaded</option>
+            <option value="loading">Loading</option>
+            <option value="error">Error</option>
+            <option value="empty">Empty</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="license-text-state">License texts</label>
+          <select id="license-text-state" class="form-select" [formField]="settingsForm.textState">
+            <option value="loaded">Loaded</option>
+            <option value="loading">Loading</option>
+            <option value="error">Error</option>
+            <option value="empty">Empty</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label" for="response-delay">
+            Response delay: {{ settings().delayMs }} ms
+          </label>
+          <input
+            id="response-delay"
+            type="range"
+            class="form-range"
+            step="200"
+            [formField]="settingsForm.delayMs"
+          />
+        </div>
+        <div class="col-md-6 d-flex align-items-end">
+          <div class="form-check form-switch mb-2">
+            <input
+              id="succeed-on-retry"
+              type="checkbox"
+              role="switch"
+              class="form-check-input"
+              [formField]="settingsForm.succeedOnRetry"
+            />
+            <label class="form-check-label" for="succeed-on-retry">Succeed on retry</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
