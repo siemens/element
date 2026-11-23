@@ -73,6 +73,8 @@ export abstract class SiLivePreviewApplicationRuntimeComponent extends SiLivePre
 
 // @public
 export interface SiLivePreviewConfig {
+    applicationUrl?: string;
+    availableLocales?: string[];
     // (undocumented)
     componentLoader: {
         load: (name: string) => Promise<any>;
