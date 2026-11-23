@@ -88,6 +88,19 @@ Wrap it inside a `ng-template` and provide the template to the `si-application-h
 </ng-template>
 ```
 
+### Keyboard interaction
+
+The apps of each category form a grid with a single tab stop:
+
+- `Tab` moves the focus into and out of a category.
+- Arrow keys move the focus between apps, following the visual layout.
+  At the end of a row or column, the focus continues with the next one.
+- `Home` and `End` move the focus to the first and last app of the row.
+- `Ctrl` + `Home` and `Ctrl` + `End` move the focus to the first and last app of the category.
+- `Enter` opens the focused app.
+- `Space` toggles the focused app as favorite, if favorites are enabled.
+- `Escape` closes the launchpad.
+
 ### Example
 
 <si-docs-component example="si-application-header/si-launchpad" height="330"></si-docs-component>

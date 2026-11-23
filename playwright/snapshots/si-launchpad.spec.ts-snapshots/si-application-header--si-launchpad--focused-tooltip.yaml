@@ -6,14 +6,20 @@
   - paragraph: Switch app
   - button "Close launchpad"
   - text: Favorites
-  - link "Assets System name":
-    - /url: .
-  - link "Fischbach System name":
-    - /url: .
-  - link "Statistics and performance analytics Building automation and monitoring system":
-    - /url: /stats
-  - link "Rocket System name":
-    - /url: .
+  - grid "Favorites":
+    - row "Assets System name Fischbach System name Statistics and performance analytics Building automation and monitoring system Rocket System name":
+      - gridcell "Assets System name":
+        - link "Assets System name":
+          - /url: .
+      - gridcell "Fischbach System name":
+        - link "Fischbach System name":
+          - /url: .
+      - gridcell "Statistics and performance analytics Building automation and monitoring system":
+        - link "Statistics and performance analytics Building automation and monitoring system":
+          - /url: /stats
+      - gridcell "Rocket System name":
+        - link "Rocket System name":
+          - /url: .
   - button "More"
 - heading "Launchpad Configuration" [level=2]
 - paragraph: Configure your launchpad settings and test different display modes.
