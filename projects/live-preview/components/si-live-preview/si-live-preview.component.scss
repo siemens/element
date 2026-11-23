@@ -43,6 +43,15 @@ $font-size-small: 11px;
     flex: unset;
   }
 
+  &.is-resizable {
+    flex: none;
+    overflow: hidden;
+
+    .preview-iframe {
+      min-block-size: 0;
+    }
+  }
+
   &.fullscreen {
     padding: 0;
     block-size: 100%;
@@ -76,6 +85,38 @@ $font-size-small: 11px;
   padding-block: 0;
   padding-inline: 30px;
   flex-direction: column;
+}
+
+.preview-resizer {
+  // Center the handle over the code panel's border without adding a row.
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  block-size: 0;
+}
+
+.preview-resize-handle {
+  display: grid;
+  place-items: center;
+  inline-size: 48px;
+  block-size: 24px;
+  cursor: row-resize;
+  touch-action: none;
+
+  &::after {
+    content: '';
+    inline-size: 32px;
+    border-block-start: 2px solid currentColor;
+  }
+
+  &:is(:hover, :focus-visible, .is-resizing) {
+    color: variables.$live-preview-link-hover-color;
+  }
+
+  &:focus-visible {
+    outline: variables.$live-preview-focus-outline;
+    outline-offset: variables.$live-preview-focus-outline-inside-offset;
+  }
 }
 
 .collapse-wrapper {
@@ -333,15 +374,6 @@ fieldset {
 
   ::ng-deep textarea {
     box-shadow: none;
-  }
-}
-
-// Embedded docs size the example independently of the code panel.
-:host(.embedded:not(.editor-fullscreen):not(.is-mobile)) {
-  .example {
-    flex: 0 0 var(--preview-height, 204px);
-    min-block-size: 0;
-    overflow: hidden;
   }
 }
 

@@ -43,6 +43,11 @@ app-sample {
   display: block;
 }
 
+// Keep example margins inside the full-height host so they don't overflow the iframe viewport.
+si-live-preview-wrapper app-sample {
+  display: flow-root;
+}
+
 body {
   overscroll-behavior: none;
 }
