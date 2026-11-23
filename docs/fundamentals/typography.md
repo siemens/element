@@ -201,7 +201,7 @@ Use semantic elements such as `<strong>` and `<em>` when the emphasis has meanin
 
 Apply display typography using CSS classes prefixed with `.si-display-`. These classes mirror the display typography scale defined in the design system and can be applied to any element. Semi bold variants use the `-sbold` suffix.
 
-<si-docs-component example="typography/display-styles" height="590"></si-docs-component>
+<si-docs-component example="typography/display-styles" height="900"></si-docs-component>
 
 ### Code styles classes
 
@@ -248,7 +248,7 @@ While not shown above, feel free to use `<b>` and `<i>` in HTML5. `<b>` is meant
 <p><em>This line is rendered as italicized text.</em></p>
 ```
 
-<si-docs-component example="typography/inline-elements" height="280"></si-docs-component>
+<si-docs-component example="typography/inline-elements" height="315"></si-docs-component>
 
 ### Text utilities
 
@@ -271,4 +271,4 @@ font-weight: variables.$si-sys-typography-h1-font-weight;
 We use the specifications for defining the style CSS classes and for configuring
 Element's typography system.
 
-<si-docs-component example="typography/semantic-elements" height="400"></si-docs-component>
+<si-docs-component example="typography/semantic-elements" height="1755"></si-docs-component>

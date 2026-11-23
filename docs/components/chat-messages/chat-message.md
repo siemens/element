@@ -78,11 +78,11 @@ The text reflows to fit the available space while preserving hierarchy and align
 
 ## Code ---
 
-<si-docs-component example="si-chat-messages/si-user-message"></si-docs-component>
+<si-docs-component example="si-chat-messages/si-user-message" height="240"></si-docs-component>
 
 <si-docs-api component="SiUserMessageComponent"></si-docs-api>
 
-<si-docs-component example="si-chat-messages/si-ai-message"></si-docs-component>
+<si-docs-component example="si-chat-messages/si-ai-message" height="300"></si-docs-component>
 
 <si-docs-api component="SiAiMessageComponent"></si-docs-api>
 
@@ -98,7 +98,7 @@ The slots are:
 - `si-avatar/si-icon/img` - For the avatar or icon representing the message sender.
 - `siChatMessageAction (helper directive)` - For actions related to the message.
 
-<si-docs-component example="si-chat-messages/si-chat-message"></si-docs-component>
+<si-docs-component example="si-chat-messages/si-chat-message" height="525"></si-docs-component>
 
 <si-docs-api component="SiChatMessageComponent"></si-docs-api>
 

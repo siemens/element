@@ -69,7 +69,7 @@ import { SiTourService } from '@siemens/element-ng/tour';
 })
 ```
 
-<si-docs-component example="si-tour/si-tour" height="300"></si-docs-component>
+<si-docs-component example="si-tour/si-tour" height="445"></si-docs-component>
 
 <si-docs-api injectable="SiTourService"></si-docs-api>
 

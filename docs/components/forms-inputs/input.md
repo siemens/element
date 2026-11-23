@@ -112,7 +112,7 @@ The password visibility toggle allows users to show or hide their passwords, enh
 
 ### Usage
 
-<si-docs-component example="input-fields/single-line" height="220"></si-docs-component>
+<si-docs-component example="input-fields/single-line" height="965"></si-docs-component>
 
 #### Password input with visibility toggle
 
@@ -157,7 +157,7 @@ Utilize the output callback event [`(passwordStrengthChanged)`](./input.md#passw
 </si-password-strength>
 ```
 
-<si-docs-component example="input-fields/password" height="220"></si-docs-component>
+<si-docs-component example="input-fields/password" height="300"></si-docs-component>
 
 <si-docs-api component="SiPasswordToggleComponent"></si-docs-api>
 <si-docs-api component="SiPasswordStrengthComponent"></si-docs-api>

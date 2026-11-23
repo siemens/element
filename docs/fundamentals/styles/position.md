@@ -82,4 +82,4 @@ For centering along only one axis, use `.translate-middle-x` to center horizonta
 </div>
 ```
 
-<si-docs-component example="position/position-center" height="300"></si-docs-component>
+<si-docs-component example="position/position-center" height="350"></si-docs-component>

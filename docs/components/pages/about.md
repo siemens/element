@@ -48,7 +48,7 @@ loaded lazily via API and revealed when loaded.
 Just set the `licenseInfo.api` parameter to the API endpoint which provides the
 license data.
 
-<si-docs-component example="si-about/si-about-api" height="500"></si-docs-component>
+<si-docs-component example="si-about/si-about-api" height="820"></si-docs-component>
 
 #### License data format
 
@@ -87,21 +87,21 @@ structured into three levels of endpoints:
 Use the `licenseInfo.text` parameter to display the provided license text as
 plain text.
 
-<si-docs-component example="si-about/si-about-text" height="500"></si-docs-component>
+<si-docs-component example="si-about/si-about-text" height="800"></si-docs-component>
 
 ### License introduction text and API
 
 If your application requires showing a disclaimer in addition to the component
 licenses provided via API, you can combine the parameters `licenseInfo.text` and `licenseInfo.api`.
 
-<si-docs-component example="si-about/si-about-text-api" height="500"></si-docs-component>
+<si-docs-component example="si-about/si-about-text-api" height="1045"></si-docs-component>
 
 ### License Iframe
 
 You can also use a URL in the `licenseInfo.iframe` parameter to show an embedded
 page containing license information.
 
-<si-docs-component example="si-about/si-about-iframe" height="500"></si-docs-component>
+<si-docs-component example="si-about/si-about-iframe" height="1225"></si-docs-component>
 
 ### Security considerations
 

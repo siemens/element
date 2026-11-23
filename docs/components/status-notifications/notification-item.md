@@ -77,7 +77,7 @@ import { SiNotificationItemComponent } from '@siemens/element-ng/notification-it
 
 ### Examples
 
-<si-docs-component example="si-notification-item/si-notification-item" height="680"></si-docs-component>
+<si-docs-component example="si-notification-item/si-notification-item" height="1205"></si-docs-component>
 
 <si-docs-api component="SiNotificationItemComponent"></si-docs-api>
 

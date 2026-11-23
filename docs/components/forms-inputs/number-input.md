@@ -77,7 +77,7 @@ import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 })
 ```
 
-<si-docs-component example="si-number-input/si-number-input"></si-docs-component>
+<si-docs-component example="si-number-input/si-number-input" height="505"></si-docs-component>
 
 <si-docs-api component="SiNumberInputComponent"></si-docs-api>
 

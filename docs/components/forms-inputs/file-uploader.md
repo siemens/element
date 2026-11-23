@@ -59,11 +59,11 @@ import { SiFileUploaderComponent } from '@siemens/element-ng/file-uploader';
 })
 ```
 
-<si-docs-component example="si-file-uploader/si-file-uploader" height="250"></si-docs-component>
+<si-docs-component example="si-file-uploader/si-file-uploader" height="835"></si-docs-component>
 
 It's also possible to have only the file selector / drop zone part without the file list.
 
-<si-docs-component example="si-file-uploader/si-file-dropzone" height="250"></si-docs-component>
+<si-docs-component example="si-file-uploader/si-file-dropzone" height="310"></si-docs-component>
 
 <si-docs-api component="SiFileUploaderComponent"></si-docs-api>
 

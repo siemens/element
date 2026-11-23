@@ -100,4 +100,4 @@ expand.
 Use the [`<si-menu-bar>`](../../components/buttons-menus/menu.md) component, if you do not need a responsive
 collapsible menu and only have a reduced number of menu items or use normal buttons.
 
-<si-docs-component example="si-page-header/si-page-header" height="600"></si-docs-component>
+<si-docs-component example="si-page-header/si-page-header" height="660"></si-docs-component>

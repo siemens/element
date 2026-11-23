@@ -90,7 +90,7 @@ Wrap it inside a `ng-template` and provide the template to the `si-application-h
 
 ### Example
 
-<si-docs-component example="si-application-header/si-launchpad" height="330"></si-docs-component>
+<si-docs-component example="si-application-header/si-launchpad" height="345"></si-docs-component>
 
 <si-docs-api component="SiLaunchpadFactoryComponent"></si-docs-api>
 

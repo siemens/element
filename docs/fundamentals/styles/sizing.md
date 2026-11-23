@@ -25,7 +25,7 @@ Available presets include `25%`, `50%`, `75%`, `100%`, and `auto` sizing options
 </div>
 ```
 
-<si-docs-component example="sizing/parent-relative-dimensions" height="300"></si-docs-component>
+<si-docs-component example="sizing/parent-relative-dimensions" height="440"></si-docs-component>
 
 Maximum dimension constraints can be applied when needed to prevent elements from exceeding specific thresholds.
 
@@ -41,7 +41,7 @@ Maximum dimension constraints can be applied when needed to prevent elements fro
 </div>
 ```
 
-<si-docs-component example="sizing/max-size" height="300"></si-docs-component>
+<si-docs-component example="sizing/max-size" height="320"></si-docs-component>
 
 ## Viewport-based dimensions
 

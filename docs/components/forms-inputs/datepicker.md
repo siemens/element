@@ -110,7 +110,7 @@ The datepicker component can be added to any view. Bidirectional binding of the 
 object is provided by the `date` property. The configuration is handled by the `config`
 object as documented in the API.
 
-<si-docs-component example="si-datepicker/si-datepicker-no-time" height="350"></si-docs-component>
+<si-docs-component example="si-datepicker/si-datepicker-no-time" height="480"></si-docs-component>
 
 ### Datepicker with time control
 
@@ -120,14 +120,14 @@ object as documented in the API.
   by the `disabledTimeChange` output property.
 - Use the `mandatoryTime` flag to hide the switch.
 
-<si-docs-component example="si-datepicker/si-datepicker" height="450"></si-docs-component>
+<si-docs-component example="si-datepicker/si-datepicker" height="600"></si-docs-component>
 
 ### Datepicker with date range
 
 The `si-datepicker` allows to pick date ranges. Use the two-way binded property `dateRange`
 and set `enableDateRange: true` in configuration.
 
-<si-docs-component example="si-datepicker/si-datepicker-range" height="450"></si-docs-component>
+<si-docs-component example="si-datepicker/si-datepicker-range" height="480"></si-docs-component>
 
 ### Input element with datepicker
 
@@ -138,7 +138,7 @@ Optionally, you can provide a custom date and time format using the `config` obj
 
 The directive implements the Angular `ControlValueAccessor` and can be used in Angular Forms.
 
-<si-docs-component base="si-datepicker" height="650">
+<si-docs-component base="si-datepicker" height="770">
   <si-docs-tab example="si-datepicker-input" heading="Datepicker Input"></si-docs-tab>
   <si-docs-tab example="si-datepicker-input-playground" heading="Datepicker Input Playground"></si-docs-tab>
 </si-docs-component>
@@ -149,7 +149,7 @@ The `SiDateRangeComponent` component is a custom component which can be used to 
 
 The component implements the Angular `ControlValueAccessor` and can be used in Angular Forms.
 
-<si-docs-component base="si-datepicker" height="450">
+<si-docs-component base="si-datepicker" height="650">
   <si-docs-tab example="si-date-range" heading="Date Range"></si-docs-tab>
   <si-docs-tab example="si-date-range-playground" heading="Date Range Playground"></si-docs-tab>
 </si-docs-component>
@@ -160,8 +160,8 @@ The timepicker component is a custom component with individual input fields for 
 parts of the time individually, like hours, and minutes. It implements the `ControlValueAccessor`
 and can be used in Angular Forms.
 
-<si-docs-component base="si-datepicker">
-  <si-docs-tab example="si-timepicker" heading="Timepicker"  height="350"></si-docs-tab>
+<si-docs-component base="si-datepicker" height="535">
+  <si-docs-tab example="si-timepicker" heading="Timepicker"></si-docs-tab>
 </si-docs-component>
 
 <si-docs-api component="SiDatepickerComponent"></si-docs-api>

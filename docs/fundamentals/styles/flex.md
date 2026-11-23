@@ -41,7 +41,7 @@ Available options include `start`, `end`, `center`, `baseline`, and `stretch` (t
 <div class="d-flex align-items-stretch">...</div>
 ```
 
-<si-docs-component example="flex/flex-align-items" height="150"></si-docs-component>
+<si-docs-component example="flex/flex-align-items" height="550"></si-docs-component>
 
 | Class                   | Responsive variation                 |
 | ----------------------- | ------------------------------------ |
@@ -65,7 +65,7 @@ The cross axis is vertical by default, or horizontal when using `flex-direction:
 <div class="align-self-stretch">Aligned flex item</div>
 ```
 
-<si-docs-component example="flex/flex-align-self" height="150"></si-docs-component>
+<si-docs-component example="flex/flex-align-self" height="550"></si-docs-component>
 
 ## Auto margins
 
@@ -92,7 +92,7 @@ These techniques help you achieve common layout patterns without custom CSS.
 </div>
 ```
 
-<si-docs-component example="flex/flex-auto-margins" height="150"></si-docs-component>
+<si-docs-component example="flex/flex-auto-margins" height="220"></si-docs-component>
 
 ## Align items with auto margins
 
@@ -114,7 +114,7 @@ This technique lets you control vertical alignment of individual items without e
 </div>
 ```
 
-<si-docs-component example="flex/flex-align-items-auto-margins" height="200"></si-docs-component>
+<si-docs-component example="flex/flex-align-items-auto-margins" height="415"></si-docs-component>
 
 ## Align content
 
@@ -132,7 +132,7 @@ These utilities are most effective when the container has wrapping enabled (`fle
 <div class="d-flex align-content-stretch">...</div>
 ```
 
-<si-docs-component example="flex/flex-align-content" height="200"></si-docs-component>
+<si-docs-component example="flex/flex-align-content" height="1290"></si-docs-component>
 
 | Class                    | Responsive variation                  |
 | ------------------------ | ------------------------------------- |
@@ -208,7 +208,7 @@ Use `.flex-column` to set a vertical direction, or `.flex-column-reverse` to sta
 | `.flex-column`         | `.flex-{breakpoint}-column`         |
 | `.flex-column-reverse` | `.flex-{breakpoint}-column-reverse` |
 
-<si-docs-component example="flex/flex-direction" height="100"></si-docs-component>
+<si-docs-component example="flex/flex-direction" height="460"></si-docs-component>
 
 ## Grow and shrink
 
@@ -253,7 +253,7 @@ These classes let you align items to the start, end, center, or distribute them 
 <div class="d-flex justify-content-evenly">...</div>
 ```
 
-<si-docs-component example="flex/flex-justify-content" height="150"></si-docs-component>
+<si-docs-component example="flex/flex-justify-content" height="380"></si-docs-component>
 
 | Class                      | Responsive variation                    |
 | -------------------------- | --------------------------------------- |
@@ -315,7 +315,7 @@ Use `.flex-wrap-reverse` to wrap items onto multiple lines in the reverse direct
 <div class="d-flex flex-wrap-reverse"> ... </div>
 ```
 
-<si-docs-component example="flex/flex-wrap" height="150"></si-docs-component>
+<si-docs-component example="flex/flex-wrap" height="540"></si-docs-component>
 
 | Class                | Responsive variation              |
 | -------------------- | --------------------------------- |

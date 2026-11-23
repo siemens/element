@@ -162,7 +162,7 @@ with it's given width.
 
 You may resize your screen to see the effect.
 
-<si-docs-component example="si-wizard/si-wizard-dynamical" height="340"></si-docs-component>
+<si-docs-component example="si-wizard/si-wizard-dynamical" height="345"></si-docs-component>
 
 ### Wizard - Failed
 

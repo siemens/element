@@ -131,27 +131,27 @@ collapsed in a horizontal split.
 
 ### Horizontal split with mixed fixed and fractional sizing
 
-<si-docs-component example="si-split/si-split-mixed"></si-docs-component>
+<si-docs-component example="si-split/si-split-mixed" height="335"></si-docs-component>
 
 ### Vertical split
 
-<si-docs-component example="si-split/si-split-vertical"></si-docs-component>
+<si-docs-component example="si-split/si-split-vertical" height="535"></si-docs-component>
 
 ### Nested splits
 
-<si-docs-component example="si-split/si-split-nested"></si-docs-component>
+<si-docs-component example="si-split/si-split-nested" height="535"></si-docs-component>
 
 ### Custom collapse icons
 
-<si-docs-component example="si-split/si-split-icons"></si-docs-component>
+<si-docs-component example="si-split/si-split-icons" height="335"></si-docs-component>
 
 ### Hide the collapse button
 
-<si-docs-component example="si-split/si-split-hide-collapse"></si-docs-component>
+<si-docs-component example="si-split/si-split-hide-collapse" height="335"></si-docs-component>
 
 ### Hide the header
 
-<si-docs-component example="si-split/si-split-hide-header"></si-docs-component>
+<si-docs-component example="si-split/si-split-hide-header" height="535"></si-docs-component>
 
 <si-docs-api component="SiSplitComponent"></si-docs-api>
 

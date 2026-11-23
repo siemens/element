@@ -82,7 +82,7 @@ import { SiCarouselComponent, SiCarouselItemDirective } from '@siemens/element-n
 </si-carousel>
 ```
 
-<si-docs-component example="si-carousel/si-carousel"></si-docs-component>
+<si-docs-component example="si-carousel/si-carousel" height="430"></si-docs-component>
 
 <si-docs-api component="SiCarouselComponent"></si-docs-api>
 

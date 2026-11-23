@@ -76,7 +76,7 @@ import { SiAvatarComponent } from '@siemens/element-ng/avatar';
 })
 ```
 
-<si-docs-component example="si-avatar/si-avatar" height="250"></si-docs-component>
+<si-docs-component example="si-avatar/si-avatar" height="570"></si-docs-component>
 
 <si-docs-api component="SiAvatarComponent"></si-docs-api>
 

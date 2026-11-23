@@ -66,7 +66,7 @@ import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notifi
 })
 ```
 
-<si-docs-component example="si-inline-notification/si-inline-notification" height="310"></si-docs-component>
+<si-docs-component example="si-inline-notification/si-inline-notification" height="435"></si-docs-component>
 
 <si-docs-api component="SiInlineNotificationComponent"></si-docs-api>
 

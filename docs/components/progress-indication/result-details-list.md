@@ -66,9 +66,9 @@ import { SiResultDetailsListComponent } from '@siemens/element-ng/result-details
 })
 ```
 
-<si-docs-component example="si-result-details-list/si-result-details-list"></si-docs-component>
+<si-docs-component example="si-result-details-list/si-result-details-list" height="400"></si-docs-component>
 
-<si-docs-component example="si-result-details-list/si-result-details-list-horizontal"></si-docs-component>
+<si-docs-component example="si-result-details-list/si-result-details-list-horizontal" height="210"></si-docs-component>
 
 <si-docs-api component="SiResultDetailsListComponent"></si-docs-api>
 

@@ -61,7 +61,7 @@ import {
 })
 ```
 
-<si-docs-component example="si-search-bar/si-search-bar"></si-docs-component>
+<si-docs-component example="si-search-bar/si-search-bar" height="250"></si-docs-component>
 
 ### Projected input
 

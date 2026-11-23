@@ -151,7 +151,7 @@ All content that should be shown in the side panel needs to be wrapped in a
 The standard way to provide content for the side panel is by placing the
 `<si-side-panel-content>` element directly inside the `<si-side-panel>`:
 
-<si-docs-component example="si-side-panel/si-side-panel" height="500"></si-docs-component>
+<si-docs-component example="si-side-panel/si-side-panel" height="615"></si-docs-component>
 
 ### Side panel with inner navigation
 

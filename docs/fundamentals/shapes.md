@@ -40,7 +40,7 @@ Radius is set for all 4 sides unless specified otherwise.
 
 All Element shape variants are accessible as `rounded-` CSS utility classes, see [border radius](./styles/borders.md#radius).
 
-<si-docs-component example="shapes/shapes" height="300"></si-docs-component>
+<si-docs-component example="shapes/shapes" height="505"></si-docs-component>
 
 ### Sass variables
 

@@ -68,11 +68,11 @@ import { SiChartCircleComponent } from '@siemens/charts-ng/circle';
 
 ### Pie chart
 
-<si-docs-component example="si-charts/circle/si-chart-circle-pie" height="400"></si-docs-component>
+<si-docs-component example="si-charts/circle/si-chart-circle-pie" height="460"></si-docs-component>
 
 ### Donut chart
 
-<si-docs-component example="si-charts/circle/si-chart-circle-donut" height="400"></si-docs-component>
+<si-docs-component example="si-charts/circle/si-chart-circle-donut" height="460"></si-docs-component>
 
 <si-docs-api component="SiChartCircleComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 

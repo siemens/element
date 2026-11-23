@@ -106,7 +106,7 @@ without the accordion effect provided by `<si-accordion>`, see the two examples:
 In this example, collapsible panels are used without an accordion allowing
 multiple panels staying open at the same time.
 
-<si-docs-component example="si-accordion/si-collapsible-panel" height="305"></si-docs-component>
+<si-docs-component example="si-accordion/si-collapsible-panel" height="475"></si-docs-component>
 
 In the next example, we combine the panels with icons and additional header CSS classes.
 
@@ -131,7 +131,7 @@ The collapsible panel supports customizing the heading via content projection by
 The collapsible panels are wrapped with `<si-accordion>` to make sure only
 one panel is open at a time:
 
-<si-docs-component example="si-accordion/si-accordion" height="305"></si-docs-component>
+<si-docs-component example="si-accordion/si-accordion" height="320"></si-docs-component>
 
 <si-docs-api component="SiAccordionComponent"></si-docs-api>
 

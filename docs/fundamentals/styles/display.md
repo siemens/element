@@ -82,4 +82,4 @@ The print and display classes can be combined.
 
 ## Examples
 
-<si-docs-component example="display/display" height="300"></si-docs-component>
+<si-docs-component example="display/display" height="330"></si-docs-component>

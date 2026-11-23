@@ -76,7 +76,7 @@ import { SiDateRangeFilterComponent } from '@siemens/element-ng/date-range-filte
 })
 ```
 
-<si-docs-component example="si-date-range-filter/si-date-range-filter" height="450"></si-docs-component>
+<si-docs-component example="si-date-range-filter/si-date-range-filter" height="715"></si-docs-component>
 
 ### Usage within popup
 

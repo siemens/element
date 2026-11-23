@@ -65,7 +65,7 @@ const config: ApplicationConfig = {
 The `SiFormlyComponent` is a wrapper around formly to generate dynamic forms.
 Please note that if you don't use this wrapper your form items will not be themed correctly based on Element theme and you might have to manually manage theming which is not recommended.
 
-<si-docs-component example="si-formly/si-dynamic-form-fields" height="500"></si-docs-component>
+<si-docs-component example="si-formly/si-dynamic-form-fields" height="2280"></si-docs-component>
 
 ## Utilities
 
@@ -198,7 +198,7 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
 
 `SiFormly` also supports rendering form with multi column grid layout.
 
-<si-docs-component example="si-formly/si-dynamic-form-grid" height="350"></si-docs-component>
+<si-docs-component example="si-formly/si-dynamic-form-grid" height="455"></si-docs-component>
 
 ### Tabs
 
@@ -210,7 +210,7 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
 
 `SiFormly` also supports rendering forms in accordions. It makes use of `SiAccordionComponent` internally.
 
-<si-docs-component example="si-formly/si-dynamic-form-accordion" height="350"></si-docs-component>
+<si-docs-component example="si-formly/si-dynamic-form-accordion" height="410"></si-docs-component>
 
 ### i18n support
 

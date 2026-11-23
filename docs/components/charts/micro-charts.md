@@ -62,7 +62,7 @@ import { SiMicrochartProgressComponent } from '@siemens/native-charts-ng/microch
 
 ### Micro charts
 
-<si-docs-component example="si-ncharts/si-micro-charts" height="400"></si-docs-component>
+<si-docs-component example="si-ncharts/si-micro-charts" height="525"></si-docs-component>
 
 <si-docs-api component="SiMicrochartBarComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 

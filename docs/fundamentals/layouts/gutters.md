@@ -156,4 +156,4 @@ You can combine `.g-0` with other grid classes, such as column widths, responsiv
 
 ## Examples
 
-<si-docs-component example="grid-system/gutters" height="150"></si-docs-component>
+<si-docs-component example="grid-system/gutters" height="725"></si-docs-component>

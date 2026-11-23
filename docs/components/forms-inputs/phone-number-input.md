@@ -90,7 +90,7 @@ import { SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
 - The `phoneNumberAriaLabel` input sets the ARIA label for the phone number input.
 - All changes are emitted through the `valueChange` output.
 
-<si-docs-component example="si-phone-number-input/si-phone-number-input" height="300"></si-docs-component>
+<si-docs-component example="si-phone-number-input/si-phone-number-input" height="395"></si-docs-component>
 
 <si-docs-api component="SiPhoneNumberInputComponent"></si-docs-api>
 

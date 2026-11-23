@@ -27,7 +27,7 @@ Apply color to text elements using the following classes:
 <div class="text-danger">text-danger</div>
 ```
 
-<si-docs-component example="typography/color-variants" height="840"></si-docs-component>
+<si-docs-component example="typography/color-variants" height="860"></si-docs-component>
 
 ## Using SASS variables
 

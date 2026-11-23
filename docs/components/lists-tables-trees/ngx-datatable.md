@@ -127,13 +127,13 @@ Hover, selection and focus states take precedence over the striping.
 - Use the [pagination](../layout-navigation/pagination.md) component as custom
   footer template with `ngx-datatable-footer` and map inputs and outputs.
 
-<si-docs-component example="datatable/datatable" height="750"></si-docs-component>
+<si-docs-component example="datatable/datatable" height="805"></si-docs-component>
 
 ### Server-side paging
 
 Datatable component configured for server-side paging and lazy loading.
 
-<si-docs-component example="datatable/datatable-paging" height="600"></si-docs-component>
+<si-docs-component example="datatable/datatable-paging" height="620"></si-docs-component>
 
 ### Vertical scroll
 
@@ -163,33 +163,33 @@ Use the `<si-empty-state></si-empty-state>` for an empty table.
 Datatable with a selection. Use the `datatableInteractionAutoSelect` input of the `siDatatableInteraction`
 directive to have it automatically select on keyboard navigation.
 
-<si-docs-component example="datatable/datatable-selection" height="600"></si-docs-component>
+<si-docs-component example="datatable/datatable-selection" height="800"></si-docs-component>
 
 ### Filter and sort
 
-<si-docs-component base="datatable" height="300">
+<si-docs-component base="datatable" height="600">
   <si-docs-tab example="datatable-filter-sort-server" heading="Server side"></si-docs-tab>
   <si-docs-tab example="datatable-filter" heading="Client side"></si-docs-tab>
 </si-docs-component>
 
 ### Responsive
 
-<si-docs-component example="datatable/datatable-responsive" height="600">
+<si-docs-component example="datatable/datatable-responsive" height="650">
 </si-docs-component>
 
 ### Fix height
 
-<si-docs-component example="datatable/datatable-fixed-height" height="600">
+<si-docs-component example="datatable/datatable-fixed-height" height="655">
 </si-docs-component>
 
 ### Sticky columns with horizontal scroll
 
-<si-docs-component example="datatable/datatable-sticky-columns" height="600">
+<si-docs-component example="datatable/datatable-sticky-columns" height="650">
 </si-docs-component>
 
 ### Reordering rows using Angular CDK Drag and Drop
 
-<si-docs-component example="datatable/datatable-row-dragging" height="400">
+<si-docs-component example="datatable/datatable-row-dragging" height="480">
 </si-docs-component>
 
 ### Column management

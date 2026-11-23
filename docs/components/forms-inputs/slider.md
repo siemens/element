@@ -59,7 +59,7 @@ import { SiSliderComponent } from '@siemens/element-ng/slider';
 })
 ```
 
-<si-docs-component base="si-slider">
+<si-docs-component base="si-slider" height="225">
   <si-docs-tab example="si-slider" heading="Default slider"></si-docs-tab>
   <si-docs-tab example="si-slider-icon" heading="with icon"></si-docs-tab>
 </si-docs-component>

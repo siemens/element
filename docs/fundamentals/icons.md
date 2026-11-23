@@ -160,4 +160,4 @@ Use stacking with the `si-icon` component to combine multiple icons into a singl
 </span>
 ```
 
-<si-docs-component example="icons/icons"></si-docs-component>
+<si-docs-component example="icons/icons" height="280"></si-docs-component>

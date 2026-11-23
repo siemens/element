@@ -130,7 +130,7 @@ Where size is one of:
 - `auto` - for classes that set the `margin` to `auto`
 - `nX` - for classes that set the margin to negative `X`, where 'X' is a number from above
 
-<si-docs-component example="spacing/spacing" height="250"></si-docs-component>
+<si-docs-component example="spacing/spacing" height="275"></si-docs-component>
 
 ### Sass variables
 

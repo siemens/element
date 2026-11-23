@@ -83,7 +83,7 @@ The select input field has the same validation states as a
 
 ### Example
 
-<si-docs-component example="custom-form-elements/select" height="550"></si-docs-component>
+<si-docs-component example="custom-form-elements/select" height="565"></si-docs-component>
 
 ### si-select component
 
@@ -267,7 +267,7 @@ export class SampleComponent {
 }
 ```
 
-<si-docs-component example="si-select/si-select-lazy-load" height="300"></si-docs-component>
+<si-docs-component example="si-select/si-select-lazy-load" height="320"></si-docs-component>
 
 #### Selection
 
@@ -358,7 +358,7 @@ The following demonstrates how to add a "Create" button within the dropdown acti
 </si-select>
 ```
 
-<si-docs-component example="si-select/si-select" height="500"></si-docs-component>
+<si-docs-component example="si-select/si-select" height="645"></si-docs-component>
 
 ### Custom select (experimental)
 
@@ -442,14 +442,14 @@ keep a `pendingItems` signal that is repopulated from a fresh
 `JSON.parse(JSON.stringify(...))` clone whenever the dropdown opens, so each
 opening starts from a clean slate without leaking state back to the caller.
 
-<si-docs-component example="si-select/si-select-custom" height="450"></si-docs-component>
+<si-docs-component example="si-select/si-select-custom" height="540"></si-docs-component>
 
 The same primitives can drive a multi-select with `Apply` / `Cancel`. The
 host component buffers pending changes while the dropdown is open and only
 calls `select.updateValue(...)` once the user confirms — keeping the
 `ControlValueAccessor` value stable until the selection is applied.
 
-<si-docs-component example="si-select/si-select-multi-custom" height="450"></si-docs-component>
+<si-docs-component example="si-select/si-select-multi-custom" height="540"></si-docs-component>
 
 <si-docs-api component="SiSelectComponent"></si-docs-api>
 

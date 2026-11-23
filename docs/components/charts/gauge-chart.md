@@ -79,7 +79,7 @@ import { SiChartGaugeComponent } from '@siemens/charts-ng/gauge';
 })
 ```
 
-<si-docs-component example="si-charts/gauge/si-chart-gauge" height="400"></si-docs-component>
+<si-docs-component example="si-charts/gauge/si-chart-gauge" height="460"></si-docs-component>
 
 <si-docs-api component="SiChartGaugeComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
@@ -97,13 +97,13 @@ import { SiNChartGaugeComponent } from '@siemens/native-charts-ng/gauge';
 
 Multiple series arcs are stacked on the gauge ring. The center shows their combined total.
 
-<si-docs-component example="si-ncharts/si-nchart-gauge" height="400"></si-docs-component>
+<si-docs-component example="si-ncharts/si-nchart-gauge" height="710"></si-docs-component>
 
 #### Single mode
 
 A single arc covers the ring. Colored background segments can be layered beneath the arc to indicate qualitative ranges.
 
-<si-docs-component example="si-ncharts/si-nchart-gauge-single" height="400"></si-docs-component>
+<si-docs-component example="si-ncharts/si-nchart-gauge-single" height="640"></si-docs-component>
 
 <si-docs-api component="SiNChartGaugeComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 

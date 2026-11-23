@@ -21,7 +21,7 @@ Quickly adjust text alignment using utility classes. Choose between `start`, `en
 <p class="text-xxl-end">Text aligns to the end on extra extra large (XXL) screens and larger.</p>
 ```
 
-<si-docs-component example="text/text-alignment" height="150"></si-docs-component>
+<si-docs-component example="text/text-alignment" height="315"></si-docs-component>
 
 ## Text wrapping and overflow
 
@@ -94,7 +94,7 @@ The sizing scale aligns with HTML heading elements—lower numbers represent lar
 <p class="fs-6">.fs-6 text</p>
 ```
 
-<si-docs-component example="text/text-font-size" height="150"></si-docs-component>
+<si-docs-component example="text/text-font-size" height="285"></si-docs-component>
 
 ## Font weight and italics
 
@@ -112,7 +112,7 @@ These classes provide a quick way to apply bold, light, normal, italic, or stand
 <p class="fst-normal">Text with normal font style.</p>
 ```
 
-<si-docs-component example="text/text-font-weight" height="150"></si-docs-component>
+<si-docs-component example="text/text-font-weight" height="280"></si-docs-component>
 
 ## Line height
 
@@ -139,7 +139,7 @@ Choose from options like `.lh-1`, `.lh-sm`, `.lh-base`, and `.lh-lg` to achieve 
 </p>
 ```
 
-<si-docs-component example="text/text-line-height" height="150"></si-docs-component>
+<si-docs-component example="text/text-line-height" height="275"></si-docs-component>
 
 ## Monospace
 

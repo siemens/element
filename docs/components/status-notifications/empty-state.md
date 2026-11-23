@@ -29,7 +29,7 @@ import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 })
 ```
 
-<si-docs-component example="si-empty-state/si-empty-state" height="240"></si-docs-component>
+<si-docs-component example="si-empty-state/si-empty-state" height="255"></si-docs-component>
 
 ### Responsive behavior
 

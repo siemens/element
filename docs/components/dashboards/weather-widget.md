@@ -75,7 +75,7 @@ import { SiWeatherWidgetComponent } from '@siemens/element-ng/dashboard';
 })
 ```
 
-<si-docs-component example="si-dashboard/si-weather-widget" height="600"></si-docs-component>
+<si-docs-component example="si-dashboard/si-weather-widget" height="2500"></si-docs-component>
 
 <si-docs-api component="SiWeatherWidgetComponent"></si-docs-api>
 
@@ -92,7 +92,7 @@ The body of `<si-weather-widget>` is implemented in the component
 The configurable example exposes every input of the widget and is useful for
 exploring layouts, metrics and forecast extras interactively.
 
-<si-docs-component example="si-dashboard/si-weather-widget-configurable" height="700"></si-docs-component>
+<si-docs-component example="si-dashboard/si-weather-widget-configurable" height="1160"></si-docs-component>
 
 ### Icon resolver
 

@@ -52,6 +52,6 @@ Customize the radius using the following utils:
 
 ## Examples
 
-<si-docs-component example="borders/borders" height="300"></si-docs-component>
+<si-docs-component example="borders/borders" height="510"></si-docs-component>
 
-<si-docs-component example="shapes/shapes" height="300"></si-docs-component>
+<si-docs-component example="shapes/shapes" height="505"></si-docs-component>

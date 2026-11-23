@@ -101,7 +101,7 @@ import { SiValueWidgetComponent } from '@siemens/element-ng/dashboard';
 })
 ```
 
-<si-docs-component example="si-dashboard/si-value-widget" height="600"></si-docs-component>
+<si-docs-component example="si-dashboard/si-value-widget" height="880"></si-docs-component>
 
 <si-docs-api component="SiValueWidgetComponent"></si-docs-api>
 
@@ -130,14 +130,14 @@ component.
 </si-card>
 ```
 
-<si-docs-component example="si-dashboard/si-value-widget-css" height="400"></si-docs-component>
+<si-docs-component example="si-dashboard/si-value-widget-css" height="435"></si-docs-component>
 
 ### Value widget body component
 
 The body of the `<si-value-widget>` is implemented in the component `<si-value-widget-body>`. You can
 use it for compositions.
 
-<si-docs-component example="si-dashboard/si-value-widget-body" height="250"></si-docs-component>
+<si-docs-component example="si-dashboard/si-value-widget-body" height="285"></si-docs-component>
 
 <si-docs-api component="SiValueWidgetBodyComponent"></si-docs-api>
 
