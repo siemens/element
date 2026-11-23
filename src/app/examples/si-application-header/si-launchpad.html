@@ -9,6 +9,7 @@
     <si-launchpad-factory
       [apps]="apps()"
       [enableFavorites]="enableFavorites()"
+      [wrapAppLabels]="wrapAppLabels()"
       (favoriteChange)="updateFavorite($event)"
     />
   </ng-template>
@@ -27,6 +28,9 @@
             </si-form-item>
             <si-form-item class="form-switch" label="Enable Categories">
               <input class="form-check-input" type="checkbox" [(ngModel)]="enableCategories" />
+            </si-form-item>
+            <si-form-item class="form-switch" label="Wrap app labels">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="wrapAppLabels" />
             </si-form-item>
             <div class="mt-5 pt-4 border-top">
               <p class="text-secondary mb-0">

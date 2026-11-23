@@ -17,6 +17,7 @@ describe('SiLaunchpad', () => {
   let harness: SiLaunchpadHarness;
   const apps = signal<App[] | AppCategory[]>([]);
   const enableFavorites = signal(false);
+  const wrapAppLabels = signal(false);
   const favoriteChangeSpy = vi.fn();
 
   beforeEach(() => {
@@ -28,11 +29,13 @@ describe('SiLaunchpad', () => {
   beforeEach(async () => {
     apps.set([]);
     enableFavorites.set(false);
+    wrapAppLabels.set(false);
     favoriteChangeSpy.mockClear();
     fixture = TestBed.createComponent(SiLaunchpadFactoryComponent, {
       bindings: [
         inputBinding('apps', apps),
         inputBinding('enableFavorites', enableFavorites),
+        inputBinding('wrapAppLabels', wrapAppLabels),
         outputBinding<FavoriteChangeEvent>('favoriteChange', favoriteChangeSpy)
       ]
     });
@@ -77,6 +80,22 @@ describe('SiLaunchpad', () => {
     const link = page.getByRole('link', { name: 'App System', exact: true }).element();
 
     link.focus();
+    await fixture.whenStable();
+
+    await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();
+  });
+
+  it('does not show a tooltip on focus when long labels wrap', async () => {
+    const name = 'Application name that is too long to fit in a launchpad tile';
+    const systemName = 'System name that is too long to fit in a launchpad tile';
+    apps.set([{ name, systemName, href: '/app' }]);
+    wrapAppLabels.set(true);
+    await fixture.whenStable();
+    const link = page.elementLocator(fixture.nativeElement).getByRole('link', {
+      name: `${name} ${systemName}`,
+      exact: true
+    });
+    link.element().focus();
     await fixture.whenStable();
 
     await expect.element(page.getByRole('tooltip')).not.toBeInTheDocument();

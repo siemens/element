@@ -88,25 +88,56 @@ and clear them as soon as the user sends a new message.
 
 ## Code ---
 
-The `si-ai-chat` component provides a model-driven chat interface with streaming responses, message actions, and activity traces. It should be inserted into a layout with fixed height, if no fixed height is provided, set a height in pixels.
+`si-ai-chat` is model-driven: pass message data through the `messages` input, and the component
+renders the conversation for you. It supports streaming responses, message actions, and activity
+traces.
+
+Place `si-ai-chat` in a layout with a fixed height, or set the component's height in pixels if the
+layout does not provide one.
 
 <si-docs-component example="si-chat-messages/si-ai-chat" height="750"></si-docs-component>
 
+### Welcome screen
+
+The built-in [AI welcome screen](ai-welcome-screen.md) appears when `messages` is explicitly an
+empty array (`[]`) and `loading` is `false`. Leaving `messages` undefined does not show it.
+
+The example starts with a conversation. Use **Clear messages** in the chat input to see the
+welcome screen.
+
+### Activity messages and traces
+
+Use `type: 'activity'` for an individual step, such as a tool call or a progress update. Use
+`type: 'activity-trace'` to group related steps under one collapsible heading. For design guidance,
+see [Activity message](activity-message.md).
+
+#### Choose what to display
+
+Use `content` for a single Markdown description. Use `input` and `output` when the activity needs
+to distinguish what went into a step from what it returned. `input` accepts a string, an array of
+short labels, or a record that maps labels to text. `output` accepts a string.
+
+The `si-ai-chat` component's `show` input controls which input and output details are visible.
+It does not affect `content`.
+
+- `auto` (default): Show the output if it is non-blank; otherwise, show the inputs.
+- `inputs`: Show only the inputs, if provided.
+- `outputs`: Show only the output, if non-blank.
+- `both`: Show inputs and non-blank output, when present.
+
+#### Control automatic expansion
+
+By default, the latest activity or trace opens automatically. A newer activity, trace, or user
+message ends that automatic expansion; an AI response alone does not.
+
+- Set `[autoExpand]="false"` on `si-ai-chat` to turn off automatic expansion by default.
+- Set `autoExpand` on a trace, activity, or nested activity to override the inherited setting.
+- Use `autoExpandInputs` and `autoExpandOutputs` to control expansion of individual details.
+  For labeled inputs, pass an array of record keys to `autoExpandInputs` to expand only those inputs.
+
+Setting `[autoExpand]="false"` changes the default, not the overrides. For example, if the latest
+activity has visible output, `autoExpandOutputs: true` can still expand it automatically.
+
 <si-docs-api component="SiAiChatComponent"></si-docs-api>
-
-Use `type: 'activity'` for tool calls, progress, and reasoning. `input` accepts a string, a list of
-short inputs, or a record of labeled inputs. `output` accepts a string. These values are rendered as
-activity message parts, while `content` is rendered directly as markdown. Prefer `content` when the
-activity does not need separate input and output sections.
-
-Use `type: 'activity-trace'` to group related or nested activity messages. By default, the latest
-activity or trace stays expanded until a newer activity or user message is added. Set the container's
-`autoExpand` input to change this globally, or set `autoExpand` on a trace, activity, or nested
-activity to override it. Use `autoExpandInputs` and `autoExpandOutputs` for part-level overrides;
-`autoExpandInputs` also accepts an array of record keys.
-
-The container's `show` input controls which parts are rendered. It accepts `auto`, `inputs`,
-`outputs`, or `both`. The default `auto` mode shows inputs when output is empty and otherwise shows
-the output.
 
 <si-docs-types></si-docs-types>

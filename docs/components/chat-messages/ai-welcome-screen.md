@@ -37,8 +37,9 @@ As soon as the user prompts a message, the welcome screen should disappear.
 
 ## Code ---
 
-When initially displaying a chat interface use the initial **si-welcome-screen** component that displays when there are no messages. It can be slotted into the **si-chat-container** component and is already built-in in the **si-ai-chat**.
-It accepts prompt suggestions as an input.
+Use `si-ai-welcome-screen` to introduce the assistant before the first message. It accepts prompt
+suggestions and can be slotted into [`si-chat-container`](chat-container.md). It is built into
+[`si-ai-chat`](ai-chat.md#welcome-screen).
 
 <si-docs-component example="si-chat-messages/si-ai-welcome-screen" height="600"></si-docs-component>
 

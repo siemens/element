@@ -135,7 +135,7 @@ The live-preview demo app runs on `http://localhost:4200/`. If it is not online,
 ask the user to start it; do not start it yourself. The command for the user is:
 
 ```shell
-pnpm start -- --allowed-hosts true --host 0.0.0.0
+pnpm start --allowed-hosts true --host 0.0.0.0
 ```
 
 Only for dashboards tests, start the corresponding dashboard server if needed:

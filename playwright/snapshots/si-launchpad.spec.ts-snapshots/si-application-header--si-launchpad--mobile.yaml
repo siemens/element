@@ -56,6 +56,8 @@
 - text: Enable Favorites
 - checkbox "Enable Categories"
 - text: Enable Categories
+- checkbox "Wrap app labels"
+- text: Wrap app labels
 - paragraph:
   - strong: "Demo note:"
   - text: Click the header icon to open the launchpad and test your settings
