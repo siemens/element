@@ -1,0 +1,21 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/all-variables';
+
+.apps {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+:host-context(.wrap-labels) .apps {
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@include all-variables.media-breakpoint-up(md) {
+  :host-context(.wrap-labels) .apps {
+    $tile-size: calc(7rem + 2 * map.get(variables.$spacers, 7));
+    grid-template-columns: repeat(auto-fill, min(100%, $tile-size));
+  }
+}

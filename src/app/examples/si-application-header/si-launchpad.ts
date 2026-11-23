@@ -32,6 +32,7 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
 export class SampleComponent {
   readonly enableFavorites = signal(true);
   readonly enableCategories = signal(false);
+  readonly wrapAppLabels = signal(false);
 
   private readonly businessApps = signal<App[]>([
     {

@@ -33,6 +33,20 @@
   }
 }
 
+:host-context(.wrap-labels) {
+  inline-size: 100%;
+
+  .text-truncate {
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+
+  .app-text {
+    min-inline-size: 0;
+    text-align: center;
+  }
+}
+
 .app-text {
   display: flex;
   align-items: center;
@@ -88,6 +102,16 @@
 
   .app-text {
     align-items: start;
+  }
+
+  :host-context(.wrap-labels) {
+    .app-text {
+      text-align: start;
+    }
+
+    .app-icon {
+      flex-shrink: 0;
+    }
   }
 
   .favorite-icon {
