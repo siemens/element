@@ -8,10 +8,12 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
   effect,
   inject,
   input,
+  linkedSignal,
   OnInit,
   signal,
   untracked,
@@ -38,6 +40,9 @@ import { LivePreviewUrlService } from '../../services/live-preview-url.service';
 import { SiLivePreviewIframeComponent } from '../si-live-preview-iframe/si-live-preview-iframe.component';
 import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.component';
 
+const PREVIEW_RESIZE_STEP = 24;
+const PREVIEW_DRAG_THRESHOLD = 4;
+
 @Component({
   selector: 'si-live-preview',
   imports: [KeyValuePipe, FormsModule, SiLivePreviewIframeComponent, SiStackblitzButtonDirective],
@@ -53,6 +58,8 @@ import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.
 })
 export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   readonly initialTheme = input<ThemeType>();
+  /** Initial example height in pixels. When set, the embedded example can be resized. */
+  readonly initialPreviewHeight = input<number>();
   private readonly config = inject(SI_LIVE_PREVIEW_CONFIG);
   private readonly internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private readonly self = inject(ElementRef);
@@ -70,6 +77,19 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
 
   protected readonly isFullscreen = signal(false);
   protected readonly isMobile = this.internalConfig.isMobile;
+  protected readonly canResizePreview = computed(
+    () => this.initialPreviewHeight() !== undefined && !this.isMobile && !this.isFullscreen()
+  );
+  protected readonly previewHeight = linkedSignal(() => this.initialPreviewHeight() ?? 204);
+  // Keep author-configured heights reachable, even when outside the usual resize range.
+  protected readonly minPreviewHeight = computed(() =>
+    Math.min(80, this.initialPreviewHeight() ?? 80)
+  );
+  protected readonly maxPreviewHeight = computed(() =>
+    Math.max(1200, this.initialPreviewHeight() ?? 1200)
+  );
+  protected readonly isResizingPreview = signal(false);
+  private previewDrag?: { pointerId: number; pageY: number; height: number; moved: boolean };
 
   private templateTs = '';
   protected readonly activeTab = signal<string>('template');
@@ -230,6 +250,88 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
       }
       this.skipInitialLoad = false;
     }
+  }
+
+  protected startPreviewResize(event: PointerEvent, handle: HTMLElement): void {
+    if (event.button !== 0 || this.previewDrag) {
+      return;
+    }
+
+    handle.setPointerCapture(event.pointerId);
+    this.previewDrag = {
+      pointerId: event.pointerId,
+      pageY: event.pageY,
+      height: this.previewHeight(),
+      moved: false
+    };
+    this.isResizingPreview.set(true);
+  }
+
+  protected movePreviewResize(event: PointerEvent): void {
+    const drag = this.previewDrag;
+    if (drag?.pointerId === event.pointerId) {
+      const delta = event.pageY - drag.pageY;
+      drag.moved ||= Math.abs(delta) > PREVIEW_DRAG_THRESHOLD;
+      if (drag.moved) {
+        this.setPreviewHeight(drag.height + delta);
+      }
+    }
+  }
+
+  protected finishPreviewResize(event: PointerEvent, handle: HTMLElement): void {
+    const drag = this.previewDrag;
+    if (drag?.pointerId !== event.pointerId) {
+      return;
+    }
+
+    // Keep a single-pointer alternative to dragging on the handle itself.
+    if (!drag.moved && Math.abs(event.pageY - drag.pageY) <= PREVIEW_DRAG_THRESHOLD) {
+      const { top, bottom, left, right } = handle.getBoundingClientRect();
+      const { clientX, clientY } = event;
+      if (clientX >= left && clientX <= right && clientY >= top && clientY <= bottom) {
+        this.stepPreviewHeight(
+          clientY < (top + bottom) / 2 ? -PREVIEW_RESIZE_STEP : PREVIEW_RESIZE_STEP
+        );
+      }
+    }
+    this.endPreviewResize(event);
+  }
+
+  protected endPreviewResize(event: PointerEvent): void {
+    if (this.previewDrag?.pointerId === event.pointerId) {
+      this.previewDrag = undefined;
+      this.isResizingPreview.set(false);
+    }
+  }
+
+  private stepPreviewHeight(delta: number): void {
+    this.setPreviewHeight(this.previewHeight() + delta);
+  }
+
+  protected resizePreviewWithKeyboard(event: KeyboardEvent): void {
+    switch (event.key) {
+      case 'ArrowUp':
+        this.stepPreviewHeight(-PREVIEW_RESIZE_STEP);
+        break;
+      case 'ArrowDown':
+        this.stepPreviewHeight(PREVIEW_RESIZE_STEP);
+        break;
+      case 'Home':
+        this.setPreviewHeight(this.minPreviewHeight());
+        break;
+      case 'End':
+        this.setPreviewHeight(this.maxPreviewHeight());
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+  }
+
+  private setPreviewHeight(height: number): void {
+    this.previewHeight.set(
+      Math.max(this.minPreviewHeight(), Math.min(this.maxPreviewHeight(), height))
+    );
   }
 
   activateTab(tab: string): void {

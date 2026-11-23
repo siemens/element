@@ -1,5 +1,12 @@
 @let active = activeTab();
-<div class="example" [class.fullscreen]="exampleFullscreen()" [class.is-mobile]="isMobile">
+<div
+  class="example"
+  [class.fullscreen]="exampleFullscreen()"
+  [class.is-mobile]="isMobile"
+  [class.is-resizable]="canResizePreview()"
+  [attr.id]="canResizePreview() ? 'resizable-example' : null"
+  [style.block-size.px]="canResizePreview() ? previewHeight() : null"
+>
   <div class="preview-iframe" [class.is-mobile]="isMobile">
     <si-live-preview-iframe
       [isFullscreen]="isFullscreen()"
@@ -31,6 +38,32 @@
     }
   </div>
 </div>
+
+@if (canResizePreview()) {
+  <div class="preview-resizer">
+    <div
+      #resizeHandle
+      class="preview-resize-handle"
+      role="separator"
+      tabindex="0"
+      aria-label="Resize example preview"
+      aria-orientation="horizontal"
+      aria-controls="resizable-example"
+      title="Drag to resize, or tap the top or bottom half of the handle"
+      [class.is-resizing]="isResizingPreview()"
+      [attr.aria-valuemin]="minPreviewHeight()"
+      [attr.aria-valuemax]="maxPreviewHeight()"
+      [attr.aria-valuenow]="previewHeight()"
+      [attr.aria-valuetext]="previewHeight() + ' pixels'"
+      (pointerdown)="startPreviewResize($event, resizeHandle)"
+      (pointermove)="movePreviewResize($event)"
+      (pointerup)="finishPreviewResize($event, resizeHandle)"
+      (pointercancel)="endPreviewResize($event)"
+      (lostpointercapture)="endPreviewResize($event)"
+      (keydown)="resizePreviewWithKeyboard($event)"
+    ></div>
+  </div>
+}
 
 <div class="code" [class.is-mobile]="isMobile" [class.is-collapsed]="editorCollapsed()">
   <div class="collapse-wrapper">
