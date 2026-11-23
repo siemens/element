@@ -1,3 +1,15 @@
+# [49.21.0](https://github.com/siemens/element/compare/v49.20.0...v49.21.0) (2026-11-23)
+
+
+### Features
+
+* **application-header:** support wrapped launchpad labels ([4581740](https://github.com/siemens/element/commit/4581740991eef62748259932d8c0f43207339bd0))
+
+
+### Bug Fixes
+
+* **application-header:** reveal truncated launchpad labels on focus ([04bdbf2](https://github.com/siemens/element/commit/04bdbf211d1ca45332e04f9369307109df21fe48)), closes [#2999](https://github.com/siemens/element/issues/2999)
+
 # [49.20.0](https://github.com/siemens/element/compare/v49.19.0...v49.20.0) (2026-11-20)
 
 
