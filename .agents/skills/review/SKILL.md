@@ -82,9 +82,16 @@ are available.
 
 ## Documentation and language
 
-- Features must be documented. For small additions, demonstrating them in examples
-  may be sufficient.
-- All public symbols must have TSDoc comments.
+- All public symbols must have clear TSDoc comments. Component documentation pages
+  auto-generate API tables from TSDoc via `<si-docs-api>` and `<si-docs-types>`.
+- Features must be documented without duplicating the generated API reference.
+  For straightforward new inputs, outputs, or public members, clear TSDoc comments
+  (and updating or adding an example when helpful) are sufficient. Flag redundant
+  prose paragraphs in `docs/` that merely restate what the TSDoc comment and API
+  table already cover.
+- Expect prose updates in `docs/` only when explaining non-obvious behavior,
+  interactions across APIs, content projection or composition patterns, or UX and
+  usage guidance.
 - Check grammar, spelling, clarity, and consistency in user-facing text,
   documentation, comments, and the PR title and description.
 
