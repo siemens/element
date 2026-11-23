@@ -23,7 +23,10 @@ import { App, AppCategory, FavoriteChangeEvent } from './si-launchpad.model';
     SiIconComponent
   ],
   templateUrl: './si-launchpad-factory.component.html',
-  styleUrl: './si-launchpad-factory.component.scss'
+  styleUrl: './si-launchpad-factory.component.scss',
+  host: {
+    '[class.wrap-labels]': 'wrapAppLabels()'
+  }
 })
 export class SiLaunchpadFactoryComponent {
   /**
@@ -54,6 +57,14 @@ export class SiLaunchpadFactoryComponent {
 
   /** All app items shown in the launchpad. */
   readonly apps = input.required<App[] | AppCategory[]>();
+
+  /**
+   * Wrap app names and descriptions instead of truncating them and showing a tooltip.
+   * Rows within each section have equal height in this mode.
+   *
+   * @defaultValue false
+   */
+  readonly wrapAppLabels = input(false, { transform: booleanAttribute });
 
   /**
    * Allow the user to select favorite apps which will then be displayed at the top.

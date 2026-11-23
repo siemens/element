@@ -3,7 +3,7 @@
     {{ category().name | translate }}
   </div>
 }
-<div class="d-flex flex-wrap gap-4">
+<div class="apps gap-4">
   @for (app of category().apps; track app) {
     @switch (app.type) {
       @case ('router-link') {
