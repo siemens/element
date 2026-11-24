@@ -30,7 +30,8 @@ import { SiTabBaseDirective } from './si-tab-base.directive';
   providers: [SiTooltipService, { provide: SiTabBaseDirective, useExisting: SiTabComponent }],
   host: {
     '(click)': 'selectTabByUser()',
-    '(keydown.enter)': 'selectTabByUser()'
+    '(keydown.enter)': 'selectTabByUser()',
+    '(keydown.space)': '$event.preventDefault(); selectTabByUser()'
   }
 })
 export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {

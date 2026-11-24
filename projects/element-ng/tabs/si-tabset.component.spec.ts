@@ -204,6 +204,31 @@ describe('SiTabset', () => {
     expect(await tabsetHarness.isTabItemActive(1)).toEqual(true);
   });
 
+  it('should select a tab with Enter and Space', async () => {
+    testComponent.tabs = ['1', '2', '3'];
+    fixture.detectChanges();
+
+    await (await tabsetHarness.getTabItemButtonAt(1)).sendKeys(TestKey.ENTER);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(true);
+
+    await (await tabsetHarness.getTabItemButtonAt(2)).sendKeys(' ');
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
+    expect(await tabsetHarness.isTabItemActive(2)).toBe(true);
+  });
+
+  it('should move focus to first and last tab with Home and End', async () => {
+    testComponent.tabs = ['1', '2', '3'];
+    fixture.detectChanges();
+    const firstTab = await tabsetHarness.getTabItemButtonAt(0);
+    await firstTab.focus();
+
+    await firstTab.sendKeys(TestKey.END);
+    expect(await (await tabsetHarness.getTabItemButtonAt(2)).isFocused()).toBe(true);
+
+    await (await tabsetHarness.getTabItemButtonAt(2)).sendKeys(TestKey.HOME);
+    expect(await firstTab.isFocused()).toBe(true);
+  });
+
   it('should show the heading as tooltip for icon tabs', async () => {
     vi.setTimerTickMode('nextTimerAsync');
     testComponent.tabs = [{ heading: 'Tab 1', icon: 'element-options' }];

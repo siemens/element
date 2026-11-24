@@ -85,6 +85,7 @@ export class SiTabsetComponent {
   /** @internal */
   focusKeyManager = new FocusKeyManager(this.tabPanels, inject(INJECTOR))
     .withHorizontalOrientation(isRTL() ? 'rtl' : 'ltr')
+    .withHomeAndEnd()
     .withWrap(true);
 
   /** @internal */
