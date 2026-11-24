@@ -13,7 +13,10 @@ export interface Project {
 }
 
 export interface AssetProject extends Omit<Project, 'files'> {
-  /** Base URL to load the project files from the application assets folder. */
+  /**
+   * Base URL to load the project files from the application assets folder.
+   * A relative URL is resolved against the live preview application, not the current page.
+   */
   assetUrl: string;
   /** Array of file paths retrieved from the application asset folder. */
   files: FilePaths;
