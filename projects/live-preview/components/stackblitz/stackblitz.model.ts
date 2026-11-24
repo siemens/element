@@ -17,6 +17,8 @@ export interface AssetProject extends Omit<Project, 'files'> {
   assetUrl: string;
   /** Array of file paths retrieved from the application asset folder. */
   files: FilePaths;
+  /** Optional in-memory files merged into the project (overrides asset files with the same path). */
+  extraFiles?: Files;
 }
 
 export type ProjectTemplates = (AssetProject | Project)[];

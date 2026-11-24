@@ -25,7 +25,13 @@ import { Type } from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
 
 // @public
-export const angularTemplateProject: () => AssetProject;
+export interface AngularTemplateOptions {
+    dependencies: Record<string, string>;
+    devDependencies: Record<string, string>;
+}
+
+// @public
+export const angularTemplateProject: (options: AngularTemplateOptions) => AssetProject;
 
 // @public (undocumented)
 export class LandscapeSupportService {
@@ -44,7 +50,7 @@ export const provideExampleRoutes: (routes: Route[]) => Provider;
 export const provideLivePreview: (config: SiLivePreviewProviderConfig, isMobile?: boolean) => EnvironmentProviders;
 
 // @public
-export const provideStackblitzConfig: (config?: StackblitzConfig) => Provider;
+export const provideStackblitzConfig: (config: StackblitzConfig) => Provider;
 
 // @public (undocumented)
 export const SI_LIVE_PREVIEW_CONFIG: InjectionToken<SiLivePreviewConfig>;
