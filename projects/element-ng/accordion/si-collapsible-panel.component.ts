@@ -167,7 +167,7 @@ export class SiCollapsiblePanelComponent {
 
   protected keydown(event: KeyboardEvent): void {
     if (event.key === 'Enter' || event.key === 'Space' || event.key === ' ') {
-      this.doToggle(undefined);
+      this.doToggle(event);
     }
   }
 }
