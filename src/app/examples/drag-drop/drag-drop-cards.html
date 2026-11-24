@@ -14,8 +14,8 @@
         <si-card
           #card
           cdkDrag
-          cdkOption
           class="card-size"
+          [cdkOption]="item"
           [heading]="item.heading"
           [cdkDragDisabled]="item?.dragDisabled"
         >
