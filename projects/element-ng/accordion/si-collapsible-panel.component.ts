@@ -3,6 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  AccordionContent,
+  AccordionGroup,
+  AccordionPanel,
+  AccordionTrigger
+} from '@angular/aria/accordion';
+import { NgTemplateOutlet } from '@angular/common';
+import {
   booleanAttribute,
   Component,
   computed,
@@ -12,7 +19,8 @@ import {
   model,
   output,
   signal,
-  viewChild
+  viewChild,
+  ViewContainerRef
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { elementDown2 } from '@siemens/element-icons';
@@ -25,11 +33,18 @@ import { filter } from 'rxjs';
 import { SiAccordionHCollapseService } from './si-accordion-hcollapse.service';
 import { SiAccordionService } from './si-accordion.service';
 
-let controlIdCounter = 1;
-
 @Component({
   selector: 'si-collapsible-panel',
-  imports: [SiIconComponent, SiTranslatePipe, SiTooltipDirective],
+  imports: [
+    AccordionContent,
+    AccordionGroup,
+    AccordionPanel,
+    AccordionTrigger,
+    NgTemplateOutlet,
+    SiIconComponent,
+    SiTranslatePipe,
+    SiTooltipDirective
+  ],
   templateUrl: './si-collapsible-panel.component.html',
   styleUrl: './si-collapsible-panel.component.scss',
   host: {
@@ -106,19 +121,23 @@ export class SiCollapsiblePanelComponent {
     () => this.accordionHCollapseService?.hcollapsed() ?? false
   );
   protected readonly fullHeight = computed(() => this.accordionService?.fullHeight() ?? false);
-  protected controlId = '__si-collapsible-' + controlIdCounter++;
-  protected headerId = this.controlId + '-header';
+  private readonly standaloneAccordionGroupView = viewChild('standaloneAccordionGroup', {
+    read: ViewContainerRef
+  });
+  protected readonly accordionGroupInjector = computed(
+    () => this.standaloneAccordionGroupView()?.injector
+  );
   protected isHCollapsible = false;
   protected readonly icons = addIcons({ elementDown2 });
   protected readonly disableAnimation = signal(false);
 
-  private readonly accordionService = inject(SiAccordionService, { optional: true });
+  protected readonly accordionService = inject(SiAccordionService, { optional: true });
   private readonly accordionHCollapseService = inject(SiAccordionHCollapseService, {
     optional: true
   });
   /** Restore the content scroll position between open/close of the panel. */
   private lastScrollPos = 0;
-  private readonly contentRef = viewChild.required<ElementRef<HTMLElement>>('content');
+  private readonly contentRef = viewChild<ElementRef<HTMLElement>>('content');
 
   constructor() {
     this.isHCollapsible = !!this.accordionHCollapseService;
@@ -142,32 +161,23 @@ export class SiCollapsiblePanelComponent {
     if (open) {
       // Restore scroll position after opening
       setTimeout(() => {
-        this.contentRef().nativeElement.scrollTop = this.lastScrollPos;
+        const content = this.contentRef();
+        if (content) {
+          content.nativeElement.scrollTop = this.lastScrollPos;
+        }
       });
     } else {
       // Save scroll position before closing
-      this.lastScrollPos = this.contentRef().nativeElement.scrollTop;
+      this.lastScrollPos = this.contentRef()?.nativeElement.scrollTop ?? 0;
     }
   }
 
-  protected doToggle(event?: Event): void {
-    if (this.disabled()) {
-      return;
-    }
-
-    event?.preventDefault();
-    const opened = this.opened();
-    this.panelToggle.emit(!opened);
-    this.openClose(this.hcollapsed() || !opened);
+  protected doToggle(open: boolean): void {
+    this.panelToggle.emit(open);
+    this.openClose(this.hcollapsed() || open);
     this.accordionService?.toggle$.next(this);
     if (this.hcollapsed()) {
       this.accordionHCollapseService?.open$.next(this);
-    }
-  }
-
-  protected keydown(event: KeyboardEvent): void {
-    if (event.key === 'Enter' || event.key === 'Space' || event.key === ' ') {
-      this.doToggle(undefined);
     }
   }
 }
