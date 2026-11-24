@@ -14,16 +14,11 @@ jobs:
       SIEMENS_NPM_USER: ${{ secrets.SIEMENS_NPM_USER }}
       MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
 
-  publish-documentation:
-    environment: github-pages
+  prepare-documentation:
     runs-on: ubuntu-26.04
-    permissions:
-      pages: write
-      id-token: write
     needs:
       - build-and-test
     steps:
-      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: pages
@@ -38,6 +33,17 @@ jobs:
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: 'dist/design'
+
+  publish-documentation:
+    environment: github-pages
+    runs-on: ubuntu-26.04
+    permissions:
+      pages: write
+      id-token: write
+    needs:
+      - prepare-documentation
+    steps:
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
       - uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
 
   # Publishes the documentation built from main to the "development" path of the
