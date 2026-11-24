@@ -124,8 +124,14 @@ export const openStackblitz = async (options: OpenStackblitzOptions): Promise<vo
   let files: Record<string, string> = {};
   if (isAssetProject(template)) {
     for (const file of template.files) {
+      if (template.extraFiles && file in template.extraFiles) {
+        continue;
+      }
       const response = await fetch(`${template.assetUrl}/${file}`);
       files[file] = await response.text();
+    }
+    if (template.extraFiles) {
+      Object.assign(files, template.extraFiles);
     }
   } else if (isProject(template)) {
     files = { ...template.files };

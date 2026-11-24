@@ -39,6 +39,7 @@ import {
 } from '@siemens/element-translate-ng/ngx-translate';
 import { SiTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 import {
+  angularTemplateProject,
   SiLivePreviewLocaleApi,
   SiLivePreviewThemeApi,
   provideLivePreview,
@@ -47,6 +48,7 @@ import {
 import { setWorkerUrl } from 'maplibre-gl';
 import { lastValueFrom, Observable, take } from 'rxjs';
 
+import { dependencies, devDependencies, version } from '../../package.json';
 import { BundlerTranslateLoader } from './bundler-translate-loader';
 import { FileUploadInterceptor } from './examples/si-file-uploader/file-upload-interceptor';
 import { CustomWrapperComponent } from './examples/si-formly/dynamic-form-custom-wrapper';
@@ -153,6 +155,33 @@ const createExampleAppConfig = (injector: Injector): ApplicationConfig => ({
   ]
 });
 
+// Federation and dashboard-only packages are unused by StackBlitz examples and introduce
+// unnecessary install overhead or strict peer constraints (e.g. native-federation vs @angular/build).
+const excludedStackblitzDependencies = new Set([
+  '@angular-architects/module-federation',
+  '@angular-architects/native-federation',
+  '@module-federation/enhanced',
+  '@module-federation/runtime',
+  '@softarc/native-federation',
+  '@softarc/native-federation-orchestrator',
+  'es-module-shims',
+  'gridstack'
+]);
+
+const stackblitzDependencies: Record<string, string> = {
+  ...Object.fromEntries(
+    Object.entries(dependencies).filter(([name]) => !excludedStackblitzDependencies.has(name))
+  ),
+  '@siemens/charts-ng': `^${version}`,
+  '@siemens/element-ng': `^${version}`,
+  '@siemens/element-theme': `^${version}`,
+  '@siemens/element-translate-ng': `^${version}`,
+  '@siemens/live-preview': `^${version}`,
+  '@siemens/map-styles': `^${version}`,
+  '@siemens/maps-ng': `^${version}`,
+  '@siemens/native-charts-ng': `^${version}`
+};
+
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
     provideLivePreview({
@@ -182,6 +211,22 @@ export const APP_CONFIG: ApplicationConfig = {
     provideHttpClient(),
     { provide: SiLivePreviewThemeApi, useClass: LivePreviewThemeApiService },
     { provide: SiLivePreviewLocaleApi, useClass: LivePreviewLocaleApiService },
-    provideStackblitzConfig()
+    provideStackblitzConfig({
+      templates: [
+        angularTemplateProject({
+          dependencies: stackblitzDependencies,
+          // Only Angular build tooling and TypeScript are needed in StackBlitz; copying all root
+          // devDependencies pulls in test/lint/release tools and fails npm resolution (e.g. vitest 5 vs @angular/build).
+          devDependencies: {
+            '@angular/build': devDependencies['@angular/build'],
+            '@angular/cli': devDependencies['@angular/cli'],
+            '@angular/compiler': devDependencies['@angular/compiler'],
+            '@angular/compiler-cli': devDependencies['@angular/compiler-cli'],
+            '@angular/language-service': devDependencies['@angular/language-service'],
+            'typescript': devDependencies.typescript
+          }
+        })
+      ]
+    })
   ]
 };
