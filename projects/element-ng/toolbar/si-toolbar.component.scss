@@ -1,0 +1,108 @@
+@use '@siemens/element-theme/src/styles/all-variables';
+
+$toolbar-docked-size: 2.5rem;
+
+:host {
+  display: inline-flex;
+  align-items: stretch;
+  max-inline-size: 100%;
+  // Items which do not fit are clipped by default.
+  // Consumers can override it, e.g. with the `overflow-auto` class to make the toolbar scrollable.
+  overflow: hidden;
+  border-radius: all-variables.$element-radius-2;
+  background-color: all-variables.$si-sys-color-background-3;
+  box-shadow: all-variables.$si-sys-color-effects-shadow-30;
+  color: all-variables.$si-sys-color-text-primary;
+}
+
+:host(.si-toolbar-vertical) {
+  flex-direction: column;
+  max-inline-size: none;
+  max-block-size: 100%;
+}
+
+:host(.si-toolbar-docked) {
+  display: flex;
+  min-block-size: $toolbar-docked-size;
+  border-radius: 0;
+  background-color: all-variables.$si-sys-color-background-1;
+  box-shadow: none;
+}
+
+:host(.si-toolbar-docked.si-toolbar-vertical) {
+  min-block-size: 0;
+  min-inline-size: $toolbar-docked-size;
+}
+
+:host([aria-disabled='true']) {
+  pointer-events: none;
+  opacity: all-variables.$si-sys-color-effects-disable-opacity;
+}
+
+// Placement within the closest positioned ancestor
+:host(.si-toolbar-placement-top),
+:host(.si-toolbar-placement-bottom),
+:host(.si-toolbar-placement-start),
+:host(.si-toolbar-placement-end) {
+  position: absolute;
+}
+
+:host(.si-toolbar-placement-top) {
+  inset-block-start: 0;
+}
+
+:host(.si-toolbar-placement-bottom) {
+  inset-block-end: 0;
+}
+
+:host(.si-toolbar-placement-start) {
+  inset-inline-start: 0;
+}
+
+:host(.si-toolbar-placement-end) {
+  inset-inline-end: 0;
+}
+
+:host(:is(.si-toolbar-placement-top, .si-toolbar-placement-bottom)) {
+  inline-size: fit-content;
+}
+
+:host(.si-toolbar-align-center:is(.si-toolbar-placement-top, .si-toolbar-placement-bottom)) {
+  inset-inline: 0;
+  margin-inline: auto;
+}
+
+:host(.si-toolbar-align-start:is(.si-toolbar-placement-top, .si-toolbar-placement-bottom)) {
+  inset-inline-start: 0;
+}
+
+:host(.si-toolbar-align-end:is(.si-toolbar-placement-top, .si-toolbar-placement-bottom)) {
+  inset-inline-end: 0;
+}
+
+:host(:is(.si-toolbar-placement-start, .si-toolbar-placement-end)) {
+  block-size: fit-content;
+}
+
+:host(.si-toolbar-align-center:is(.si-toolbar-placement-start, .si-toolbar-placement-end)) {
+  inset-block: 0;
+  margin-block: auto;
+}
+
+:host(.si-toolbar-align-start:is(.si-toolbar-placement-start, .si-toolbar-placement-end)) {
+  inset-block-start: 0;
+}
+
+:host(.si-toolbar-align-end:is(.si-toolbar-placement-start, .si-toolbar-placement-end)) {
+  inset-block-end: 0;
+}
+
+:host(.si-toolbar-docked:is(.si-toolbar-placement-top, .si-toolbar-placement-bottom)) {
+  inset-inline: 0;
+  inline-size: auto;
+}
+
+:host(.si-toolbar-docked:is(.si-toolbar-placement-start, .si-toolbar-placement-end)) {
+  inset-block: 0;
+  block-size: auto;
+}
