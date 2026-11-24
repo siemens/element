@@ -277,6 +277,8 @@ export class SiStatusBarComponent implements OnDestroy, OnChanges {
       this.significanceChanged();
     } else {
       clearTimeout(this.timer);
+      clearTimeout(this.significanceUpdateTimer);
+      this.significanceUpdateTimer = undefined;
       this.expanded.set(0);
       this.placeholderHeight.set(0);
       this.contentHeight.set(undefined);

@@ -195,5 +195,23 @@ describe('SiStatusBarComponent', () => {
 
       expect(element.querySelector('.expanded')).not.toBeInTheDocument();
     });
+
+    it('does not throw when leaving responsive mode before pending item update', () => {
+      const activeItems: StatusBarItem[] = [
+        { title: 'one', status: 'danger', value: 1 },
+        { title: 'two', status: 'warning', value: 2 },
+        { title: 'three', status: 'success', value: 3 }
+      ];
+      element.style.width = '100px';
+      items.set(activeItems);
+      fixture.detectChanges();
+
+      element.style.width = '2000px';
+      items.set([...activeItems]);
+      fixture.detectChanges();
+
+      expect(() => vi.advanceTimersByTime(200)).not.toThrow();
+      expect(element.querySelector('.responsive')).not.toBeInTheDocument();
+    });
   });
 });
