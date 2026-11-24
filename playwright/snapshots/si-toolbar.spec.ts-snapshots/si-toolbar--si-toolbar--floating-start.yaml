@@ -1,0 +1,39 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: /
+  - heading "Graphics editor" [level=1]
+  - button "Account of Lars Vegas"
+- navigation:
+  - button "Collapse" [expanded]
+  - button "Floating"
+  - button "Docked"
+- main:
+  - heading "Floating toolbar" [level=2]
+  - paragraph: Compact toolbars float above the workspace with a subtle elevation.
+  - text: Placement
+  - group "Placement":
+    - radio "Start" [checked]
+    - text: Start
+    - radio "End"
+    - text: End
+    - radio "Top"
+    - text: Top
+    - radio "Bottom"
+    - text: Bottom
+  - toolbar "Editor toolbar":
+    - group "Tools":
+      - button "Pen"
+      - button "Move" [pressed]
+      - button "Line"
+      - button "Text"
+    - group "History":
+      - button "Undo"
+      - button "Redo" [disabled]
+  - toolbar "Alignment toolbar":
+    - group "Alignment":
+      - button "Align left"
+      - button "Align vertical centers"
+      - button "Align horizontal centers"
+      - button "Align right"

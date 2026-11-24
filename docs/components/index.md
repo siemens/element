@@ -131,6 +131,7 @@ documentation.
 - [Text Area](forms-inputs/text-area.md)
 - [Threshold](forms-inputs/threshold.md)
 - [Toast Notification](status-notifications/toast-notification.md)
+- [Toolbar](buttons-menus/toolbar.md)
 - [Tooltip](status-notifications/tooltip.md)
 - [Tour](layout-navigation/tour.md)
 - [Tree View](lists-tables-trees/tree-view.md)

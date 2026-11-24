@@ -1,0 +1,229 @@
+<div class="has-navbar-fixed-top si-layout-fixed-height h-100">
+  <si-application-header>
+    <si-header-brand>
+      <a siHeaderLogo routerLink="/"></a>
+      <h1 class="application-name">Graphics editor</h1>
+    </si-header-brand>
+    <si-header-actions>
+      <button
+        si-header-account-item
+        type="button"
+        name="Lars Vegas"
+        [siHeaderDropdownTriggerFor]="account"
+      >
+      </button>
+    </si-header-actions>
+  </si-application-header>
+
+  <si-navbar-vertical [items]="navbarItems()">
+    <div
+      class="si-layout-fixed-height"
+      [class.flex-row]="dockedToLayout() && orientation() === 'vertical'"
+    >
+      @if (dockedToLayout() && (placement() === 'top' || placement() === 'start')) {
+        <ng-container *ngTemplateOutlet="toolbar" />
+      }
+      <div class="si-layout-main-padding si-layout-fixed-height">
+        <div class="si-layout-header">
+          @if (variant() === 'floating') {
+            <h2 class="si-layout-title si-layout-top-element">Floating toolbar</h2>
+            <p class="si-layout-subtitle">
+              @if (multipleToolbars()) {
+                Compact toolbars float above the workspace with a subtle elevation.
+              } @else {
+                A compact toolbar floats above the workspace with a subtle elevation.
+              }
+            </p>
+          } @else {
+            <h2 class="si-layout-title si-layout-top-element">Docked toolbar</h2>
+            <p class="si-layout-subtitle">
+              @if (dockedToLayout()) {
+                A compact toolbar docks to the application layout edge for persistent access.
+              } @else {
+                A compact toolbar docks to the workspace edge for persistent access.
+              }
+            </p>
+          }
+        </div>
+
+        <div class="d-flex flex-wrap align-items-center gap-6 mb-6">
+          <div class="d-flex align-items-center gap-4">
+            <span id="toolbar-placement-label" class="si-body-sbold">Placement</span>
+            <div class="btn-group" role="group" aria-labelledby="toolbar-placement-label">
+              @for (option of placements; track option) {
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="toolbar-placement"
+                  [id]="'toolbar-placement-' + option"
+                  [checked]="placement() === option"
+                  (change)="placement.set(option)"
+                />
+                <label class="btn" [for]="'toolbar-placement-' + option">{{
+                  option | titlecase
+                }}</label>
+              }
+            </div>
+          </div>
+
+          @if (variant() === 'floating') {
+            <div class="d-flex align-items-center gap-4">
+              <span id="toolbar-alignment-label" class="si-body-sbold">Alignment</span>
+              <div class="btn-group" role="group" aria-labelledby="toolbar-alignment-label">
+                @for (option of alignments; track option) {
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="toolbar-alignment"
+                    [id]="'toolbar-alignment-' + option"
+                    [checked]="alignment() === option"
+                    (change)="alignment.set(option)"
+                  />
+                  <label class="btn" [for]="'toolbar-alignment-' + option">{{
+                    option | titlecase
+                  }}</label>
+                }
+              </div>
+            </div>
+
+            <div class="form-check form-switch">
+              <input
+                id="toolbar-multiple"
+                type="checkbox"
+                class="form-check-input"
+                role="switch"
+                [checked]="multipleToolbars()"
+                (change)="onMultipleToolbarsChange($event)"
+              />
+              <label class="form-check-label" for="toolbar-multiple">Multiple toolbars</label>
+            </div>
+          } @else {
+            <div class="form-check form-switch">
+              <input
+                id="toolbar-dock-layout"
+                type="checkbox"
+                class="form-check-input"
+                role="switch"
+                [checked]="dockToLayout()"
+                (change)="onDockToLayoutChange($event)"
+              />
+              <label class="form-check-label" for="toolbar-dock-layout">
+                Dock to application layout
+              </label>
+            </div>
+          }
+        </div>
+
+        @if (!dockedToLayout()) {
+          <div
+            class="position-relative si-layout-fixed-height background-0 mb-5"
+            [class.border]="variant() === 'docked'"
+          >
+            @if (floatingMultiple()) {
+              <div
+                class="position-absolute d-flex align-items-center gap-4 pe-none"
+                [class.justify-content-start]="alignment() === 'start'"
+                [class.justify-content-center]="alignment() === 'center'"
+                [class.justify-content-end]="alignment() === 'end'"
+                [class.top-0]="placement() !== 'bottom'"
+                [class.bottom-0]="placement() !== 'top'"
+                [class.start-0]="placement() !== 'end'"
+                [class.end-0]="placement() !== 'start'"
+                [class.flex-column]="orientation() === 'vertical'"
+              >
+                <ng-container *ngTemplateOutlet="toolbar" />
+                <si-toolbar
+                  class="pe-auto"
+                  aria-label="Alignment toolbar"
+                  [orientation]="orientation()"
+                >
+                  <si-toolbar-group aria-label="Alignment">
+                    @for (action of alignmentActions; track action.id) {
+                      <button
+                        type="button"
+                        class="btn btn-icon btn-tertiary-ghost"
+                        ngToolbarWidget
+                        [value]="action.id"
+                        [attr.aria-label]="action.label"
+                        [siTooltip]="action.label"
+                        (click)="logEvent(action.label)"
+                      >
+                        <si-icon class="icon" [icon]="action.icon" />
+                      </button>
+                    }
+                  </si-toolbar-group>
+                </si-toolbar>
+              </div>
+            } @else {
+              <ng-container *ngTemplateOutlet="toolbar" />
+            }
+          </div>
+        }
+      </div>
+      @if (dockedToLayout() && (placement() === 'bottom' || placement() === 'end')) {
+        <ng-container *ngTemplateOutlet="toolbar" />
+      }
+    </div>
+  </si-navbar-vertical>
+</div>
+
+<ng-template #toolbar>
+  <si-toolbar
+    aria-label="Editor toolbar"
+    [class.pe-auto]="floatingMultiple()"
+    [class.border-start]="dockedToLayout() && placement() !== 'end'"
+    [class.flex-shrink-0]="dockedToLayout()"
+    [variant]="variant()"
+    [placement]="dockedToLayout() || floatingMultiple() ? undefined : placement()"
+    [alignment]="alignment()"
+    [orientation]="orientation()"
+  >
+    <si-toolbar-group aria-label="Tools">
+      @for (tool of tools; track tool.id) {
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary-ghost"
+          ngToolbarWidget
+          [value]="tool.id"
+          [class.active]="activeTool() === tool.id"
+          [attr.aria-pressed]="activeTool() === tool.id"
+          [attr.aria-label]="tool.label"
+          [siTooltip]="tool.label"
+          (click)="selectTool(tool.id)"
+        >
+          <si-icon class="icon" [icon]="tool.icon" />
+        </button>
+      }
+    </si-toolbar-group>
+    <si-toolbar-group aria-label="History">
+      <button
+        type="button"
+        class="btn btn-icon btn-tertiary-ghost"
+        ngToolbarWidget
+        value="undo"
+        aria-label="Undo"
+        siTooltip="Undo"
+        (click)="logEvent('Undo')"
+      >
+        <si-icon class="icon" [icon]="icons.elementUndo" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-icon btn-tertiary-ghost"
+        ngToolbarWidget
+        value="redo"
+        aria-label="Redo"
+        [disabled]="true"
+        (click)="logEvent('Redo')"
+      >
+        <si-icon class="icon" [icon]="icons.elementRedo" />
+      </button>
+    </si-toolbar-group>
+  </si-toolbar>
+</ng-template>
+
+<ng-template #account>
+  <si-header-dropdown>
+    <si-account-details name="Lars Vegas" email="lars.vegas@siemens.com" />
+  </si-header-dropdown>
+</ng-template>

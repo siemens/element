@@ -1,0 +1,19 @@
+- text: Workspace width
+- slider "Workspace width": /\d+/
+- toolbar "Editor toolbar":
+  - group "Tools":
+    - button "Pen"
+    - button "Move"
+    - button "More Tools"
+  - group "History":
+    - button "More History"
+  - group "Alignment":
+    - button "More Alignment" [expanded]
+  - group "Zoom":
+    - button "More Zoom"
+- menu:
+  - menuitem "Align left"
+  - menuitem "Align vertical centers"
+  - menuitem "Align horizontal centers"
+  - menuitem "Align right"
+- tooltip "More Alignment"
