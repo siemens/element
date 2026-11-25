@@ -37,6 +37,7 @@
               [valueOnly]="item.isSpecial"
               (click)="onItemClicked(item)"
               (keydown.enter)="onItemClicked(item)"
+              (keydown.space)="$event.preventDefault(); onItemClicked(item)"
             />
           }
         </div>
@@ -75,6 +76,7 @@
             (significanceChange)="significanceChanged()"
             (click)="onItemClicked(item)"
             (keydown.enter)="onItemClicked(item)"
+            (keydown.space)="$event.preventDefault(); onItemClicked(item)"
           />
         }
       </div>

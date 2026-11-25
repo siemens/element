@@ -27,7 +27,9 @@
   - button "Properties"
   - button "Documents"
   - button "Graphics"
-  - text: /4 Emergency \d+ Trouble \d+ Success/
+  - button "4 Emergency"
+  - button /\d+ Trouble/
+  - button /\d+ Success/
   - button "Toggle"
   - heading "Here is a title" [level=2]
   - text: A nice list of things
