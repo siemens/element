@@ -351,7 +351,7 @@ importers:
         version: 4.14.0(playwright-core@1.65.1)
       '@commitlint/cli':
         specifier: 21.2.4
-        version: 21.2.4(conventional-commits-parser@7.1.3)(typescript@6.0.3)
+        version: 21.2.4(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)(typescript@6.0.3)
       '@commitlint/config-conventional':
         specifier: 21.2.4
         version: 21.2.4
@@ -369,16 +369,16 @@ importers:
         version: 22.2.7(chokidar@5.0.0)
       '@semantic-release/changelog':
         specifier: 7.0.0
-        version: 7.0.0(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))
+        version: 7.0.0(semantic-release@26.0.1(supports-color@10.2.2))
       '@semantic-release/exec':
         specifier: 7.1.0
-        version: 7.1.0(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)
+        version: 7.1.0(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)
       '@semantic-release/git':
         specifier: 11.0.1
-        version: 11.0.1(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)
+        version: 11.0.1(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)
       '@siemens/commitlint-config':
         specifier: 5.1.0
-        version: 5.1.0(@commitlint/cli@21.2.4(conventional-commits-parser@7.1.3)(typescript@6.0.3))(@commitlint/config-conventional@21.2.4)
+        version: 5.1.0(@commitlint/cli@21.2.4(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)(typescript@6.0.3))(@commitlint/config-conventional@21.2.4)
       '@siemens/eslint-config-angular':
         specifier: 5.1.0
         version: 5.1.0(@eslint/js@10.0.1(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2)))(angular-eslint@22.6.0(chokidar@5.0.0)(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript-eslint@8.72.2(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(typescript@6.0.3))(eslint-plugin-perfectionist@5.13.0(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))(eslint-plugin-prefer-arrow@1.2.3(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2)))(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2))(typescript-eslint@8.72.2(eslint@10.15.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3))
@@ -470,8 +470,8 @@ importers:
         specifier: 6.1.4
         version: 6.1.4
       semantic-release:
-        specifier: 25.0.9
-        version: 25.0.9(supports-color@10.2.2)(typescript@6.0.3)
+        specifier: 26.0.1
+        version: 26.0.1(supports-color@10.2.2)
       semver:
         specifier: 7.8.6
         version: 7.8.6
@@ -3528,11 +3528,15 @@ packages:
     peerDependencies:
       semantic-release: '>=20.1.0'
 
-  '@semantic-release/commit-analyzer@13.0.1':
-    resolution: {integrity: sha512-wdnBPHKkr9HhNhXOhZD5a2LNl91+hs8CC2vsAVYxtZH3y0dV3wKn+uZSN61rdJQZ8EGxzWB3inWocBHV9+u/CQ==, tarball: https://registry.npmjs.org/@semantic-release/commit-analyzer/-/commit-analyzer-13.0.1.tgz}
-    engines: {node: '>=20.8.1'}
+  '@semantic-release/commit-analyzer@14.0.0-beta.5':
+    resolution: {integrity: sha512-fnmPi9LP8e1Ai0OhaF4ZdfNLlq2xJfxxKKvap/7GjRaPBGNmeTEC+1S3Q722DN+vO4yjSWUyaxmNJzRiiS21gw==, tarball: https://registry.npmjs.org/@semantic-release/commit-analyzer/-/commit-analyzer-14.0.0-beta.5.tgz}
+    engines: {node: '>=26.13'}
     peerDependencies:
       semantic-release: '>=20.1.0'
+
+  '@semantic-release/core@1.0.0':
+    resolution: {integrity: sha512-tHXmIcTO62N3Xed8dcNCdyIpirDnZAR/Y0sFXFR4+sSdegv7Ma/+tFMip2YwZ0T40Ng1rQ9CR/5GpxbQZ3/cYg==, tarball: https://registry.npmjs.org/@semantic-release/core/-/core-1.0.0.tgz}
+    engines: {node: '>=26.13'}
 
   '@semantic-release/error@4.0.0':
     resolution: {integrity: sha512-mgdxrHTLOjOddRVYIYDo0fR3/v61GNN1YGkfbrjuIKg/uMgCd+Qzo3UAXJ+woLQQpos4pl5Esuw5A7AoNlzjUQ==, tarball: https://registry.npmjs.org/@semantic-release/error/-/error-4.0.0.tgz}
@@ -3556,15 +3560,15 @@ packages:
     peerDependencies:
       semantic-release: '>=24.1.0'
 
-  '@semantic-release/npm@13.2.0':
-    resolution: {integrity: sha512-Uz4JGafLoEGiheLKEs1orockCWP6liY9D2YnvKHYbqo9hCHAw9fuAHcU53q29SXVCtkvDhs/QVUg7Vvuyfp4Jg==, tarball: https://registry.npmjs.org/@semantic-release/npm/-/npm-13.2.0.tgz}
-    engines: {node: ^22.14.0 || >= 24.10.0}
+  '@semantic-release/npm@14.0.0-beta.3':
+    resolution: {integrity: sha512-SHt6hBwWkC8hjK0curlE+D1LbfqKCkE4b2SwqyQOBocadPajwBw30Yr9MxrrSBjdVbWn9e1vND4mjwm2JjrNsA==, tarball: https://registry.npmjs.org/@semantic-release/npm/-/npm-14.0.0-beta.3.tgz}
+    engines: {node: '>=26.13'}
     peerDependencies:
       semantic-release: '>=20.1.0'
 
-  '@semantic-release/release-notes-generator@14.1.1':
-    resolution: {integrity: sha512-Pbd2e2XRMUD0OxehHpgd5/YghsE76cddkRHSoDvKLK+OCy4Ewxn49rWR631MEUU01lgwF/uyVXvbnVuu6+Z6VA==, tarball: https://registry.npmjs.org/@semantic-release/release-notes-generator/-/release-notes-generator-14.1.1.tgz}
-    engines: {node: '>=20.8.1'}
+  '@semantic-release/release-notes-generator@15.0.0-beta.4':
+    resolution: {integrity: sha512-LSyBUHHsrg+1MgzoXD4eBQGNBCBVCJfgFf2oU9L5pZ2B53Xhke6Apwp4IHIKiOONYEFnnzFmBdi5J0vEmipnig==, tarball: https://registry.npmjs.org/@semantic-release/release-notes-generator/-/release-notes-generator-15.0.0-beta.4.tgz}
+    engines: {node: '>=26.13'}
     peerDependencies:
       semantic-release: '>=20.1.0'
 
@@ -3668,10 +3672,6 @@ packages:
   '@simple-libs/child-process-utils@2.0.0':
     resolution: {integrity: sha512-dvNoRKLijXnD0XoJAz94pbNuB5GQgDr55UhpSPhffDkTT0Cmcqh9jSCOtwfT2d4H6MI9E7c4SgtMuJXZ6F3c6A==, tarball: https://registry.npmjs.org/@simple-libs/child-process-utils/-/child-process-utils-2.0.0.tgz}
     engines: {node: '>=22'}
-
-  '@simple-libs/stream-utils@1.2.0':
-    resolution: {integrity: sha512-KxXvfapcixpz6rVEB6HPjOUZT22yN6v0vI0urQSk1L8MlEWPDFCZkhw2xmkyoTGYeFw7tWTZd7e3lVzRZRN/EA==, tarball: https://registry.npmjs.org/@simple-libs/stream-utils/-/stream-utils-1.2.0.tgz}
-    engines: {node: '>=18'}
 
   '@simple-libs/stream-utils@2.0.0':
     resolution: {integrity: sha512-fCTuZK4QBa+39Oz9l4OGfJfz+GpwCp3AqO7Zch3to99xHPgstVsRFpeQ8LNd2o1Gv8raL2mCFwiaHh7bFSp5DQ==, tarball: https://registry.npmjs.org/@simple-libs/stream-utils/-/stream-utils-2.0.0.tgz}
@@ -4390,6 +4390,9 @@ packages:
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==, tarball: https://registry.npmjs.org/argparse/-/argparse-2.0.1.tgz}
 
+  argparse@3.0.4:
+    resolution: {integrity: sha512-fwWK3Zq22l4XJJjx5mcBHGikIk+hJqO+32dPm0Jur7+rtG5x1scOjSfdT9ZKeWHPpsya/l0HHK4tDImBkTrtvA==, tarball: https://registry.npmjs.org/argparse/-/argparse-3.0.4.tgz}
+
   argue-cli@3.2.0:
     resolution: {integrity: sha512-VipTB0gXgGIFO2Rg9yEVN5wLt2AurJcZqDbgmYSwPwsykhLrQhs240/bfceev4w68lI8JshoOJIk9uW7tFzROw==, tarball: https://registry.npmjs.org/argue-cli/-/argue-cli-3.2.0.tgz}
     engines: {node: '>=22'}
@@ -4403,9 +4406,6 @@ packages:
 
   array-flatten@1.1.1:
     resolution: {integrity: sha512-PCVAQswWemu6UdxsDFFX/+gVeYqKAod3D3UVm91jHwynguOwAvYPhx8nNlM++NqRcK6CxxpUafjmhIdKiHibqg==, tarball: https://registry.npmjs.org/array-flatten/-/array-flatten-1.1.1.tgz}
-
-  array-ify@1.0.0:
-    resolution: {integrity: sha512-c5AMf34bKdvPhQ7tBGhqkgKNUzMr4WUs+WDtC2ZUGOUncbxKMTvqxYctiseW3+L4bA8ec+GcZ6/A/FW4m8ukng==, tarball: https://registry.npmjs.org/array-ify/-/array-ify-1.0.0.tgz}
 
   asn1js@3.1.0:
     resolution: {integrity: sha512-HWYi1THkOqguCiO+vwj09ZkQFD2kKEsejYHAYCtX0D80WVdoDnvRc9IukXX/jeb0T9NRWJnRtqwdbHltnFjwXA==, tarball: https://registry.npmjs.org/asn1js/-/asn1js-3.1.0.tgz}
@@ -4749,9 +4749,6 @@ packages:
   common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==, tarball: https://registry.npmjs.org/common-path-prefix/-/common-path-prefix-3.0.0.tgz}
 
-  compare-func@2.0.0:
-    resolution: {integrity: sha512-zHig5N+tPWARooBnb0Zx1MFcdfpyJrfTJ3Y5L+IFvUm8rM74hHz66z0gw0x4tijh5CorKkKUCnW82R2vmpeCRA==, tarball: https://registry.npmjs.org/compare-func/-/compare-func-2.0.0.tgz}
-
   compressible@2.0.18:
     resolution: {integrity: sha512-AF3r7P5dWxL8MxyITRMlORQNaOA2IkAFaTr4k7BUumjPtRpGDTZpl0Pb1XCO6JeDCBdp126Cgs9sMxqSjgYyRg==, tarball: https://registry.npmjs.org/compressible/-/compressible-2.0.18.tgz}
     engines: {node: '>= 0.6'}
@@ -4792,10 +4789,6 @@ packages:
     resolution: {integrity: sha512-GW4qUsfFo59d0HbUibDlWv5wPz+vAAcaTWbKIuKCf0JkC7wWkSyf8f13IpXn5JkeMlB2P8iTSSIjwXljorg2vA==, tarball: https://registry.npmjs.org/content-type/-/content-type-3.1.1.tgz}
     engines: {node: '>=22'}
 
-  conventional-changelog-angular@8.3.1:
-    resolution: {integrity: sha512-6gfI3otXK5Ph5DfCOI1dblr+kN3FAm5a97hYoQkqNZxOaYa5WKfXH+AnpsmS+iUH2mgVC2Cg2Qw9m5OKcmNrIg==, tarball: https://registry.npmjs.org/conventional-changelog-angular/-/conventional-changelog-angular-8.3.1.tgz}
-    engines: {node: '>=18'}
-
   conventional-changelog-angular@9.4.0:
     resolution: {integrity: sha512-HdxRxuS8bBXVIuo4V82gvSwAXT0vYQUizrjs/izmPg5JdDstr8v8I5hduGL3iQbG+o310dUDxC4+LetuS5hu9w==, tarball: https://registry.npmjs.org/conventional-changelog-angular/-/conventional-changelog-angular-9.4.0.tgz}
     engines: {node: '>=22'}
@@ -4804,19 +4797,14 @@ packages:
     resolution: {integrity: sha512-jS1LRFSbRoAr6JbhhRy1JYfNNUj5LM3+v49hRE03CgccsiYqgdVj/RTmrw4J1rylrqijHwdOlJWiJa61JHOgHg==, tarball: https://registry.npmjs.org/conventional-changelog-conventionalcommits/-/conventional-changelog-conventionalcommits-10.4.1.tgz}
     engines: {node: '>=22'}
 
-  conventional-changelog-writer@8.4.0:
-    resolution: {integrity: sha512-HHBFkk1EECxxmCi4CTu091iuDpQv5/OavuCUAuZmrkWpmYfyD816nom1CvtfXJ/uYfAAjavgHvXHX291tSLK8g==, tarball: https://registry.npmjs.org/conventional-changelog-writer/-/conventional-changelog-writer-8.4.0.tgz}
-    engines: {node: '>=18'}
+  conventional-changelog-writer@9.3.0:
+    resolution: {integrity: sha512-lxiECDlvy880e7JIYAtAhxg0wD/CGCVbZCdeua5aOlQVFTEd39zAeOzwK22i/FO4xnEOURK1gbUTETNEYW7zxQ==, tarball: https://registry.npmjs.org/conventional-changelog-writer/-/conventional-changelog-writer-9.3.0.tgz}
+    engines: {node: '>=22'}
     hasBin: true
 
-  conventional-commits-filter@5.0.0:
-    resolution: {integrity: sha512-tQMagCOC59EVgNZcC5zl7XqO30Wki9i9J3acbUvkaosCT6JX3EeFwJD7Qqp4MCikRnzS18WXV3BLIQ66ytu6+Q==, tarball: https://registry.npmjs.org/conventional-commits-filter/-/conventional-commits-filter-5.0.0.tgz}
-    engines: {node: '>=18'}
-
-  conventional-commits-parser@6.4.0:
-    resolution: {integrity: sha512-tvRg7FIBNlyPzjdG8wWRlPHQJJHI7DylhtRGeU9Lq+JuoPh5BKpPRX83ZdLrvXuOSu5Eo/e7SzOQhU4Hd2Miuw==, tarball: https://registry.npmjs.org/conventional-commits-parser/-/conventional-commits-parser-6.4.0.tgz}
-    engines: {node: '>=18'}
-    hasBin: true
+  conventional-commits-filter@6.0.1:
+    resolution: {integrity: sha512-cs+LadpH7Kpw0M3k8wurk+sOVVDAENA0iK4OBOrkL94j5lEVYRJ4j3zd2bhY9qgzyrPqthdcYT3axzRN7AliMg==, tarball: https://registry.npmjs.org/conventional-commits-filter/-/conventional-commits-filter-6.0.1.tgz}
+    engines: {node: '>=22'}
 
   conventional-commits-parser@7.1.3:
     resolution: {integrity: sha512-Q9oWm1o9uy/oEsZQIraoFMZ4RuPD+79KgwWj6mJVP356tazolCB0piRLZ5Kz9te9p027uSEcUW+Gu44Eh+X79g==, tarball: https://registry.npmjs.org/conventional-commits-parser/-/conventional-commits-parser-7.1.3.tgz}
@@ -4878,6 +4866,10 @@ packages:
 
   cose-base@2.2.0:
     resolution: {integrity: sha512-AzlgcsCbUMymkADOJtQm3wO9S3ltPfYOFD5033keQn9NJzIbtnZj+UdBJe7DYml/8TdbtHJW3j58SOnKhWY/5g==, tarball: https://registry.npmjs.org/cose-base/-/cose-base-2.2.0.tgz}
+
+  cosmiconfig@10.0.1:
+    resolution: {integrity: sha512-/zvGoYn0y27QTBmK+0B+oPdEPC4fKGUmJsMTQbDjqph00TrkqfVFW/M+C6ya54sYCgHC6QCwK/mI6djt8cEGHQ==, tarball: https://registry.npmjs.org/cosmiconfig/-/cosmiconfig-10.0.1.tgz}
+    engines: {node: ^22.18 || >= 24}
 
   cosmiconfig@9.0.2:
     resolution: {integrity: sha512-gtTZxTDau1wL7Y7zifc2dd8jHSK/k6BTx/2Xp/BpdlAdnlYWFVt7qhJqgwi7637yRwRQ3qL4ZidbB4I8tA5VOg==, tarball: https://registry.npmjs.org/cosmiconfig/-/cosmiconfig-9.0.2.tgz}
@@ -5220,10 +5212,6 @@ packages:
 
   domutils@3.2.2:
     resolution: {integrity: sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw==, tarball: https://registry.npmjs.org/domutils/-/domutils-3.2.2.tgz}
-
-  dot-prop@5.3.0:
-    resolution: {integrity: sha512-QM8q3zDe58hqUqjraQOmzZ1LIH9SWQJTlEKCH4kJ2oQvLZk7RbQXvtDM2XEq3fwkV9CCvvH4LA0AV+ogFsBM2Q==, tarball: https://registry.npmjs.org/dot-prop/-/dot-prop-5.3.0.tgz}
-    engines: {node: '>=8'}
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==, tarball: https://registry.npmjs.org/dunder-proto/-/dunder-proto-1.0.1.tgz}
@@ -5789,11 +5777,6 @@ packages:
   handle-thing@2.0.1:
     resolution: {integrity: sha512-9Qn4yBxelxoh2Ow62nP+Ka/kMnOXRi8BXnRaUwezLNhqelnN49xKz4F/dPP8OYLxLxq6JDtZb2i9XznUQbNPTg==, tarball: https://registry.npmjs.org/handle-thing/-/handle-thing-2.0.1.tgz}
 
-  handlebars@4.7.10:
-    resolution: {integrity: sha512-P5VJMVM7qgBn6vjXMw8WG9uVI+ncf2pi72j4de4yz5ZULLj2RGqLYaKOYGsgyrViQ0tePOVlN1tDCCXXtFqXKg==, tarball: https://registry.npmjs.org/handlebars/-/handlebars-4.7.10.tgz}
-    engines: {node: '>=0.4.7'}
-    hasBin: true
-
   has-flag@3.0.0:
     resolution: {integrity: sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw==, tarball: https://registry.npmjs.org/has-flag/-/has-flag-3.0.0.tgz}
     engines: {node: '>=4'}
@@ -5842,6 +5825,10 @@ packages:
 
   hookified@2.2.0:
     resolution: {integrity: sha512-p/LgFzRN5FeoD3DLS6bkUapeye6E4SI6yJs6KetENd18S+FBthqYq2amJUWpt5z0EQwwHemidjY5OqJGEKm5uA==, tarball: https://registry.npmjs.org/hookified/-/hookified-2.2.0.tgz}
+
+  hosted-git-info@10.1.1:
+    resolution: {integrity: sha512-DeOnSPAvOndYKfw075gt8yZzQ7S2hNztw34zBTfhIzLhmBTswIBg5/y+pqu/VD5cYWm5goAFTusDmUEmKZ0PEQ==, tarball: https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-10.1.1.tgz}
+    engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
 
   hosted-git-info@7.0.2:
     resolution: {integrity: sha512-puUZAUKT5m8Zzvs72XWy3HtvVbTWljRE66cP60bxJzAqf2DgICo7lYTY2IHUmLnNpjYvw5bvmoHvPc0QO2a62w==, tarball: https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-7.0.2.tgz}
@@ -6109,10 +6096,6 @@ packages:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==, tarball: https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz}
     engines: {node: '>=0.12.0'}
 
-  is-obj@2.0.0:
-    resolution: {integrity: sha512-drqDG3cbczxxEJRoOXcOjtdp1J/lyp1mNn0xaznRs8+muBhgQcrnbspox5X5fOw0HnMnbfDzvnEMEtqDEJEo8w==, tarball: https://registry.npmjs.org/is-obj/-/is-obj-2.0.0.tgz}
-    engines: {node: '>=8'}
-
   is-path-inside@4.0.0:
     resolution: {integrity: sha512-lJJV/5dYS+RcL8uQdBDW9c9uWFLLBNRyFhnAKXw5tVqLlKZ4RMGZKv+YQ/IA3OhD+RpbJa1LLFM1FQPGyIXvOA==, tarball: https://registry.npmjs.org/is-path-inside/-/is-path-inside-4.0.0.tgz}
     engines: {node: '>=12'}
@@ -6220,6 +6203,10 @@ packages:
 
   js-yaml@4.3.2:
     resolution: {integrity: sha512-SFNOvSJ+Dgf/9An904Yx+CgSlIPCkIpao4qo51lpee25TIRejdH3rhR4EZMGoNx3/TP3O+wzWuiTFl4sqbltzA==, tarball: https://registry.npmjs.org/js-yaml/-/js-yaml-4.3.2.tgz}
+    hasBin: true
+
+  js-yaml@5.5.0:
+    resolution: {integrity: sha512-paNr4LFIFPjeeSmwNYdrb8FafLLG/Cr2Af3GjbsHJ5CxIjH4r0c2emlmRdAtpPAieP1gRVzk6buBbVP5gBMGAg==, tarball: https://registry.npmjs.org/js-yaml/-/js-yaml-5.5.0.tgz}
     hasBin: true
 
   jsesc@3.1.0:
@@ -6563,10 +6550,6 @@ packages:
 
   memfs@4.80.0:
     resolution: {integrity: sha512-N70W2isi44XdGn7uPo9NJ4zRukcdkwSFHlnYx42SWOH/+hzqNc8P7+tVoA2up4z7faHvNi1RSNCFjxoYQ71VPQ==, tarball: https://registry.npmjs.org/memfs/-/memfs-4.80.0.tgz}
-
-  meow@13.2.0:
-    resolution: {integrity: sha512-pxQJQzB6djGPXh08dacEloMFopsOqGVRKFPYvPOt9XDZ1HasbgDZA74CJGreSU4G3Ak7EFJGoiH2auq+yXISgA==, tarball: https://registry.npmjs.org/meow/-/meow-13.2.0.tgz}
-    engines: {node: '>=18'}
 
   meow@14.1.0:
     resolution: {integrity: sha512-EDYo6VlmtnumlcBCbh1gLJ//9jvM/ndXHfVXIFrZVr6fGcwTUyCTFNTLCKuY3ffbK8L/+3Mzqnd58RojiZqHVw==, tarball: https://registry.npmjs.org/meow/-/meow-14.1.0.tgz}
@@ -6971,15 +6954,16 @@ packages:
     resolution: {integrity: sha512-9qny7Z9DsQU8Ou39ERsPU4OZQlSTP47ShQzuKZ6PRXpYLtIFgl/DEBYEXKlvcEa+9tHVcK8CF81Y2V72qaZhWA==, tarball: https://registry.npmjs.org/npm-run-path/-/npm-run-path-6.0.0.tgz}
     engines: {node: '>=18'}
 
-  npm@11.21.1:
-    resolution: {integrity: sha512-YTzL6QBEJXyHcTu0JiUc7RKMp+mzlJtl7rGLmERaXUQeFHIMc9atdr6G9M9C8vDWbv40epoTQAzNL2/PtZVDhQ==, tarball: https://registry.npmjs.org/npm/-/npm-11.21.1.tgz}
-    engines: {node: ^20.17.0 || >=22.9.0}
+  npm@12.2.3:
+    resolution: {integrity: sha512-ovmNRRe76Jvcp1E6iOePQ6H9Zr4XMOrqgfaeGNhtRvP3XSl2Lo/a9C1N5/jRlLLrsqCem/omgGdZHpZ5a6yn1Q==, tarball: https://registry.npmjs.org/npm/-/npm-12.2.3.tgz}
+    engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
     hasBin: true
     bundledDependencies:
       - '@isaacs/string-locale-compare'
       - '@npmcli/arborist'
       - '@npmcli/config'
       - '@npmcli/fs'
+      - '@npmcli/git'
       - '@npmcli/map-workspaces'
       - '@npmcli/metavuln-calculator'
       - '@npmcli/package-json'
@@ -6989,9 +6973,11 @@ packages:
       - '@sigstore/tuf'
       - abbrev
       - archy
+      - bin-links
       - cacache
       - chalk
       - ci-info
+      - diff
       - fastest-levenshtein
       - fs-minipass
       - glob
@@ -7811,9 +7797,9 @@ packages:
     resolution: {integrity: sha512-ftnu3TW4+3eBfLRFnDEkzGxSF/10BJBkaLJuBHZX0kiPS7bRdlpZGu6YGt4KngMkdTwJE6MbjavFpqHvqVt+Ew==, tarball: https://registry.npmjs.org/selfsigned/-/selfsigned-5.5.0.tgz}
     engines: {node: '>=18'}
 
-  semantic-release@25.0.9:
-    resolution: {integrity: sha512-bxve7csK0/Txr++CkfrmV+X1r4jqiSOw2WsSad9E2S68R+ZfLBwDn8IceM8WfiOmKQIHgsQc1cNA8Dzg7U75pg==, tarball: https://registry.npmjs.org/semantic-release/-/semantic-release-25.0.9.tgz}
-    engines: {node: ^22.14.0 || >= 24.10.0}
+  semantic-release@26.0.1:
+    resolution: {integrity: sha512-nVDjgiPeiYuHtq4sjiJJVnq9i7zyXMFNGFL8MU0GWQLE0EPq98fTogh5RzHPvqxltnezmQ8QfiYZ100DFXyPQw==, tarball: https://registry.npmjs.org/semantic-release/-/semantic-release-26.0.1.tgz}
+    engines: {node: '>=26.13'}
     hasBin: true
 
   semver-regex@4.0.5:
@@ -8720,9 +8706,6 @@ packages:
   word-wrap@1.2.5:
     resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==, tarball: https://registry.npmjs.org/word-wrap/-/word-wrap-1.2.5.tgz}
     engines: {node: '>=0.10.0'}
-
-  wordwrap@1.0.0:
-    resolution: {integrity: sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==, tarball: https://registry.npmjs.org/wordwrap/-/wordwrap-1.0.0.tgz}
 
   wrap-ansi@10.0.2:
     resolution: {integrity: sha512-6OLRNZqRntVGBm26ghZ5eZhCuWWyOkRCSn8XsOIuq5stpCE/tjLbdozd93naILZig0lmD8ANfRwnhn0DLeXGlg==, tarball: https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-10.0.2.tgz}
@@ -10301,13 +10284,13 @@ snapshots:
   '@colors/colors@1.5.0':
     optional: true
 
-  '@commitlint/cli@21.2.4(conventional-commits-parser@7.1.3)(typescript@6.0.3)':
+  '@commitlint/cli@21.2.4(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)(typescript@6.0.3)':
     dependencies:
       '@commitlint/config-conventional': 21.2.4
       '@commitlint/format': 21.2.3
       '@commitlint/lint': 21.2.4
       '@commitlint/load': 21.2.4(typescript@6.0.3)
-      '@commitlint/read': 21.2.3(conventional-commits-parser@7.1.3)
+      '@commitlint/read': 21.2.3(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)
       '@commitlint/types': 21.2.3
       tinyexec: 1.3.1
       yargs: 18.2.0
@@ -10372,11 +10355,11 @@ snapshots:
       conventional-changelog-angular: 9.4.0
       conventional-commits-parser: 7.1.3
 
-  '@commitlint/read@21.2.3(conventional-commits-parser@7.1.3)':
+  '@commitlint/read@21.2.3(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)':
     dependencies:
       '@commitlint/top-level': 21.2.0
       '@commitlint/types': 21.2.3
-      '@conventional-changelog/git-client': 3.2.0(conventional-commits-parser@7.1.3)
+      '@conventional-changelog/git-client': 3.2.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)
       tinyexec: 1.3.1
     transitivePeerDependencies:
       - conventional-commits-filter
@@ -10408,12 +10391,13 @@ snapshots:
       conventional-commits-parser: 7.1.3
       picocolors: 1.1.1
 
-  '@conventional-changelog/git-client@3.2.0(conventional-commits-parser@7.1.3)':
+  '@conventional-changelog/git-client@3.2.0(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)':
     dependencies:
       '@simple-libs/child-process-utils': 2.0.0
       '@simple-libs/stream-utils': 2.0.0
       verkit: 0.5.0
     optionalDependencies:
+      conventional-commits-filter: 6.0.1
       conventional-commits-parser: 7.1.3
 
   '@conventional-changelog/template@1.4.0': {}
@@ -11982,30 +11966,57 @@ snapshots:
 
   '@sec-ant/readable-stream@0.4.1': {}
 
-  '@semantic-release/changelog@7.0.0(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))':
+  '@semantic-release/changelog@7.0.0(semantic-release@26.0.1(supports-color@10.2.2))':
     dependencies:
       '@semantic-release/error': 4.0.0
       aggregate-error: 5.1.0
       lodash-es: 4.18.1
-      semantic-release: 25.0.9(supports-color@10.2.2)(typescript@6.0.3)
+      semantic-release: 26.0.1(supports-color@10.2.2)
 
-  '@semantic-release/commit-analyzer@13.0.1(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)':
+  '@semantic-release/commit-analyzer@14.0.0-beta.5(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)':
     dependencies:
-      conventional-changelog-angular: 8.3.1
-      conventional-changelog-writer: 8.4.0
-      conventional-commits-filter: 5.0.0
-      conventional-commits-parser: 6.4.0
+      conventional-changelog-angular: 9.4.0
+      conventional-changelog-conventionalcommits: 10.4.1
+      conventional-commits-filter: 6.0.1
+      conventional-commits-parser: 7.1.3
       debug: 4.4.3(supports-color@10.2.2)
       import-from-esm: 2.0.0(supports-color@10.2.2)
       lodash-es: 4.18.1
       micromatch: 4.0.8
-      semantic-release: 25.0.9(supports-color@10.2.2)(typescript@6.0.3)
+      semantic-release: 26.0.1(supports-color@10.2.2)
     transitivePeerDependencies:
+      - supports-color
+
+  '@semantic-release/core@1.0.0(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)':
+    dependencies:
+      '@semantic-release/commit-analyzer': 14.0.0-beta.5(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)
+      '@semantic-release/error': 4.0.0
+      aggregate-error: 5.1.0
+      cosmiconfig: 10.0.1
+      debug: 4.4.3(supports-color@10.2.2)
+      env-ci: 11.2.0
+      execa: 10.2.1
+      figures: 6.1.0
+      get-stream: 6.0.1
+      git-log-parser: 1.2.1
+      hook-std: 4.0.0
+      hosted-git-info: 10.1.1
+      import-from-esm: 2.0.0(supports-color@10.2.2)
+      lodash-es: 4.18.1
+      micromatch: 4.0.8
+      p-each-series: 3.0.0
+      p-reduce: 3.0.0
+      read-package-up: 12.0.0
+      resolve-from: 5.0.0
+      semver: 7.8.6
+      signale: 1.4.0
+    transitivePeerDependencies:
+      - semantic-release
       - supports-color
 
   '@semantic-release/error@4.0.0': {}
 
-  '@semantic-release/exec@7.1.0(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)':
+  '@semantic-release/exec@7.1.0(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)':
     dependencies:
       '@semantic-release/error': 4.0.0
       aggregate-error: 3.1.0
@@ -12013,11 +12024,11 @@ snapshots:
       execa: 9.6.1
       lodash-es: 4.18.1
       parse-json: 8.3.0
-      semantic-release: 25.0.9(supports-color@10.2.2)(typescript@6.0.3)
+      semantic-release: 26.0.1(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
-  '@semantic-release/git@11.0.1(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)':
+  '@semantic-release/git@11.0.1(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)':
     dependencies:
       '@semantic-release/error': 4.0.0
       aggregate-error: 5.1.0
@@ -12027,11 +12038,11 @@ snapshots:
       lodash-es: 4.18.1
       micromatch: 4.0.8
       p-reduce: 3.0.0
-      semantic-release: 25.0.9(supports-color@10.2.2)(typescript@6.0.3)
+      semantic-release: 26.0.1(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
-  '@semantic-release/github@12.0.10(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)':
+  '@semantic-release/github@12.0.10(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)':
     dependencies:
       '@octokit/core': 7.0.8
       '@octokit/plugin-paginate-rest': 15.0.0(@octokit/core@7.0.8)
@@ -12047,7 +12058,7 @@ snapshots:
       lodash-es: 4.18.1
       mime: 4.1.2
       p-filter: 4.1.0
-      semantic-release: 25.0.9(supports-color@10.2.2)(typescript@6.0.3)
+      semantic-release: 26.0.1(supports-color@10.2.2)
       tinyglobby: 0.2.17
       undici: 7.30.1
       url-join: 5.2.0
@@ -12055,7 +12066,7 @@ snapshots:
       - kerberos
       - supports-color
 
-  '@semantic-release/npm@13.2.0(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))':
+  '@semantic-release/npm@14.0.0-beta.3(semantic-release@26.0.1(supports-color@10.2.2))':
     dependencies:
       '@actions/core': 3.0.1
       '@semantic-release/error': 4.0.0
@@ -12066,25 +12077,26 @@ snapshots:
       lodash-es: 4.18.1
       nerf-dart: 1.0.0
       normalize-url: 9.0.1
-      npm: 11.21.1
+      npm: 12.2.3
       rc: 1.2.8
       read-pkg: 10.1.0
       registry-auth-token: 5.1.1
-      semantic-release: 25.0.9(supports-color@10.2.2)(typescript@6.0.3)
+      semantic-release: 26.0.1(supports-color@10.2.2)
       semver: 7.8.6
       tempy: 3.2.0
 
-  '@semantic-release/release-notes-generator@14.1.1(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)':
+  '@semantic-release/release-notes-generator@15.0.0-beta.4(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)':
     dependencies:
-      conventional-changelog-angular: 8.3.1
-      conventional-changelog-writer: 8.4.0
-      conventional-commits-filter: 5.0.0
-      conventional-commits-parser: 6.4.0
+      conventional-changelog-angular: 9.4.0
+      conventional-changelog-conventionalcommits: 10.4.1
+      conventional-changelog-writer: 9.3.0
+      conventional-commits-filter: 6.0.1
+      conventional-commits-parser: 7.1.3
       debug: 4.4.3(supports-color@10.2.2)
       import-from-esm: 2.0.0(supports-color@10.2.2)
       lodash-es: 4.18.1
       read-package-up: 11.0.0
-      semantic-release: 25.0.9(supports-color@10.2.2)(typescript@6.0.3)
+      semantic-release: 26.0.1(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -12116,9 +12128,9 @@ snapshots:
   '@siemens-ux/design-tokens@0.17.0':
     optional: true
 
-  '@siemens/commitlint-config@5.1.0(@commitlint/cli@21.2.4(conventional-commits-parser@7.1.3)(typescript@6.0.3))(@commitlint/config-conventional@21.2.4)':
+  '@siemens/commitlint-config@5.1.0(@commitlint/cli@21.2.4(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)(typescript@6.0.3))(@commitlint/config-conventional@21.2.4)':
     dependencies:
-      '@commitlint/cli': 21.2.4(conventional-commits-parser@7.1.3)(typescript@6.0.3)
+      '@commitlint/cli': 21.2.4(conventional-commits-filter@6.0.1)(conventional-commits-parser@7.1.3)(typescript@6.0.3)
       '@commitlint/config-conventional': 21.2.4
 
   '@siemens/element-icons@1.7.0': {}
@@ -12211,8 +12223,6 @@ snapshots:
   '@simple-libs/child-process-utils@2.0.0':
     dependencies:
       '@simple-libs/stream-utils': 2.0.0
-
-  '@simple-libs/stream-utils@1.2.0': {}
 
   '@simple-libs/stream-utils@2.0.0': {}
 
@@ -13109,6 +13119,8 @@ snapshots:
 
   argparse@2.0.1: {}
 
+  argparse@3.0.4: {}
+
   argue-cli@3.2.0: {}
 
   argv-formatter@1.0.0: {}
@@ -13116,8 +13128,6 @@ snapshots:
   aria-query@5.3.2: {}
 
   array-flatten@1.1.1: {}
-
-  array-ify@1.0.0: {}
 
   asn1js@3.1.0:
     dependencies:
@@ -13487,11 +13497,6 @@ snapshots:
 
   common-path-prefix@3.0.0: {}
 
-  compare-func@2.0.0:
-    dependencies:
-      array-ify: 1.0.0
-      dot-prop: 5.3.0
-
   compressible@2.0.18:
     dependencies:
       mime-db: 1.54.0
@@ -13532,10 +13537,6 @@ snapshots:
 
   content-type@3.1.1: {}
 
-  conventional-changelog-angular@8.3.1:
-    dependencies:
-      compare-func: 2.0.0
-
   conventional-changelog-angular@9.4.0:
     dependencies:
       '@conventional-changelog/template': 1.4.0
@@ -13544,20 +13545,15 @@ snapshots:
     dependencies:
       '@conventional-changelog/template': 1.4.0
 
-  conventional-changelog-writer@8.4.0:
+  conventional-changelog-writer@9.3.0:
     dependencies:
-      '@simple-libs/stream-utils': 1.2.0
-      conventional-commits-filter: 5.0.0
-      handlebars: 4.7.10
-      meow: 13.2.0
-      semver: 7.8.6
+      '@conventional-changelog/template': 1.4.0
+      '@simple-libs/stream-utils': 2.0.0
+      argue-cli: 3.2.0
+      conventional-commits-filter: 6.0.1
+      verkit: 0.5.0
 
-  conventional-commits-filter@5.0.0: {}
-
-  conventional-commits-parser@6.4.0:
-    dependencies:
-      '@simple-libs/stream-utils': 1.2.0
-      meow: 13.2.0
+  conventional-commits-filter@6.0.1: {}
 
   conventional-commits-parser@7.1.3:
     dependencies:
@@ -13614,6 +13610,11 @@ snapshots:
   cose-base@2.2.0:
     dependencies:
       layout-base: 2.0.1
+
+  cosmiconfig@10.0.1:
+    dependencies:
+      env-paths: 2.2.1
+      js-yaml: 5.5.0
 
   cosmiconfig@9.0.2(typescript@6.0.3):
     dependencies:
@@ -13968,10 +13969,6 @@ snapshots:
       dom-serializer: 2.0.0
       domelementtype: 2.3.0
       domhandler: 5.0.3
-
-  dot-prop@5.3.0:
-    dependencies:
-      is-obj: 2.0.0
 
   dunder-proto@1.0.1:
     dependencies:
@@ -14682,15 +14679,6 @@ snapshots:
 
   handle-thing@2.0.1: {}
 
-  handlebars@4.7.10:
-    dependencies:
-      minimist: 1.2.8
-      neo-async: 2.6.2
-      source-map: 0.6.1
-      wordwrap: 1.0.0
-    optionalDependencies:
-      uglify-js: 3.19.3
-
   has-flag@3.0.0: {}
 
   has-flag@4.0.0: {}
@@ -14720,6 +14708,10 @@ snapshots:
   hookified@1.15.1: {}
 
   hookified@2.2.0: {}
+
+  hosted-git-info@10.1.1:
+    dependencies:
+      lru-cache: 11.5.3
 
   hosted-git-info@7.0.2:
     dependencies:
@@ -14991,8 +14983,6 @@ snapshots:
 
   is-number@7.0.0: {}
 
-  is-obj@2.0.0: {}
-
   is-path-inside@4.0.0: {}
 
   is-plain-obj@3.0.0: {}
@@ -15076,6 +15066,10 @@ snapshots:
   js-yaml@4.3.2:
     dependencies:
       argparse: 2.0.1
+
+  js-yaml@5.5.0:
+    dependencies:
+      argparse: 3.0.4
 
   jsesc@3.1.0: {}
 
@@ -15558,8 +15552,6 @@ snapshots:
       thingies: 2.6.1(tslib@2.8.1)
       tree-dump: 1.1.0(tslib@2.8.1)
       tslib: 2.8.1
-
-  meow@13.2.0: {}
 
   meow@14.1.0: {}
 
@@ -16126,7 +16118,7 @@ snapshots:
       path-key: 4.0.0
       unicorn-magic: 0.3.0
 
-  npm@11.21.1: {}
+  npm@12.2.3: {}
 
   nth-check@2.1.1:
     dependencies:
@@ -17006,40 +16998,24 @@ snapshots:
       '@peculiar/x509': 1.14.3
       pkijs: 3.4.3
 
-  semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3):
+  semantic-release@26.0.1(supports-color@10.2.2):
     dependencies:
-      '@semantic-release/commit-analyzer': 13.0.1(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)
-      '@semantic-release/error': 4.0.0
-      '@semantic-release/github': 12.0.10(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)
-      '@semantic-release/npm': 13.2.0(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))
-      '@semantic-release/release-notes-generator': 14.1.1(semantic-release@25.0.9(supports-color@10.2.2)(typescript@6.0.3))(supports-color@10.2.2)
-      aggregate-error: 5.1.0
-      cosmiconfig: 9.0.2(typescript@6.0.3)
+      '@semantic-release/commit-analyzer': 14.0.0-beta.5(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)
+      '@semantic-release/core': 1.0.0(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)
+      '@semantic-release/github': 12.0.10(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)
+      '@semantic-release/npm': 14.0.0-beta.3(semantic-release@26.0.1(supports-color@10.2.2))
+      '@semantic-release/release-notes-generator': 15.0.0-beta.4(semantic-release@26.0.1(supports-color@10.2.2))(supports-color@10.2.2)
       debug: 4.4.3(supports-color@10.2.2)
-      env-ci: 11.2.0
-      execa: 9.6.1
-      figures: 6.1.0
+      execa: 10.2.1
       find-versions: 6.0.0
-      get-stream: 6.0.1
-      git-log-parser: 1.2.1
-      hook-std: 4.0.0
-      hosted-git-info: 9.0.3
-      import-from-esm: 2.0.0(supports-color@10.2.2)
       lodash-es: 4.18.1
       marked: 15.0.12
       marked-terminal: 7.3.1(marked@15.0.12)
-      micromatch: 4.0.8
-      p-each-series: 3.0.0
-      p-reduce: 3.0.0
-      read-package-up: 12.0.0
-      resolve-from: 5.0.0
       semver: 7.8.6
-      signale: 1.4.0
       yargs: 18.2.0
     transitivePeerDependencies:
       - kerberos
       - supports-color
-      - typescript
 
   semver-regex@4.0.5: {}
 
@@ -18075,8 +18051,6 @@ snapshots:
   wildcard@2.0.1: {}
 
   word-wrap@1.2.5: {}
-
-  wordwrap@1.0.0: {}
 
   wrap-ansi@10.0.2:
     dependencies:
