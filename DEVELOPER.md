@@ -166,7 +166,7 @@ pnpm run dashboards-demo:build-and-run-all:esm
 ./e2e-local.sh update <test-file-name>
 
 # To run specific static tests, use --grep and restrict to the static spec:
-./e2e-local.sh run --grep 'buttons/buttons|badges/badges'
+./e2e-local.sh run --grep 'buttons/buttons|badges/default'
 ```
 
 Available parameters for `e2e-local.sh`:

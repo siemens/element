@@ -1,0 +1,32 @@
+- heading "Default size" [level=3]
+- status: Badge default
+- text: Badge primary Badge secondary
+- status: Badge inverse
+- status: Badge info
+- status: Badge success
+- status: Badge warning
+- status: Badge danger
+- status: Badge critical
+- status: Badge caution
+- status: Badge info-emphasis
+- status: Badge success-emphasis
+- status: Badge warning-emphasis
+- status: Badge danger-emphasis
+- status: Badge critical-emphasis
+- status: Badge caution-emphasis
+- heading "Small size" [level=3]
+- status: Badge default
+- text: Badge primary Badge secondary
+- status: Badge inverse
+- status: Badge info
+- status: Badge success
+- status: Badge warning
+- status: Badge danger
+- status: Badge critical
+- status: Badge caution
+- status: Badge info-emphasis
+- status: Badge success-emphasis
+- status: Badge warning-emphasis
+- status: Badge danger-emphasis
+- status: Badge critical-emphasis
+- status: Badge caution-emphasis
