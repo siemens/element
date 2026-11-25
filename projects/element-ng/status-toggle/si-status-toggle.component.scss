@@ -53,6 +53,10 @@
     color: variables.$si-sys-color-text-disabled !important; // stylelint-disable-line declaration-no-important
   }
 
+  &:has(input:focus-visible) {
+    @include variables.make-outline-focus-inside();
+  }
+
   span {
     max-inline-size: 100%;
     user-select: none;
