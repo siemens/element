@@ -21,7 +21,7 @@ Place them close to the item they describe so the meaning stays clear.
 ### Best practices
 
 - Keep badge text short and specific.
-- Use a small badge in compact spaces, such as inline next to a list item title.
+- Use a small badge in compact spaces, such as inline next or in list item.
 - Use whole numbers for counts.
 
 ## Design ---
