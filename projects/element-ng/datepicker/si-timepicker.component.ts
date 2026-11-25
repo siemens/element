@@ -65,6 +65,10 @@ interface Config {
 const dateWithTime = (base: Date, time: Date): Date =>
   createDate(base, time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds());
 
+/**
+ * Time input that propagates a valid `Date`, `null` when all visible fields are empty,
+ * or an `Invalid Date` when the entered time is incomplete or invalid.
+ */
 @Component({
   selector: 'si-timepicker',
   imports: [A11yModule, NgTemplateOutlet, ReactiveFormsModule, SiTranslatePipe],
@@ -364,7 +368,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
    */
   private time?: Date;
   /**
-   * Whether `null` was emitted due to an incomplete or invalid input.
+   * Whether `null` or an `Invalid Date` was emitted due to an empty, incomplete or invalid input.
    * The next valid time must be emitted, even if it equals the previous `time`.
    */
   private invalidTimeEmitted = false;
@@ -392,6 +396,8 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
         }
       });
     });
+    // Propagate edits without reformatting the inputs and interrupting typing.
+    this.timeControls.valueChanges.subscribe(() => this.updateTime());
   }
 
   writeValue(obj?: Date | string): void {
@@ -428,6 +434,9 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     if (childErrors && Object.keys(childErrors).length) {
       return childErrors;
     }
+    if (control.value instanceof Date && !this.isValidDate(control.value)) {
+      return { timeFormat: true };
+    }
     const errors: ValidationErrors = {
       ...this.validateMin(control),
       ...this.validateMax(control)
@@ -462,29 +471,33 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     }
   }
 
-  protected toHtmlInputElement = (target?: EventTarget | null): HTMLInputElement =>
-    target as HTMLInputElement;
-
   protected updateField(name: keyof Value, value: string): void {
     this.timeControls.get(name)?.setValue(value, { emitEvent: false });
     this.updateTime();
+    this.formatFields();
+  }
+
+  protected onBlur(): void {
+    this.formatFields();
     this.onTouched();
   }
 
   protected toggleMeridian(): void {
     const time = this.changeTime(this.time, { hours: 12 });
     this.setTime(time);
+    this.updateUI(this.time);
   }
 
   /**
    * Takes the current UI values and updates the time object value
-   * accordingly, if they UI input values are valid.
+   * accordingly, if the UI input values are valid.
    */
   private updateTime(): void {
     if (this.hasInvalidUnit()) {
       this.isValid.emit(false);
       this.invalidTimeEmitted = true;
-      this.onChange(null);
+      const empty = this.units().every(unit => this.timeControls.controls[unit.name].value === '');
+      this.onChange(empty ? null : new Date(NaN));
       return;
     }
 
@@ -492,7 +505,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
   }
 
   /**
-   * Sets a new time object as model value, updates the user interface
+   * Sets a new time object as model value
    * and invokes onChange to let timepicker clients know about the update.
    * @param time - The new time to be set.
    */
@@ -500,8 +513,14 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     if (this.invalidTimeEmitted || this.time?.getTime() !== time?.getTime()) {
       this.invalidTimeEmitted = false;
       this.time = time;
-      this.updateUI(this.time);
       this.onChange(this.time);
+    }
+  }
+
+  /** Format valid time fields without overwriting incomplete or invalid input. */
+  private formatFields(): void {
+    if (!this.hasInvalidUnit()) {
+      this.updateUI(this.time);
     }
   }
 

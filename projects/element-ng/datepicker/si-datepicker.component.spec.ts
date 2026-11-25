@@ -111,10 +111,20 @@ describe('SiDatepickerComponent', () => {
     component.date.set(initialDate);
     await updateConfig({ ...component.config(), showTime: true, showMinutes: true });
 
+    enterValue(helper.getTimeInputMinutes(), '70');
+    await fixture.whenStable();
+
+    expect(component.date()).toEqual(initialDate);
+    expect(helper.getTimeInputMinutes().value).toBe('70');
+
+    enterValue(helper.getTimeInputMinutes(), '');
+    await fixture.whenStable();
+
+    expect(component.date()).toEqual(initialDate);
+    expect(helper.getTimeInputMinutes().value).toBe('');
+
     enterValue(helper.getTimeInputHours(), '14');
     enterValue(helper.getTimeInputMinutes(), '30');
-    helper.getTimeInputMinutes().dispatchEvent(new Event('blur'));
-    fixture.detectChanges();
     await fixture.whenStable();
 
     expect(component.changedDate).toBeDefined();
@@ -163,10 +173,14 @@ describe('SiDatepickerComponent', () => {
   });
 
   it('should select days in preview', async () => {
+    await updateConfig({ showTime: true });
+    enterValue(helper.getTimeInputMinutes(), '70');
+
     // Select 1.January 2024
     await picker.selectCell({ text: '1', isPreview: true });
 
     expect(await (await picker.monthViewButton()).text()).toBe('January');
+    expect(component.date()).toEqual(new Date('2024-01-01T00:00:00'));
   });
 
   describe('with month view', () => {
