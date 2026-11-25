@@ -466,12 +466,13 @@ export class SiTreeViewItemComponent implements OnInit, AfterViewInit, Focusable
         }
       }
       this.siTreeViewService.focusFirstChildEvent.next(this.treeItem);
-    } else if (
-      this.showCheckOrOptionBox &&
-      (rtlCorrectedKey === 'Space' || rtlCorrectedKey === ' ')
-    ) {
+    } else if (rtlCorrectedKey === 'Space' || rtlCorrectedKey === ' ') {
       event.preventDefault();
-      this.onBoxClicked();
+      if (this.showCheckOrOptionBox) {
+        this.onBoxClicked();
+      } else {
+        this.onItemClicked(event);
+      }
     }
   }
 

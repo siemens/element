@@ -1131,6 +1131,22 @@ describe('SiTreeViewComponent', () => {
       expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items()[1]]);
     });
 
+    it('should select the item and prevent scrolling on space', () => {
+      const treeViewComponent = component.treeViewComponent();
+      vi.spyOn(treeViewComponent.treeItemClicked, 'emit');
+      vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
+
+      const secondItem = Array.from(element.querySelectorAll<HTMLElement>('si-tree-view-item')).at(
+        1
+      )!;
+      const space = new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true });
+      secondItem.dispatchEvent(space);
+
+      expect(space.defaultPrevented).toBe(true);
+      expect(treeViewComponent.treeItemClicked.emit).toHaveBeenCalled();
+      expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items()[1]]);
+    });
+
     it('should expand node on keydown ArrowRight', () => {
       const treeViewComponent = component.treeViewComponent();
       vi.spyOn(treeViewComponent.treeItemFolderClicked, 'emit');
