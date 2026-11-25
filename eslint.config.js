@@ -58,6 +58,7 @@ export const tsConfig = defineConfig({
       { preferInputSignals: false, preferQuerySignals: false }
     ],
     '@angular-eslint/no-experimental': ['off'],
+    '@angular-eslint/no-global-document': ['off'],
     '@angular-eslint/no-developer-preview': ['error'],
     '@angular-eslint/prefer-host-metadata-property': ['off'],
     '@angular-eslint/inject-at-top': ['off'],

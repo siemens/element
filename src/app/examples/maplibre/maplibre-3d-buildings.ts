@@ -19,11 +19,7 @@ import {
 import { injectSiMapStyle, injectSiMapTranslations } from '@siemens/element-ng/maplibre';
 import { injectIsDarkTheme } from '@siemens/element-ng/theme';
 import { LOG_EVENT } from '@siemens/live-preview';
-import type {
-  ExpressionSpecification,
-  FillExtrusionLayerSpecification,
-  FilterSpecification
-} from 'maplibre-gl';
+import type { FilterSpecification } from 'maplibre-gl';
 
 import { environment } from '../../../environments/environment';
 
@@ -51,13 +47,11 @@ export class SampleComponent {
   protected readonly mapTranslations = injectSiMapTranslations();
   private readonly isDark = injectIsDarkTheme();
 
-  protected readonly buildingFilter = [
-    '!=',
-    ['get', 'hide_3d'],
-    true
-  ] as unknown as FilterSpecification;
+  protected readonly buildingFilter: FilterSpecification = ['!=', ['get', 'hide_3d'], true];
 
-  protected readonly buildingPaint = computed<FillExtrusionLayerSpecification['paint']>(() => ({
+  // TODO: Use FillExtrusionLayerSpecification['paint'] once
+  // https://github.com/maplibre/ngx-maplibre-gl/issues/368 is fixed.
+  protected readonly buildingPaint = computed<ReturnType<LayerComponent['paint']>>(() => ({
     'fill-extrusion-color': this.isDark() ? 'rgba(7, 72, 89, 1)' : 'rgba(164, 146, 127, 1)',
     'fill-extrusion-opacity': 0.85,
     // Animate height from 0 to render_height between zoom 15 and 16.
@@ -69,7 +63,7 @@ export class SampleComponent {
       0,
       16,
       ['get', 'render_height']
-    ] as ExpressionSpecification,
+    ],
     'fill-extrusion-base': [
       'interpolate',
       ['linear'],
@@ -78,7 +72,7 @@ export class SampleComponent {
       0,
       16,
       ['get', 'render_min_height']
-    ] as ExpressionSpecification
+    ]
   }));
 
   protected onError(event: ErrorEvent & EventData): void {
