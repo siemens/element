@@ -29,7 +29,7 @@
       type="button"
       si-header-selection-item
       [siHeaderDropdownTriggerFor]="tenants"
-      >{{ activeTenant }}</button
+      >{{ activeTenant() }}</button
     >
     <button
       type="button"
@@ -46,7 +46,7 @@
         type="button"
         si-header-selection-item
         [siHeaderDropdownTriggerFor]="tenants"
-        >{{ activeTenant }}</button
+        >{{ activeTenant() }}</button
       >
       <button
         si-header-action-item
@@ -75,10 +75,10 @@
   <si-header-dropdown>
     @for (tenant of allTenants; track tenant) {
       <button
-        si-header-dropdown-item
+        si-header-dropdown-check-item
         type="button"
-        [checked]="tenant === activeTenant ? 'check' : undefined"
-        (click)="activeTenant = tenant"
+        [checked]="tenant === activeTenant()"
+        (checkedChange)="activeTenant.set($event ? tenant : activeTenant())"
       >
         {{ tenant }}
       </button>
@@ -110,7 +110,14 @@
     >
       Language
     </button>
-    <button si-header-dropdown-item icon="element-palette" type="button">Design</button>
+    <button
+      si-header-dropdown-item
+      icon="element-palette"
+      type="button"
+      [siHeaderDropdownTriggerFor]="theme"
+    >
+      Theme
+    </button>
     <button si-header-dropdown-item icon="element-user" type="button">Profile</button>
   </si-header-dropdown>
 </ng-template>
@@ -129,6 +136,35 @@
   <si-header-dropdown>
     <button si-header-dropdown-item type="button">English (US)</button>
     <button si-header-dropdown-item type="button">English (UK)</button>
+  </si-header-dropdown>
+</ng-template>
+
+<ng-template #theme>
+  <si-header-dropdown>
+      <button
+        si-header-dropdown-radio-item
+        type="button"
+        [checked]="activeTheme() === 'light'"
+        (checkedChange)="selectTheme('light')"
+      >
+        Light
+      </button>
+      <button
+        si-header-dropdown-radio-item
+        type="button"
+        [checked]="activeTheme() === 'dark'"
+        (checkedChange)="selectTheme('dark')"
+      >
+        Dark
+      </button>
+      <button
+        si-header-dropdown-radio-item
+        type="button"
+        [checked]="activeTheme() === 'auto'"
+        (checkedChange)="selectTheme('auto')"
+      >
+        Auto
+      </button>
   </si-header-dropdown>
 </ng-template>
 
