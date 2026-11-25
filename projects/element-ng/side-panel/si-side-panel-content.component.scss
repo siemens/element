@@ -63,7 +63,8 @@
       }
 
       .icon {
-        padding: map.get(all-variables.$spacers-block, 1) map.get(all-variables.$spacers-inline, 1);
+        padding-block: map.get(all-variables.$spacers-block, 1);
+        padding-inline: map.get(all-variables.$spacers-inline, 1);
       }
     }
   }

@@ -57,7 +57,8 @@
   &:is(si-icon) {
     background: variables.$element-launchpad-app-background;
     font-size: 2.5rem;
-    padding: map.get(variables.$spacers-block, 2) map.get(variables.$spacers-inline, 2);
+    padding-block: map.get(variables.$spacers-block, 2);
+    padding-inline: map.get(variables.$spacers-inline, 2);
     color: variables.$element-launchpad-app-color;
   }
 }
@@ -76,7 +77,8 @@
 @include all-variables.media-breakpoint-down(md) {
   :host {
     flex-direction: row;
-    padding: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
+    padding-block: map.get(variables.$spacers-block, 4);
+    padding-inline: map.get(variables.$spacers-inline, 4);
 
     &:has(.favorite-icon) {
       padding-inline-end: map.get(variables.$spacers-inline, 9);

@@ -64,7 +64,8 @@
 }
 
 .draggable-overlay {
-  inset: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
+  inset-block: map.get(variables.$spacers-block, 4);
+  inset-inline: map.get(variables.$spacers-inline, 4);
   position: absolute;
   z-index: 100;
 }

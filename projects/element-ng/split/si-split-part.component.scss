@@ -22,7 +22,8 @@ $header-height: 40px;
   flex-direction: row;
   flex: none;
   align-items: center;
-  padding: map.get(all-variables.$spacers-block, 3) map.get(all-variables.$spacers-inline, 3);
+  padding-block: map.get(all-variables.$spacers-block, 3);
+  padding-inline: map.get(all-variables.$spacers-inline, 3);
   background: all-variables.$si-sys-color-background-0;
   block-size: $header-height;
 }
@@ -33,7 +34,8 @@ $header-height: 40px;
   flex: auto;
   flex-direction: column;
   max-block-size: 100%;
-  padding: map.get(all-variables.$spacers-block, 3) map.get(all-variables.$spacers-inline, 3);
+  padding-block: map.get(all-variables.$spacers-block, 3);
+  padding-inline: map.get(all-variables.$spacers-inline, 3);
 
   .si-split-part-title {
     inline-size: 100%;

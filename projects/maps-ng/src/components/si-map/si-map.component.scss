@@ -76,7 +76,8 @@ $main-button-margin: 1px;
   .ol-attribution {
     inset-inline-start: 0;
     inset-block-end: 0;
-    padding: map.get(variables.$spacers-block, 4) map.get(variables.$spacers-inline, 4);
+    padding-block: map.get(variables.$spacers-block, 4);
+    padding-inline: map.get(variables.$spacers-inline, 4);
 
     button {
       inline-size: 1.5rem;
