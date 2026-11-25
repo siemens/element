@@ -3,6 +3,7 @@
   [class.text-disabled]="!value()"
   [class.blink]="blink() && value()"
   [attr.tabindex]="clickable() ? '0' : ''"
+  [attr.role]="clickable() ? 'button' : null"
   [attr.aria-disabled]="!value()"
 >
   <div

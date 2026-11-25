@@ -1,4 +1,10 @@
-- text: /4 Emergency 0 Life safety 0 Security 0 Supervisory \d+ Trouble \d+ Caution 1 Nasty long text \d+ Not clickable/
+- button "4 Emergency"
+- button "0 Life safety" [disabled]
+- text: 0 Security 0 Supervisory
+- button /\d+ Trouble/
+- button /\d+ Caution/
+- button "1 Nasty long text"
+- text: /\d+ Not clickable/
 - button "Mute/Unmute"
 - paragraph: Here goes the content
 - text: Control panel
