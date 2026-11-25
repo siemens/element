@@ -4,21 +4,13 @@
  */
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { page } from 'vitest/browser';
 
 import { SiResponsiveContainerDirective } from './index';
 
 @Component({
   imports: [SiResponsiveContainerDirective],
   template: `
-    <div
-      siResponsiveContainer
-      class="vh-100 w-100"
-      [resizeThrottle]="10"
-      [style.width.px]="width()"
-    >
-      Testli
-    </div>
+    <div siResponsiveContainer [resizeThrottle]="10" [style.width.px]="width()">Testli</div>
   `
 })
 class TestHostComponent {
@@ -26,25 +18,24 @@ class TestHostComponent {
 }
 
 describe('SiResponsiveContainerDirective', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
   let element: HTMLElement;
+  let fixture: ComponentFixture<TestHostComponent>;
+  let component: TestHostComponent;
 
   beforeEach(async () => {
-    await page.viewport(100, 100);
     fixture = TestBed.createComponent(TestHostComponent);
+    component = fixture.componentInstance;
     element = fixture.nativeElement;
+    await fixture.whenStable();
   });
 
-  afterEach(() => vi.useRealTimers());
-
-  const testSize = async (size: string | number, clazz: string | number): Promise<void> => {
-    vi.useFakeTimers();
-    await page.viewport(parseInt(size as string, 10), 100);
-
-    vi.advanceTimersByTime(100);
+  const testSize = async (size: number, clazz: string): Promise<void> => {
+    component.width.set(size);
     await fixture.whenStable();
 
-    expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz.toString());
+    await vi.waitFor(() => {
+      expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz);
+    });
   };
 
   it.for([
@@ -53,7 +44,7 @@ describe('SiResponsiveContainerDirective', () => {
     [780, 'si-container-md'],
     [1000, 'si-container-lg'],
     [1200, 'si-container-xl']
-  ])('width %i sets %s class', async ([size, expected]) => {
+  ] as const)('width %i sets %s class', async ([size, expected]) => {
     await testSize(size, expected);
   });
 });

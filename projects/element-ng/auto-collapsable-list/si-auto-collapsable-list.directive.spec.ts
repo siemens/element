@@ -4,6 +4,7 @@
  */
 import { Component, signal, viewChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAnimationFrame } from '@siemens/element-ng/test-helpers';
 
 import { SiAutoCollapsableListItemDirective } from './si-auto-collapsable-list-item.directive';
 import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
@@ -71,20 +72,6 @@ describe('SiAutoCollapsableListDirective', () => {
       element => (element.classList.contains('visible') ? 'visible' : 'hidden')
     );
 
-  // Each browser rendering frame runs in order:
-  //   requestAnimationFrame (rAF) callbacks → Style → Layout → ResizeObserver
-  // (see https://html.spec.whatwg.org/multipage/webappapis.html#update-the-rendering)
-  //
-  // A single rAF resolves before the ResizeObserver step of its own frame,
-  // so its promise would settle too early. The nested (second) rAF is
-  // registered during the first rAF and therefore runs in the next frame —
-  // after the current frame has already completed Layout and delivered
-  // ResizeObserver notifications.
-  const waitForResizeObserver = (): Promise<void> =>
-    new Promise<void>(resolve =>
-      requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
-    );
-
   const detectSizeChange = async (opts?: {
     width?: number;
     containerWidth?: number;
@@ -95,7 +82,7 @@ describe('SiAutoCollapsableListDirective', () => {
     if (opts?.containerWidth !== undefined) {
       component.containerWidth.set(opts.containerWidth);
     }
-    await waitForResizeObserver();
+    await waitForAnimationFrame();
     await fixture.whenStable();
   };
 
@@ -114,7 +101,7 @@ describe('SiAutoCollapsableListDirective', () => {
       .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
       .forEach(element => expect(element).toHaveClass('invisible'));
 
-    await waitForResizeObserver();
+    await waitForAnimationFrame();
     await fixture.whenStable();
     hostElement
       .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
@@ -241,7 +228,7 @@ describe('SiAutoCollapsableListDirective', () => {
   it('should release resize observers when destroyed', async () => {
     using unobserve = vi.spyOn(ResizeObserver.prototype, 'unobserve');
     fixture.detectChanges();
-    await waitForResizeObserver();
+    await waitForAnimationFrame();
     await fixture.whenStable();
 
     const listElement = hostElement.querySelector<HTMLElement>('.position-relative')!;
