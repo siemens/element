@@ -20,18 +20,23 @@
 
   @let selIndexValue = selectedIndex();
   @for (item of itemsValue; track $index) {
-    <div
+    <label
       #items
-      class="status-toggle-item focus-inside px-4"
-      role="radio"
-      [attr.aria-checked]="$index === selIndexValue"
-      [attr.tabindex]="isDisabled() || item.disabled ? '' : '0'"
-      [attr.aria-disabled]="isDisabled() || item.disabled"
+      class="status-toggle-item px-4"
       [class.active]="$index === selIndexValue"
       [class.disabled]="item.disabled || isDisabled()"
       [style.width.%]="100 / $count"
-      (keydown.enter)="selectItem($index)"
+      (click)="handleLabelClick($event, radio)"
     >
+      <input
+        #radio
+        type="radio"
+        class="visually-hidden"
+        [name]="name"
+        [checked]="$index === selIndexValue"
+        [disabled]="isDisabled() || item.disabled"
+        (change)="handleChange($index)"
+      />
       <span class="icon icon-stack">
         <si-icon
           [class]="$index === selIndexValue ? (item.activeIconClass ?? 'active') : ''"
@@ -50,6 +55,6 @@
       >
         {{ item.text | translate }}
       </span>
-    </div>
+    </label>
   }
 </div>

@@ -169,6 +169,31 @@ describe('SiStatusToggleComponent', () => {
       expect(component.toggle().value()).toEqual('B');
       expect(component.toggle().itemClick.emit).toHaveBeenCalledWith('B');
     });
+
+    it('should select an item via its native radio input', () => {
+      fixture.detectChanges();
+      vi.spyOn(component.toggle().itemClick, 'emit');
+
+      const radios = element.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+      expect(radios).toHaveLength(3);
+      expect(radios[0].checked).toBe(true);
+      expect(radios[2].disabled).toBe(true);
+
+      radios[1].click();
+      fixture.detectChanges();
+      expect(component.toggle().value()).toBe('B');
+      expect(radios[1].checked).toBe(true);
+      expect(component.toggle().itemClick.emit).toHaveBeenCalledExactlyOnceWith('B');
+    });
+
+    it('should leave pointer selection to the drag handling', () => {
+      fixture.detectChanges();
+
+      element.querySelectorAll<HTMLElement>('.status-toggle-item .text-truncate')[1].click();
+      fixture.detectChanges();
+
+      expect(component.toggle().value()).toBe('A');
+    });
   });
 
   describe('as form control', () => {
@@ -192,6 +217,15 @@ describe('SiStatusToggleComponent', () => {
       touchClick(fixture, element.querySelectorAll<HTMLElement>('.status-toggle-item')[1], false);
 
       expect(component.formControl.value).toBe('B');
+    });
+
+    it('marks the control as touched when selecting via the radio input', () => {
+      fixture.detectChanges();
+
+      element.querySelectorAll<HTMLInputElement>('input[type="radio"]')[1].click();
+
+      expect(component.formControl.value).toBe('B');
+      expect(component.formControl.touched).toBe(true);
     });
 
     it('sets the disabled state', () => {

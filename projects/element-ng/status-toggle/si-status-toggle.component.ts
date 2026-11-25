@@ -39,6 +39,8 @@ import { StatusToggleItem } from './status-toggle.model';
   ]
 })
 export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, OnDestroy, OnChanges {
+  private static idCounter = 0;
+
   /** List of status items. */
   readonly items = input.required<StatusToggleItem[]>();
   /**
@@ -63,6 +65,7 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
   private unlistenDragEvents: (() => void)[] = [];
   private readonly internalDisabled = signal(false);
 
+  protected readonly name = `__si-status-toggle-${SiStatusToggleComponent.idCounter++}`;
   protected readonly selectedIndex = signal<number | undefined>(undefined);
   protected readonly draggablePosition = signal('');
   protected readonly animated = signal(false);
@@ -123,6 +126,18 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
       this.unlistenDragEvents.push(listenGlobal('touchmove', e => this.handleDragMove(e), true));
       this.unlistenDragEvents.push(listenGlobal('touchend', e => this.handleDragEnd(e)));
     }
+  }
+
+  protected handleLabelClick(event: MouseEvent, radio: HTMLInputElement): void {
+    // Pointer selection is handled by the drag logic, so the label must not select its radio as well.
+    if (event.target !== radio) {
+      event.preventDefault();
+    }
+  }
+
+  protected handleChange(index: number): void {
+    this.selectItem(index);
+    this.onTouched?.();
   }
 
   private handleDragStart(event: Event): boolean {
