@@ -22,6 +22,9 @@
 .si-tree-view-header-btn {
   cursor: pointer;
   margin-inline-end: calc(var(--si-tree-view-padding-base-horizontal) / 2);
+  padding: 0;
+  border: 0;
+  background: none;
   font-size: var(--si-tree-view-icon-size);
 }
 

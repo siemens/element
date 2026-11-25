@@ -22,23 +22,24 @@
 }
 @if (flatTree()) {
   <div class="si-tree-view-header">
-    <span
+    <button
+      type="button"
       class="si-tree-view-header-btn si-tree-view-header-root"
-      tabindex="0"
       [class]="computedIcons().headerHome"
       [class.disabled]="headerShowsRoot"
+      [disabled]="headerShowsRoot"
+      [attr.aria-label]="navigateHomeLabel | translate"
       (click)="onFlatTreeNavigateHome()"
-      (keydown.enter)="onFlatTreeNavigateHome()"
-    ></span>
+    ></button>
     @if (lastBreadCrumbItem) {
-      <span
+      <button
+        type="button"
         class="si-tree-view-header-btn"
-        tabindex="0"
         [class]="computedIcons().headerArrow"
         [class.disabled]="headerShowsRoot"
+        [attr.aria-label]="navigateUpLabel | translate"
         (click)="onFlatTreeNavigateUp()"
-        (keydown.enter)="onFlatTreeNavigateUp()"
-      ></span>
+      ></button>
       <span class="text-center text-truncate">{{ lastBreadCrumbItem.label | translate }}</span>
     }
   </div>

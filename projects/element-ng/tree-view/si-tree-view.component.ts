@@ -413,6 +413,12 @@ export class SiTreeViewComponent
   private readonly _items = signal(this.items());
 
   protected readonly svgIcons = addIcons({ elementExpandAll, elementCollapseAll });
+  protected readonly navigateHomeLabel = t(
+    () => $localize`:@@SI_TREE_VIEW.NAVIGATE_HOME:Navigate to top level`
+  );
+  protected readonly navigateUpLabel = t(
+    () => $localize`:@@SI_TREE_VIEW.NAVIGATE_UP:Navigate one level up`
+  );
 
   private updateTreeItemDefaults(item: TreeItem): void {
     item.showCheckbox ??= this.enableCheckbox();
