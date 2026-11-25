@@ -119,7 +119,7 @@ si-activity-trace                     optional group, collapses everything
     └── si-activity-message           nested step (advanced cases only)
 ```
 
-<si-docs-component example="si-chat-messages/si-activity-message"></si-docs-component>
+<si-docs-component example="si-chat-messages/si-activity-message" height="890"></si-docs-component>
 
 <si-docs-api component="SiActivityTraceComponent"></si-docs-api>
 

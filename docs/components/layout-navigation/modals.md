@@ -239,7 +239,7 @@ this.modalService.show(template, {
 
 This section describes the general usage of the element modals.
 
-<si-docs-component example="si-modals/si-modal-dialogs" height="450"></si-docs-component>
+<si-docs-component example="si-modals/si-modal-dialogs" height="570"></si-docs-component>
 
 #### Action dialog
 

@@ -53,7 +53,7 @@ import { SiIp6InputDirective } from '@siemens/element-ng/ip-input';
 })
 ```
 
-<si-docs-component example="si-ip-input/si-ip-input" height="300"></si-docs-component>
+<si-docs-component example="si-ip-input/si-ip-input" height="420"></si-docs-component>
 
 <si-docs-api directive="SiIp4InputDirective"></si-docs-api>
 

@@ -153,14 +153,14 @@ placeholders automatically.
 
 #### List
 
-<si-docs-component base="drag-drop" height="550">
+<si-docs-component base="drag-drop" height="730">
   <si-docs-tab example="drag-drop" heading="List"></si-docs-tab>
   <si-docs-tab example="drag-drop-cards" heading="Cards"></si-docs-tab>
 </si-docs-component>
 
 #### Tree with different drag and drop use cases
 
-<si-docs-component base="si-tree-view" height="400">
+<si-docs-component base="si-tree-view" height="700">
   <si-docs-tab example="si-tree-view-drag-drop-move" heading="Moving between trees"></si-docs-tab>
   <si-docs-tab example="si-tree-view-drag-drop-copy" heading="Copying between trees"></si-docs-tab>
   <si-docs-tab example="si-tree-view-drag-drop-copy-from-list" heading="Copying from a list to a tree"></si-docs-tab>

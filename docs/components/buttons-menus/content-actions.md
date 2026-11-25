@@ -93,7 +93,7 @@ Configure the content action bar with `MenuItem`s as primary and secondary actio
 configure an Angular router or a href target as well as a custom action. Sub-menus are supported
 by the `items` property.
 
-<si-docs-component example="si-content-action-bar/si-content-action-bar" height="400"></si-docs-component>
+<si-docs-component example="si-content-action-bar/si-content-action-bar" height="510"></si-docs-component>
 
 ### Action item states
 

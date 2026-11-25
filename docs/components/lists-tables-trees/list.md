@@ -117,7 +117,7 @@ place each item in an outlined container.
 </ul>
 ```
 
-<si-docs-component example="list-item/list-variants" height="650"></si-docs-component>
+<si-docs-component example="list-item/list-variants" height="1110"></si-docs-component>
 
 ### List item configurations
 
@@ -146,7 +146,7 @@ Add `.align-indicator-center` to `.list-item` to center both across the entire i
 </li>
 ```
 
-<si-docs-component example="list-item/list-item" height="400"></si-docs-component>
+<si-docs-component example="list-item/list-item" height="775"></si-docs-component>
 
 ### Action list items
 
@@ -157,13 +157,13 @@ The item should be placed inside a `<ul>` + `<li>` structure to preserve list se
 
 Use `aria-labelledby` and `aria-describedby` on the interactive element to provide a concise accessible name (the title) and description, instead of exposing all inner text as the accessible name.
 
-<si-docs-component example="list-item/list-item-action" height="400"></si-docs-component>
+<si-docs-component example="list-item/list-item-action" height="480"></si-docs-component>
 
 ### Unread state
 
 Use the `.unread` class on `.list-item-title` to indicate unread items with a bold title and a dot indicator.
 
-<si-docs-component example="list-item/list-item-unread" height="400"></si-docs-component>
+<si-docs-component example="list-item/list-item-unread" height="435"></si-docs-component>
 
 ### List in a card
 

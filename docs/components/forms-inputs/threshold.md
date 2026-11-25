@@ -89,7 +89,7 @@ import { SiThresholdComponent } from '@siemens/element-ng/threshold';
 })
 ```
 
-<si-docs-component example="si-threshold/si-threshold"></si-docs-component>
+<si-docs-component example="si-threshold/si-threshold" height="1260"></si-docs-component>
 
 <si-docs-api component="SiThresholdComponent"></si-docs-api>
 

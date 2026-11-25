@@ -25,7 +25,7 @@ it comes with some inherent limitations.
 
 Element styles native HTML tables with CSS classes. Apply the `.table` class to a `<table>` element.
 
-<si-docs-component example="datatable/html-table" height="500"></si-docs-component>
+<si-docs-component example="datatable/html-table" height="620"></si-docs-component>
 
 ### Usage
 

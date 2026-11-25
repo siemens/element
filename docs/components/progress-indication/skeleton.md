@@ -94,4 +94,4 @@ the placeholders when loading is completed.
 By default, the block-size height is `1em` to meet the text height.
 Adjust the width (e.g. `w-100`) and the height for none text elements.
 
-<si-docs-component example="si-skeleton/si-skeleton"></si-docs-component>
+<si-docs-component example="si-skeleton/si-skeleton" height="350"></si-docs-component>

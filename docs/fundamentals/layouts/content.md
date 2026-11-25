@@ -148,14 +148,14 @@ comes with the vertical navigation adjusts its display accordingly.
 
 ### Full View Layout Examples
 
-<si-docs-component base="si-layouts" height="550">
+<si-docs-component base="si-layouts" height="700">
   <si-docs-tab example="content-full-layout-fixed-height" heading="Fixed Height"></si-docs-tab>
   <si-docs-tab example="content-full-layout-full-scroll" heading="Full Scroll"></si-docs-tab>
 </si-docs-component>
 
 ### 1:2 Layout Examples
 
-<si-docs-component base="si-layouts" height="550">
+<si-docs-component base="si-layouts" height="750">
   <si-docs-tab example="content-1-2-layout-fixed-height" heading="Fixed Height"></si-docs-tab>
   <si-docs-tab example="content-1-2-layout-full-scroll" heading="Full Scroll"></si-docs-tab>
 </si-docs-component>
@@ -164,7 +164,7 @@ comes with the vertical navigation adjusts its display accordingly.
 
 A bottom margin of `16px` or `.mb-6` is added to the content element container.
 
-<si-docs-component base="si-layouts" height="550">
+<si-docs-component base="si-layouts" height="800">
   <si-docs-tab example="content-tile-layout-full-scroll" heading="No Vertical Navbar"></si-docs-tab>
   <si-docs-tab example="content-tile-layout-full-scroll-vertical-nav" heading="Vertical Navbar"></si-docs-tab>
 </si-docs-component>

@@ -47,4 +47,4 @@ This ensures correct semantics, accessibility, and behavior.
 The link styling is applied to the standard HTML `a` element. For links inside a paragraph,
 add the class `.link-text` to add the underline.
 
-<si-docs-component example="links/links" height="75"></si-docs-component>
+<si-docs-component example="links/links" height="315"></si-docs-component>

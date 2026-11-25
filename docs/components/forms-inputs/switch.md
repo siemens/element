@@ -102,4 +102,4 @@ To create an inline switch, additionally apply the `form-check-inline` class to 
 
 ### Example
 
-<si-docs-component example="si-switch/si-switch"></si-docs-component>
+<si-docs-component example="si-switch/si-switch" height="320"></si-docs-component>

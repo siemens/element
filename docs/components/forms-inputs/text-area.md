@@ -47,4 +47,4 @@ Users may also manually resize the field if resizing is enabled.
 
 ### Example
 
-<si-docs-component example="input-fields/multi-line" height="700"></si-docs-component>
+<si-docs-component example="input-fields/multi-line" height="710"></si-docs-component>

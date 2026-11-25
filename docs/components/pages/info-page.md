@@ -57,7 +57,7 @@ the translate pipe by the component.
 The component comes with an integrated icon. Configure the icon, icon color, set the text
 as needed and provide a link to leave the page again.
 
-<si-docs-component example="si-info-page/si-info-page" height="350"></si-docs-component>
+<si-docs-component example="si-info-page/si-info-page" height="360"></si-docs-component>
 
 ### Stacked icon
 
@@ -68,7 +68,7 @@ the internal icon component using content projection.
 Use content projection and add the CSS class `.si-info-actions` to the surrounding element
 to inject `Actions`.
 
-<si-docs-component example="si-info-page/si-info-page-stacked-icon" height="350"></si-docs-component>
+<si-docs-component example="si-info-page/si-info-page-stacked-icon" height="355"></si-docs-component>
 
 ### Illustrations
 

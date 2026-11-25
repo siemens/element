@@ -141,7 +141,7 @@ to define are:
 - `[placeholder]` input for placeholder (empty string by default)
 - `[submitText]` input for configurable 'submit' text ('Apply search criteria' by default)
 
-<si-docs-component example="si-filtered-search/si-filtered-search-basic" height="300"></si-docs-component>
+<si-docs-component example="si-filtered-search/si-filtered-search-basic" height="350"></si-docs-component>
 
 ### Filtered search - Basic with predefined search criteria
 

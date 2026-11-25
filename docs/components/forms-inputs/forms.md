@@ -330,7 +330,7 @@ To customize the breakpoint, use the `responsive-form-col-layout` mixin within y
 
 ### Example
 
-<si-docs-component base="si-form" height="780">
+<si-docs-component base="si-form" height="1135">
   <si-docs-tab example="si-signal-form" heading="Signal Form"></si-docs-tab>
   <si-docs-tab example="si-reactive-form" heading="Reactive Form"></si-docs-tab>
   <si-docs-tab example="si-template-driven-form" heading="Template-driven Form"></si-docs-tab>

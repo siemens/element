@@ -123,7 +123,7 @@ Unless the context is clear - you should add extra, descriptive text that is `vi
 
 ### Examples
 
-<si-docs-component example="badges/badges"></si-docs-component>
+<si-docs-component example="badges/badges" height="465"></si-docs-component>
 
 <si-docs-api component="SiBadgeComponent"></si-docs-api>
 

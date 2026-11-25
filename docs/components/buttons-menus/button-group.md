@@ -159,7 +159,7 @@ For icon-only button groups, use the `btn-icon` class along with appropriate `ar
 
 ### Action button group example
 
-<si-docs-component example="buttons/button-groups" height="400"></si-docs-component>
+<si-docs-component example="buttons/button-groups" height="640"></si-docs-component>
 
 ### Split button
 
@@ -255,4 +255,4 @@ This is the standard HTML pattern and works well for text labels:
 </div>
 ```
 
-<si-docs-component example="buttons/selection-buttons" height="350"></si-docs-component>
+<si-docs-component example="buttons/selection-buttons" height="530"></si-docs-component>

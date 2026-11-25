@@ -80,7 +80,7 @@ illustrations, or animations to enhance depth and spatial relationships.
 Four shadow levels and a `none` option are available as CSS utility classes.
 Choose the level according to the usage guidance above.
 
-<si-docs-component example="elevation/elevation" height="120"></si-docs-component>
+<si-docs-component example="elevation/elevation" height="150"></si-docs-component>
 
 Use a system token when a utility class is not suitable. The Sass variables
 resolve to theme-aware CSS custom properties and automatically adapt to the

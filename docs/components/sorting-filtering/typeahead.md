@@ -46,7 +46,7 @@ import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
 This is the most basic typeahead you can get.
 Tokenization is disabled here as it is not needed and normally enabled by default.
 
-<si-docs-component example="si-typeahead/si-typeahead-basic" height="300"></si-docs-component>
+<si-docs-component example="si-typeahead/si-typeahead-basic" height="380"></si-docs-component>
 
 ### Typeahead - OnFocus & Scrollable
 
@@ -59,7 +59,7 @@ Lastly, a scrollable typeahead is the better option in many cases, especially if
 
 Tokenization is disabled here as well as it is not needed and normally enabled by default.
 
-<si-docs-component example="si-typeahead/si-typeahead-onfocus-scrollable" height="300"></si-docs-component>
+<si-docs-component example="si-typeahead/si-typeahead-onfocus-scrollable" height="380"></si-docs-component>
 
 ### Typeahead - Async
 
@@ -73,7 +73,7 @@ and prevent the typeahead from being closed using escape.
 
 Tokenization is disabled here as well as it is not needed and normally enabled by default.
 
-<si-docs-component example="si-typeahead/si-typeahead-async" height="300"></si-docs-component>
+<si-docs-component example="si-typeahead/si-typeahead-async" height="380"></si-docs-component>
 
 ### Typeahead - Tokenized
 
@@ -91,7 +91,7 @@ The options are as follows:
   where there is not an overlapping or adjacent different result.
   (`independently` also slightly changes sorting behavior in the same way.)
 
-<si-docs-component example="si-typeahead/si-typeahead-tokenized" height="300"></si-docs-component>
+<si-docs-component example="si-typeahead/si-typeahead-tokenized" height="380"></si-docs-component>
 
 ### Typeahead - Custom
 
@@ -100,7 +100,7 @@ and executing a function on select of an option, you can do that too.
 
 Tokenization is kept enabled and `typeaheadMatchAllTokens` is set to `once` to match more results.
 
-<si-docs-component example="si-typeahead/si-typeahead-custom" height="300"></si-docs-component>
+<si-docs-component example="si-typeahead/si-typeahead-custom" height="445"></si-docs-component>
 
 <si-docs-api directive="SiTypeaheadDirective"></si-docs-api>
 

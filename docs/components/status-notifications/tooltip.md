@@ -113,7 +113,7 @@ It must be on an interactive element like a button or link.
 Otherwise, it cannot be reached by keyboard user.
 It is using `aria-describe` to expose its content to screen reader.
 
-<si-docs-component example="si-tooltip/si-tooltip"></si-docs-component>
+<si-docs-component example="si-tooltip/si-tooltip" height="295"></si-docs-component>
 
 ## Tooltip for text overflow
 

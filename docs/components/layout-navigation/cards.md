@@ -109,7 +109,7 @@ addition, the heading and text within the body should be left aligned.
 Try to avoid content overflows in cards. In case of overflows, make sure the scrollbar
 is placed on the edge of the card and padding is set internally.
 
-<si-docs-component example="si-card/si-card" height="300"></si-docs-component>
+<si-docs-component example="si-card/si-card" height="685"></si-docs-component>
 
 <si-docs-api component="SiCardComponent"></si-docs-api>
 
@@ -140,7 +140,7 @@ Use `routerLinkActive="selected"` to highlight the active route. Add `RouterLink
 </a>
 ```
 
-<si-docs-component example="si-card/si-action-card" height="300"></si-docs-component>
+<si-docs-component example="si-card/si-action-card" height="1050"></si-docs-component>
 
 <si-docs-api component="SiActionCardComponent"></si-docs-api>
 
@@ -153,7 +153,7 @@ Every card can be turned into an outline card by adding the `.card-outline` clas
 <si-card class="card-outline"> ... </si-card>
 ```
 
-<si-docs-component example="si-card/card-variants" height="300"></si-docs-component>
+<si-docs-component example="si-card/card-variants" height="375"></si-docs-component>
 
 ### Native HTML markup
 
@@ -315,7 +315,7 @@ When card groups include footers, they automatically align at the bottom regardl
 </div>
 ```
 
-<si-docs-component example="si-card/card-group" height="300"></si-docs-component>
+<si-docs-component example="si-card/card-group" height="690"></si-docs-component>
 
 Use the grid system to create responsive card layouts. Wrap cards in columns and rows to control their positioning and spacing.
 
@@ -366,6 +366,6 @@ For example, here’s `.row-cols-1` laying out the cards on one column, and `.ro
 </div>
 ```
 
-<si-docs-component example="si-card/card-grid" height="300"></si-docs-component>
+<si-docs-component example="si-card/card-grid" height="965"></si-docs-component>
 
 <si-docs-types></si-docs-types>

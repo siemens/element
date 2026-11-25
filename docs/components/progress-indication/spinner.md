@@ -40,11 +40,11 @@ import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 
 You can use loading spinner directive to enable the spinner on a specific element.
 
-<si-docs-component example="si-loading-spinner/si-loading-spinner-directive" height="200"></si-docs-component>
+<si-docs-component example="si-loading-spinner/si-loading-spinner-directive" height="340"></si-docs-component>
 
 Additionally, you can enable semi-transparent overlay and initial loading time for the spinner to be displayed.
 
-<si-docs-component example="si-loading-spinner/si-loading-spinner-delay" height="200"></si-docs-component>
+<si-docs-component example="si-loading-spinner/si-loading-spinner-delay" height="370"></si-docs-component>
 
 <si-docs-api directive="SiLoadingSpinnerDirective"></si-docs-api>
 
@@ -55,7 +55,7 @@ on a button. The `si-loading-button` is implemented as a wrapper around a normal
 HTML button. The most important button properties are routed through and are
 accessible via the wrapper.
 
-<si-docs-component example="si-loading-spinner/si-loading-button" height="200"></si-docs-component>
+<si-docs-component example="si-loading-spinner/si-loading-button" height="245"></si-docs-component>
 
 <si-docs-api component="SiLoadingButtonComponent"></si-docs-api>
 

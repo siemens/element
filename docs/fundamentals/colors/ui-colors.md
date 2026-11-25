@@ -186,7 +186,7 @@ The contextual colors represent the primary colors of each specific use-case and
 are based on the system color tokens. They can be consumed directly using
 Element's [color utility classes](../styles/colors.md).
 
-<si-docs-component example="colors/color-utils"></si-docs-component>
+<si-docs-component example="colors/color-utils" height="2670"></si-docs-component>
 
 The color utility classes for background, text, and borders are defined in the
 [\_utilities](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/mixins/_utilities.scss) file.

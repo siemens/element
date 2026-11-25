@@ -171,7 +171,7 @@ These classes are ideal for quickly building simple grid layouts or managing the
 </div>
 ```
 
-<si-docs-component example="grid-system/grid-row-cols" height="150"></si-docs-component>
+<si-docs-component example="grid-system/grid-row-cols" height="570"></si-docs-component>
 
 Create a grid that dynamically adapts the number of columns to the screen size using responsive `.row-cols-*` classes. These classes allow you to specify how many columns should be displayed at each breakpoint, ensuring your layout remains visually balanced and user-friendly across all devices.
 

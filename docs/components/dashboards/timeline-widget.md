@@ -73,7 +73,7 @@ import { SiTimelineWidgetComponent } from '@siemens/element-ng/dashboard';
 })
 ```
 
-<si-docs-component example="si-dashboard/si-timeline-widget" height="620"></si-docs-component>
+<si-docs-component example="si-dashboard/si-timeline-widget" height="700"></si-docs-component>
 
 <si-docs-api component="SiTimelineWidgetComponent"></si-docs-api>
 
@@ -90,6 +90,6 @@ You can use it for compositions.
 
 For more flexibility and control, use the CSS classes directly in the `<si-card>` component.
 
-<si-docs-component example="si-dashboard/si-timeline-widget-css" height="400"></si-docs-component>
+<si-docs-component example="si-dashboard/si-timeline-widget-css" height="645"></si-docs-component>
 
 <si-docs-types></si-docs-types>

@@ -103,7 +103,7 @@ Buttons are implemented using CSS classes on native HTML elements. Use `<button>
 
 Apply the `.btn` base class together with a semantic variant such as `.btn-primary`. Always add `type="button"` to action buttons. Icon-only buttons must have an accessible name via `aria-label`, `title` or a visually hidden label.
 
-<si-docs-component example="buttons/buttons" height="330"></si-docs-component>
+<si-docs-component example="buttons/buttons" height="780"></si-docs-component>
 
 ### Navigation buttons
 
@@ -124,4 +124,4 @@ Use [flex](../../fundamentals/styles/flex.md) and [grid](../../fundamentals/layo
 - **Dialog actions:** Use `.modal-footer` to right-align dialog actions and provide consistent spacing.
 - **Custom footers:** Use flex utilities such as `.d-flex`, `.flex-wrap`, `.justify-content-end`, and `.gap-6` to create a similar layout or customize the alignment. See [Flex utilities](../../fundamentals/styles/flex.md).
 
-<si-docs-component example="buttons/buttons-placement" height="450"></si-docs-component>
+<si-docs-component example="buttons/buttons-placement" height="555"></si-docs-component>

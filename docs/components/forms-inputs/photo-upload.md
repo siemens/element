@@ -103,7 +103,7 @@ import { SiPhotoUploadComponent } from '@siemens/element-ng/photo-upload';
 export class SampleComponent {}
 ```
 
-<si-docs-component example="si-photo-upload/si-photo-upload" height="600"></si-docs-component>
+<si-docs-component example="si-photo-upload/si-photo-upload" height="650"></si-docs-component>
 
 ### Image cropping
 
