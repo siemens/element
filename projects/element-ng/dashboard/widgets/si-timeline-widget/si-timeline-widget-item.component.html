@@ -78,10 +78,12 @@
         } @else if (action.type === 'menu') {
           <button
             type="button"
-            class="btn btn-icon btn-tertiary element-options-vertical"
+            class="btn btn-icon btn-tertiary"
             [attr.aria-label]="ariaLabelDropdown | translate"
             [cdkMenuTriggerFor]="actionMenu"
-          ></button>
+          >
+            <si-icon [icon]="icons.elementOptionsVertical" />
+          </button>
 
           <ng-template #actionMenu>
             <si-menu-factory [items]="action.menuItems" />
