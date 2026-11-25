@@ -13,7 +13,7 @@
         - checkbox "Press Space to toggle row selection (unchecked)"
       - gridcell "0"
       - gridcell "Max Meier 0 This is a dynamic tooltip using the value of Max Meier 0":
-        - text: Max Meier 0
+        - text: ""
         - tooltip "This is a dynamic tooltip using the value of Max Meier 0"
       - gridcell "Engineer"
       - gridcell /\d+ years/

@@ -7,10 +7,21 @@
   - code: inline code
   - text: "and create lists:"
 - list:
-  - listitem: First item
-  - listitem: Second item
+  - listitem:
+    - text: First item
+    - button "First source"
+  - listitem:
+    - text: Second item
+    - button "Second source"
+  - listitem:
+    - strong: Bold text
+    - text: for emphasis
+  - listitem:
+    - emphasis: Italic text
+    - text: for subtle emphasis
 - group:
   - button "Good response"
   - button "Bad response"
   - button "Copy response"
   - button "Additional actions"
+  - button "Sources"

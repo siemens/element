@@ -1,17 +1,17 @@
 - group "Basic radio toggle button group":
   - radio "Day" [checked]
-  - text: ""
+  - text: Day
   - radio "Week"
-  - text: ""
+  - text: Week
   - radio "Month"
-  - text: ""
+  - text: Month
 - group "Temperature mode selection":
   - radio "Comfort" [checked]
-  - text: ""
+  - text: Comfort
   - radio "Pre-comfort"
-  - text: ""
+  - text: Pre-comfort
   - radio "Economy"
-  - text: ""
+  - text: Economy
 - group "Layout selection":
   - radio "One pane" [checked]
   - radio "Two panes"
@@ -19,13 +19,13 @@
 - heading "Multi-select" [level=4]
 - group "Email status filter":
   - checkbox "Read" [checked]
-  - text: ""
+  - text: Read
   - checkbox "Unread"
-  - text: ""
+  - text: Unread
   - checkbox "Archived" [checked]
-  - text: ""
+  - text: Archived
   - checkbox "Deleted"
-  - text: ""
+  - text: Deleted
 - group "Category filter":
   - checkbox "Garden" [checked]
   - checkbox "Mobile"
@@ -35,46 +35,46 @@
 - heading "Sizing" [level=4]
 - group "Basic radio toggle button group":
   - radio "Large" [checked]
-  - text: ""
+  - text: Large
   - radio "Group"
-  - text: ""
+  - text: Group
   - radio "Size"
-  - text: ""
+  - text: Size
 - group "Basic radio toggle button group":
   - radio "Default" [checked]
-  - text: ""
+  - text: Default
   - radio "Group"
-  - text: ""
+  - text: Group
   - radio "Size"
-  - text: ""
+  - text: Size
 - group "Basic radio toggle button group":
   - radio "Small" [checked]
-  - text: ""
+  - text: Small
   - radio "Group"
-  - text: ""
+  - text: Group
   - radio "Size"
-  - text: ""
+  - text: Size
 - group "Basic radio toggle button group":
   - radio "Large" [checked]
-  - text: ""
+  - text: Large
   - radio "Group"
-  - text: ""
+  - text: Group
   - radio "Size"
-  - text: ""
+  - text: Size
 - group "Basic radio toggle button group":
   - radio "Default" [checked]
-  - text: ""
+  - text: Default
   - radio "Group"
-  - text: ""
+  - text: Group
   - radio "Size"
-  - text: ""
+  - text: Size
 - group "Basic radio toggle button group":
   - radio "Small" [checked]
-  - text: ""
+  - text: Small
   - radio "Group"
-  - text: ""
+  - text: Group
   - radio "Size"
-  - text: ""
+  - text: Size
 - group "Climate control mode":
   - radio "Heating"
   - radio "Water"

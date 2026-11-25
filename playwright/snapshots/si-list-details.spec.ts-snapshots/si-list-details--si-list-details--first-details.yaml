@@ -4,7 +4,7 @@
 - button "Remove"
 - text: "Location : Zug"
 - button "Remove"
-- button "Filters"
+- button "Filters": 
 - table:
   - rowgroup:
     - row "Name Role Company":

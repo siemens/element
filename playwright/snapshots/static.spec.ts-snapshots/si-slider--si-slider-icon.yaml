@@ -4,6 +4,6 @@
   - slider "Value"
   - button "Increment"
 - text: Write
-- spinbutton "Slide Write"
+- spinbutton "Slide Write": /\d+/
 - checkbox "Disabled"
 - text: Disabled

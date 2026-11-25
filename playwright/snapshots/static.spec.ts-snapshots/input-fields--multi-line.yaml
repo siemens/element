@@ -6,7 +6,7 @@
 - textbox "Disabled textarea (empty with placeholder)" [disabled]:
   - /placeholder: Placeholder not visible
 - text: Placeholder text not displayed for disabled textarea Disabled textarea with value
-- textbox "Disabled textarea with value" [disabled]
+- textbox "Disabled textarea with value" [disabled]: This is the value
 - text: Readonly textarea
 - textbox "Readonly textarea": This is the value
 - text: Name

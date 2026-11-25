@@ -3,11 +3,12 @@
 - button "Secondary"
 - button "Secondary"
 - button "Tertiary"
+- button "Ghost"
 - button "Warning"
 - button "Danger"
 - button "Default"
-- button "clock"
-- button "clock"
+- button "clock": 
+- button "clock": 
 - text: Control panel
 - checkbox "Toggle loading"
 - text: Toggle loading

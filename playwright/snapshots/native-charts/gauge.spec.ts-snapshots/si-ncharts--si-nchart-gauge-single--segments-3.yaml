@@ -1,11 +1,14 @@
 - text: Single value gauge with segments
 - img: /\d+ \d+ \d+ \d+,\d+ \d+ \d+,\d+ \d+,\d+ ppm/
 - text: Min. decimals*
-- spinbutton "Min. decimals*"
+- spinbutton "Min. decimals*": "0"
 - text: Max. decimals*
-- spinbutton "Max. decimals*"
+- spinbutton "Max. decimals*": "2"
 - text: Num. axis decimals*
-- spinbutton "Num. axis decimals*"
+- spinbutton "Num. axis decimals*": "0"
+- text: Marker value*
+- checkbox "Enable marker"
+- spinbutton "Marker value*" [disabled]
 - checkbox "Show ticks" [checked]
 - text: Show ticks
 - checkbox "Show range labels outside"

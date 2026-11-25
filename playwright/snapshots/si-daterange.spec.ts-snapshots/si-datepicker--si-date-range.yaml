@@ -1,7 +1,7 @@
 - text: Date range
 - group "Date range":
   - textbox "Start"
-  - text: ""
+  - text: "-"
   - textbox "End"
   - button "Open calendar"
 - heading "Date range value" [level=4]

@@ -1,22 +1,22 @@
 - text: Timepicker on date object
 - group "Timepicker on date object":
-  - text: ""
+  - text: hh
   - textbox "Hours":
     - /placeholder: hh
-    - text: ""
+    - text: /\d+/
   - text: ""
   - textbox "Minutes":
     - /placeholder: mm
-    - text: ""
-  - text: ""
+    - text: /\d+/
+  - text: ss
   - textbox "Seconds":
     - /placeholder: ss
-    - text: ""
-  - text: ""
+    - text: /\d+/
+  - text: ms
   - textbox "Milliseconds":
     - /placeholder: ms
-    - text: ""
-  - text: ""
+    - text: /\d+/
+  - text: am/pm
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"

@@ -17,7 +17,7 @@
       - cell "Last 1"
       - cell
       - cell /\d+/:
-        - textbox "Age"
+        - textbox "Age": /\d+/
       - cell "Context menu":
         - button "Context menu"
     - row /plant status none 2 First 2 Last 2 \d+ Context menu/:
@@ -28,7 +28,7 @@
       - cell "Last 2"
       - cell
       - cell /\d+/:
-        - textbox "Age"
+        - textbox "Age": /\d+/
       - cell "Context menu":
         - button "Context menu"
     - row /plant status none 3 First 3 Last 3 \d+ Context menu/:
@@ -39,7 +39,7 @@
       - cell "Last 3"
       - cell
       - cell /\d+/:
-        - textbox "Age"
+        - textbox "Age": /\d+/
       - cell "Context menu":
         - button "Context menu"
     - row /plant in status info 4 First 4 Last 4 \d+ Context menu/:
@@ -50,7 +50,7 @@
       - cell "Last 4"
       - cell
       - cell /\d+/:
-        - textbox "Age"
+        - textbox "Age": /\d+/
       - cell "Context menu":
         - button "Context menu"
     - row /plant status none 5 First 5 Last 5 \d+ Context menu/:
@@ -61,7 +61,7 @@
       - cell "Last 5"
       - cell
       - cell /\d+/:
-        - textbox "Age"
+        - textbox "Age": /\d+/
       - cell "Context menu":
         - button "Context menu"
     - row /plant status none 6 First 6 Last 6 \d+ Context menu/:
@@ -72,7 +72,7 @@
       - cell "Last 6"
       - cell
       - cell /\d+/:
-        - textbox "Age"
+        - textbox "Age": /\d+/
       - cell "Context menu":
         - button "Context menu"
     - row /plant status none 7 First 7 Last 7 \d+ Context menu/:
@@ -83,7 +83,7 @@
       - cell "Last 7"
       - cell
       - cell /\d+/:
-        - textbox "Age"
+        - textbox "Age": /\d+/
       - cell "Context menu":
         - button "Context menu"
     - row /plant in status warning 8 First 8 Last 8 \d+ Context menu/:
@@ -94,7 +94,7 @@
       - cell "Last 8"
       - cell
       - cell /\d+/:
-        - textbox "Age"
+        - textbox "Age": /\d+/
       - cell "Context menu":
         - button "Context menu"
 - navigation "Pagination":
@@ -126,3 +126,5 @@
   - option "checkbox"
 - checkbox "Enforce checkboxes"
 - text: Enforce checkboxes
+- checkbox "Striped rows"
+- text: Striped rows

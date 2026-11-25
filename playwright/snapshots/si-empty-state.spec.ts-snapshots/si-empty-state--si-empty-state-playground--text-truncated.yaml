@@ -1,2 +1,8 @@
 - text: No users
 - paragraph: There are no users within this group. Add users to get started.
+- text: Control Panel
+- checkbox "Responsive mode" [checked]
+- text: "/Responsive mode Container height: \\d+ px/"
+- 'slider /Container height: \d+ px/'
+- checkbox "Show actions"
+- text: Show actions

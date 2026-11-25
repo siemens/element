@@ -13,10 +13,10 @@
 - text: "-/+ Buttons"
 - checkbox "Align end (right in LTR)" [checked]
 - text: Align end (right in LTR) Min. value
-- spinbutton "Min. value"
+- spinbutton "Min. value": "0"
 - text: Max. value
-- spinbutton "Max. value"
+- spinbutton "Max. value": /\d+/
 - text: Step size
-- spinbutton "Step size"
+- spinbutton "Step size": "1"
 - text: Unit
-- textbox "Unit"
+- textbox "Unit": °C

@@ -1,4 +1,5 @@
 - paragraph: Title
+- paragraph: A long subheading that provides secondary context and gets truncated when the side panel is too narrow
 - button "Full screen"
 - button "Close"
 - button "Hey there" [expanded]
