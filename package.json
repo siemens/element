@@ -175,7 +175,7 @@
     "postcss-scss": "4.0.9",
     "prettier": "3.10.1",
     "rimraf": "6.1.4",
-    "semantic-release": "25.0.9",
+    "semantic-release": "26.0.1",
     "semver": "7.8.6",
     "stylelint": "17.16.0",
     "stylelint-scss": "7.5.0",
