@@ -24,7 +24,7 @@
         [name]="config.name"
         [placeholder]="config.placeholder"
         [readonly]="readonly()"
-        (blur)="updateField(config.name, toHtmlInputElement($event.target).value)"
+        (blur)="onBlur()"
         (keydown)="handleKeyPressEvent($event)"
       />
     </label>

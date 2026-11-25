@@ -509,7 +509,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   protected timeSelected(newTime?: Date): void {
-    if (newTime == null) {
+    if (!isValid(newTime)) {
       return;
     }
 
@@ -586,7 +586,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    * @param selection - selected date.
    */
   protected selectionChange(selection: Date): void {
-    const time = this.time.value;
+    const time = isValid(this.time.value) ? this.time.value : undefined;
     const newDate = createDate(
       selection,
       time?.getHours(),

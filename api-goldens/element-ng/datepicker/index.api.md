@@ -412,7 +412,7 @@ export class SiDateRangeComponent implements ControlValueAccessor, Validator, Af
     writeValue(dateRange: DateRange): void;
 }
 
-// @public (undocumented)
+// @public
 export class SiTimepickerComponent implements ControlValueAccessor, Validator, SiFormItemControl {
     constructor();
     readonly disabledInput: _angular_core.InputSignal<boolean>;

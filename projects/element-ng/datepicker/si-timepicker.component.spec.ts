@@ -52,6 +52,8 @@ describe('SiTimepickerComponent', () => {
     e.value = v;
     e.dispatchEvent(new Event('input'));
     e.dispatchEvent(new Event('change'));
+  };
+  const blurInput = (e: HTMLInputElement): void => {
     e.dispatchEvent(new Event('blur'));
   };
   const generateKeyEvent = (key: 'ArrowDown' | 'ArrowUp'): KeyboardEvent => {
@@ -81,11 +83,11 @@ describe('SiTimepickerComponent', () => {
     let fixture: ComponentFixture<WrapperComponent>;
     let component: WrapperComponent;
 
-    beforeEach(() => {
+    beforeEach(async () => {
       fixture = TestBed.createComponent(WrapperComponent);
       component = fixture.componentInstance;
       element = fixture.nativeElement;
-      fixture.detectChanges();
+      await fixture.whenStable();
     });
 
     it('should display seconds and milliseconds input', () => {
@@ -164,29 +166,52 @@ describe('SiTimepickerComponent', () => {
       expect(getHours().value).toEqual('04');
     });
 
-    it('should update time on ui changes', () => {
+    it('should update time while typing and format on blur', async () => {
       component.showSeconds.set(true);
       component.showMilliseconds.set(true);
       component.time.setValue('2022-01-12 16:23:59.435');
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       expect(getHours().value).toEqual('04');
+      enterValue(getHours(), '0');
+      expect(component.time.value).toEqual(new Date('2022-01-12 12:23:59.435'));
       enterValue(getHours(), '03');
+      expect(component.time.value).toEqual(new Date('2022-01-12 15:23:59.435'));
       enterValue(getMinutes(), '03');
-      enterValue(getSeconds(), '06');
+      expect(component.time.value).toEqual(new Date('2022-01-12 15:03:59.435'));
+      enterValue(getSeconds(), '6');
+      expect(component.time.value).toEqual(new Date('2022-01-12 15:03:06.435'));
+      expect(getSeconds().value).toBe('6');
       enterValue(getMilliseconds(), '999');
       expect(component.time.value).toEqual(new Date('2022-01-12 15:03:06.999'));
+      expect(component.time.untouched).toBe(true);
+
+      blurInput(getSeconds());
+      await fixture.whenStable();
+
+      expect(getSeconds().value).toBe('06');
+      expect(component.time.touched).toBe(true);
     });
 
-    it('should update time when re-entering a previously cleared time component', () => {
+    it('should update time when re-entering a previously cleared time component', async () => {
       component.time.setValue(new Date('2022-01-12 16:23'));
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       enterValue(getHours(), '');
+      expect(component.time.value).toEqual(new Date(NaN));
+      expect(component.time.errors).toEqual({ timeFormat: true });
+
+      enterValue(getMinutes(), '');
       expect(component.time.value).toBeNull();
+      expect(component.time.valid).toBe(true);
+
+      enterValue(getMinutes(), '23');
+      expect(component.time.value).toEqual(new Date(NaN));
+      expect(component.time.errors).toEqual({ timeFormat: true });
 
       enterValue(getHours(), '04');
       expect(component.time.value).toEqual(new Date('2022-01-12 16:23'));
+      expect(component.time.valid).toBe(true);
     });
 
     it('should determine the meridian', () => {
@@ -236,10 +261,16 @@ describe('SiTimepickerComponent', () => {
     it('should validate minutes range', async () => {
       component.time.setValue('2021-01-12 18:23:59.435');
       enterValue(getMinutes(), '70'); // Invalid minutes
-      fixture.detectChanges();
+      await fixture.whenStable();
 
+      expect(component.time.value).toEqual(new Date(NaN));
       expect(component.time.errors).toEqual({ minutes: { max: 59 } });
       expect(getMinutes()).toHaveClass('ng-invalid');
+
+      blurInput(getMinutes());
+      await fixture.whenStable();
+
+      expect(getMinutes().value).toBe('70');
     });
 
     it('should validate seconds range', async () => {
@@ -320,24 +351,25 @@ describe('SiTimepickerComponent', () => {
       expect(select?.value).not.toBe(currentMeridian);
     });
 
-    it('should not toggle meridian', () => {
+    it('should not toggle meridian', async () => {
       component.time.setValue('2021-01-12 01:01:00.000');
-      fixture.detectChanges();
+      await fixture.whenStable();
       // Entering 12 am (midnight) should not toggle the meridian
       enterValue(getHours(), '12');
 
-      fixture.detectChanges();
+      await fixture.whenStable();
       const select = element.querySelector<HTMLSelectElement>('select');
       expect(select?.value).not.toBe('pm');
     });
 
-    it('should toggle meridian when hours > 12', () => {
+    it('should toggle meridian when hours > 12', async () => {
       component.time.setValue('2021-01-12 01:01:00.000');
-      fixture.detectChanges();
+      await fixture.whenStable();
       // Entering hours above 12 should toggle the meridian to PM
       enterValue(getHours(), '13');
+      blurInput(getHours());
 
-      fixture.detectChanges();
+      await fixture.whenStable();
       const select = element.querySelector<HTMLSelectElement>('select');
       expect(select?.value).toBe('pm');
     });
