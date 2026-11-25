@@ -38,6 +38,7 @@ class RecognitionMock implements VoiceInputRecognition {
     continuous
     [disabled]="disabled()"
     [lang]="lang()"
+    [mode]="mode()"
     [silenceTimeout]="silenceTimeout()"
     [(value)]="value"
     (listeningChange)="changes($event)"
@@ -51,6 +52,7 @@ class TestHostComponent {
   readonly value = signal('Existing draft');
   readonly disabled = signal(false);
   readonly lang = signal('');
+  readonly mode = signal<'toggle' | 'push-to-talk'>('toggle');
   readonly silenceTimeout = signal(0);
   readonly changes = vi.fn();
   readonly completions = vi.fn();
@@ -285,6 +287,82 @@ describe('SiVoiceInputDirective', () => {
       const expectedCalls =
         outcome === 'completed' ? [['Hello']] : outcome === 'empty' ? [['']] : [];
       expect(host.completions.mock.calls).toEqual(expectedCalls);
+    }
+  );
+
+  it('starts and stops push-to-talk with pointer capture', async () => {
+    const { fixture, button, host } = await setup();
+    host.mode.set('push-to-talk');
+    await fixture.whenStable();
+    using capture = vi.spyOn(button, 'setPointerCapture');
+
+    button.dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 1 }));
+    recognition.onstart?.();
+    button.dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 2 }));
+    button.dispatchEvent(new PointerEvent('pointerup', { button: 0, pointerId: 2 }));
+    expect(recognition.stop).not.toHaveBeenCalled();
+    expect(capture).toHaveBeenCalledExactlyOnceWith(1);
+
+    button.dispatchEvent(new PointerEvent('pointerup', { button: 0, pointerId: 1 }));
+    button.dispatchEvent(new PointerEvent('lostpointercapture', { pointerId: 1 }));
+    button.dispatchEvent(new MouseEvent('click', { detail: 1 }));
+    expect(recognition.start).toHaveBeenCalledOnce();
+    expect(recognition.stop).toHaveBeenCalledOnce();
+    expect(recognition.abort).not.toHaveBeenCalled();
+    recognition.onend?.();
+    await fixture.whenStable();
+  });
+
+  it('stops push-to-talk after keyboard release during startup', async () => {
+    const { fixture, button, host } = await setup();
+    host.mode.set('push-to-talk');
+    await fixture.whenStable();
+
+    button.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
+    button.dispatchEvent(new KeyboardEvent('keyup', { key: ' ', bubbles: true }));
+    expect(recognition.stop).not.toHaveBeenCalled();
+    recognition.onstart?.();
+    expect(recognition.stop).toHaveBeenCalledOnce();
+    recognition.onend?.();
+    await fixture.whenStable();
+    expect(host.changes.mock.calls).toEqual([[true], [false]]);
+  });
+
+  it('only stops a keyboard hold when the initiating key is released', async () => {
+    const { fixture, button, host } = await setup();
+    host.mode.set('push-to-talk');
+    await fixture.whenStable();
+
+    button.dispatchEvent(new KeyboardEvent('keydown', { key: ' ' }));
+    recognition.onstart?.();
+    button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    button.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter' }));
+    expect(recognition.stop).not.toHaveBeenCalled();
+
+    button.dispatchEvent(new KeyboardEvent('keyup', { key: ' ' }));
+    expect(recognition.stop).toHaveBeenCalledOnce();
+  });
+
+  it.each(['pointercancel', 'lostpointercapture'])(
+    'cancels without emitting completed when a hold is interrupted by %s',
+    async event => {
+      const { fixture, button, host } = await setup();
+      host.mode.set('push-to-talk');
+      await fixture.whenStable();
+
+      button.dispatchEvent(new PointerEvent('pointerdown', { button: 0, pointerId: 1 }));
+      recognition.onstart?.();
+      recognition.onresult?.({ results: [{ isFinal: true, 0: { transcript: 'Hello' } }] });
+      expect(host.value()).toBe('Existing draft Hello');
+      const lateEnd = recognition.onend;
+
+      button.dispatchEvent(new PointerEvent(event, { pointerId: 1 }));
+      lateEnd?.();
+      await fixture.whenStable();
+
+      expect(recognition.abort).toHaveBeenCalledOnce();
+      expect(host.completions).not.toHaveBeenCalled();
+      expect(host.value()).toBe('Existing draft');
     }
   );
 });

@@ -9,6 +9,7 @@ import {
   DestroyRef,
   Directive,
   effect,
+  ElementRef,
   inject,
   InjectionToken,
   input,
@@ -131,13 +132,21 @@ export const SI_VOICE_INPUT_RECOGNITION = new InjectionToken<
     '[disabled]': 'disabled() || !supported',
     '[attr.aria-pressed]': 'listening()',
     '[attr.aria-label]': 'buttonLabel()',
-    '(click)': 'onClick()',
-    '(keydown.escape)': 'onEscape($event)'
+    '(click)': 'onClick($event)',
+    '(pointerdown)': 'onPointerDown($event)',
+    '(pointerup)': 'onPointerUp($event)',
+    '(pointercancel)': 'onPointerCancel($event)',
+    '(lostpointercapture)': 'onPointerCancel($event)',
+    '(keydown)': 'onKeyDown($event)',
+    '(keydown.escape)': 'onEscape($event)',
+    '(keyup)': 'onKeyUp($event)',
+    '(blur)': 'onBlur()'
   },
   exportAs: 'siVoiceInput'
 })
 export class SiVoiceInputDirective {
   private readonly createRecognition = inject(SI_VOICE_INPUT_RECOGNITION);
+  private readonly element = inject<ElementRef<HTMLButtonElement>>(ElementRef).nativeElement;
   private readonly destroyRef = inject(DestroyRef);
   private readonly translate = injectSiTranslateService();
   private readonly phase = signal<
@@ -147,6 +156,7 @@ export class SiVoiceInputDirective {
   private silenceTimer?: ReturnType<typeof setTimeout>;
   private savedDraft = '';
   private attemptTranscript = '';
+  private hold?: { key: string } | { pointerId: number };
   /** Monotonic session counter incremented on start and detach to ignore stale callbacks and re-entrant restarts. */
   private attempt = 0;
 
@@ -154,6 +164,8 @@ export class SiVoiceInputDirective {
   readonly value = model('');
   /** Disables the button and cancels any active recognition. @defaultValue false */
   readonly disabled = input(false, { transform: booleanAttribute });
+  /** Interaction mode: click to toggle or hold for push-to-talk. @defaultValue 'toggle' */
+  readonly mode = input<'toggle' | 'push-to-talk'>('toggle');
   /** Keeps recognizing after an utterance ends. @defaultValue false */
   readonly continuous = input(false, { transform: booleanAttribute });
   /** Stops recognition after this many milliseconds of silence; `0` disables it. @defaultValue 0 */
@@ -327,7 +339,11 @@ export class SiVoiceInputDirective {
     }
   }
 
-  protected onClick(): void {
+  protected onClick(event: MouseEvent): void {
+    // Ignore the synthesized mouse click emitted after a push-to-talk pointer hold.
+    if (this.hold || (this.mode() === 'push-to-talk' && event.detail > 0)) {
+      return;
+    }
     if (this.listening()) {
       this.stop();
     } else {
@@ -335,9 +351,77 @@ export class SiVoiceInputDirective {
     }
   }
 
+  protected onPointerDown(event: PointerEvent): void {
+    if (
+      this.mode() !== 'push-to-talk' ||
+      event.button !== 0 ||
+      this.disabled() ||
+      !this.supported ||
+      this.listening()
+    ) {
+      return;
+    }
+    if (typeof this.element.setPointerCapture === 'function') {
+      try {
+        this.element.setPointerCapture(event.pointerId);
+      } catch {
+        // Synthetic or already-released pointers cannot be captured.
+      }
+    }
+    this.hold = { pointerId: event.pointerId };
+    this.start();
+  }
+
+  protected onPointerUp(event: PointerEvent): void {
+    if (
+      event.button === 0 &&
+      this.hold &&
+      'pointerId' in this.hold &&
+      this.hold.pointerId === event.pointerId
+    ) {
+      this.hold = undefined;
+      this.stop();
+    }
+  }
+
+  protected onPointerCancel(event: PointerEvent): void {
+    if (this.hold && 'pointerId' in this.hold && this.hold.pointerId === event.pointerId) {
+      this.cancel();
+    }
+  }
+
+  protected onKeyDown(event: KeyboardEvent): void {
+    if (this.mode() === 'push-to-talk' && (event.key === ' ' || event.key === 'Enter')) {
+      event.preventDefault();
+      if (!event.repeat && !this.disabled() && this.supported && !this.listening()) {
+        this.hold = { key: event.code || event.key };
+        this.start();
+      }
+    }
+  }
+
   protected onEscape(event: Event): void {
     if (this.listening()) {
       event.preventDefault();
+      this.cancel();
+    }
+  }
+
+  protected onKeyUp(event: KeyboardEvent): void {
+    if (
+      (event.key === ' ' || event.key === 'Enter') &&
+      this.hold &&
+      'key' in this.hold &&
+      this.hold.key === (event.code || event.key)
+    ) {
+      event.preventDefault();
+      this.hold = undefined;
+      this.stop();
+    }
+  }
+
+  protected onBlur(): void {
+    if (this.hold) {
       this.cancel();
     }
   }
@@ -373,6 +457,7 @@ export class SiVoiceInputDirective {
 
   private detach(): VoiceInputRecognition | undefined {
     this.attempt++;
+    this.hold = undefined;
     this.clearSilenceTimer();
     const recognition = this.recognition;
     this.recognition = undefined;

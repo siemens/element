@@ -9,7 +9,11 @@
 - status: Listening…
 - heading "Control panel" [level=3]
 - switch "Send after dictation" [disabled]
-- text: Send after dictation Recognition language
+- text: Send after dictation Voice input mode
+- combobox "Voice input mode" [disabled]:
+  - option "Toggle" [selected]
+  - option "Push-to-talk"
+- text: Recognition language
 - combobox "Recognition language" [disabled]:
   - option "Browser default" [selected]
   - option "English (United States)"

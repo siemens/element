@@ -72,7 +72,7 @@ They help users continue the conversation without having to formulate the next m
 
 Voice input lets users dictate messages using an optional button next to the send button.
 
-- Click the button to start or stop dictation.
+- Supports toggle (click to start and stop) and push-to-talk (hold to record) modes.
 - Recognized text is inserted into the input field for review before sending.
 - An optional waveform indicates active recording.
 
@@ -120,7 +120,7 @@ Provide `SI_VOICE_INPUT_RECOGNITION` to use a custom provider.
 Place `si-voice-waveform` in `siChatInputEnd` beside the button to show audio activity while
 recording.
 
-<si-docs-component example="si-chat-messages/si-chat-voice-input" height="440"></si-docs-component>
+<si-docs-component example="si-chat-messages/si-chat-voice-input" height="500"></si-docs-component>
 
 ### Measured microphone levels
 
