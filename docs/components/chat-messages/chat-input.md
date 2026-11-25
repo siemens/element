@@ -74,6 +74,7 @@ Voice input lets users dictate messages using an optional button next to the sen
 
 - Click the button to start or stop dictation.
 - Recognized text is inserted into the input field for review before sending.
+- An optional waveform indicates active recording.
 
 ## Code ---
 
@@ -81,10 +82,13 @@ Voice input lets users dictate messages using an optional button next to the sen
 
 ```ts
 import { SiChatInputComponent } from '@siemens/element-ng/chat-messages';
-import { SiVoiceInputDirective } from '@siemens/element-ng/voice-input';
+import {
+  SiVoiceInputDirective,
+  SiVoiceWaveformComponent
+} from '@siemens/element-ng/voice-input';
 
 @Component({
-  imports: [SiChatInputComponent, SiVoiceInputDirective, ...]
+  imports: [SiChatInputComponent, SiVoiceInputDirective, SiVoiceWaveformComponent, ...]
 })
 ```
 
@@ -113,11 +117,15 @@ It uses the browser's
 [`webkitSpeechRecognition`](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API)
 API with the browser's default language, or a BCP 47 tag via `lang`.
 Provide `SI_VOICE_INPUT_RECOGNITION` to use a custom provider.
+Place `si-voice-waveform` in `siChatInputEnd` beside the button to show audio activity while
+recording.
 
-<si-docs-component example="si-chat-messages/si-chat-voice-input" height="360"></si-docs-component>
+<si-docs-component example="si-chat-messages/si-chat-voice-input" height="400"></si-docs-component>
 
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
 
 <si-docs-api directive="SiVoiceInputDirective"></si-docs-api>
+
+<si-docs-api component="SiVoiceWaveformComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>

@@ -33,6 +33,13 @@ export class SiVoiceInputDirective {
 }
 
 // @public
+export class SiVoiceWaveformComponent {
+    constructor();
+    readonly active: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly level: _angular_core.InputSignal<number | undefined>;
+}
+
+// @public
 export type VoiceInputError = 'no-speech' | 'aborted' | 'audio-capture' | 'network' | 'not-allowed' | 'service-not-allowed' | 'bad-grammar' | 'language-not-supported' | 'unsupported' | 'start-failed' | 'stop-failed' | 'abort-failed' | 'unknown';
 
 // @public

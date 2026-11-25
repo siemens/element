@@ -28,7 +28,7 @@ export type AccentLineType = StatusType | 'caution' | 'primary' | 'inactive';
 export type Align = 'start' | 'center' | 'end';
 
 // @public (undocumented)
-export const areAnimationsDisabled: () => boolean;
+export const areAnimationsDisabled: (element?: Element) => boolean;
 
 // @public @deprecated (undocumented)
 export const AXIS_X: {
