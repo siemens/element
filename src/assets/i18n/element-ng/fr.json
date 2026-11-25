@@ -48,6 +48,7 @@
   "SI_LIST_WIDGET.SEARCH_PLACEHOLDER": "Rechercher…",
   "SI_LOADING_SPINNER.LABEL": "Chargement…",
   "SI_MAIN_DETAIL_CONTAINER.BACK": "Retour",
+  "SI_MESSAGE_LOADER.LOADING_TEXT": "En attente d’une réponse",
   "SI_NAVBAR_VERTICAL.COLLAPSE": "Réduire",
   "SI_NAVBAR_VERTICAL.EXPAND": "Développer",
   "SI_PAGINATION.BACK": "Retour",

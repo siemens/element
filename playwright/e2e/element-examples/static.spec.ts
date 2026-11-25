@@ -148,6 +148,7 @@ test('si-chat-messages/si-chat-history', async ({ page, si }) => {
   await si.runVisualAndA11yTests('history');
 });
 test('si-chat-messages/si-ai-chat', ({ si }) => si.static());
+test('si-chat-messages/si-message-loader', ({ si }) => si.static());
 test('ag-grid/ag-grid-empty-state', async ({ si }) => {
   await si.static({ disabledA11yRules: ['aria-required-children'] });
 });

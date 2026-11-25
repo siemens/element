@@ -232,6 +232,7 @@ export interface SiTranslatableKeys {
   'SI_MARKDOWN.DOWNLOAD_TABLE_AS_CSV'?: string;
   'SI_MARKDOWN_CALLOUT.NOTE'?: string;
   'SI_MARKDOWN_CALLOUT.TIP'?: string;
+  'SI_MESSAGE_LOADER.LOADING_TEXT'?: string;
   'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
   'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;
   'SI_NAVBAR_VERTICAL.BACK'?: string;
