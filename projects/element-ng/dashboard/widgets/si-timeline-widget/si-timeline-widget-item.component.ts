@@ -13,7 +13,8 @@ import {
   OnInit
 } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, RouterLink } from '@angular/router';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { elementOptionsVertical } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuModule } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -142,4 +143,5 @@ export class SiTimelineWidgetItemComponent
   );
 
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
+  protected readonly icons = addIcons({ elementOptionsVertical });
 }

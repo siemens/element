@@ -60,6 +60,24 @@ describe('SiStatusBarComponent', () => {
     expect(spy).toHaveBeenCalledWith(items()[0]);
   });
 
+  it('should expose clickable items as buttons and invoke action on Space', async () => {
+    const spy = vi.fn();
+    items.set([
+      { title: 'Clickable', status: 'success', value: 200, action: spy },
+      { title: 'Static', status: 'danger', value: 404 }
+    ]);
+    await fixture.whenStable();
+
+    const [clickable, staticItem] = element.querySelectorAll<HTMLElement>('.status-item');
+    expect(clickable).toHaveAttribute('role', 'button');
+    expect(staticItem).not.toHaveAttribute('role');
+
+    const space = new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true });
+    clickable.dispatchEvent(space);
+    expect(space.defaultPrevented).toBe(true);
+    expect(spy).toHaveBeenCalledWith(items()[0]);
+  });
+
   it('shows an optional mute button', async () => {
     expect(element.querySelector('.mute-button')).not.toBeInTheDocument();
 

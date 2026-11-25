@@ -1,6 +1,22 @@
-- text: /4 Emergency \d+ Trouble \d+ Caution 1 Nasty long text that won't fit 8\+/
+- button "4 Emergency"
+- button /\d+ Trouble/
+- button /\d+ Caution/
+- button "1 Nasty long text that won't fit"
+- button "8+"
 - button "Mute/Unmute"
-- text: /4 Emergency 0 Life safety 0 Security 0 Supervisory \d+ Trouble \d+ Caution 1 Nasty long text that won't fit \d+ Not clickable 4 More stuff 2 Coffee machines 2 Test 2 Supervisory \d+ Trouble \d+ Warnings 1 Nasty long text/
+- button "4 Emergency"
+- button "0 Life safety" [disabled]
+- text: 0 Security 0 Supervisory
+- button /\d+ Trouble/
+- button /\d+ Caution/
+- button "1 Nasty long text that won't fit"
+- text: /\d+ Not clickable/
+- button "4 More stuff"
+- button "2 Coffee machines"
+- text: 2 Test 2 Supervisory
+- button /\d+ Trouble/
+- button /\d+ Warnings/
+- button "1 Nasty long text"
 - button "Toggle" [expanded]
 - button "Pause blinking"
 - button "Resume blinking"

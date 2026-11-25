@@ -1,4 +1,8 @@
-- text: /4 Emergency \d+ Trouble \d+ Caution 1 Nasty long text that won't fit 8\+/
+- button "4 Emergency"
+- button /\d+ Trouble/
+- button /\d+ Caution/
+- button "1 Nasty long text that won't fit"
+- button "8+"
 - button "Mute/Unmute"
 - button "Toggle"
 - button "Pause blinking"
