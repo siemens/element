@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, signal } from '@angular/core';
+import { afterNextRender, Component, inject, Injector, signal } from '@angular/core';
 import { elementVoice, elementStopFilled } from '@siemens/element-icons';
 import { ChatInputAttachment, SiChatInputComponent } from '@siemens/element-ng/chat-messages';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -27,10 +27,12 @@ import { LOG_EVENT } from '@siemens/live-preview';
 })
 export class SampleComponent {
   private readonly logEvent = inject(LOG_EVENT);
+  private readonly injector = inject(Injector);
   readonly icons = addIcons({ elementVoice, elementStopFilled });
   readonly value = signal('');
   readonly language = signal('');
   readonly listening = signal(false);
+  readonly autoSend = signal(false);
   readonly useCustomLevels = signal(false);
   readonly voiceInputLevel = signal<number | undefined>(undefined);
   readonly error = signal<string | undefined>(undefined);
@@ -42,6 +44,13 @@ export class SampleComponent {
       this.voiceInputLevel.set(this.useCustomLevels() ? 0 : undefined);
     }
     this.logEvent(listening ? 'Dictation started' : 'Dictation ended');
+  }
+
+  onDictationCompleted(transcript: string, chat: SiChatInputComponent): void {
+    if (this.autoSend() && transcript) {
+      // Wait for [disabled]="voiceInput.listening()" to clear before submitting.
+      afterNextRender(() => chat.submit(), { injector: this.injector });
+    }
   }
 
   onTranscript(transcript: string): void {

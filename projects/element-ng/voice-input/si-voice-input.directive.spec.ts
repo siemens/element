@@ -263,4 +263,28 @@ describe('SiVoiceInputDirective', () => {
     expect(host.value()).toBe('Existing draft');
     expect(host.completions).not.toHaveBeenCalled();
   });
+
+  it.each(['completed', 'empty', 'cancelled', 'error'] as const)(
+    'emits completed only on normal recognition end (%s)',
+    async outcome => {
+      const { fixture, button, voiceInput, host } = await setup();
+      await userEvent.click(button);
+      if (outcome !== 'empty') {
+        recognition.onresult?.({ results: [{ isFinal: true, 0: { transcript: 'Hello' } }] });
+      }
+
+      if (outcome === 'completed' || outcome === 'empty') {
+        recognition.onend?.();
+      } else if (outcome === 'cancelled') {
+        voiceInput.cancel();
+      } else {
+        recognition.onerror?.({ error: 'network' });
+      }
+      await fixture.whenStable();
+
+      const expectedCalls =
+        outcome === 'completed' ? [['Hello']] : outcome === 'empty' ? [['']] : [];
+      expect(host.completions.mock.calls).toEqual(expectedCalls);
+    }
+  );
 });

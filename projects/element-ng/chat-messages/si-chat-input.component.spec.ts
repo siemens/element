@@ -142,6 +142,36 @@ describe('SiChatInputComponent', () => {
     expect(textarea.element().getBoundingClientRect().height).toBeGreaterThan(initialHeight);
   });
 
+  it('should submit the current draft and clear the input via submit()', async () => {
+    value.set('Recognized message');
+    await fixture.whenStable();
+
+    component.submit();
+    await fixture.whenStable();
+
+    expect(sendSpy).toHaveBeenCalledExactlyOnceWith({
+      content: 'Recognized message',
+      attachments: []
+    });
+    expect(value()).toBe('');
+  });
+
+  it.each(['disabled', 'sending', 'empty'] as const)(
+    'should not submit via submit() when %s',
+    async state => {
+      if (state !== 'empty') {
+        value.set('Recognized message');
+        (state === 'disabled' ? disabled : sending).set(true);
+      }
+      await fixture.whenStable();
+
+      component.submit();
+
+      expect(sendSpy).not.toHaveBeenCalled();
+      expect(value()).toBe(state === 'empty' ? '' : 'Recognized message');
+    }
+  );
+
   it('should have default empty value', async () => {
     await fixture.whenStable();
     expect(value()).toBe('');
