@@ -217,7 +217,8 @@ select:is(.form-control, .form-select)[multiple] {
   block-size: unset;
 
   option {
-    padding: map.get(spacers.$spacers-block, 4) map.get(spacers.$spacers-inline, 4);
+    padding-block: map.get(spacers.$spacers-block, 4);
+    padding-inline: map.get(spacers.$spacers-inline, 4);
   }
 
   option:checked,

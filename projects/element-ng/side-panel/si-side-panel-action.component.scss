@@ -34,7 +34,8 @@
 
   .dot,
   .icon {
-    margin: map.get(all-variables.$spacers-block, 1) map.get(all-variables.$spacers-inline, 1);
+    margin-block: map.get(all-variables.$spacers-block, 1);
+    margin-inline: map.get(all-variables.$spacers-inline, 1);
   }
 }
 
