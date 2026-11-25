@@ -19,31 +19,31 @@
 - list:
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button "Show actions": 
+    - button "Show actions"
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button "Show actions": 
+    - button "Show actions"
   - listitem:
     - text: /Today \d+:\d+ Title Description/
     - button "Redo"
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button "Show actions": 
+    - button "Show actions"
 - button "Do something"
 - text: Heading
 - list:
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button "Show actions": 
+    - button "Show actions"
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button "Show actions": 
+    - button "Show actions"
   - listitem:
     - text: /Today \d+:\d+ Title/
     - button "Redo"
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button "Show actions": 
+    - button "Show actions"
 - text: Heading
 - button "Show actions"
 - list:
