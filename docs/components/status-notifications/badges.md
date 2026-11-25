@@ -100,11 +100,10 @@ To set a badge's background color, apply the `.bg-{status token}` utility classe
 <div role="status" class="badge bg-critical-emphasis">Critical</div>
 ```
 
-For a compact badge, add the `badge-sm` class to either native markup or `si-badge`:
+For a compact badge in native markup, add the `badge-sm` class:
 
 ```html
 <span class="badge badge-sm bg-default">Small</span>
-<si-badge class="badge-sm" type="success" icon="element-validation-success">Small</si-badge>
 ```
 
 The `badge-dot` class provides a smaller dot that can be placed at the side of an icon:

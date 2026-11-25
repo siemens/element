@@ -23,14 +23,15 @@ export type BadgeType =
   template: `
     @let ico = icon();
     @if (ico) {
-      <si-icon class="icon" [icon]="ico" />
+      <si-icon class="icon" [style.font-size.rem]="size() === 'small' ? 1 : null" [icon]="ico" />
     }
     <span class="text-truncate"><ng-content /></span>
   `,
   host: {
     role: 'status',
     class: 'badge',
-    '[class]': '"bg-" + type()'
+    '[class]': '"bg-" + type()',
+    '[class.badge-sm]': 'size() === "small"'
   }
 })
 export class SiBadgeComponent {
@@ -44,4 +45,9 @@ export class SiBadgeComponent {
    * @defaultValue 'default'
    */
   readonly type = input<BadgeType>('default');
+  /**
+   * Badge size.
+   * @defaultValue 'regular'
+   */
+  readonly size = input<'regular' | 'small'>('regular');
 }
