@@ -29,17 +29,30 @@ Control how text is wrapped inside an element using the [text-wrap](https://deve
 
 - `.text-wrap` forces text to wrap onto multiple lines when it exceeds the container size.
 - `.text-nowrap` prevents text from being wrapped to maintain a single line of text e.g. for buttons, labels or navigation items.
+- `.text-balance` distributes text across lines of similar length, making it useful for headings and short text blocks.
+- `.text-pretty` improves line breaks to avoid a short final line, making it useful for paragraphs.
+
+These utilities only control wrapping; they do not change how whitespace is collapsed or preserved.
 
 ```html
 <div class="text-wrap" style="width: 6rem;"> This text should wrap. </div>
 <div class="text-nowrap" style="width: 8rem;"> This text should overflow the parent. </div>
+<div class="text-balance" style="max-inline-size: 20rem;">
+  Balance this heading across lines of similar length for a more even appearance.
+</div>
+<div class="text-pretty" style="max-inline-size: 20rem;">
+  Improve paragraph line breaks to avoid leaving a single word alone on the final line.
+</div>
 ```
 
-<si-docs-component example="text/text-wrap" height="150"></si-docs-component>
+<si-docs-component example="text/text-wrap" height="300"></si-docs-component>
 
 ## Word break
 
 Use the `.text-break` utility to force long words or unbroken strings to wrap onto the next line, preventing layout issues caused by text overflow.
+
+It sets `word-wrap: break-word` (the legacy alias of `overflow-wrap: break-word`) and `word-break: break-word`, supporting word breaking in flex containers.
+Unlike `.text-wrap`, which allows normal line breaks, `.text-break` also breaks otherwise unbreakable strings such as long URLs or identifiers.
 
 ```html
 <p class="text-break"

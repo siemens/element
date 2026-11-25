@@ -527,13 +527,10 @@ $utilities: (
     class: text,
     values: lowercase uppercase capitalize
   ),
-  'white-space': (
-    property: white-space,
+  'text-wrap': (
+    property: text-wrap,
     class: text,
-    values: (
-      wrap: normal,
-      nowrap: nowrap
-    )
+    values: wrap nowrap balance pretty
   ),
   'word-wrap': (
     property: word-wrap word-break,
