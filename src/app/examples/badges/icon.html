@@ -1,5 +1,5 @@
 <h3 class="mb-6">Default size</h3>
-<div class="d-flex flex-wrap align-items-center gap-4 mb-8">
+<div class="d-flex flex-wrap align-items-center gap-4">
   @for (variant of variants; track variant.name) {
     @if (variant.name === 'primary' || variant.name === 'secondary') {
       <span class="badge mx-0" [class]="'bg-' + variant.name">
@@ -8,22 +8,6 @@
       </span>
     } @else {
       <si-badge class="mx-0" [type]="variant.name" [icon]="variant.icon">
-        Badge {{ variant.name }}
-      </si-badge>
-    }
-  }
-</div>
-
-<h3 class="mb-6">Small size</h3>
-<div class="d-flex flex-wrap align-items-center gap-4">
-  @for (variant of variants; track variant.name) {
-    @if (variant.name === 'primary' || variant.name === 'secondary') {
-      <span class="badge badge-sm mx-0" [class]="'bg-' + variant.name">
-        <si-icon class="icon" [icon]="variant.icon" />
-        <span class="text-truncate">Badge {{ variant.name }}</span>
-      </span>
-    } @else {
-      <si-badge class="badge-sm mx-0" [type]="variant.name" [icon]="variant.icon">
         Badge {{ variant.name }}
       </si-badge>
     }
