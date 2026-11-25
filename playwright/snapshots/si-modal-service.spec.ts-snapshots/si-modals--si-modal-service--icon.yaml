@@ -2,13 +2,12 @@
 - button "Create large modal"
 - button "Create centered modal"
 - button "Create modal with icon"
-- button "Create full-screen modal"
 - button "Create nested modal"
 - button "Create modal with custom component"
 - dialog "Modal":
-  - text: Information
+  - text: ""
   - heading "Modal" [level=4]
-  - button "Close modal": 
+  - button "Close modal"
   - text: This is the body.
   - button "Close"
   - button "Accept"

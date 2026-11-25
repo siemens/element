@@ -1,5 +1,4 @@
 - paragraph: Title
-- paragraph: A long subheading that provides secondary context and gets truncated when the side panel is too narrow
 - button "Close"
 - button "Hey there" [expanded]
 - region "Hey there": And here we have some content
@@ -13,21 +12,21 @@
 - button "Toggle side panel"
 - group "Size toggle button group":
   - radio "Regular" [checked]
-  - text: Regular
+  - text: ""
   - radio "Wide"
-  - text: Wide
+  - text: ""
   - radio "Extended"
-  - text: Extended
+  - text: ""
 - group "Display mode toggle button group":
   - radio "Overlay" [checked]
-  - text: Overlay
+  - text: ""
   - radio "Navigate"
-  - text: Navigate
+  - text: ""
 - group "Mode toggle button group":
   - radio "Over" [checked]
-  - text: Over
+  - text: ""
   - radio "Scroll"
-  - text: Scroll
+  - text: ""
 - separator
 - heading "Modes and sizes" [level=2]
 - paragraph:

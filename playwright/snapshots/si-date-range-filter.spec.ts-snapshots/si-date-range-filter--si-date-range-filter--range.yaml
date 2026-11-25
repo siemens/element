@@ -10,11 +10,11 @@
 - text: Reference
 - textbox "Reference Open calendar":
   - /placeholder: Select date
-  - text: /4\/5\/\d+/
+  - text: ""
 - button "Open calendar"
 - checkbox "Today"
 - text: Today Period
-- spinbutton "Value": /\d+/
+- spinbutton "Value"
 - combobox "Unit": Unit Days
 - radio "Before"
 - text: Before

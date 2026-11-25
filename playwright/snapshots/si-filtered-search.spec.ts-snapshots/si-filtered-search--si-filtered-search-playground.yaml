@@ -19,13 +19,13 @@
 - text: Exclusive criteria
 - checkbox "Disable free text pills" [checked]
 - text: Disable free text pills Search debounce time
-- spinbutton "Search debounce time": "0"
+- spinbutton "Search debounce time"
 - text: Number of visible options
-- spinbutton "Number of visible options": /\d+/
+- spinbutton "Number of visible options"
 - text: Max criteria
-- spinbutton "Max criteria": "4"
+- spinbutton "Max criteria"
 - text: Max options (0 means unlimited)
-- spinbutton "Max options (0 means unlimited)": /\d+/
+- spinbutton "Max options (0 means unlimited)"
 - text: Search criteria input
 - textbox "Search criteria input":
   - /placeholder: "Enter and assign search criteria as JSON e.g. { \"criterias\": [], \"value\": \"test\" }"

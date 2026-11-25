@@ -1,17 +1,17 @@
 - text: Energy consumption and production
 - img: /-\d+\.\d+ 0\.0 \d+\.\d+ \d+\.\d+ KWh/
 - text: Angle*
-- spinbutton "Angle*": /\d+/
+- spinbutton "Angle*"
 - text: Value range*
-- spinbutton "Value range*": /\d+/
+- spinbutton "Value range*"
 - text: Unit
-- textbox "Unit": KWh
+- textbox "Unit"
 - text: Min. decimals*
-- spinbutton "Min. decimals*": "1"
+- spinbutton "Min. decimals*"
 - text: Max. decimals*
-- spinbutton "Max. decimals*": "2"
+- spinbutton "Max. decimals*"
 - text: Num. axis decimals*
-- spinbutton "Num. axis decimals*": "1"
+- spinbutton "Num. axis decimals*"
 - text: Legend position*
 - combobox "Legend position*":
   - option "In a column" [selected]

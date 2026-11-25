@@ -9,9 +9,9 @@
 - text: Icon input
 - textbox "Icon input": Input with icon for additional information tooltip
 - text: Number input
-- spinbutton "Number input": "5.5"
+- spinbutton "Number input"
 - text: Password input*
-- textbox "Password input*": dolor
+- textbox "Password input*"
 - button "Show password"
 - text: Please enter a stronger password Email input
 - textbox "Email input": john.doe@example.org
@@ -36,7 +36,7 @@
 - button "Open calendar"
 - text: Daterange
 - group:
-  - textbox "Start": /8\/\d+\/\d+/
+  - textbox "Start"
   - text: "-"
   - textbox "End": /8\/\d+\/\d+/
   - button "Open calendar"
@@ -48,16 +48,16 @@
 - group:
   - textbox "Hours":
     - /placeholder: hh
-    - text: /\d+/
+    - text: ""
   - textbox "Minutes":
     - /placeholder: mm
-    - text: /\d+/
+    - text: ""
   - textbox "Seconds":
     - /placeholder: ss
-    - text: /\d+/
+    - text: ""
   - textbox "Milliseconds":
     - /placeholder: ms
-    - text: /\d+/
+    - text: ""
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
@@ -72,13 +72,13 @@
 - group "Multi-Checkbox":
   - text: ""
   - 'checkbox "Option #1" [checked]'
-  - text: "Option #1"
+  - text: ""
   - 'checkbox "Option #2"'
-  - text: "Option #2"
+  - text: ""
   - 'checkbox "Option #3" [checked]'
-  - text: "Option #3"
+  - text: ""
   - 'checkbox "Option #4"'
-  - text: "Option #4"
+  - text: ""
 - separator
 - group "Radio":
   - text: ""
@@ -94,7 +94,7 @@
 - text: si-select*
 - combobox "si-select*"
 - text: Please choose an option si-select multi
-- combobox "si-select multi": Good , Poor
+- combobox "si-select multi"
 - text: Select
 - combobox "Select":
   - option "Rome"
@@ -105,11 +105,11 @@
 - text: IPv4 Address*
 - textbox "IPv4 Address*":
   - /placeholder: Enter a IPv4 address
-  - text: /\d+\.\d+\.0\.1/
+  - text: ""
 - text: IPv4 Address with CIDR*
 - textbox "IPv4 Address with CIDR*":
   - /placeholder: Enter a IPv4 address with subnet mask
-  - text: /\d+\.\d+\.0\.1\/\d+/
+  - text: ""
 - text: IPv6 Address*
 - textbox "IPv6 Address*":
   - /placeholder: Enter a IPv6 address

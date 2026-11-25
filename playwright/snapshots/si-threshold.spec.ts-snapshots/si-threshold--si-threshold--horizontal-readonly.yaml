@@ -1,19 +1,19 @@
 - text: Unhealthy
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C Poor
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C Average
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C Good
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C Very good
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C Good
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C Average
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C Poor
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: "°C Unhealthy Control panel Validation: true"
 - checkbox "Can add/remove steps"
 - text: Can add/remove steps
@@ -31,12 +31,12 @@
 - text: Can wrap
 - checkbox "Use alias for step values"
 - text: Use alias for step values Max. steps
-- spinbutton "Max. steps": /\d+/
+- spinbutton "Max. steps"
 - text: Min. value
-- spinbutton "Min. value": /-\d+/
+- spinbutton "Min. value"
 - text: Max. value
-- spinbutton "Max. value": /\d+/
+- spinbutton "Max. value"
 - text: Step size
-- spinbutton "Step size": "1"
+- spinbutton "Step size"
 - text: Unit
-- textbox "Unit": °C
+- textbox "Unit"

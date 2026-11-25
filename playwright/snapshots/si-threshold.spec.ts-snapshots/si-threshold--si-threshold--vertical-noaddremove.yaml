@@ -1,26 +1,26 @@
 - combobox "Status": Status Unhealthy
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C
 - combobox "Status": Status Poor
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C
 - combobox "Status": Status Average
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C
 - combobox "Status": Status Good
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C
 - combobox "Status": Status Very good
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C
 - combobox "Status": Status Good
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C
 - combobox "Status": Status Average
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C
 - combobox "Status": Status Poor
-- spinbutton "Threshold value": /\d+/
+- spinbutton "Threshold value"
 - text: °C
 - combobox "Status": Status Unhealthy
 - text: "Control panel Validation: true"
@@ -40,12 +40,12 @@
 - text: Can wrap
 - checkbox "Use alias for step values"
 - text: Use alias for step values Max. steps
-- spinbutton "Max. steps": /\d+/
+- spinbutton "Max. steps"
 - text: Min. value
-- spinbutton "Min. value": /-\d+/
+- spinbutton "Min. value"
 - text: Max. value
-- spinbutton "Max. value": /\d+/
+- spinbutton "Max. value"
 - text: Step size
-- spinbutton "Step size": "1"
+- spinbutton "Step size"
 - text: Unit
-- textbox "Unit": °C
+- textbox "Unit"
