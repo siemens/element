@@ -122,6 +122,13 @@ recording.
 
 <si-docs-component example="si-chat-messages/si-chat-voice-input" height="400"></si-docs-component>
 
+### Measured microphone levels
+
+Pair `siVoiceInput` and `si-voice-waveform` with the Web Audio API to drive the waveform from
+live microphone volume.
+
+<si-docs-component example="si-chat-messages/si-chat-voice-input-browser" height="220"></si-docs-component>
+
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
 
 <si-docs-api directive="SiVoiceInputDirective"></si-docs-api>
