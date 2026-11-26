@@ -167,6 +167,19 @@ export class SiFileUploadDirective {
     const newFiles: UploadFile[] = [];
     let pendingEntries = 0;
 
+    const onEntryDone = (): void => {
+      if (--pendingEntries === 0) {
+        if (newFiles.length > 0) {
+          this.filesAdded.emit(newFiles);
+        }
+        const validFiles = newFiles.filter(f => f.status === 'added');
+        if (validFiles.length > 0) {
+          this.validFiles.emit(validFiles);
+        }
+        this.reset();
+      }
+    };
+
     const traverseFileTree = (item: FileSystemEntry): void => {
       if (item.isFile) {
         (item as FileSystemFileEntry).file(file => {
@@ -177,16 +190,7 @@ export class SiFileUploadDirective {
             this.fileError.emit(uploadFile as FileUploadError);
           }
 
-          if (--pendingEntries === 0) {
-            if (newFiles.length > 0) {
-              this.filesAdded.emit(newFiles);
-            }
-            const validFiles = newFiles.filter(f => f.status === 'added');
-            if (validFiles.length > 0) {
-              this.filesAdded.emit(validFiles);
-            }
-            this.reset();
-          }
+          onEntryDone();
         });
       } else if (item.isDirectory) {
         const dirReader = (item as FileSystemDirectoryEntry).createReader();
@@ -195,16 +199,7 @@ export class SiFileUploadDirective {
             pendingEntries++;
             traverseFileTree(entry);
           }
-          if (--pendingEntries === 0) {
-            if (newFiles.length > 0) {
-              this.filesAdded.emit(newFiles);
-            }
-            const validFiles = newFiles.filter(f => f.status === 'added');
-            if (validFiles.length > 0) {
-              this.filesAdded.emit(validFiles);
-            }
-            this.reset();
-          }
+          onEntryDone();
         });
       }
     };

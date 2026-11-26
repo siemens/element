@@ -72,7 +72,8 @@ describe('SiFileDropzoneComponent', () => {
         webkitGetAsEntry: () => ({
           isFile: true,
           isDirectory: false,
-          file: (callback: (file: File) => void) => callback(new File(['content'], 'file.txt')),
+          file: (callback: (file: File) => void) =>
+            queueMicrotask(() => callback(new File(['content'], 'file.txt'))),
           filesystem: null as any,
           fullPath: '/file.txt',
           name: 'file.txt',
@@ -97,18 +98,20 @@ describe('SiFileDropzoneComponent', () => {
               successCallback: (entries: any[]) => void,
               errorCallback: (error: any) => void
             ) => {
-              successCallback([
-                {
-                  isFile: true,
-                  isDirectory: false,
-                  file: (callback: (file: File) => void) =>
-                    callback(new File(['content'], 'newFile.txt')),
-                  filesystem: null as any,
-                  fullPath: '/newFile.txt',
-                  name: 'newFile.txt',
-                  getParent: () => {}
-                }
-              ]);
+              queueMicrotask(() =>
+                successCallback([
+                  {
+                    isFile: true,
+                    isDirectory: false,
+                    file: (callback: (file: File) => void) =>
+                      queueMicrotask(() => callback(new File(['content'], 'newFile.txt'))),
+                    filesystem: null as any,
+                    fullPath: '/newFile.txt',
+                    name: 'newFile.txt',
+                    getParent: () => {}
+                  }
+                ])
+              );
             }
           })
         })
@@ -290,7 +293,7 @@ describe('SiFileDropzoneComponent', () => {
     element.querySelector('.drag-and-drop')?.dispatchEvent(new DragEvent('drop', { dataTransfer }));
     await fixture.whenStable();
 
-    expect(filesAddedSpy).toHaveBeenCalled();
+    expect(filesAddedSpy).toHaveBeenCalledOnce();
     const files = getFiles();
     expect(files).toHaveLength(2);
     expect(files[0].fileName).toBe('file.txt');
