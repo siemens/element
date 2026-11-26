@@ -88,7 +88,7 @@ def test_type_card_kinds_link_to_language_documentation(site, symbol, label, url
   reference = (site / f'site/api/fixture/library/types/{symbol}/index.html').read_text(encoding='utf-8')
 
   assert re.search(
-    rf'<a\b[^>]*class="?api-kind"?[^>]*href="?{re.escape(url)}"?[^>]*>{label}</a>',
+    rf'<a\b[^>]*class="?api-kind"?[^>]*href="?{re.escape(url)}"?[^>]*>{label}</a\s*>',
     reference,
   )
 
