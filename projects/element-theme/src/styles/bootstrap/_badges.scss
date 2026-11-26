@@ -145,7 +145,7 @@
     font-weight: si-sys-variables.$si-sys-typography-body-font-weight;
   }
 
-  &:has(> .icon) {
+  &:has(> :is(.icon, .icon-sm)) {
     display: inline-flex;
     align-items: center;
     gap: map.get(spacers.$spacers-block, 1) map.get(spacers.$spacers-inline, 1);

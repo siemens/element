@@ -23,7 +23,7 @@ export type BadgeType =
   template: `
     @let ico = icon();
     @if (ico) {
-      <si-icon class="icon" [style.font-size.rem]="size() === 'small' ? 1 : null" [icon]="ico" />
+      <si-icon [class]="size() === 'small' ? 'icon-sm' : 'icon'" [icon]="ico" />
     }
     <span class="text-truncate"><ng-content /></span>
   `,
