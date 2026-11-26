@@ -1,0 +1,35 @@
+- text: Persistent tool selection
+- toolbar "Drawing tools":
+  - group "Tools":
+    - button "Pen"
+    - button "Move"
+    - button "Line"
+    - button "Text" [pressed]
+  - group "History":
+    - button "Undo"
+    - button "Redo"
+- text: Secondary and text buttons
+- toolbar "Object actions":
+  - group "Edit":
+    - button "Copy"
+    - button "Duplicate"
+    - button "Delete"
+  - group "Publish":
+    - group "Export":
+      - button "Export"
+      - button "More export options"
+- text: Dropdown buttons, select and selection buttons
+- toolbar "View settings":
+  - group "Insert":
+    - button "Line style"
+  - group "Zoom":
+    - button "Zoom out"
+    - text: Zoom level
+    - combobox "Zoom level": /\d+%/
+    - button "Zoom in"
+  - group "View":
+    - radiogroup "View mode":
+      - radio "2D" [checked]
+      - text: 2D
+      - radio "3D"
+      - text: 3D

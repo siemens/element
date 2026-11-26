@@ -1,0 +1,60 @@
+<div class="d-flex align-items-center gap-4">
+  <label for="workspace-width" class="form-label mb-0 text-nowrap">Workspace width</label>
+  <input
+    id="workspace-width"
+    type="range"
+    class="form-range"
+    min="30"
+    max="100"
+    [value]="workspaceWidth()"
+    (input)="workspaceWidth.set(+$any($event.target).value)"
+  />
+</div>
+
+<div class="flex-grow-1 background-0 border rounded-2 p-5" [style.inline-size.%]="workspaceWidth()">
+  <div class="d-flex justify-content-center" (siResizeObserver)="availableWidth.set($event.width)">
+    <si-toolbar aria-label="Editor toolbar">
+      @for (item of layout(); track item.section.label) {
+        <si-toolbar-group [attr.aria-label]="item.section.label">
+          @for (action of item.visible; track action.id) {
+            <button
+              type="button"
+              class="btn btn-icon btn-tertiary-ghost"
+              ngToolbarWidget
+              [value]="action.id"
+              [attr.aria-label]="action.label"
+              [siTooltip]="action.label"
+              (click)="runAction(action)"
+            >
+              <si-icon class="icon" [icon]="action.icon" />
+            </button>
+          }
+          @if (item.overflow.length) {
+            <button
+              type="button"
+              class="btn btn-icon btn-tertiary-ghost"
+              ngToolbarWidget
+              [value]="item.section.label + '-overflow'"
+              [attr.aria-label]="'More ' + item.section.label"
+              [siTooltip]="'More ' + item.section.label"
+              [cdkMenuTriggerFor]="overflowMenu"
+              [cdkMenuTriggerData]="{ $implicit: item.overflow }"
+            >
+              <si-icon class="icon" [icon]="icons.elementOptions" />
+            </button>
+          }
+        </si-toolbar-group>
+      }
+    </si-toolbar>
+  </div>
+</div>
+
+<ng-template #overflowMenu let-actions>
+  <si-menu>
+    @for (action of actions; track action.id) {
+      <si-menu-item [icon]="action.icon" (triggered)="runAction(action)">
+        {{ action.label }}
+      </si-menu-item>
+    }
+  </si-menu>
+</ng-template>

@@ -79,6 +79,7 @@ nav:
       - Help button:                      'components/buttons-menus/help-button.md'
       - Links:                            'components/buttons-menus/links.md'
       - Menu:                             'components/buttons-menus/menu.md'
+      - Toolbar:                          'components/buttons-menus/toolbar.md'
     - Dashboards:
       - Overview:                         'components/dashboards/index.md'
       - Dashboard:                        'components/dashboards/dashboard.md'

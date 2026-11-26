@@ -1,0 +1,196 @@
+<span class="si-h5">Persistent tool selection</span>
+<si-toolbar aria-label="Drawing tools">
+  <si-toolbar-group aria-label="Tools">
+    @for (tool of tools; track tool.id) {
+      <button
+        type="button"
+        class="btn btn-icon btn-tertiary-ghost"
+        ngToolbarWidget
+        [value]="tool.id"
+        [class.active]="activeTool() === tool.id"
+        [attr.aria-pressed]="activeTool() === tool.id"
+        [attr.aria-label]="tool.label"
+        [siTooltip]="tool.label"
+        (click)="selectTool(tool.id)"
+      >
+        <si-icon class="icon" [icon]="tool.icon" />
+      </button>
+    }
+  </si-toolbar-group>
+  <si-toolbar-group aria-label="History">
+    <button
+      type="button"
+      class="btn btn-icon btn-tertiary-ghost"
+      ngToolbarWidget
+      value="undo"
+      aria-label="Undo"
+      siTooltip="Undo"
+      (click)="logEvent('Undo')"
+    >
+      <si-icon class="icon" [icon]="icons.elementUndo" />
+    </button>
+    <button
+      type="button"
+      class="btn btn-icon btn-tertiary-ghost"
+      ngToolbarWidget
+      value="redo"
+      aria-label="Redo"
+      siTooltip="Redo"
+      (click)="logEvent('Redo')"
+    >
+      <si-icon class="icon" [icon]="icons.elementRedo" />
+    </button>
+  </si-toolbar-group>
+</si-toolbar>
+
+<span class="si-h5">Secondary and text buttons</span>
+<si-toolbar aria-label="Object actions">
+  <si-toolbar-group aria-label="Edit">
+    <button
+      type="button"
+      class="btn btn-icon btn-secondary"
+      ngToolbarWidget
+      value="copy"
+      aria-label="Copy"
+      siTooltip="Copy"
+      (click)="logEvent('Copy')"
+    >
+      <si-icon class="icon" [icon]="icons.elementCopy" />
+    </button>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      ngToolbarWidget
+      value="duplicate"
+      (click)="logEvent('Duplicate')"
+    >
+      Duplicate
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      ngToolbarWidget
+      value="delete"
+      (click)="logEvent('Delete')"
+    >
+      <si-icon class="icon" [icon]="icons.elementDelete" />
+      Delete
+    </button>
+  </si-toolbar-group>
+  <si-toolbar-group aria-label="Publish">
+    <div class="btn-group" role="group" aria-label="Export">
+      <button
+        type="button"
+        class="btn btn-primary"
+        ngToolbarWidget
+        value="export"
+        (click)="logEvent('Export')"
+      >
+        <si-icon class="icon" [icon]="icons.elementExport" />
+        Export
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-icon dropdown-toggle"
+        ngToolbarWidget
+        value="export-options"
+        aria-label="More export options"
+        [cdkMenuTriggerFor]="exportMenu"
+      >
+        <si-icon class="dropdown-caret icon" [icon]="icons.elementDown2" />
+      </button>
+    </div>
+  </si-toolbar-group>
+</si-toolbar>
+
+<span class="si-h5">Dropdown buttons, select and selection buttons</span>
+<si-toolbar aria-label="View settings">
+  <si-toolbar-group aria-label="Insert">
+    <button
+      type="button"
+      class="btn btn-tertiary-ghost dropdown-toggle"
+      ngToolbarWidget
+      value="line-style"
+      aria-label="Line style"
+      siTooltip="Line style"
+      [cdkMenuTriggerFor]="lineStyleMenu"
+    >
+      <si-icon class="icon" [icon]="icons.elementLine" />
+      <si-icon class="dropdown-caret icon" [icon]="icons.elementDown2" />
+    </button>
+  </si-toolbar-group>
+  <si-toolbar-group aria-label="Zoom">
+    <button
+      type="button"
+      class="btn btn-icon btn-tertiary-ghost"
+      ngToolbarWidget
+      value="zoom-out"
+      aria-label="Zoom out"
+      siTooltip="Zoom out"
+      (click)="logEvent('Zoom out')"
+    >
+      <si-icon class="icon" [icon]="icons.elementZoomOut" />
+    </button>
+    <span id="toolbar-zoom-label" class="visually-hidden">Zoom level</span>
+    <si-select
+      class="form-control"
+      labelledby="toolbar-zoom-label"
+      ngToolbarWidget
+      [options]="zoomLevels"
+      [(value)]="zoom"
+    />
+    <button
+      type="button"
+      class="btn btn-icon btn-tertiary-ghost"
+      ngToolbarWidget
+      value="zoom-in"
+      aria-label="Zoom in"
+      siTooltip="Zoom in"
+      (click)="logEvent('Zoom in')"
+    >
+      <si-icon class="icon" [icon]="icons.elementZoomIn" />
+    </button>
+  </si-toolbar-group>
+  <si-toolbar-group aria-label="View">
+    <div class="btn-group" role="radiogroup" aria-label="View mode">
+      <input
+        id="toolbar-view-2d"
+        type="radio"
+        class="btn-check"
+        name="toolbar-view"
+        ngToolbarWidget
+        value="2d"
+        [checked]="view() === '2d'"
+        (change)="view.set('2d')"
+      />
+      <label class="btn" for="toolbar-view-2d">2D</label>
+      <input
+        id="toolbar-view-3d"
+        type="radio"
+        class="btn-check"
+        name="toolbar-view"
+        ngToolbarWidget
+        value="3d"
+        [checked]="view() === '3d'"
+        (change)="view.set('3d')"
+      />
+      <label class="btn" for="toolbar-view-3d">3D</label>
+    </div>
+  </si-toolbar-group>
+</si-toolbar>
+
+<ng-template #exportMenu>
+  <si-menu>
+    <si-menu-item (triggered)="logEvent('Export as PDF')">Export as PDF</si-menu-item>
+    <si-menu-item (triggered)="logEvent('Export as SVG')">Export as SVG</si-menu-item>
+    <si-menu-item (triggered)="logEvent('Export as PNG')">Export as PNG</si-menu-item>
+  </si-menu>
+</ng-template>
+
+<ng-template #lineStyleMenu>
+  <si-menu>
+    <si-menu-item (triggered)="logEvent('Solid')">Solid</si-menu-item>
+    <si-menu-item (triggered)="logEvent('Dashed')">Dashed</si-menu-item>
+    <si-menu-item (triggered)="logEvent('Dotted')">Dotted</si-menu-item>
+  </si-menu>
+</ng-template>
