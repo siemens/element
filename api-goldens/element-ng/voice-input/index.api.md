@@ -22,6 +22,7 @@ export class SiVoiceInputDirective {
     readonly lang: _angular_core.InputSignal<string>;
     readonly listening: _angular_core.Signal<boolean>;
     readonly listeningChange: _angular_core.OutputEmitterRef<boolean>;
+    readonly mode: _angular_core.InputSignal<"toggle" | "push-to-talk">;
     readonly silenceTimeout: _angular_core.InputSignal<number>;
     start(): void;
     readonly startLabel: _angular_core.InputSignal<TranslatableString>;

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { afterNextRender, Component, inject, Injector, signal } from '@angular/core';
+import { afterNextRender, Component, computed, inject, Injector, signal } from '@angular/core';
 import { elementVoice, elementStopFilled } from '@siemens/element-icons';
 import { ChatInputAttachment, SiChatInputComponent } from '@siemens/element-ng/chat-messages';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
@@ -33,9 +33,16 @@ export class SampleComponent {
   readonly language = signal('');
   readonly listening = signal(false);
   readonly autoSend = signal(false);
+  readonly mode = signal<'toggle' | 'push-to-talk'>('toggle');
   readonly useCustomLevels = signal(false);
   readonly voiceInputLevel = signal<number | undefined>(undefined);
   readonly error = signal<string | undefined>(undefined);
+  readonly tooltip = computed(() => {
+    if (this.mode() === 'push-to-talk') {
+      return this.listening() ? 'Release to stop' : 'Hold to dictate';
+    }
+    return this.listening() ? 'Stop dictation' : 'Start dictation';
+  });
 
   onListeningChange(listening: boolean): void {
     this.listening.set(listening);
@@ -66,6 +73,13 @@ export class SampleComponent {
         : `Voice input failed: ${error}`;
     this.error.set(message);
     this.logEvent(`Voice input failed: ${error}`);
+  }
+
+  setMode(event: Event): void {
+    const mode = (event.target as HTMLSelectElement).value;
+    if (mode === 'toggle' || mode === 'push-to-talk') {
+      this.mode.set(mode);
+    }
   }
 
   sendMessage(event: { content: string; attachments: ChatInputAttachment[] }): void {
