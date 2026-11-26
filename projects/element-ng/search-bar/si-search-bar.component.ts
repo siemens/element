@@ -307,6 +307,8 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
       projectedInput.onReset();
       return;
     }
+    // Replace any pending debounced input so it cannot restore the cleared value
+    this.debouncer.next('');
     this.setSearch('');
     this.focus();
   }
