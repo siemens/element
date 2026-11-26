@@ -131,6 +131,6 @@ width so its text can overflow.
 
 <si-docs-component example="si-tooltip/si-tooltip-overflow"></si-docs-component>
 
-<si-docs-api directive="SiTooltipDirective"></si-docs-api>
+[[ api('SiTooltipDirective') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

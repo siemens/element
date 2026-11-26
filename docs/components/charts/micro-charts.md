@@ -64,12 +64,12 @@ import { SiMicrochartProgressComponent } from '@siemens/native-charts-ng/microch
 
 <si-docs-component example="si-ncharts/si-micro-charts" height="400"></si-docs-component>
 
-<si-docs-api component="SiMicrochartBarComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiMicrochartBarComponent', package='@siemens/native-charts-ng', hide_implicitly_public=True) ]]
 
-<si-docs-api component="SiMicrochartDonutComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiMicrochartDonutComponent', package='@siemens/native-charts-ng', hide_implicitly_public=True) ]]
 
-<si-docs-api component="SiMicrochartLineComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiMicrochartLineComponent', package='@siemens/native-charts-ng', hide_implicitly_public=True) ]]
 
-<si-docs-api component="SiMicrochartProgressComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiMicrochartProgressComponent', package='@siemens/native-charts-ng', hide_implicitly_public=True) ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

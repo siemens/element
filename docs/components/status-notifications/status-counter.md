@@ -22,7 +22,7 @@ import { SiStatusCounterComponent } from '@siemens/element-ng/status-counter';
   <si-docs-tab example="si-status-counter" heading="Status Counter"></si-docs-tab>
 </si-docs-component>
 
-<si-docs-api component="SiStatusCounterComponent"></si-docs-api>
-<si-docs-api component="SiStatusIconComponent"></si-docs-api>
+[[ api('SiStatusCounterComponent') ]]
+[[ api('SiStatusIconComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

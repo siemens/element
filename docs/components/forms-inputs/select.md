@@ -451,16 +451,16 @@ calls `select.updateValue(...)` once the user confirms — keeping the
 
 <si-docs-component example="si-select/si-select-multi-custom" height="450"></si-docs-component>
 
-<si-docs-api component="SiSelectComponent"></si-docs-api>
+[[ api('SiSelectComponent') ]]
 
-<si-docs-api directive="SiSelectSimpleOptionsDirective" heading="Simple options (via SiSelectSimpleOptionsDirective)"></si-docs-api>
+[[ api('SiSelectSimpleOptionsDirective', heading='Simple options (via SiSelectSimpleOptionsDirective)') ]]
 
-<si-docs-api directive="SiCustomSelectDirective"></si-docs-api>
+[[ api('SiCustomSelectDirective') ]]
 
-<si-docs-api component="SiSelectComboboxComponent"></si-docs-api>
+[[ api('SiSelectComboboxComponent') ]]
 
-<si-docs-api component="SiSelectComboboxValueComponent"></si-docs-api>
+[[ api('SiSelectComboboxValueComponent') ]]
 
-<si-docs-api directive="SiSelectDropdownDirective"></si-docs-api>
+[[ api('SiSelectDropdownDirective') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

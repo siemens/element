@@ -108,6 +108,6 @@ page containing license information.
 The `licenseInfo.iframe` URL is marked as a trusted resource URL and is not sanitized by Angular.
 Only pass URLs from trusted sources.
 
-<si-docs-api component="SiAboutComponent"></si-docs-api>
+[[ api('SiAboutComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

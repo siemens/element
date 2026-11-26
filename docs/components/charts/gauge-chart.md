@@ -81,7 +81,7 @@ import { SiChartGaugeComponent } from '@siemens/charts-ng/gauge';
 
 <si-docs-component example="si-charts/gauge/si-chart-gauge" height="400"></si-docs-component>
 
-<si-docs-api component="SiChartGaugeComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiChartGaugeComponent', package='@siemens/charts-ng', hide_implicitly_public=True) ]]
 
 ### Native gauge chart
 
@@ -105,6 +105,6 @@ A single arc covers the ring. Colored background segments can be layered beneath
 
 <si-docs-component example="si-ncharts/si-nchart-gauge-single" height="400"></si-docs-component>
 
-<si-docs-api component="SiNChartGaugeComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiNChartGaugeComponent', package='@siemens/native-charts-ng', hide_implicitly_public=True) ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

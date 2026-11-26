@@ -102,6 +102,6 @@ To get a vertical navigation without icons, i.e. labels only set `[textOnly]="tr
 
 <si-docs-component example="si-navbar-vertical/si-navbar-vertical-text" height="400"></si-docs-component>
 
-<si-docs-api component="SiNavbarVerticalComponent"></si-docs-api>
+[[ api('SiNavbarVerticalComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

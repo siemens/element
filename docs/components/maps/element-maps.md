@@ -249,7 +249,7 @@ Customize the tooltip width with `maxLabelLength`:
 
 <si-docs-component example="si-map/si-map-default-style" height="580"></si-docs-component>
 
-<si-docs-api component="SiMapComponent" package="@siemens/maps-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiMapComponent', package='@siemens/maps-ng', hide_implicitly_public=True) ]]
 
 #### Methods
 
@@ -285,4 +285,4 @@ The `description` of a map point can contain HTML and is rendered in the popover
 Do not pass untrusted content that was marked as trusted (e.g. via `bypassSecurityTrustHtml`).
 The point `name` is rendered as plain text.
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -125,8 +125,8 @@ to the title to reserve space for the vertical navigation and the side panel in 
 </si-dashboard>
 ```
 
-<si-docs-api component="SiDashboardComponent"></si-docs-api>
+[[ api('SiDashboardComponent') ]]
 
-<si-docs-api component="SiDashboardCardComponent"></si-docs-api>
+[[ api('SiDashboardCardComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -55,8 +55,8 @@ import { SiIp6InputDirective } from '@siemens/element-ng/ip-input';
 
 <si-docs-component example="si-ip-input/si-ip-input" height="300"></si-docs-component>
 
-<si-docs-api directive="SiIp4InputDirective"></si-docs-api>
+[[ api('SiIp4InputDirective') ]]
 
-<si-docs-api directive="SiIp6InputDirective"></si-docs-api>
+[[ api('SiIp6InputDirective') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -293,34 +293,20 @@ Each chapter must include:
 ### Code section
 
 Embed the API for relevant components, directives, services, pipes, and types
-instead of linking to it. Put API tags on their own lines, outside prose paragraphs.
+instead of linking to it. Put API macros on their own lines, outside prose paragraphs.
 Export local APIs through the public entry point declared in `ng-package.json`.
 The compiler extractor discovers those exports automatically; no documentation
 barrel or separate documentation tsconfig is needed.
 
-To enhance the docs with live examples and API specs, use these tags in the Markdown files:
+To enhance the docs with live examples and API specs, use these tags and Jinja macros in the Markdown files:
 
 - `<si-docs-component example="si-example-1/si-example-1"></si-docs-component>`  
   The path in the example is relative from the example base url and only
   requires the subfolder and example name.
-- `<si-docs-api component="SiExampleComponent"></si-docs-api>`
-  To show the input parameters, output parameters and public attributes of your component, enter the class
-  name in the `component` attribute.
-- `<si-docs-api directive="SiExampleDirective"></si-docs-api>`  
-  To show the input parameters, output parameters and public attributes of your directive, enter the class
-  name in the `directive` attribute.
-- `<si-docs-api injectable="SiExampleService"></si-docs-api>`  
-  To show the public attributes of your service, enter the class
-  name in the `injectable` attribute.
-- `<si-docs-type name="SiExampleInterface"></si-docs-type>`  
-  To show the attributes of your interface or class, enter the type
-  name in the `name` attribute.
-- `<si-docs-types></si-docs-types>`  
-  To show the types of the input and output parameters of your component,
-  only works in combination with the `si-docs-api` tag.
-  Includes the types for all components and directives documented in the same
-  file. Can therefore only be used once per file.
-  It should always be used to get better types documentation resolution.
-
-To document these tags literally, put them in fenced or inline code. Literal code
-and comments are not interpreted as active API or example requests.
+- `[[ api('SiExampleComponent') ]]`  
+  Shows the input parameters, output parameters, and public attributes of a component, directive, service, pipe, or class. Optional keyword arguments: `package`, `heading`, `no_heading=True`, `hide_implicitly_public=True`.
+- `[[ api_type('SiExampleInterface') ]]`  
+  Shows compact documentation for a type alias, interface, enum, function, or member. Optional keyword arguments: `package`, `heading`, `no_heading=True`.
+- `[[ api_types() ]]`  
+  Shows the types referenced by the `api()` and `api_type()` calls in the same file.
+  Place it once per file after the API embeds to get local type documentation links.

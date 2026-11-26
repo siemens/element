@@ -385,8 +385,8 @@ or if the state is set manually by applying a class like `.is-invalid`.
 </div>
 ```
 
-<si-docs-api component="SiFormContainerComponent"></si-docs-api>
+[[ api('SiFormContainerComponent') ]]
 
-<si-docs-api component="SiFormItemComponent"></si-docs-api>
+[[ api('SiFormItemComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

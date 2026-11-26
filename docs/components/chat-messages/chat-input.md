@@ -87,6 +87,6 @@ Clear the list (set to `[]`) on send and repopulate it after each AI response.
 />
 ```
 
-<si-docs-api component="SiChatInputComponent"></si-docs-api>
+[[ api('SiChatInputComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

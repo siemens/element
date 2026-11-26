@@ -66,6 +66,6 @@ the source icon. Set `disabled` when source details must not be available.
 
 <si-docs-component example="si-source-chip/si-source-chip" height="700"></si-docs-component>
 
-<si-docs-api component="SiSourceChipComponent"></si-docs-api>
+[[ api('SiSourceChipComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

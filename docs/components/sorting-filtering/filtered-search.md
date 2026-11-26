@@ -212,6 +212,6 @@ The following example shows the use of multi select criterion:
 
 <si-docs-component example="si-filtered-search/si-filtered-search-multiselect" height="300"></si-docs-component>
 
-<si-docs-api component="SiFilteredSearchComponent"></si-docs-api>
+[[ api('SiFilteredSearchComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -46,6 +46,6 @@ import { SiProgressbarComponent } from '@siemens/element-ng/progressbar';
 
 <si-docs-component example="si-progressbar/si-progressbar-dynamic" height="250"></si-docs-component>
 
-<si-docs-api component="SiProgressbarComponent"></si-docs-api>
+[[ api('SiProgressbarComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

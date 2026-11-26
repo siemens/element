@@ -3,6 +3,7 @@
 {% import 'html/macros.html.jinja' as layout with context %}
 <section
   class="si-docs-api no-copy"
+  {% if mode == 'api' %}markdown="1"{% endif %}
   data-api-symbol="{{ symbol.id }}"
   data-api-mode="{{ mode }}"
   data-api-source="{{ source }}"

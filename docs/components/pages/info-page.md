@@ -78,6 +78,6 @@ its `width` and `height` up front, preserving the source image's aspect ratio to
 
 <si-docs-component example="si-info-page/si-info-page-illustration" height="650"></si-docs-component>
 
-<si-docs-api component="SiInfoPageComponent"></si-docs-api>
+[[ api('SiInfoPageComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -181,23 +181,23 @@ You can also use a custom header instead of `<si-details-pane-header>`. When usi
 
 <si-docs-component example="si-list-details/si-list-details-custom-header" height="500"></si-docs-component>
 
-<si-docs-api component="SiListDetailsComponent"></si-docs-api>
+[[ api('SiListDetailsComponent') ]]
 
-<si-docs-api component="SiListPaneComponent"></si-docs-api>
+[[ api('SiListPaneComponent') ]]
 
-<si-docs-api component="SiListPaneHeaderComponent"></si-docs-api>
+[[ api('SiListPaneHeaderComponent') ]]
 
-<si-docs-api component="SiListPaneBodyComponent"></si-docs-api>
+[[ api('SiListPaneBodyComponent') ]]
 
-<si-docs-api component="SiDetailsPaneComponent"></si-docs-api>
+[[ api('SiDetailsPaneComponent') ]]
 
-<si-docs-api component="SiDetailsPaneHeaderComponent"></si-docs-api>
+[[ api('SiDetailsPaneHeaderComponent') ]]
 
-<si-docs-api component="SiDetailsPaneBodyComponent"></si-docs-api>
+[[ api('SiDetailsPaneBodyComponent') ]]
 
-<si-docs-api component="SiDetailsPaneFooterComponent"></si-docs-api>
+[[ api('SiDetailsPaneFooterComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]
 
 ## Code (legacy) ---
 
@@ -233,4 +233,4 @@ interpreted as a percentage for the static layout.
 
 <si-docs-component example="si-main-detail-container/si-main-detail-container" height="500"></si-docs-component>
 
-<si-docs-api component="SiMainDetailContainerComponent"></si-docs-api>
+[[ api('SiMainDetailContainerComponent') ]]

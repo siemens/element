@@ -125,6 +125,6 @@ Unless the context is clear - you should add extra, descriptive text that is `vi
 
 <si-docs-component example="badges/badges"></si-docs-component>
 
-<si-docs-api component="SiBadgeComponent"></si-docs-api>
+[[ api('SiBadgeComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

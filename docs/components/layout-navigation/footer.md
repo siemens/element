@@ -67,6 +67,6 @@ import { SiFooterComponent } from '@siemens/element-ng/footer';
 
 <si-docs-component example="si-footer/si-footer"></si-docs-component>
 
-<si-docs-api component="SiFooterComponent"></si-docs-api>
+[[ api('SiFooterComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

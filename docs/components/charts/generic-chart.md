@@ -32,6 +32,6 @@ import { SiChartComponent } from '@siemens/charts-ng/chart';
 
 <si-docs-component example="si-charts/generic/si-chart-generic" full="true" height="400"></si-docs-component>
 
-<si-docs-api component="SiChartComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiChartComponent', package='@siemens/charts-ng', hide_implicitly_public=True) ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -405,26 +405,26 @@ Header dropdowns should only be used in headers. In other areas, use the [SiMenu
 
 <si-docs-component example="si-application-header/si-application-header" height="220"></si-docs-component>
 
-<si-docs-api component="SiApplicationHeaderComponent"></si-docs-api>
+[[ api('SiApplicationHeaderComponent') ]]
 
-<si-docs-api directive="SiHeaderBrandDirective"></si-docs-api>
+[[ api('SiHeaderBrandDirective') ]]
 
-<si-docs-api component="SiHeaderNavigationComponent"></si-docs-api>
+[[ api('SiHeaderNavigationComponent') ]]
 
-<si-docs-api component="SiHeaderNavigationItemComponent"></si-docs-api>
+[[ api('SiHeaderNavigationItemComponent') ]]
 
-<si-docs-api directive="SiHeaderActionsDirective"></si-docs-api>
+[[ api('SiHeaderActionsDirective') ]]
 
-<si-docs-api component="SiHeaderActionItemComponent"></si-docs-api>
+[[ api('SiHeaderActionItemComponent') ]]
 
-<si-docs-api component="SiHeaderAccountItemComponent"></si-docs-api>
+[[ api('SiHeaderAccountItemComponent') ]]
 
-<si-docs-api component="SiHeaderCollapsibleActionsComponent"></si-docs-api>
+[[ api('SiHeaderCollapsibleActionsComponent') ]]
 
-<si-docs-api directive="SiHeaderDropdownTriggerDirective"></si-docs-api>
+[[ api('SiHeaderDropdownTriggerDirective') ]]
 
-<si-docs-api component="SiHeaderDropdownComponent"></si-docs-api>
+[[ api('SiHeaderDropdownComponent') ]]
 
-<si-docs-api component="SiHeaderDropdownItemComponent"></si-docs-api>
+[[ api('SiHeaderDropdownItemComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

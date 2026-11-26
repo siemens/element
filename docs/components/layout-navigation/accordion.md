@@ -124,7 +124,7 @@ The collapsible panel supports customizing the heading via content projection by
 </si-collapsible-panel>
 ```
 
-<si-docs-api component="SiCollapsiblePanelComponent"></si-docs-api>
+[[ api('SiCollapsiblePanelComponent') ]]
 
 ### Full Accordion
 
@@ -133,6 +133,6 @@ one panel is open at a time:
 
 <si-docs-component example="si-accordion/si-accordion" height="305"></si-docs-component>
 
-<si-docs-api component="SiAccordionComponent"></si-docs-api>
+[[ api('SiAccordionComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

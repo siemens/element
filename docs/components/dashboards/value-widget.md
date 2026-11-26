@@ -103,7 +103,7 @@ import { SiValueWidgetComponent } from '@siemens/element-ng/dashboard';
 
 <si-docs-component example="si-dashboard/si-value-widget" height="600"></si-docs-component>
 
-<si-docs-api component="SiValueWidgetComponent"></si-docs-api>
+[[ api('SiValueWidgetComponent') ]]
 
 ### CSS class usage
 
@@ -139,6 +139,6 @@ use it for compositions.
 
 <si-docs-component example="si-dashboard/si-value-widget-body" height="250"></si-docs-component>
 
-<si-docs-api component="SiValueWidgetBodyComponent"></si-docs-api>
+[[ api('SiValueWidgetBodyComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -50,6 +50,6 @@ Here an idea of icons representing states:
 
 <si-docs-component example="si-summary-widget/si-summary-widget" height="250"></si-docs-component>
 
-<si-docs-api component="SiSummaryWidgetComponent"></si-docs-api>
+[[ api('SiSummaryWidgetComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

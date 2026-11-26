@@ -31,8 +31,8 @@ Severity symbols can be built with status icons.
 
 <si-docs-component example="si-icon/si-status-icon"></si-docs-component>
 
-<si-docs-api component="SiIconComponent"></si-docs-api>
+[[ api('SiIconComponent') ]]
 
-<si-docs-api component="SiStatusIconComponent"></si-docs-api>
+[[ api('SiStatusIconComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

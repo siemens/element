@@ -153,8 +153,8 @@ collapsed in a horizontal split.
 
 <si-docs-component example="si-split/si-split-hide-header"></si-docs-component>
 
-<si-docs-api component="SiSplitComponent"></si-docs-api>
+[[ api('SiSplitComponent') ]]
 
-<si-docs-api component="SiSplitPartComponent"></si-docs-api>
+[[ api('SiSplitPartComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

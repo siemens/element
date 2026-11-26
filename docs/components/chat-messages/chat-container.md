@@ -55,4 +55,4 @@ The slots are:
 
 <si-docs-component example="si-chat-messages/si-chat-container" height="600"></si-docs-component>
 
-<si-docs-api component="SiChatContainerComponent"></si-docs-api>
+[[ api('SiChatContainerComponent') ]]

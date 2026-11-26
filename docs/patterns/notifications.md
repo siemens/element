@@ -126,4 +126,4 @@ It can work independently or alongside other notification patterns, such as popo
 
 <si-docs-component example="si-notification-item/si-notification-item-side-panel" height="500"></si-docs-component>
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

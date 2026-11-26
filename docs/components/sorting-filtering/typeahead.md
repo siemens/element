@@ -102,6 +102,6 @@ Tokenization is kept enabled and `typeaheadMatchAllTokens` is set to `once` to m
 
 <si-docs-component example="si-typeahead/si-typeahead-custom" height="300"></si-docs-component>
 
-<si-docs-api directive="SiTypeaheadDirective"></si-docs-api>
+[[ api('SiTypeaheadDirective') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

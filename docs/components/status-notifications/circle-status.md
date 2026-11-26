@@ -81,6 +81,6 @@ import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 
 <si-docs-component example="si-circle-status/si-circle-status" height="250"></si-docs-component>
 
-<si-docs-api component="SiCircleStatusComponent"></si-docs-api>
+[[ api('SiCircleStatusComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -34,7 +34,7 @@ import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 
 <si-docs-component example="si-loading-spinner/si-loading-spinner" height="200"></si-docs-component>
 
-<si-docs-api component="SiLoadingSpinnerComponent"></si-docs-api>
+[[ api('SiLoadingSpinnerComponent') ]]
 
 ### Spinner directive
 
@@ -46,7 +46,7 @@ Additionally, you can enable semi-transparent overlay and initial loading time f
 
 <si-docs-component example="si-loading-spinner/si-loading-spinner-delay" height="200"></si-docs-component>
 
-<si-docs-api directive="SiLoadingSpinnerDirective"></si-docs-api>
+[[ api('SiLoadingSpinnerDirective') ]]
 
 ### Loading button
 
@@ -57,6 +57,6 @@ accessible via the wrapper.
 
 <si-docs-component example="si-loading-spinner/si-loading-button" height="200"></si-docs-component>
 
-<si-docs-api component="SiLoadingButtonComponent"></si-docs-api>
+[[ api('SiLoadingButtonComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

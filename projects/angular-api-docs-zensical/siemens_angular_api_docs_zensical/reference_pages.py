@@ -11,9 +11,8 @@ from tempfile import TemporaryDirectory
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
-from md_extension_element_api.adapter import ApiRenderError, safe_url
-from md_extension_element_api.schema import SCHEMA_VERSION
-
+from .adapter import ApiRenderError, safe_url
+from .schema import SCHEMA_VERSION
 from .settings import DEFAULT_PAGES_DIR, ElementDocsSettings
 
 

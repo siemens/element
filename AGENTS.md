@@ -60,7 +60,7 @@ test design, assertions, async stabilization, and the repository's test commands
 ## Documentation
 
 - Document all public symbols (components, directives, services, inputs, outputs, and exported types) with clear TSDoc comments.
-- Component documentation pages automatically generate API tables from TSDoc via `<si-docs-api>` and `<si-docs-types>`.
+- Component documentation pages automatically generate API tables from TSDoc via `[[ api(...) ]]` and `[[ api_types() ]]`.
 - Do NOT add prose paragraphs or subsections in `docs/` merely to describe or restate a new component/directive input, output, or public member that is already explained by its TSDoc comment and listed in the generated API table.
 - Only add or update prose in `docs/` when there is helpful context beyond the API table — such as non-obvious behavior, interactions across multiple APIs, content projection or composition patterns, UX/usage guidance, or important caveats.
 - When a new capability benefits from visual or interactive demonstration, prefer updating an existing example or adding a focused `<si-docs-component>` example over adding redundant explanatory prose.

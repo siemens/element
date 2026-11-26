@@ -83,7 +83,7 @@ are available.
 ## Documentation and language
 
 - All public symbols must have clear TSDoc comments. Component documentation pages
-  auto-generate API tables from TSDoc via `<si-docs-api>` and `<si-docs-types>`.
+  auto-generate API tables from TSDoc via `[[ api(...) ]]` and `[[ api_types() ]]`.
 - Features must be documented without duplicating the generated API reference.
   For straightforward new inputs, outputs, or public members, clear TSDoc comments
   (and updating or adding an example when helpful) are sufficient. Flag redundant

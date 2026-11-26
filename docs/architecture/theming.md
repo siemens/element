@@ -56,7 +56,7 @@ The SiThemeService is responsible for all theming topics.
 - At startup, it tries to load a custom active theme from the SiThemeStore.
 - If available, it applies the custom theme. Otherwise, the default Element theme is used.
 
-<si-docs-type name="SiThemeStore"></si-docs-type>
+[[ api_type('SiThemeStore') ]]
 
 The `SiDefaultThemeStore` is a [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 based implementation of the `SiThemeStore`, which is used by default. To provide custom themes using other means
@@ -69,7 +69,7 @@ You need to provide your implementation in the main app module:
 { provide: SiThemeStore, useClass: YourThemeStoreImpl }
 ```
 
-<si-docs-api injectable="SiThemeService"></si-docs-api>
+[[ api('SiThemeService') ]]
 
 ## Build time custom theme
 
@@ -140,4 +140,4 @@ Then, use `themes.make-theme()` like this:
     The required keys in the map might change in future versions of Element, so forward compatibility is not guaranteed.
     Topic like usability and accessibility and not guaranteed that way so please always involve UX when using this feature.
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

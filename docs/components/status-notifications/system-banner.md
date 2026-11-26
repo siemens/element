@@ -83,6 +83,6 @@ use the same visibility condition for rendering the banner and applying this cla
 
 <si-docs-component example="si-system-banner/si-system-banner" height="250"></si-docs-component>
 
-<si-docs-api component="SiSystemBannerComponent"></si-docs-api>
+[[ api('SiSystemBannerComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -164,12 +164,12 @@ and can be used in Angular Forms.
   <si-docs-tab example="si-timepicker" heading="Timepicker"  height="350"></si-docs-tab>
 </si-docs-component>
 
-<si-docs-api component="SiDatepickerComponent"></si-docs-api>
+[[ api('SiDatepickerComponent') ]]
 
-<si-docs-api component="SiDateRangeComponent"></si-docs-api>
+[[ api('SiDateRangeComponent') ]]
 
-<si-docs-api component="SiTimepickerComponent"></si-docs-api>
+[[ api('SiTimepickerComponent') ]]
 
-<si-docs-api directive="SiDatepickerDirective"></si-docs-api>
+[[ api('SiDatepickerDirective') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

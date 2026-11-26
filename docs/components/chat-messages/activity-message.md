@@ -121,10 +121,10 @@ si-activity-trace                     optional group, collapses everything
 
 <si-docs-component example="si-chat-messages/si-activity-message"></si-docs-component>
 
-<si-docs-api component="SiActivityTraceComponent"></si-docs-api>
+[[ api('SiActivityTraceComponent') ]]
 
-<si-docs-api component="SiActivityMessageComponent"></si-docs-api>
+[[ api('SiActivityMessageComponent') ]]
 
-<si-docs-api component="SiActivityMessagePartComponent"></si-docs-api>
+[[ api('SiActivityMessagePartComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

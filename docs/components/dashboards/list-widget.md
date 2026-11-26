@@ -89,7 +89,7 @@ Add the empty state component by content projection with the `empty-state` slot.
 
 <si-docs-component example="si-dashboard/si-list-widget" height="550"></si-docs-component>
 
-<si-docs-api component="SiListWidgetComponent"></si-docs-api>
+[[ api('SiListWidgetComponent') ]]
 
 ### List widget body component
 
@@ -98,7 +98,7 @@ use it for compositions.
 
 <si-docs-component example="si-dashboard/si-list-widget-body" height="450"></si-docs-component>
 
-<si-docs-api component="SiListWidgetBodyComponent"></si-docs-api>
+[[ api('SiListWidgetBodyComponent') ]]
 
 ### CSS class usage
 
@@ -107,4 +107,4 @@ component.
 
 <si-docs-component example="si-dashboard/si-list-widget-css" height="400"></si-docs-component>
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

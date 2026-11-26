@@ -66,6 +66,6 @@ promptSuggestions = {
 };
 ```
 
-<si-docs-api component="SiAiWelcomeScreenComponent"></si-docs-api>
+[[ api('SiAiWelcomeScreenComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

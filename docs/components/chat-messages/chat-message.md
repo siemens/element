@@ -80,11 +80,11 @@ The text reflows to fit the available space while preserving hierarchy and align
 
 <si-docs-component example="si-chat-messages/si-user-message"></si-docs-component>
 
-<si-docs-api component="SiUserMessageComponent"></si-docs-api>
+[[ api('SiUserMessageComponent') ]]
 
 <si-docs-component example="si-chat-messages/si-ai-message"></si-docs-component>
 
-<si-docs-api component="SiAiMessageComponent"></si-docs-api>
+[[ api('SiAiMessageComponent') ]]
 
 ### Base chat message
 
@@ -100,12 +100,12 @@ The slots are:
 
 <si-docs-component example="si-chat-messages/si-chat-message"></si-docs-component>
 
-<si-docs-api component="SiChatMessageComponent"></si-docs-api>
+[[ api('SiChatMessageComponent') ]]
 
 ### Attachment list
 
 <si-docs-component example="si-chat-messages/si-attachment-list"></si-docs-component>
 
-<si-docs-api component="SiAttachmentListComponent"></si-docs-api>
+[[ api('SiAttachmentListComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

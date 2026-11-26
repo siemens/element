@@ -1,0 +1,15 @@
+{# Markdown helpers for HTML Jinja templates. Kept in a .md.jinja file so
+   Prettier's HTML Jinja plugin leaves Markdown syntax unindented and intact. #}
+{% macro heading(level, title, anchor) %}
+
+{{ '#' * level }} {{ title }} {{ '{#' ~ anchor ~ '}' }}
+
+{% endmacro %}
+
+{% macro code_fence(code, language=none) %}{% set ns = namespace(fence='```') %}{% for _ in range(10) %}{% if ns.fence in code %}{% set ns.fence = ns.fence ~ '`' %}{% endif %}{% endfor %}{% set lang = language if language and '\n' not in language and '`' not in language else '' %}
+
+{{ ns.fence }}{{ lang }}
+{{ code | safe }}
+{{ ns.fence }}
+
+{% endmacro %}
