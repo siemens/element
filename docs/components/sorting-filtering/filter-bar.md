@@ -78,6 +78,6 @@ import { SiFilterBarComponent } from '@siemens/element-ng/filter-bar';
 
 <si-docs-component example="si-filter-bar/si-filter-bar"></si-docs-component>
 
-<si-docs-api component="SiFilterBarComponent"></si-docs-api>
+[[ api('SiFilterBarComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

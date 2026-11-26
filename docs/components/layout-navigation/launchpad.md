@@ -92,6 +92,6 @@ Wrap it inside a `ng-template` and provide the template to the `si-application-h
 
 <si-docs-component example="si-application-header/si-launchpad" height="330"></si-docs-component>
 
-<si-docs-api component="SiLaunchpadFactoryComponent"></si-docs-api>
+[[ api('SiLaunchpadFactoryComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

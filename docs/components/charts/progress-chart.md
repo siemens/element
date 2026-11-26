@@ -76,7 +76,7 @@ instead of bars. Every arc is used to visualize the progression of an item.
 
 <si-docs-component example="si-charts/progress/si-chart-progress" height="400"></si-docs-component>
 
-<si-docs-api component="SiChartProgressComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiChartProgressComponent', package='@siemens/charts-ng', hide_implicitly_public=True) ]]
 
 ### Progress bar chart
 
@@ -84,6 +84,6 @@ A more traditional progress chart using horizontal bars.
 
 <si-docs-component example="si-charts/progress-bar/si-chart-progress-bar" height="400"></si-docs-component>
 
-<si-docs-api component="SiChartProgressBarComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiChartProgressBarComponent', package='@siemens/charts-ng', hide_implicitly_public=True) ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

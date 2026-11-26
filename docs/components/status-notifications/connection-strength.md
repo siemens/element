@@ -39,6 +39,6 @@ import { SiConnectionStrengthComponent } from '@siemens/element-ng/connection-st
 
 <si-docs-component example="si-connection-strength/si-connection-strength" height="260"></si-docs-component>
 
-<si-docs-api component="SiConnectionStrengthComponent"></si-docs-api>
+[[ api('SiConnectionStrengthComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

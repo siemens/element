@@ -1,5 +1,5 @@
 # Widget guide
 
-<si-docs-api component="WidgetComponent"></si-docs-api>
+[[ api('WidgetComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

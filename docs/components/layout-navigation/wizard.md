@@ -212,8 +212,8 @@ The number representation for wizard steps can be enabled by setting the
 
 <si-docs-component example="si-wizard/si-wizard-numbered-steps" height="340"></si-docs-component>
 
-<si-docs-api component="SiWizardComponent"></si-docs-api>
+[[ api('SiWizardComponent') ]]
 
-<si-docs-api component="SiWizardStepComponent"></si-docs-api>
+[[ api('SiWizardStepComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

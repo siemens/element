@@ -41,6 +41,6 @@ languages are set to the ISO language codes as uppercase:
 
 <si-docs-component example="si-language-switcher/si-language-switcher-string-array"></si-docs-component>
 
-<si-docs-api component="SiLanguageSwitcherComponent"></si-docs-api>
+[[ api('SiLanguageSwitcherComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

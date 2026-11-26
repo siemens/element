@@ -92,6 +92,6 @@ import { SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
 
 <si-docs-component example="si-phone-number-input/si-phone-number-input" height="300"></si-docs-component>
 
-<si-docs-api component="SiPhoneNumberInputComponent"></si-docs-api>
+[[ api('SiPhoneNumberInputComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

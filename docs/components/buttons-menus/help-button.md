@@ -48,6 +48,6 @@ import { SiHelpButtonComponent } from '@siemens/element-ng/help-button';
 
 <si-docs-component example="si-help-button/si-help-button" height="230"></si-docs-component>
 
-<si-docs-api component="SiHelpButtonComponent"></si-docs-api>
+[[ api('SiHelpButtonComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

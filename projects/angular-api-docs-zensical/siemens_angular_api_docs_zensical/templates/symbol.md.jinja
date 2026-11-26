@@ -1,5 +1,5 @@
 {# Linked from a category index. generate-pages writes the Markdown shell;
-   the API extension fills its placeholder tags when Zensical builds the site. -#}
+   the API macros expand to placeholder tags filled when Zensical builds the site. -#}
 ---
 search:
   boost: 0.25
@@ -9,6 +9,6 @@ search:
 
 {% if page.category == 'types' %}## TypeScript declaration
 
-<si-docs-type name="{{ page.name|e }}" package="{{ page.importPath|e }}"></si-docs-type>{% else %}<si-docs-api {{ page.category[:-1] }}="{{ page.name|e }}" noHeading="true" package="{{ page.importPath|e }}"></si-docs-api>{% endif %}
+[[ api_type({{ page.name|tojson }}, package={{ page.importPath|tojson }}) ]]{% else %}[[ api({{ page.name|tojson }}, package={{ page.importPath|tojson }}, no_heading=True) ]]{% endif %}
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

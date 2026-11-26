@@ -151,13 +151,13 @@ Tabs can be combined with toolbar actions (e.g. icon buttons) positioned inline 
 
 <si-docs-component example="si-tabs/si-tabs-toolbar"></si-docs-component>
 
-<si-docs-api component="SiTabsetComponent"></si-docs-api>
+[[ api('SiTabsetComponent') ]]
 
-<si-docs-api component="SiTabComponent"></si-docs-api>
+[[ api('SiTabComponent') ]]
 
-<si-docs-api component="SiTabLinkComponent"></si-docs-api>
+[[ api('SiTabLinkComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]
 
 ## Code (legacy) ---
 
@@ -292,6 +292,6 @@ given tab can be activated or deactivated.
 
 <si-docs-component example="si-tabs/si-tabs-legacy"></si-docs-component>
 
-<si-docs-api component="SiTabsetLegacyComponent"></si-docs-api>
+[[ api('SiTabsetLegacyComponent') ]]
 
-<si-docs-api component="SiTabLegacyComponent"></si-docs-api>
+[[ api('SiTabLegacyComponent') ]]

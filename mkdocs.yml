@@ -302,8 +302,6 @@ markdown_extensions:
   - md_in_html
   - element-docs:
       site_url: *site_url
-  - md_extension_element_api.extension:
-      enabled: *element_docs_api_enabled
   - toc:
       permalink: true
 

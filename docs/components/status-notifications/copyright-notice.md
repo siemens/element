@@ -33,6 +33,6 @@ import { SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice
 
 <si-docs-component example="si-copyright-notice/si-copyright-notice"></si-docs-component>
 
-<si-docs-api component="SiCopyrightNoticeComponent"></si-docs-api>
+[[ api('SiCopyrightNoticeComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

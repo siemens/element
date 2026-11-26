@@ -282,10 +282,10 @@ that was modified. User results are `Save`, `Discard`, or `Cancel`.
 Use the `SiColumnSelectionDialogService` if you need a dialog to configure the
 column setup of a table.
 
-<si-docs-api injectable="SiModalService"></si-docs-api>
+[[ api('SiModalService') ]]
 
-<si-docs-api injectable="SiActionDialogService"></si-docs-api>
+[[ api('SiActionDialogService') ]]
 
-<si-docs-api injectable="SiColumnSelectionDialogService"></si-docs-api>
+[[ api('SiColumnSelectionDialogService') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

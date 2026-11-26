@@ -184,6 +184,6 @@ A custom background image needs to meet some basic criteria to make sure it look
 String values of `implicitLegalAcknowledge` and of `passwordPolicyContent` (`si-change-password`) are rendered as HTML
 and sanitized by Angular. Do not pass untrusted content that was marked as trusted (e.g. via `bypassSecurityTrustHtml`).
 
-<si-docs-api component="SiLandingPageComponent"></si-docs-api>
+[[ api('SiLandingPageComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

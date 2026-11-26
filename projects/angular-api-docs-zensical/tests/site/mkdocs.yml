@@ -9,9 +9,6 @@ extra:
     api:
       enabled: true
       artifact_dir: prepared
-markdown_extensions:
-  - md_extension_element_api.extension:
-      enabled: true
 plugins:
   - llmstxt:
       base_url: ''

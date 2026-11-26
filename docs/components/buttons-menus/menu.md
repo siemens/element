@@ -76,16 +76,16 @@ In general, we recommend using the `si-content-action-bar` over the `si-menu-bar
 
 <si-docs-component example="si-menu/si-menu-bar" height="500"></si-docs-component>
 
-<si-docs-api component="SiMenuItemComponent"></si-docs-api>
+[[ api('SiMenuItemComponent') ]]
 
-<si-docs-api component="SiMenuItemCheckboxComponent"></si-docs-api>
+[[ api('SiMenuItemCheckboxComponent') ]]
 
-<si-docs-api component="SiMenuItemRadioComponent"></si-docs-api>
+[[ api('SiMenuItemRadioComponent') ]]
 
-<si-docs-api component="SiMenuFactoryComponent"></si-docs-api>
+[[ api('SiMenuFactoryComponent') ]]
 
-<si-docs-api directive="CdkMenuTrigger"></si-docs-api>
+[[ api('CdkMenuTrigger') ]]
 
-<si-docs-api directive="CdkContextMenuTrigger"></si-docs-api>
+[[ api('CdkContextMenuTrigger') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

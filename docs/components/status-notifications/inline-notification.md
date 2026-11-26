@@ -68,6 +68,6 @@ import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notifi
 
 <si-docs-component example="si-inline-notification/si-inline-notification" height="310"></si-docs-component>
 
-<si-docs-api component="SiInlineNotificationComponent"></si-docs-api>
+[[ api('SiInlineNotificationComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

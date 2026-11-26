@@ -2,9 +2,13 @@
    (html/) and llmstxt Markdown export templates (llmstxt/). #}
 {# Keep links such as #t:SomeComponent working when the page already shows that
    component in an API card. Add a second link target, not a second card. #}
-{% macro type_target(anchor) -%}
+{% macro type_target(anchor, block=false) -%}
   {% if anchor in type_targets %}
-    <span id="{{ type_targets[anchor] }}" data-api-type-target-for="{{ anchor }}"></span>
+    {% if block %}
+      <div id="{{ type_targets[anchor] }}" data-api-type-target-for="{{ anchor }}"></div>
+    {% else %}
+      <span id="{{ type_targets[anchor] }}" data-api-type-target-for="{{ anchor }}"></span>
+    {% endif %}
   {% endif %}
 {%- endmacro %}
 
@@ -58,15 +62,13 @@
   {% endif %}
 {%- endmacro %}
 
-{# Used for doc comments on symbols, members, and signatures. Browser cards can
-   highlight fenced examples; Markdown export gets plain pre/code with the language. #}
+{# Used for doc comments in llmstxt Markdown export, where code blocks stay plain pre/code. #}
 {% macro blocks(items, local) -%}
   {%- for block in items -%}
     {%- if block.kind == 'code' -%}
       {%- set code = block.parts | map(attribute='text') | join -%}
       {%- set language = block.language | default(none) -%}
-      {%- set highlighted = highlight_example(code, language) if highlight_example | default(none) else none -%}
-      {% if highlighted %}{{ highlighted | safe }}{% else %}<pre><code {% if language %}class="language-{{ language }}"{% endif %}>{{ code }}</code></pre>{% endif %}
+      <pre><code {% if language %}class="language-{{ language }}"{% endif %}>{{ code }}</code></pre>
     {%- else -%}
       <p>{{ fragments(block.parts, local) }}</p>
     {%- endif -%}

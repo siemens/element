@@ -84,6 +84,6 @@ import { SiCarouselComponent, SiCarouselItemDirective } from '@siemens/element-n
 
 <si-docs-component example="si-carousel/si-carousel"></si-docs-component>
 
-<si-docs-api component="SiCarouselComponent"></si-docs-api>
+[[ api('SiCarouselComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

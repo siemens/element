@@ -64,6 +64,6 @@ import { SiSliderComponent } from '@siemens/element-ng/slider';
   <si-docs-tab example="si-slider-icon" heading="with icon"></si-docs-tab>
 </si-docs-component>
 
-<si-docs-api component="SiSliderComponent"></si-docs-api>
+[[ api('SiSliderComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

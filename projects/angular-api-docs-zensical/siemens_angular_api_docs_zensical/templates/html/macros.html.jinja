@@ -1,6 +1,20 @@
 {# Browser-only layout macros for html/symbol.html.jinja and html/member.html.jinja.
    llmstxt export uses llmstxt/structured.html.jinja instead. #}
 {% import 'shared/content.html.jinja' as content with context %}
+{% import 'html/markdown.md.jinja' as md %}
+
+{# Used for doc comments on browser cards, emitting Markdown fences for SuperFences. #}
+{% macro blocks(items, local) -%}
+  {%- for block in items -%}
+    {%- if block.kind == 'code' -%}
+      {%- set code = block.parts | map(attribute='text') | join -%}
+      {%- set language = block.language | default(none) -%}
+      {{ md.code_fence(code, language) }}
+    {%- else -%}
+      <p>{{ content.fragments(block.parts, local) }}</p>
+    {% endif -%}
+  {%- endfor -%}
+{%- endmacro %}
 
 {# Used below the summary of a function or a callable item in a compact list.
    Skip doc paragraphs the member summary has already shown above the overloads. #}
@@ -19,7 +33,7 @@
           class="api-signature"
         ><code>{{ content.fragments(signature.label, local, false) }}</code></pre>
       {% endif %}
-      {% for block in signature.documentation %}{% if block not in shared_documentation %}{{ content.blocks([block], local) }}{% endif %}{% endfor %}
+      {% for block in signature.documentation %}{% if block not in shared_documentation %}{{ blocks([block], local) }}{% endif %}{% endfor %}
       {% if signature.parameters %}{% if compact %}{{ type_rows(signature.parameters, 'Parameters', local) }}{% else %}{{ rows(signature.parameters, true, 'Parameters', local) }}{% endif %}{% endif %}
       {% if not compact and signature.returns %}
         <p><strong>Returns: </strong>{{ content.fragments(signature.returns, local) }}</p>
@@ -34,14 +48,7 @@
   {% if mode == 'type' %}
     {{ type_rows(group.rows, group.title, local, group.anchor) }}
   {% else %}
-    <h4 id="{{ group.anchor }}" data-api-toc-label="{{ group.title }}">
-      {{ group.title }}<a
-        class="headerlink"
-        href="#{{ group.anchor | urlencode }}"
-        title="Permanent link to {{ group.title }}"
-        >¶</a
-      >
-    </h4>
+    {{ md.heading(4, group.title, group.anchor) }}
     {{ rows(group.rows, group.showDefaults, group.title, local) }}
   {% endif %}
 {%- endmacro %}
@@ -75,7 +82,7 @@
             {% endif %}
           {% endfor %}
           {% if notes.description and not row.signatures %}
-            <div class="api-type-notes">{{ content.blocks(notes.description, local) }}</div>
+            <div class="api-type-notes">{{ blocks(notes.description, local) }}</div>
           {% endif %}
           <p class="api-type-member">
             {% if row.name != 'constructor' %}{% if row.sourceUrl %}
@@ -104,7 +111,7 @@
             <span class="api-badge" data-badge="{{ badge }}">{{ badge }}</span>
           {% endfor %}
           {% if row.documentation and row.signatures %}
-            <div class="api-type-notes">{{ content.blocks(row.documentation, local) }}</div>
+            <div class="api-type-notes">{{ blocks(row.documentation, local) }}</div>
           {% endif %}
           {{ signatures(row.signatures, local, row.documentation, compact=true, inline_first=true) }}
         </li>
@@ -166,9 +173,16 @@
               <td class="api-column-default">{{ content.default_value(row, local) }}</td>
             {% endif %}
             <td class="api-column-description">
-              {{ content.blocks(row.documentation, local) }}{% for signature in row.signatures %}
+              {{ blocks(row.documentation, local) }}
+              {% for signature in row.signatures %}
                 <section id="{{ signature.anchor }}">
-                  {{ content.type_target(signature.anchor) }}{% for block in signature.documentation %}{% if block not in row.documentation %}{{ content.blocks([block], local) }}{% endif %}{% endfor %}{% if signature.parameters %}{{ type_rows(signature.parameters, 'Parameters', local) }}{% endif %}
+                  {{ content.type_target(signature.anchor) }}
+                  {% for block in signature.documentation %}
+                    {% if block not in row.documentation %}{{ blocks([block], local) }}{% endif %}
+                  {% endfor %}
+                  {% if signature.parameters %}
+                    {{ type_rows(signature.parameters, 'Parameters', local) }}
+                  {% endif %}
                 </section>
               {% endfor %}
             </td>

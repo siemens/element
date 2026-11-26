@@ -122,6 +122,6 @@ model. The clear button resets the bound form value to an empty string.
 
 <si-docs-component example="si-search-bar/si-search-bar-value"></si-docs-component>
 
-<si-docs-api component="SiSearchBarComponent"></si-docs-api>
+[[ api('SiSearchBarComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

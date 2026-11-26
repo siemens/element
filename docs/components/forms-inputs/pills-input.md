@@ -73,8 +73,8 @@ import { SiPillsInputComponent } from '@siemens/element-ng/pills-input';
 
 <si-docs-component example="si-pills-input/si-pills-input" height="250"></si-docs-component>
 
-<si-docs-api component="SiPillsInputComponent"></si-docs-api>
+[[ api('SiPillsInputComponent') ]]
 
-<si-docs-api directive="SiPillsInputCsvDirective"></si-docs-api>
+[[ api('SiPillsInputCsvDirective') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -68,6 +68,6 @@ Following components are affected when using the `si-electron-titlebar`:
 In order to get the `close`, `minimize` and `maximize` buttons from the operating system
 in your Electron application, please have a look at the [Electron caption buttons guide](https://www.electronjs.org/de/docs/latest/tutorial/window-customization#window-controls-overlay-macos-windows).
 
-<si-docs-api component="SiElectrontitlebarComponent"></si-docs-api>
+[[ api('SiElectrontitlebarComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

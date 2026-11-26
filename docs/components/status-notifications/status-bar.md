@@ -96,6 +96,6 @@ import { SiStatusBarComponent } from '@siemens/element-ng/status-bar';
 
 <si-docs-component example="si-status-bar/si-status-bar"></si-docs-component>
 
-<si-docs-api component="SiStatusBarComponent"></si-docs-api>
+[[ api('SiStatusBarComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

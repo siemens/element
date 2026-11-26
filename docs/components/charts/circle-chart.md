@@ -74,6 +74,6 @@ import { SiChartCircleComponent } from '@siemens/charts-ng/circle';
 
 <si-docs-component example="si-charts/circle/si-chart-circle-donut" height="400"></si-docs-component>
 
-<si-docs-api component="SiChartCircleComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiChartCircleComponent', package='@siemens/charts-ng', hide_implicitly_public=True) ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

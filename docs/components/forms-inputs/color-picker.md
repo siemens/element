@@ -83,6 +83,6 @@ import { SiColorPickerComponent } from '@siemens/element-ng/color-picker';
 
 <si-docs-component example="si-color-picker/si-color-picker" height="250"></si-docs-component>
 
-<si-docs-api component="SiColorPickerComponent"></si-docs-api>
+[[ api('SiColorPickerComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -85,9 +85,9 @@ about including to your app.
 
 Direct <a href="../../../dashboards-demo/#/dashboard">Link</a> to dashboard demo.
 
-<si-docs-api component="SiFlexibleDashboardComponent" package="@siemens/dashboards-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiFlexibleDashboardComponent', package='@siemens/dashboards-ng', hide_implicitly_public=True) ]]
 
-<si-docs-api component="SiGridComponent" package="@siemens/dashboards-ng"></si-docs-api>
+[[ api('SiGridComponent', package='@siemens/dashboards-ng') ]]
 
 ### Custom header
 
@@ -130,11 +130,11 @@ region for routine or transient widget updates.
 
 ### Persistence of dashboard configuration
 
-<si-docs-type name="SiWidgetStorage" package="@siemens/dashboards-ng"></si-docs-type>
+[[ api_type('SiWidgetStorage', package='@siemens/dashboards-ng') ]]
 
-<si-docs-api component="SiWidgetCatalogComponent" package="@siemens/dashboards-ng"></si-docs-api>
+[[ api('SiWidgetCatalogComponent', package='@siemens/dashboards-ng') ]]
 
-<si-docs-api component="SiWidgetInstanceEditorDialogComponent" package="@siemens/dashboards-ng"></si-docs-api>
+[[ api('SiWidgetInstanceEditorDialogComponent', package='@siemens/dashboards-ng') ]]
 
 ### Widget renderer
 
@@ -156,11 +156,11 @@ and the matching `widget` definition. The `widget` must match the config's `widg
 <si-widget-renderer [widgetConfig]="widgetConfig" [widget]="widget" />
 ```
 
-<si-docs-api component="SiWidgetRendererComponent" package="@siemens/dashboards-ng"></si-docs-api>
+[[ api('SiWidgetRendererComponent', package='@siemens/dashboards-ng') ]]
 
 ### Security considerations
 
 Widgets can be loaded via Module Federation, Native Federation or as web components from a URL.
 The loaded code is executed in your application. Only register widget factories that point to trusted sources.
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

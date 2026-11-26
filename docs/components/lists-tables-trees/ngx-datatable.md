@@ -231,12 +231,12 @@ directive. If you use `siResizeObserver` directive ensure that you have imported
 <ngx-datatable (siResizeObserver)="resizeTable()" ...></ngx-datatable>
 ```
 
-<si-docs-api component="DatatableComponent" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('DatatableComponent', hide_implicitly_public=True) ]]
 
 #### Methods
 
-<si-docs-type name="DatatableComponent.recalculate"></si-docs-type>
+[[ api_type('DatatableComponent.recalculate') ]]
 
-<si-docs-api directive="SiDatatableInteractionDirective"></si-docs-api>
+[[ api('SiDatatableInteractionDirective') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

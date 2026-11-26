@@ -36,6 +36,6 @@ A status toggle is a good way to directly set a status on a screen, e.g. the res
   <si-docs-tab example="si-status-toggle" heading="All examples"></si-docs-tab>
 </si-docs-component>
 
-<si-docs-api component="SiStatusToggleComponent"></si-docs-api>
+[[ api('SiStatusToggleComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

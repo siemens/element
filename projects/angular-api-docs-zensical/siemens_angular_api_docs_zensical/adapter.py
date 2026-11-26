@@ -22,6 +22,7 @@ class ApiSelection:
   mode: str
   view: dict
   member: bool = False
+  member_id: str = ''
 
 
 def safe_url(value):
@@ -77,8 +78,9 @@ class PresentationAdapter:
       raise ApiRenderError(f'Ambiguous API member {key!r}; add an exact importPath attribute')
     if not candidates:
       self.lookup(name, package)  # Keep the normal lookup's actionable diagnostic.
-    member = self.data['members'][candidates[0]]
-    return ApiSelection(self.symbols[member['symbolId']], mode, member['view'], member=True)
+    member_id = candidates[0]
+    member = self.data['members'][member_id]
+    return ApiSelection(self.symbols[member['symbolId']], mode, member['view'], member=True, member_id=member_id)
 
   def related_types(self, selections):
     """Union prepared transitive IDs, excluding every explicitly embedded owner."""

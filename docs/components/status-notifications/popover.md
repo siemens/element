@@ -167,6 +167,6 @@ import {
 
 <si-docs-component example="si-popover/si-popover" height="260"></si-docs-component>
 
-<si-docs-api directive="SiPopoverDirective"></si-docs-api>
+[[ api('SiPopoverDirective') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

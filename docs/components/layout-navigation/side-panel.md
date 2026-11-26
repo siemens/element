@@ -179,10 +179,10 @@ actions, or status indicators.
 
 <si-docs-component example="si-side-panel/si-side-panel-collapsible" height="500"></si-docs-component>
 
-<si-docs-api component="SiSidePanelComponent"></si-docs-api>
+[[ api('SiSidePanelComponent') ]]
 
-<si-docs-api component="SiSidePanelContentComponent"></si-docs-api>
+[[ api('SiSidePanelContentComponent') ]]
 
-<si-docs-api injectable="SiSidePanelService"></si-docs-api>
+[[ api('SiSidePanelService') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

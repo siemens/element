@@ -77,7 +77,7 @@ import { SiWeatherWidgetComponent } from '@siemens/element-ng/dashboard';
 
 <si-docs-component example="si-dashboard/si-weather-widget" height="600"></si-docs-component>
 
-<si-docs-api component="SiWeatherWidgetComponent"></si-docs-api>
+[[ api('SiWeatherWidgetComponent') ]]
 
 #### Weather widget body component
 
@@ -85,7 +85,7 @@ The body of `<si-weather-widget>` is implemented in the component
 `<si-weather-widget-body>`. You can use it for compositions where the
 [`<si-card>`](../layout-navigation/cards.md) wrapper is not appropriate.
 
-<si-docs-api component="SiWeatherWidgetBodyComponent"></si-docs-api>
+[[ api('SiWeatherWidgetBodyComponent') ]]
 
 ### Configurable playground
 
@@ -151,6 +151,6 @@ instead (`providedIn: 'root'` on the class itself, or via `providers` in
 
 <si-docs-component example="si-dashboard/si-weather-widget-custom-resolver" height="600"></si-docs-component>
 
-<si-docs-api component="SiWeatherIconResolver"></si-docs-api>
+[[ api('SiWeatherIconResolver') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

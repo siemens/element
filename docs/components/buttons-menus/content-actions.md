@@ -108,6 +108,6 @@ Use the `MenuItem` property `icon` to provide icons for all primary actions.
 
 <si-docs-component example="si-content-action-bar/si-content-action-bar-toolbar" height="400"></si-docs-component>
 
-<si-docs-api component="SiContentActionBarComponent"></si-docs-api>
+[[ api('SiContentActionBarComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

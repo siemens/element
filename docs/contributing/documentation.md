@@ -100,35 +100,33 @@ Zensical reads the real `docs/` directory. There is no copied documentation tree
 
 The API integration is switched on by environment variables in `mkdocs.yml`:
 
-| Setting                                         | Default mode (`docs:build`, `docs:serve`) | API mode (`docs:build:api`, `docs:serve:api`) |
-| ----------------------------------------------- | ----------------------------------------- | --------------------------------------------- |
-| `ELEMENT_DOCS_API`                              | unset                                     | `true`                                        |
-| `ELEMENT_DOCS_EXCLUDE` (`exclude_docs`)         | `/api/` (reference pages excluded)        | empty (reference pages included)              |
-| `md_extension_element_api` extension            | disabled                                  | enabled                                       |
-| `llmstxt` plugin (Markdown export and llms.txt) | disabled                                  | enabled                                       |
-| **Components → API** navigation                 | not added                                 | added from the reference catalog              |
+| Setting                                           | Default mode (`docs:build`, `docs:serve`) | API mode (`docs:build:api`, `docs:serve:api`) |
+| ------------------------------------------------- | ----------------------------------------- | --------------------------------------------- |
+| `ELEMENT_DOCS_API`                                | unset                                     | `true`                                        |
+| `ELEMENT_DOCS_EXCLUDE` (`exclude_docs`)           | `/api/` (reference pages excluded)        | empty (reference pages included)              |
+| API Jinja macros (`api`, `api_type`, `api_types`) | return empty output                       | render API documentation                      |
+| `llmstxt` plugin (Markdown export and llms.txt)   | disabled                                  | enabled                                       |
+| **Components → API** navigation                   | not added                                 | added from the reference catalog              |
 
 The default mode is a fast preview for authored content and requires no preparation.
 The API mode requires `docs:generate-api` to have run first; it never extracts or generates pages on its own.
 
-### Markdown extensions
+### Markdown extensions and macros
 
 `md_extension_element_docs` (registered as `element-docs`) handles authored syntax that is unrelated to the API:
 
 - It keeps `si-docs-component` blocks as raw HTML, which the live preview renders in the browser.
 - It converts `## Title ---` headings into native tab blocks while keeping a heading for deep links and the table of contents.
 
-`md_extension_element_api` renders the API tags (`si-docs-api`, `si-docs-type`, and `si-docs-types`).
-It runs as a late postprocessor, after includes and snippets are expanded and raw HTML is restored, so API tags from any source are handled the same way.
+`siemens_angular_api_docs_zensical.macros` registers the API Jinja macros (`api()`, `api_type()`, and `api_types()`) via Zensical's `macros` plugin using `[% raw %][[ ... ]][% endraw %]` delimiters (to avoid clashing with Angular's `{{ }}` syntax).
 For each page it:
 
-1. Parses the API tags in the final HTML. Tags inside `pre`, `code`, `textarea`, `si-docs-component`, and HTML comments are treated as literal text.
-2. Resolves the requested symbols and members against `api-documentation.json`.
-3. Allocates page-local anchors, resolves links either to the same page or to the canonical reference page, and renders the symbols with the templates in `md_extension_element_api/templates/`.
-4. Adds the rendered headings to the table of contents.
+1. Resolves the requested symbols and members against `api-documentation.json`.
+2. Allocates page-local anchors, resolves links either to the same page or to the canonical reference page, and renders the symbols with the templates in `siemens_angular_api_docs_zensical/templates/`.
+3. Emits native Markdown headings and fenced code blocks so Python-Markdown's `toc`, `attr_list`, and `pymdownx.superfences` handle TOC entries, permalinks, and syntax highlighting directly.
 
 The artifact is cached and reloaded when the file changes.
-Unknown, ambiguous, or malformed API requests fail the build with the page path in the message.
+Unknown, ambiguous, or malformed API requests fail the build.
 
 ### Navigation
 

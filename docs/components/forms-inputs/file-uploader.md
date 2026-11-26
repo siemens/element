@@ -65,8 +65,8 @@ It's also possible to have only the file selector / drop zone part without the f
 
 <si-docs-component example="si-file-uploader/si-file-dropzone" height="250"></si-docs-component>
 
-<si-docs-api component="SiFileUploaderComponent"></si-docs-api>
+[[ api('SiFileUploaderComponent') ]]
 
-<si-docs-api component="SiFileDropzoneComponent"></si-docs-api>
+[[ api('SiFileDropzoneComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

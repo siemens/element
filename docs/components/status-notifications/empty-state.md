@@ -48,6 +48,6 @@ normal wrapping behavior.
 
 <si-docs-component example="si-empty-state/si-empty-state-playground" height="550"></si-docs-component>
 
-<si-docs-api component="SiEmptyStateComponent"></si-docs-api>
+[[ api('SiEmptyStateComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

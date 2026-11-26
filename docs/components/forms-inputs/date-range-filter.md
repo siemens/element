@@ -85,8 +85,8 @@ CSS style.
 
 <si-docs-component example="si-date-range-filter/si-date-range-filter-popup" height="400"></si-docs-component>
 
-<si-docs-api component="SiDateRangeFilterComponent"></si-docs-api>
+[[ api('SiDateRangeFilterComponent') ]]
 
-<si-docs-api injectable="SiDateRangeCalculationService"></si-docs-api>
+[[ api('SiDateRangeCalculationService') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -111,7 +111,7 @@ is placed on the edge of the card and padding is set internally.
 
 <si-docs-component example="si-card/si-card" height="300"></si-docs-component>
 
-<si-docs-api component="SiCardComponent"></si-docs-api>
+[[ api('SiCardComponent') ]]
 
 ### Action cards
 
@@ -142,7 +142,7 @@ Use `routerLinkActive="selected"` to highlight the active route. Add `RouterLink
 
 <si-docs-component example="si-card/si-action-card" height="300"></si-docs-component>
 
-<si-docs-api component="SiActionCardComponent"></si-docs-api>
+[[ api('SiActionCardComponent') ]]
 
 ### Outline cards
 
@@ -368,4 +368,4 @@ For example, here’s `.row-cols-1` laying out the cards on one column, and `.ro
 
 <si-docs-component example="si-card/card-grid" height="300"></si-docs-component>
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

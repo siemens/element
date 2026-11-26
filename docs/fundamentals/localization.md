@@ -124,6 +124,6 @@ If you need to support locale changes without reloading, we recommend to extend 
 export class DateImpurePipe extends DatePipe implements PipeTransform {}
 ```
 
-<si-docs-api injectable="SiLocaleService"></si-docs-api>
+[[ api('SiLocaleService') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

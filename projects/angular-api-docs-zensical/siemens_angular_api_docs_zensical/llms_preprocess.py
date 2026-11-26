@@ -2,10 +2,9 @@
 
 from zensical.config import get_config
 
-from md_extension_element_api.renderer import load_renderer
-from md_extension_element_api.structured import preprocess_api
-
+from .renderer import load_renderer
 from .settings import load_settings
+from .structured import preprocess_api
 from .structured_content import preprocess_content
 from .structured_examples import preprocess_examples
 

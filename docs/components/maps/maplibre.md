@@ -180,6 +180,6 @@ focus moves to the scrolling region, so pressing Enter again does not close the 
 
 <si-docs-component example="maplibre/maplibre-cluster-custom-popover" height="580"></si-docs-component>
 
-<si-docs-api component="SiClusterSourceComponent"></si-docs-api>
-<si-docs-api component="SiClusterPopoverComponent"></si-docs-api>
-<si-docs-api directive="SiClusterPopoverTemplateDirective"></si-docs-api>
+[[ api('SiClusterSourceComponent') ]]
+[[ api('SiClusterPopoverComponent') ]]
+[[ api('SiClusterPopoverTemplateDirective') ]]

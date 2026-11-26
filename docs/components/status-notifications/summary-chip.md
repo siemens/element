@@ -45,6 +45,6 @@ The component is very flexible, hence allowing the following variants:
 
 <si-docs-component example="si-summary-chip/si-summary-chip" height="250"></si-docs-component>
 
-<si-docs-api component="SiSummaryChipComponent"></si-docs-api>
+[[ api('SiSummaryChipComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

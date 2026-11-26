@@ -9,12 +9,62 @@ from .settings import load_settings
 
 THEME_DIR = Path(__file__).resolve().parent / 'theme'
 STYLESHEET = '_src/docs-builder.css'
+MACROS_MODULE = 'siemens_angular_api_docs_zensical.macros'
+MACROS_DEFAULTS = {
+  # Avoid probing main.py / importing "main" on every page.
+  'module_name': '',
+  # Keep macros from walking and hashing all of docs_dir into watched_files.
+  'include_dir': '.element-docs-macros',
+  'on_error_fail': True,
+  'j2_variable_start_string': '[[',
+  'j2_variable_end_string': ']]',
+  'j2_block_start_string': '[%',
+  'j2_block_end_string': '%]',
+  'j2_comment_start_string': '[#',
+  'j2_comment_end_string': '#]',
+}
+
+
+def _configure_macros(config):
+  """Register the API macros pluglet and fast, Angular-safe defaults."""
+  plugins = config.get('plugins')
+  macros = None
+  if isinstance(plugins, dict):
+    entry = plugins.get('macros')
+    if isinstance(entry, dict):
+      macros = entry
+    else:
+      macros = {}
+      plugins['macros'] = macros
+  else:
+    if not isinstance(plugins, list):
+      plugins = []
+      config['plugins'] = plugins
+    for index, item in enumerate(plugins):
+      if item == 'macros':
+        macros = {}
+        plugins[index] = {'macros': macros}
+        break
+      if isinstance(item, dict) and 'macros' in item:
+        macros = item['macros'] if isinstance(item['macros'], dict) else {}
+        item['macros'] = macros
+        break
+    if macros is None:
+      macros = {}
+      plugins.append({'macros': macros})
+
+  modules = macros.setdefault('modules', [])
+  if isinstance(modules, list) and MACROS_MODULE not in modules:
+    modules.append(MACROS_MODULE)
+  for key, value in MACROS_DEFAULTS.items():
+    macros.setdefault(key, value)
 
 
 def _apply_defaults_with_element_docs(config, path):
   extra = config.get('extra')
   if not isinstance(extra, dict) or extra.pop('element_docs_install', None) is not install:
     return _original_apply_defaults(config, path)
+  _configure_macros(config)
   settings = load_settings({**config, 'root_dir': Path(path).resolve().parent})
   if settings.enabled:
     from .reference_pages import load_reference_catalog

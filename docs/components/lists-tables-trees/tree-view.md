@@ -156,7 +156,7 @@ It is used to provide an array of `TreeItem` objects to be displayed.
 Note that all properties of the `TreeItem` interface are optional. This allows you to
 directly feed a JSON structure (e.g. from an API) to the tree view.
 
-<si-docs-type name="TreeItem"></si-docs-type>
+[[ api_type('TreeItem') ]]
 
 <si-docs-component example="si-tree-view/si-tree-view" height="300"></si-docs-component>
 
@@ -254,6 +254,6 @@ export class SampleComponent {
 
 <si-docs-component example="si-tree-view/si-tree-view-playground" height="600"></si-docs-component>
 
-<si-docs-api component="SiTreeViewComponent"></si-docs-api>
+[[ api('SiTreeViewComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -184,7 +184,7 @@ export const routes: Route[] = [
 
 The `siBreadcrumb` object is an array of `BreadcrumbRouterLink` objects.
 
-<si-docs-type name="BreadcrumbRouterLink"></si-docs-type>
+[[ api_type('BreadcrumbRouterLink') ]]
 
 See [Angular docs](https://angular.dev/api/router/Resolve) to learn how to resolve
 route data with the Angular router resolvers.
@@ -214,7 +214,7 @@ export class CustomBreadcrumbResolverService extends SiBreadcrumbDefaultResolver
 
 The resolver uses the following type:
 
-<si-docs-type name="SiBreadcrumbResolverService"></si-docs-type>
+[[ api_type('SiBreadcrumbResolverService') ]]
 
 Afterwards you need to provide the custom resolver, instead of the default resolver, in your `app.module.ts`:
 
@@ -241,8 +241,8 @@ export class AppComponent {
 }
 ```
 
-<si-docs-api component="SiBreadcrumbComponent"></si-docs-api>
+[[ api('SiBreadcrumbComponent') ]]
 
-<si-docs-api component="SiBreadcrumbRouterComponent"></si-docs-api>
+[[ api('SiBreadcrumbRouterComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

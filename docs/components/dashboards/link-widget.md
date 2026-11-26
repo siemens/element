@@ -47,7 +47,7 @@ import { SiLinkWidgetComponent } from '@siemens/element-ng/dashboard';
 
 <si-docs-component example="si-dashboard/si-link-widget" height="400"></si-docs-component>
 
-<si-docs-api component="SiLinkWidgetComponent"></si-docs-api>
+[[ api('SiLinkWidgetComponent') ]]
 
 ### CSS class usage
 
@@ -56,4 +56,4 @@ component.
 
 <si-docs-component example="si-dashboard/si-link-widget-css" height="400"></si-docs-component>
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

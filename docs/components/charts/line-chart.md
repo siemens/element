@@ -66,6 +66,6 @@ import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 
 <si-docs-component example="si-charts/cartesian/si-chart-line" height="400"></si-docs-component>
 
-<si-docs-api component="SiChartCartesianComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+[[ api('SiChartCartesianComponent', package='@siemens/charts-ng', hide_implicitly_public=True) ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

@@ -70,6 +70,6 @@ import { SiResultDetailsListComponent } from '@siemens/element-ng/result-details
 
 <si-docs-component example="si-result-details-list/si-result-details-list-horizontal"></si-docs-component>
 
-<si-docs-api component="SiResultDetailsListComponent"></si-docs-api>
+[[ api('SiResultDetailsListComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

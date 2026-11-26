@@ -91,6 +91,6 @@ import { SiThresholdComponent } from '@siemens/element-ng/threshold';
 
 <si-docs-component example="si-threshold/si-threshold"></si-docs-component>
 
-<si-docs-api component="SiThresholdComponent"></si-docs-api>
+[[ api('SiThresholdComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

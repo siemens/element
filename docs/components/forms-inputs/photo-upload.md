@@ -151,6 +151,6 @@ export class SampleComponent {
 The `sourcePhotoUrl` is marked as a trusted resource URL and is not sanitized by Angular.
 Only pass URLs from trusted sources.
 
-<si-docs-api component="SiPhotoUploadComponent"></si-docs-api>
+[[ api('SiPhotoUploadComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

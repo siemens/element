@@ -104,10 +104,10 @@ recommended bounded height for menus with many items.
 Use [button groups](button-group.md) to create split-button patterns. Use the [menu component](menu.md) when the
 content, see [content actions](content-actions.md).
 
-<si-docs-api directive="CdkConnectedOverlay"></si-docs-api>
+[[ api('CdkConnectedOverlay') ]]
 
-<si-docs-api directive="CdkOverlayOrigin"></si-docs-api>
+[[ api('CdkOverlayOrigin') ]]
 
-<si-docs-api directive="CdkTrapFocus"></si-docs-api>
+[[ api('CdkTrapFocus') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

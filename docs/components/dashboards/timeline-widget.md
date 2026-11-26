@@ -75,7 +75,7 @@ import { SiTimelineWidgetComponent } from '@siemens/element-ng/dashboard';
 
 <si-docs-component example="si-dashboard/si-timeline-widget" height="620"></si-docs-component>
 
-<si-docs-api component="SiTimelineWidgetComponent"></si-docs-api>
+[[ api('SiTimelineWidgetComponent') ]]
 
 ### Timeline widget body component
 
@@ -84,7 +84,7 @@ You can use it for compositions.
 
 <si-docs-component example="si-dashboard/si-timeline-widget-body" height="450"></si-docs-component>
 
-<si-docs-api component="SiTimelineWidgetBodyComponent"></si-docs-api>
+[[ api('SiTimelineWidgetBodyComponent') ]]
 
 ### CSS class usage
 
@@ -92,4 +92,4 @@ For more flexibility and control, use the CSS classes directly in the `<si-card>
 
 <si-docs-component example="si-dashboard/si-timeline-widget-css" height="400"></si-docs-component>
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

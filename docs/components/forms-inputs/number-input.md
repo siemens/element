@@ -79,6 +79,6 @@ import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 
 <si-docs-component example="si-number-input/si-number-input"></si-docs-component>
 
-<si-docs-api component="SiNumberInputComponent"></si-docs-api>
+[[ api('SiNumberInputComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

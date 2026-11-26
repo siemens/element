@@ -86,6 +86,6 @@ const config: ApplicationConfig = {
 };
 ```
 
-<si-docs-type name="provideSiUiState"></si-docs-type>
+[[ api_type('provideSiUiState') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

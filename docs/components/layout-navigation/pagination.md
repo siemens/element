@@ -57,6 +57,6 @@ import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 
 <si-docs-component example="si-pagination/si-pagination"></si-docs-component>
 
-<si-docs-api component="SiPaginationComponent"></si-docs-api>
+[[ api('SiPaginationComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

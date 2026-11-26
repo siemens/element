@@ -146,6 +146,6 @@ message ends that automatic expansion; an AI response alone does not.
 Setting `[autoExpand]="false"` changes the default, not the overrides. For example, if the latest
 activity has visible output, `autoExpandOutputs: true` can still expand it automatically.
 
-<si-docs-api component="SiAiChatComponent"></si-docs-api>
+[[ api('SiAiChatComponent') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

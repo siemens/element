@@ -73,6 +73,6 @@ button is clicked.
 
 <si-docs-component example="si-toast-notification/si-toast-notification"></si-docs-component>
 
-<si-docs-api injectable="SiToastNotificationService"></si-docs-api>
+[[ api('SiToastNotificationService') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]

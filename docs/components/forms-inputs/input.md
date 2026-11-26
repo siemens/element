@@ -159,8 +159,8 @@ Utilize the output callback event [`(passwordStrengthChanged)`](./input.md#passw
 
 <si-docs-component example="input-fields/password" height="220"></si-docs-component>
 
-<si-docs-api component="SiPasswordToggleComponent"></si-docs-api>
-<si-docs-api component="SiPasswordStrengthComponent"></si-docs-api>
-<si-docs-api directive="SiPasswordStrengthDirective"></si-docs-api>
+[[ api('SiPasswordToggleComponent') ]]
+[[ api('SiPasswordStrengthComponent') ]]
+[[ api('SiPasswordStrengthDirective') ]]
 
-<si-docs-types></si-docs-types>
+[[ api_types() ]]
