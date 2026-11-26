@@ -1,0 +1,70 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/all-variables';
+
+$focus-ring-size: calc(
+  #{all-variables.$si-sys-sizing-focus-ring-width} +
+    #{all-variables.$si-sys-sizing-focus-ring-offset}
+);
+$padding-block: max(#{map.get(all-variables.$spacers-block, 2)}, #{$focus-ring-size});
+$padding-inline: max(#{map.get(all-variables.$spacers-inline, 2)}, #{$focus-ring-size});
+$divider-thickness: all-variables.$si-sys-sizing-border-width-default;
+$divider-length: all-variables.$si-sys-sizing-size-70;
+
+:host {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: map.get(all-variables.$spacers-inline, 2);
+  // The padding keeps the focus outline of the items within the toolbar, which clips its overflow.
+  padding-block: $padding-block;
+  padding-inline: $padding-inline;
+}
+
+:host(:not(:first-child)) {
+  position: relative;
+  padding-inline-start: calc(#{$padding-inline} + #{$divider-thickness});
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    margin-block: auto;
+    block-size: $divider-length;
+    max-block-size: 100%;
+    border-inline-start: $divider-thickness solid all-variables.$si-sys-color-border-4;
+  }
+}
+
+:host(.si-toolbar-group-vertical) {
+  flex-direction: column;
+  gap: map.get(all-variables.$spacers-block, 2);
+}
+
+:host(.si-toolbar-group-vertical:not(:first-child)) {
+  padding-inline-start: $padding-inline;
+  padding-block-start: calc(#{$padding-block} + #{$divider-thickness});
+
+  &::before {
+    inset-block: 0 auto;
+    inset-inline: 0;
+    margin-block: 0;
+    margin-inline: auto;
+    inline-size: $divider-length;
+    max-inline-size: 100%;
+    block-size: auto;
+    border-inline-start: 0;
+    border-block-start: $divider-thickness solid all-variables.$si-sys-color-border-4;
+  }
+}
+
+:host ::ng-deep > [aria-disabled='true'] {
+  pointer-events: none;
+  opacity: all-variables.$si-sys-color-effects-disable-opacity;
+}
+
+// Buttons in a toolbar are as compact as their content
+:host ::ng-deep .btn {
+  min-inline-size: 0;
+}

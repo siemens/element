@@ -85,6 +85,7 @@ export * from './tabs';
 export * from './theme';
 export * from './threshold';
 export * from './toast-notification';
+export * from './toolbar';
 export * from './tooltip';
 export * from './tour';
 export * from './translate';
