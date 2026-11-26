@@ -234,6 +234,28 @@ describe('SiSearchBarComponent', () => {
       vi.advanceTimersByTime(1);
       expect(searchChange).toHaveBeenCalledWith('world');
     });
+
+    it('should not restore a pending debounced value after clearing', () => {
+      vi.useFakeTimers();
+
+      const searchChange = vi.fn();
+      const fixture = TestBed.createComponent(SiSearchBarComponent, {
+        bindings: [outputBinding('searchChange', searchChange)]
+      });
+      const element: HTMLElement = fixture.nativeElement;
+      fixture.detectChanges();
+
+      fakeInput('abc', element);
+      vi.advanceTimersByTime(400);
+      fixture.detectChanges();
+
+      fakeInput('abcd', element);
+      element.querySelector<HTMLButtonElement>('.search-bar-clear')!.click();
+      vi.advanceTimersByTime(400);
+
+      expect(getInput(element).value).toBe('');
+      expect(searchChange.mock.calls).toEqual([['abc'], ['']]);
+    });
   });
 
   describe('with projected input', () => {
