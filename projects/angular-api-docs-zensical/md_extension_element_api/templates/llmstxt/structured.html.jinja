@@ -1,17 +1,17 @@
 {# structured.py replaces browser API cards with this simpler HTML before
    Zensical converts the page to Markdown. The browser never displays it. #}
-{% import 'macros.html.jinja' as api with context %}
+{% import 'shared/content.html.jinja' as content with context %}
 {# Used for top-level functions and callable members. When a member summary
    has already printed a paragraph, don't repeat it under each overload. #}
 {% macro signatures(items, shared_documentation=[]) -%}
   {% for signature in items %}
     <section id="{{ signature.anchor }}">
-      {{ api.type_target(signature.anchor) }}
-      <pre><code>{{ api.fragments(signature.label, local, false) }}</code></pre>
-      {% for block in signature.documentation %}{% if block not in shared_documentation %}{{ api.blocks([block], local) }}{% endif %}{% endfor %}
+      {{ content.type_target(signature.anchor) }}
+      <pre><code>{{ content.fragments(signature.label, local, false) }}</code></pre>
+      {% for block in signature.documentation %}{% if block not in shared_documentation %}{{ content.blocks([block], local) }}{% endif %}{% endfor %}
       {% if signature.parameters %}{{ rows(signature.parameters, true, 'Parameters') }}{% endif %}
       {% if signature.returns %}
-        <p><strong>Returns: </strong>{{ api.fragments(signature.returns, local) }}</p>
+        <p><strong>Returns: </strong>{{ content.fragments(signature.returns, local) }}</p>
       {% endif %}
     </section>
   {% endfor %}
@@ -34,17 +34,19 @@
       {% for row in items %}
         <tr id="{{ row.anchor }}">
           <td class="api-column-name">
-            {{ api.type_target(row.anchor) }}{% if row.sourceUrl %}
+            {{ content.type_target(row.anchor) }}{% if row.sourceUrl %}
               <a href="{{ safe_url(row.sourceUrl) }}">{{ row.name }}</a>
             {% else %}
               {{ row.name }}
             {% endif %}{% if row.badges %}({{ row.badges | join(', ') }}){% endif %}
           </td>
-          <td class="api-column-type"><code>{{ api.fragments(row.type, local, false) }}</code></td>
+          <td class="api-column-type">
+            <code>{{ content.fragments(row.type, local, false) }}</code>
+          </td>
           {% if show_defaults %}
-            <td class="api-column-default">{{ api.default_value(row, local) }}</td>
+            <td class="api-column-default">{{ content.default_value(row, local) }}</td>
           {% endif %}
-          <td class="api-column-description">{{ api.blocks(row.documentation, local) }}</td>
+          <td class="api-column-description">{{ content.blocks(row.documentation, local) }}</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -56,7 +58,7 @@
 {%- endmacro %}
 
 <section {% if symbol_anchor %}id="{{ symbol_anchor }}"{% endif %}>
-  {% if symbol_anchor %}{{ api.type_target(symbol_anchor) }}{% endif %}
+  {% if symbol_anchor %}{{ content.type_target(symbol_anchor) }}{% endif %}
   {% if not member %}
     {% if not no_heading %}
       <h3>
@@ -73,10 +75,10 @@
     {% endfor %}
     {% if symbol.importStatement %}<pre><code>{{ symbol.importStatement }}</code></pre>{% endif %}
   {% endif %}
-  {# The same main description shown by symbol.html.jinja, rendered here for the
+  {# The same main description shown by html/symbol.html.jinja, rendered here for the
    downloadable Markdown. Individual member descriptions are rendered below. #}
-  {{ api.blocks(view.documentation, local) }}
-  {% if view.declaration %}<pre><code>{{ api.fragments(view.declaration, local, false) }}</code></pre>{% endif %}
+  {{ content.blocks(view.documentation, local) }}
+  {% if view.declaration %}<pre><code>{{ content.fragments(view.declaration, local, false) }}</code></pre>{% endif %}
   {{ signatures(view.signatures) }}
   {% for group in view.groups %}
     {# Methods and other members get separate sections so details survive Markdown export. #}
@@ -84,7 +86,7 @@
       <h4 {% if group.anchor is defined %}id="{{ group.anchor }}"{% endif %}>{{ group.title }}</h4>
       {% for row in group.rows %}
         <section id="{{ row.anchor }}">
-          {{ api.type_target(row.anchor) }}
+          {{ content.type_target(row.anchor) }}
           <h5>{{ row.name }}</h5>
           {% if row.sourceUrl %}
             <p><a href="{{ safe_url(row.sourceUrl) }}">Source for {{ row.name }}</a></p>
@@ -93,12 +95,14 @@
             <p><strong>Modifiers: </strong>{{ row.badges | join(', ') }}</p>
           {% endif %}
           {% if not row.signatures %}
-            <p><strong>Type: </strong><code>{{ api.fragments(row.type, local, false) }}</code></p>
+            <p>
+              <strong>Type: </strong><code>{{ content.fragments(row.type, local, false) }}</code>
+            </p>
           {% endif %}
           {% if row.default is not none %}
-            <p><strong>Default: </strong>{{ api.default_value(row, local) }}</p>
+            <p><strong>Default: </strong>{{ content.default_value(row, local) }}</p>
           {% endif %}
-          {{ api.blocks(row.documentation, local) }}
+          {{ content.blocks(row.documentation, local) }}
           {{ signatures(row.signatures, row.documentation) }}
         </section>
       {% endfor %}

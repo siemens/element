@@ -132,8 +132,8 @@ class ApiRenderer:
     self.environment.globals['safe_url'] = safe_url
     self.environment.globals['callable_type'] = callable_type
     self.environment.globals['kind_documentation'] = KIND_DOCUMENTATION
-    self.template = self.environment.get_template('symbol.html.jinja')
-    self.member_template = self.environment.get_template('member.html.jinja')
+    self.template = self.environment.get_template('html/symbol.html.jinja')
+    self.member_template = self.environment.get_template('html/member.html.jinja')
 
   def prepare_page(self, requests, current_file_path, reserved_ids, *, highlight_example=None):
     """Resolve the entire page before rendering, including forward/local links."""
