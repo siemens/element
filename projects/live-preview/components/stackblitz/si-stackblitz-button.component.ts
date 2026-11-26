@@ -2,10 +2,10 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { httpResource } from '@angular/common/http';
-import { computed, Directive, inject, input } from '@angular/core';
+import { computed, Directive, inject, input, resource } from '@angular/core';
 
-import { openStackblitz } from './stackblitz';
+import { LivePreviewUrlService } from '../../services/live-preview-url.service';
+import { loadStackblitzProject, openStackblitz } from './stackblitz';
 import { SI_STACKBLITZ_CONFIG } from './stackblitz.provider';
 
 @Directive({
@@ -20,16 +20,8 @@ import { SI_STACKBLITZ_CONFIG } from './stackblitz.provider';
 })
 export class SiStackblitzButtonDirective {
   protected readonly config = inject(SI_STACKBLITZ_CONFIG, { optional: true });
-  private readonly exampleTs = httpResource.text(() =>
-    this.example() ? `${this.baseUrl()}${this.example()}.ts` : undefined
-  );
-  private readonly isExample = computed(() => {
-    if (this.exampleTs.hasValue()) {
-      const content = this.exampleTs.value();
-      return /selector: 'app-sample'/gm.test(content);
-    }
-    return false;
-  });
+  private readonly urls = inject(LivePreviewUrlService);
+
   /** Framework to use for the Stackblitz project. */
   readonly framework = input.required<string>();
 
@@ -39,21 +31,33 @@ export class SiStackblitzButtonDirective {
   /** The example name. */
   readonly example = input<string | null>();
 
-  /** Indicate whether a stackblitz isn't available. */
-  protected readonly disabled = computed(
-    () =>
-      !this.config?.templates.find(item => item.name === this.framework()) ||
-      !this.example() ||
-      !this.isExample()
+  private readonly template = computed(() =>
+    this.config?.templates.find(item => item.name === this.framework())
   );
 
+  // Loaded upfront, so that the click handler can open Stackblitz synchronously.
+  private readonly project = resource({
+    params: () => {
+      const template = this.template();
+      const example = this.example();
+      return template && example ? { template, example, baseUrl: this.baseUrl() } : undefined;
+    },
+    loader: ({ params, abortSignal }) =>
+      loadStackblitzProject({
+        ...params,
+        // Resolve template assets against the live preview, which isn't the page in the docs.
+        assetBaseUrl: this.urls.applicationUrl.href,
+        signal: abortSignal
+      })
+  });
+
+  /** Indicate whether a stackblitz isn't available. */
+  protected readonly disabled = computed(() => !this.project.hasValue());
+
   /** Open the Stackblitz editor with the specified configuration. */
-  protected async openStackblitz(): Promise<void> {
-    await openStackblitz({
-      framework: this.framework(),
-      example: this.example()!,
-      templates: this.config!.templates,
-      baseUrl: this.baseUrl()
-    });
+  protected openStackblitz(): void {
+    if (this.project.hasValue()) {
+      openStackblitz(this.project.value());
+    }
   }
 }

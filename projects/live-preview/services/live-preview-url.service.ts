@@ -13,7 +13,8 @@ export class LivePreviewUrlService {
   private readonly state = inject(LivePreviewStateService);
   private readonly document = inject(DOCUMENT);
   // Keep resolution at runtime to avoid Vite rewriting '.' as a filesystem asset.
-  private readonly applicationUrl = new URL('.', new URL(import.meta.url));
+  /** URL of the live preview application, which also serves its assets. */
+  readonly applicationUrl = new URL('.', new URL(import.meta.url));
 
   readonly origin = this.applicationUrl.origin;
   readonly iframeUrl = this.routeUrl(

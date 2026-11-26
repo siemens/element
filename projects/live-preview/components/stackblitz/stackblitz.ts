@@ -4,22 +4,27 @@
  */
 import sdk from '@stackblitz/sdk';
 
-import { AssetProject, Project, ProjectTemplates } from './stackblitz.model';
+import { AssetProject, Project } from './stackblitz.model';
 
-export interface OpenStackblitzOptions {
-  /** Framework to use for the Stackblitz project. */
-  framework: string;
-  /** Project templates configuration. */
-  templates: ProjectTemplates;
+export interface LoadStackblitzProjectOptions {
+  /** Project template to create the Stackblitz project from. */
+  template: AssetProject | Project;
   /** Example name to load. */
   example: string;
   /** Base URL for fetching example files. */
   baseUrl: string;
+  /** Base URL to resolve a relative template `assetUrl` against. */
+  assetBaseUrl: string;
+  /** Abort signal for example-specific requests. */
+  signal?: AbortSignal;
 }
 
-export const isProject = (item: AssetProject | Project): item is Project => {
-  return !Array.isArray((item as Project).files);
-};
+export interface StackblitzProject {
+  title: string;
+  files: Record<string, string>;
+  /** File to open in the Stackblitz editor. */
+  openFile: string;
+}
 
 export const isAssetProject = (item: AssetProject | Project): item is AssetProject => {
   return 'assetUrl' in item;
@@ -100,76 +105,131 @@ const getStyleUrls = (ts: string): string[] => {
   return styleUrls;
 };
 
-const addRelativeImports = async (
-  files: Record<string, string>,
-  baseUrl: string,
-  baseFolder: string,
-  path: string
-): Promise<void> => {
-  const ts = files[path];
-  for (const item of getRelativeImports(ts)) {
-    const response = await fetch(`${baseUrl}${item}.ts`);
-    files[absolute(baseFolder, `${item}.ts`)] = await response.text();
+const fetchText = async (url: string, signal?: AbortSignal): Promise<string> => {
+  const response = await fetch(url, { priority: 'low', signal });
+  if (!response.ok) {
+    throw new Error(`Failed to load ${url}: ${response.status}`);
   }
+  return response.text();
 };
 
-export const openStackblitz = async (options: OpenStackblitzOptions): Promise<void> => {
-  const { framework, templates, example, baseUrl } = options;
-  const template = templates.find(item => item.name === framework);
-  if (!template) {
-    return;
+const fetchOptionalText = async (
+  url: string,
+  signal?: AbortSignal
+): Promise<string | undefined> => {
+  const response = await fetch(url, { priority: 'low', signal });
+  return response.ok ? response.text() : undefined;
+};
+
+// Template files are identical for all examples, so they are only requested once.
+const templateFilesCache = new WeakMap<AssetProject, Promise<Record<string, string>>>();
+
+const loadTemplateFiles = (
+  template: AssetProject | Project,
+  assetBaseUrl: string
+): Promise<Readonly<Record<string, string>>> => {
+  if (!isAssetProject(template)) {
+    return Promise.resolve(template.files);
+  }
+  let files = templateFilesCache.get(template);
+  if (!files) {
+    files = Promise.all(
+      template.files.map(
+        async file =>
+          [
+            file,
+            await fetchText(new URL(`${template.assetUrl}/${file}`, assetBaseUrl).href)
+          ] as const
+      )
+    ).then(entries => Object.fromEntries(entries));
+    // Allow a later attempt to retry failed requests.
+    files.catch(() => templateFilesCache.delete(template));
+    templateFilesCache.set(template, files);
+  }
+  return files;
+};
+
+/**
+ * Prefetch all files of the Stackblitz project for an example.
+ * Returns `undefined` when the example cannot be opened in Stackblitz.
+ */
+export const loadStackblitzProject = async ({
+  template,
+  example,
+  baseUrl,
+  assetBaseUrl,
+  signal
+}: LoadStackblitzProjectOptions): Promise<StackblitzProject | undefined> => {
+  const exampleTs = await fetchOptionalText(`${baseUrl}${example}.ts`, signal);
+  if (!exampleTs?.includes("selector: 'app-sample'")) {
+    return undefined;
   }
 
-  // Get template project files
-  let files: Record<string, string> = {};
-  if (isAssetProject(template)) {
-    for (const file of template.files) {
-      const response = await fetch(`${template.assetUrl}/${file}`);
-      files[file] = await response.text();
-    }
-  } else if (isProject(template)) {
-    files = { ...template.files };
-  }
-
-  const baseFolder = getBaseFolder(files);
   const exampleFolder = folder(example);
+  const exampleUrl = `${baseUrl}${exampleFolder}`;
+
+  const [templateFiles, html, styles, imports] = await Promise.all([
+    loadTemplateFiles(template, assetBaseUrl),
+    fetchOptionalText(`${baseUrl}${example}.html`, signal),
+    Promise.all(
+      getStyleUrls(exampleTs).map(
+        async styleUrl =>
+          [styleUrl, await fetchOptionalText(absolute(exampleUrl, styleUrl), signal)] as const
+      )
+    ),
+    Promise.all(
+      getRelativeImports(exampleTs).map(
+        async item =>
+          [item, await fetchOptionalText(absolute(exampleUrl, `${item}.ts`), signal)] as const
+      )
+    )
+  ]);
+
+  const files = { ...templateFiles };
+  const baseFolder = getBaseFolder(files);
+  const exampleBaseFolder = `${baseFolder}${exampleFolder}`;
   updateExampleImport(files, example);
 
-  // Add example HTML file
-  const html = await (await fetch(`${baseUrl}${example}.html`)).text();
-  files[`${baseFolder}${example}.html`] = html;
+  if (html !== undefined) {
+    files[`${baseFolder}${example}.html`] = html;
+  }
 
-  // Add example TS file
-  const ts = await (await fetch(`${baseUrl}${example}.ts`)).text();
   const tsPath = `${baseFolder}${example}.ts`;
-  files[tsPath] = ts;
+  files[tsPath] = exampleTs;
 
-  // Add example style files
-  for (const styleUrl of getStyleUrls(ts)) {
-    const response = await fetch(absolute(`${baseUrl}${exampleFolder}`, styleUrl));
-    if (response.ok) {
-      const stylePath = absolute(`${baseFolder}${exampleFolder}`, styleUrl);
-      files[stylePath] = await response.text();
+  for (const [styleUrl, style] of styles) {
+    if (style !== undefined) {
+      files[absolute(exampleBaseFolder, styleUrl)] = style;
     }
   }
 
-  // Get relative imports files
-  await addRelativeImports(
-    files,
-    `${baseUrl}${exampleFolder}`,
-    `${baseFolder}${exampleFolder}`,
-    tsPath
-  );
+  for (const [item, ts] of imports) {
+    if (ts !== undefined) {
+      files[absolute(exampleBaseFolder, `${item}.ts`)] = ts;
+    }
+  }
 
+  return {
+    title: `Element ${template.name} ${example} example`,
+    files,
+    openFile: tsPath
+  };
+};
+
+/**
+ * Open a prefetched project in a new Stackblitz tab. Must be called synchronously from a user
+ * interaction so the browser's popup blocker allows the new tab.
+ */
+export const openStackblitz = ({ title, files, openFile }: StackblitzProject): void => {
   sdk.openProject(
     {
-      title: `Element ${framework} ${example} example`,
+      title,
       template: 'node',
       description: 'Blank starter project for building ES6 apps.',
       files: { ...files }
     },
     {
-      openFile: tsPath
+      openFile
     }
   );
 };
