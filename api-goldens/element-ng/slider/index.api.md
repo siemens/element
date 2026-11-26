@@ -11,6 +11,7 @@ import { Signal } from '@angular/core';
 
 // @public (undocumented)
 export class SiSliderComponent implements ControlValueAccessor, SiFormItemControl {
+    constructor();
     readonly decrementLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;

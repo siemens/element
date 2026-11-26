@@ -3,54 +3,71 @@
 
 $track-color: si-sys-variables.$si-sys-color-border-4 !default;
 $track-height: 4px !default;
-$thumb-size: 24px !default;
+$thumb-size: 1.5rem !default;
 
 @mixin range-track {
+  border-radius: si-sys-variables.$si-sys-sizing-border-radius-xs;
   block-size: $track-height;
-  cursor: pointer;
-  animation-duration: 0.2s;
   background: $track-color;
 }
 
 @mixin range-thumb {
-  box-shadow: var(--thumb-shadow);
-  border: 1px solid si-sys-variables.$si-sys-color-border-accent;
+  box-sizing: border-box;
+  box-shadow: si-sys-variables.$si-sys-color-effects-shadow-10;
+  border: 1px solid var(--si-range-thumb-color);
   block-size: $thumb-size;
   inline-size: $thumb-size;
   border-radius: 50%;
-  background: si-sys-variables.$si-sys-color-background-1;
-  cursor: pointer;
-
-  &:hover {
-    border-color: si-sys-variables.$si-sys-color-border-accent-hover;
-    background: radial-gradient(
+  // Inner dot shown on hover/focus/active (0.5px stop anti-aliases the edge)
+  background:
+    radial-gradient(
       circle,
-      si-sys-variables.$si-sys-color-text-accent-hover 0%,
-      si-sys-variables.$si-sys-color-text-accent-hover 35%,
-      si-sys-variables.$si-sys-color-background-accent-secondary-hover 36%
-    );
-  }
-
-  &:active {
-    border-color: si-sys-variables.$si-sys-color-border-accent-active;
-    background: radial-gradient(
-      circle,
-      si-sys-variables.$si-sys-color-background-accent-active 0%,
-      si-sys-variables.$si-sys-color-background-accent-active 35%,
-      si-sys-variables.$si-sys-color-background-accent-secondary-active 36%
-    );
-  }
+      var(--si-range-thumb-dot-color, transparent) calc($thumb-size / 4),
+      transparent calc($thumb-size / 4 + 0.5px)
+    ),
+    var(--si-range-thumb-bg);
 }
 
 .form-range {
-  --thumb-shadow: #{si-sys-variables.$si-sys-color-effects-shadow-20};
-  -webkit-appearance: none; // stylelint-disable-line property-no-vendor-prefix
+  --si-range-thumb-color: #{si-sys-variables.$si-sys-color-text-accent};
+  --si-range-thumb-bg: #{si-sys-variables.$si-sys-color-background-1};
+  appearance: none;
   background: transparent;
   inline-size: 100%;
+  cursor: pointer;
+
+  &:disabled {
+    --si-range-thumb-color: #{si-sys-variables.$si-sys-color-text-disabled};
+    cursor: default;
+  }
+
+  &:not(:disabled) {
+    &:hover:not(:active) {
+      --si-range-thumb-color: #{si-sys-variables.$si-sys-color-text-accent-hover};
+      --si-range-thumb-bg: #{si-sys-variables.$si-sys-color-background-accent-secondary-hover};
+    }
+
+    &:active {
+      cursor: grabbing;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      --si-range-thumb-dot-color: var(--si-range-thumb-color);
+    }
+  }
 
   &:focus-visible {
-    --thumb-shadow: #{focus.$si-focus-styling-box-shadow};
     outline: none;
+
+    &::-webkit-slider-thumb {
+      @include focus.make-outline-focus();
+    }
+
+    &::-moz-range-thumb {
+      @include focus.make-outline-focus();
+    }
   }
 
   &::-webkit-slider-runnable-track {
@@ -59,8 +76,8 @@ $thumb-size: 24px !default;
 
   &::-webkit-slider-thumb {
     @include range-thumb;
-    -webkit-appearance: none; // stylelint-disable-line property-no-vendor-prefix
-    margin-block-start: -0.5 * $thumb-size;
+    appearance: none;
+    margin-block-start: calc(($track-height - $thumb-size) / 2);
   }
 
   &::-moz-range-track {
@@ -69,9 +86,5 @@ $thumb-size: 24px !default;
 
   &::-moz-range-thumb {
     @include range-thumb;
-  }
-
-  &::-moz-focus-outer {
-    border: 0;
   }
 }

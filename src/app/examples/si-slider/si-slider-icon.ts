@@ -15,6 +15,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
-  slidingValue = 85;
+  slidingValue = 90;
   disabled = false;
 }
