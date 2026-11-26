@@ -13,8 +13,8 @@ api-goldens
 mkdocs.yml
 docs/**/dynamic-forms.md
 
-# Formatting not possible because of extra MkDocs syntax
-docs/_custom_theme/partials/toc.html
+# Markdown Jinja templates (prettier-plugin-jinja-template targets HTML only)
+**/*.md.jinja
 
 # Ignore test files in schematics
 **/schematics/**/files/**
