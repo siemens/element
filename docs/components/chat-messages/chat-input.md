@@ -68,7 +68,25 @@ They help users continue the conversation without having to formulate the next m
 - Selecting a prompt inserts its text into the input field so the user can review or edit before sending.
 - The prompt list is cleared when the user sends a message.
 
+### Voice input
+
+Voice input lets users dictate messages using an optional button next to the send button.
+
+- Click the button to start or stop dictation.
+- Recognized text is inserted into the input field for review before sending.
+
 ## Code ---
+
+### Usage
+
+```ts
+import { SiChatInputComponent } from '@siemens/element-ng/chat-messages';
+import { SiVoiceInputDirective } from '@siemens/element-ng/voice-input';
+
+@Component({
+  imports: [SiChatInputComponent, SiVoiceInputDirective, ...]
+})
+```
 
 <si-docs-component example="si-chat-messages/si-chat-input"></si-docs-component>
 
@@ -87,6 +105,19 @@ Clear the list (set to `[]`) on send and repopulate it after each AI response.
 />
 ```
 
+### Voice input
+
+Add a button with `siVoiceInput` to the `siChatInputEnd` slot.
+It uses the browser's
+[`SpeechRecognition`](https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition) or
+[`webkitSpeechRecognition`](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API)
+API with the browser's default language, or a BCP 47 tag via `lang`.
+Provide `SI_VOICE_INPUT_RECOGNITION` to use a custom provider.
+
+<si-docs-component example="si-chat-messages/si-chat-voice-input" height="360"></si-docs-component>
+
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
+
+<si-docs-api directive="SiVoiceInputDirective"></si-docs-api>
 
 <si-docs-types></si-docs-types>

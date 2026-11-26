@@ -1,0 +1,16 @@
+- textbox "Chat input" [disabled]:
+  - /placeholder: Enter a command, question or topic…
+  - text: Show the energy consumption for the last seven days.
+- group:
+  - button "Attach file" [disabled]
+- button "Stop dictation" [pressed]
+- button "Send" [disabled]
+- text: The content is AI generated. Always verify the information for accuracy.
+- status: Listening…
+- heading "Control panel" [level=3]
+- text: Recognition language
+- combobox "Recognition language" [disabled]:
+  - option "Browser default" [selected]
+  - option "English (United States)"
+  - option "German (Germany)"
+  - option "French (France)"
