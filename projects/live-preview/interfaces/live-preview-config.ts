@@ -22,6 +22,11 @@ export interface SiLivePreviewConfig {
     load: (name: string) => Promise<any>;
     list: string[];
     webcomponentsList: string[];
+    /**
+     * Optional map of example keys (matching `list`) to supporting `.ts` and `.html` file paths
+     * relative to the component loader root.
+     */
+    supportingFiles?: Record<string, string[]>;
   };
   examplesBaseUrl: string;
   ticketBaseUrl: string;

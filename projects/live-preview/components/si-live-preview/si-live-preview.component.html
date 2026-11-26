@@ -67,14 +67,17 @@
 
 <div class="code" [class.is-mobile]="isMobile" [class.is-collapsed]="editorCollapsed()">
   <div class="collapse-wrapper">
-    <div role="tablist" class="nav lp-tabs">
-      @if (showEditor() && (active === 'template' || active === 'typescript')) {
+    <div role="tablist" class="nav lp-tabs" aria-label="Code views">
+      @if (
+        showEditor() && (active === 'template' || active === 'typescript' || active === 'other')
+      ) {
         <button
           type="button"
           role="tab"
           class="tab-item tab-link focus-inside"
           id="templateEditorTab"
           [class.tab-active]="active === 'template'"
+          [attr.aria-selected]="active === 'template'"
           (click)="activateTab('template')"
         >
           Template
@@ -85,10 +88,24 @@
           class="tab-item tab-link focus-inside"
           id="typescriptEditorTab"
           [class.tab-active]="active === 'typescript'"
+          [attr.aria-selected]="active === 'typescript'"
           (click)="activateTab('typescript')"
         >
           Typescript
         </button>
+        @if (supportingFiles().length) {
+          <button
+            type="button"
+            role="tab"
+            class="tab-item tab-link focus-inside"
+            id="otherFilesEditorTab"
+            [class.tab-active]="active === 'other'"
+            [attr.aria-selected]="active === 'other'"
+            (click)="activateTab('other')"
+          >
+            Other files ({{ supportingFiles().length }})
+          </button>
+        }
       }
     </div>
     @if (!isMobile) {
@@ -378,6 +395,54 @@
         <div class="copied" role="tooltip">copied</div>
       </div>
       <fieldset #codeTypescript class="codeflask-editor readonly"></fieldset>
+    </fieldset>
+    <fieldset
+      class="tab-pane"
+      [class.tab-active]="active === 'other'"
+      [class.is-mobile]="isMobile"
+      [disabled]="editorCollapsed()"
+    >
+      <div class="supporting-files-bar">
+        <div class="supporting-file-selector">
+          @if (supportingFiles().length > 1) {
+            <select
+              aria-label="Select supporting file"
+              class="supporting-file-select"
+              [ngModel]="selectedSupportingFile()"
+              (ngModelChange)="selectSupportingFile($event)"
+            >
+              @for (file of supportingFiles(); track file.path) {
+                <option [value]="file.path">{{ file.name }}</option>
+              }
+            </select>
+          } @else if (supportingFiles().length === 1) {
+            <span class="supporting-file-name">{{ supportingFiles()[0].name }}</span>
+          }
+        </div>
+        <div class="supporting-file-actions" [class.show-copied]="showCopied()">
+          <span class="readonly-label">read-only</span>
+          @if (allowCopy) {
+            <button
+              type="button"
+              class="btn-command"
+              title="Copy code"
+              aria-label="Copy code"
+              (click)="copyCode()"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                  d="M380.8,197.2H240.4a43.25,43.25,0,0,0-43.2,43.2V380.8A43.25,43.25,0,0,0,240.4,424H380.8A43.25,43.25,0,0,0,424,380.8V240.4A43.25,43.25,0,0,0,380.8,197.2ZM400,380.8A19.22,19.22,0,0,1,380.8,400H240.4a19.22,19.22,0,0,1-19.2-19.2V240.4a19.22,19.22,0,0,1,19.2-19.2H380.8A19.22,19.22,0,0,1,400,240.4Z"
+                />
+                <path
+                  d="M146.8,290.8H131.2A19.22,19.22,0,0,1,112,271.6V131.2A19.22,19.22,0,0,1,131.2,112H271.6a19.22,19.22,0,0,1,19.2,19.2v15.6a12,12,0,0,0,24,0V131.2A43.25,43.25,0,0,0,271.6,88H131.2A43.25,43.25,0,0,0,88,131.2V271.6a43.25,43.25,0,0,0,43.2,43.2h15.6a12,12,0,0,0,0-24Z"
+                />
+              </svg>
+            </button>
+          }
+          <div class="copied" role="tooltip">copied</div>
+        </div>
+      </div>
+      <fieldset #codeSupporting class="codeflask-editor readonly"></fieldset>
     </fieldset>
     <fieldset
       class="tab-pane"

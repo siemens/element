@@ -1,6 +1,8 @@
 import path from 'path';
 import { globIterate } from 'glob';
 
+import { collectSupportingFiles } from './supporting-files-resolver.cjs';
+
 const livePreviewComponentLoader = {
   name: 'live-preview-component-loader',
   setup: build => {
@@ -33,6 +35,7 @@ const livePreviewComponentLoader = {
 
         let code = 'export default { load: function (path) { switch (path) {';
         const files = [];
+        const tsFiles = [];
         const webcomponentsFiles = [];
         const glob = path.posix.join(root, examples.replace(/\.ts$/, '.{ts,tsx,vue,js}'));
         const rootNormalized = path.normalize(root);
@@ -45,6 +48,7 @@ const livePreviewComponentLoader = {
             let importFileName = rel ? `./${fileName}` : file.replace(/\.ts$/, '');
             code += `case '${fileName}': return import('${importFileName}');`;
             files.push(fileName);
+            tsFiles.push(path.resolve(file));
           } else {
             webcomponentsFiles.push(file.replace(root + '/', '').replace(/\.(tsx|vue|js)$/, ''));
           }
@@ -52,14 +56,16 @@ const livePreviewComponentLoader = {
         files.sort();
         webcomponentsFiles.sort();
 
-        code += `default: return undefined; } }, list: ${JSON.stringify(files)}`;
+        const supportingFiles = collectSupportingFiles({ root, entryFiles: tsFiles });
+
+        code += `default: return undefined; } }, list: ${JSON.stringify(files)}, supportingFiles: ${JSON.stringify(supportingFiles)}`;
         if (webcomponents) {
           code += `, webcomponentsList: ${JSON.stringify(webcomponentsFiles)}`;
         }
 
         code += '};';
 
-        return { watchDirs, contents: code, resolveDir: root, loader: 'js' };
+        return { watchDirs, watchFiles: tsFiles, contents: code, resolveDir: root, loader: 'js' };
       }
     );
   }

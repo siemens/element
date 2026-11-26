@@ -78,6 +78,7 @@ export interface SiLivePreviewConfig {
         load: (name: string) => Promise<any>;
         list: string[];
         webcomponentsList: string[];
+        supportingFiles?: Record<string, string[]>;
     };
     defaultRoutes?: Route[];
     // (undocumented)

@@ -1,6 +1,8 @@
 const glob = require('glob');
 const path = require('path');
 
+const { collectSupportingFiles } = require('./supporting-files-resolver.cjs');
+
 // note: this can't be an arrow function!
 exports.default = function () {
   const args = this.getOptions();
@@ -32,6 +34,7 @@ exports.default = function () {
   const tsRegex = new RegExp(`${root}(.+)\\.(ts|vue|tsx|jsx|html)`);
   const reactVueRegex = new RegExp(`${root}(.+)-(react|vue|js)\\.(vue|tsx|jsx|html)`);
   const list = [];
+  const tsFiles = [];
   const webcomponentsList = [];
   let code = 'export default { load: function (path) {';
   for (const file of files) {
@@ -42,13 +45,18 @@ exports.default = function () {
         this.addDependency(path.resolve(path.dirname(file)));
         code += `if (path == '${match[1]}') return import('${file}');`;
         list.push(match[1]);
+        if (file.endsWith('.ts')) {
+          tsFiles.push(path.resolve(file));
+        }
       } else {
         webcomponentsList.push(match[1]);
       }
     }
   }
 
-  code += `}, list: ${JSON.stringify(list)}, webcomponentsList: ${JSON.stringify(webcomponentsList)}}`;
+  const supportingFiles = collectSupportingFiles({ root, entryFiles: tsFiles });
+
+  code += `}, list: ${JSON.stringify(list)}, supportingFiles: ${JSON.stringify(supportingFiles)}, webcomponentsList: ${JSON.stringify(webcomponentsList)}}`;
 
   return code;
 };
