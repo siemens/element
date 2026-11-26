@@ -215,6 +215,26 @@ describe('SiTreeViewComponent', () => {
     expect(element.querySelector('.si-tree-view-header')).toBeTruthy();
   });
 
+  it('should render accessible flat tree navigation buttons', async () => {
+    component.selectedItem.set(undefined);
+    await fixture.whenStable();
+    element.querySelector<HTMLElement>('.si-tree-view-item-toggle')!.click();
+    component.flatTree.set(true);
+    await fixture.whenStable();
+
+    const [home, up] = element.querySelectorAll<HTMLButtonElement>('.si-tree-view-header-btn');
+    expect(home.tagName).toBe('BUTTON');
+    expect(home).toHaveAttribute('aria-label', 'Navigate to top level');
+    expect(home).toBeEnabled();
+    expect(up.tagName).toBe('BUTTON');
+    expect(up).toHaveAttribute('aria-label', 'Navigate one level up');
+
+    home.click();
+    await fixture.whenStable();
+
+    expect(home).toBeDisabled();
+  });
+
   describe('when switching to a flat tree', () => {
     beforeEach(async () => {
       component.selectedItem.set(undefined);
