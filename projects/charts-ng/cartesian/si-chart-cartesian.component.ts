@@ -62,6 +62,23 @@ echarts.use([
   LegacyGridContainLabel
 ]);
 
+interface FormatTooltipParameter {
+  axisValueLabel?: string;
+  componentSubType: string;
+  name: string;
+  seriesName: string;
+  value: string | string[];
+  percent: number;
+  encode: {
+    value?: number[];
+    y: number[];
+  };
+  data: {
+    name: string;
+  };
+  axisValue: string;
+}
+
 @Component({
   selector: 'si-chart-cartesian',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
@@ -107,8 +124,7 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
     }
     super.ngOnChanges(changes);
   }
-
-  private formatTooltip(p: object | object[]): string {
+  private formatTooltip(p: FormatTooltipParameter | FormatTooltipParameter[]): string {
     const params = Array.isArray(p) ? p : [p];
     const label: string = params[0]?.axisValueLabel ?? '';
 
@@ -123,13 +139,13 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
           ? // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
             series.name || series.seriesName
           : series.seriesName;
-      const valIndex = (series.encode.value ?? series.encode.y)[0];
+      const valueIndex = (series.encode.value ?? series.encode.y)[0];
       const value = isCandle
         ? ''
         : isPie
-          ? series.percent + '%'
+          ? `${series.percent}%`
           : Array.isArray(series.value)
-            ? series.value[valIndex]
+            ? series.value[valueIndex]
             : series.value;
 
       html += '<div style="display: flex; align-items: center;">';
