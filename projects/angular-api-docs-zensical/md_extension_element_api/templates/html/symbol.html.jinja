@@ -1,7 +1,8 @@
 {# ApiRenderer uses this for full browser cards: <si-docs-api> shows the API of
    a component, directive, or other symbol. <si-docs-type> and <si-docs-types>
    show compact type cards. For the main description, see view.documentation below. #}
-{% import 'macros.html.jinja' as api with context %}
+{% import 'shared/content.html.jinja' as content with context %}
+{% import 'html/macros.html.jinja' as layout with context %}
 {# API declarations are not standalone copyable examples. Avoid the theme
    inserting duplicate unlabeled navigation landmarks for every signature. #}
 {# Search needs IDs on headings to start separate sections. Keep the target on
@@ -16,14 +17,14 @@
   data-api-no-heading="{{ 'true' if no_heading else 'false' }}"
   {% if mode == 'api' and hide_implicitly_public %}data-api-hide-implicitly-public="true"{% endif %}
 >
-  {% if no_heading %}{{ api.type_target(symbol_anchor) }}{% endif %}
+  {% if no_heading %}{{ content.type_target(symbol_anchor) }}{% endif %}
   {% set card_content %}
     {% if mode == 'type' or not no_heading %}
       {% set section_title = heading ~ ' API Documentation' if heading == symbol.name else heading %}
       <div class="{{ 'api-type-header' if mode == 'type' else 'api-symbol-header' }}">
         {% if mode == 'api' %}
           <h3 id="{{ symbol_anchor }}" data-api-toc-label="{{ section_title }}">
-            {{ api.type_target(symbol_anchor) }}{{ section_title }}<a
+            {{ content.type_target(symbol_anchor) }}{{ section_title }}<a
               class="headerlink"
               href="#{{ symbol_anchor | urlencode }}"
               title="Permanent link"
@@ -53,10 +54,10 @@
           <div class="api-type-declaration">
             {% if symbol.kind == 'type_alias' and view.declaration %}
               <code
-                >{% if view.declaration[0:2] | map(attribute='text') | join == 'type ' ~ symbol.name ~ ' = ' %}{{ api.fragments(view.declaration[2:], local, false) }}{% else %}{{ api.fragments(view.declaration, local, false) }}{% endif %}</code
+                >{% if view.declaration[0:2] | map(attribute='text') | join == 'type ' ~ symbol.name ~ ' = ' %}{{ content.fragments(view.declaration[2:], local, false) }}{% else %}{{ content.fragments(view.declaration, local, false) }}{% endif %}</code
               >
             {% elif view.declaration[1:] and view.declaration[0].text == symbol.kind ~ ' ' ~ symbol.name %}
-              <code>{{ api.fragments(view.declaration[1:], local, false) }}</code>
+              <code>{{ content.fragments(view.declaration[1:], local, false) }}</code>
             {% endif %}
             <a
               class="headerlink"
@@ -95,9 +96,9 @@
       {# The main description comes from the symbol's TypeScript doc comment. For a
    component or directive, it appears below the selector and import. To find the
    descriptions of individual inputs, outputs, or methods, follow group() below. #}
-      {{ api.blocks(view.documentation, local) }}
-      {{ api.signatures(view.signatures, local, compact=mode == 'type') }}
-      {% for group in view.groups %}{{ api.group(group, local, mode) }}{% endfor %}
+      {{ content.blocks(view.documentation, local) }}
+      {{ layout.signatures(view.signatures, local, compact=mode == 'type') }}
+      {% for group in view.groups %}{{ layout.group(group, local, mode) }}{% endfor %}
     </div>
   {% endset %}
   {% if mode == 'type' %}

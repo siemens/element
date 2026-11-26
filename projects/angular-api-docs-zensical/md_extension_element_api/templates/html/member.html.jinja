@@ -1,6 +1,6 @@
-{# ApiRenderer uses this instead of symbol.html.jinja when the embed selects a
+{# ApiRenderer uses this instead of html/symbol.html.jinja when the embed selects a
    single member (for example, WidgetComponent.heading), not the whole symbol. #}
-{% import 'macros.html.jinja' as api with context %}
+{% import 'html/macros.html.jinja' as layout with context %}
 <section
   class="si-docs-api no-copy"
   data-api-symbol="{{ symbol.id }}"
@@ -8,5 +8,5 @@
   data-api-source="{{ source }}"
   data-api-member="{{ member_id }}"
 >
-  {% for group in view.groups %}{{ api.group(group, local, mode) }}{% endfor %}
+  {% for group in view.groups %}{{ layout.group(group, local, mode) }}{% endfor %}
 </section>

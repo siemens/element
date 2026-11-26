@@ -1,0 +1,74 @@
+{# Shared inline and content macros used by both browser HTML templates
+   (html/) and llmstxt Markdown export templates (llmstxt/). #}
+{# Keep links such as #t:SomeComponent working when the page already shows that
+   component in an API card. Add a second link target, not a second card. #}
+{% macro type_target(anchor) -%}
+  {% if anchor in type_targets %}
+    <span id="{{ type_targets[anchor] }}" data-api-type-target-for="{{ anchor }}"></span>
+  {% endif %}
+{%- endmacro %}
+
+{# Used by blocks() for prose and by signatures and type cells for declarations.
+   Set inline_code=false when the caller already supplies <code>.
+   Keep a bold phrase in one <strong> even when it contains code or links. #}
+{% macro _fragment(part, local, inline_code=true) -%}
+  {%- if part.kind == 'link' -%}
+    {%- set url = href(part, local) -%}
+    {%- if url is not none -%}
+      <a href="{{ url }}">{{ part.text }}</a>
+    {%- else -%}
+      {{ part.text }}
+    {%- endif -%}
+  {%- elif part.kind == 'code' and inline_code -%}
+    <code>{{ part.text }}</code>
+  {%- else -%}
+    {{ part.text }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro fragments(parts, local, inline_code=true) -%}
+  {%- set ns = namespace(runs=[]) -%}
+  {%- for part in parts -%}
+    {%- set is_strong = part.strong is defined -%}
+    {%- if ns.runs and ns.runs[-1].strong == is_strong -%}
+      {%- set _ = ns.runs[-1].parts.append(part) -%}
+    {%- else -%}
+      {%- set _ = ns.runs.append({'strong': is_strong, 'parts': [part]}) -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- for run in ns.runs -%}
+    {%- set content -%}
+      {%- for part in run.parts -%}{{ _fragment(part, local, inline_code) }}{%- endfor -%}
+    {%- endset -%}
+    {%- if run.strong -%}
+      <strong>{{ content }}</strong>
+    {%- else -%}
+      {{ content }}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endmacro %}
+
+{# Used in member rows and the Markdown export. A default like DEFAULT_TITLE
+   stays in code style even when it links to the constant's docs. #}
+{% macro default_value(row, local) -%}
+  {% if row.default is not none %}
+    <code
+      >{% if row.defaultLink is defined %}{{ fragments([row.defaultLink], local, false) }}{% else %}{{ row.default }}{% endif %}</code
+    >
+  {% endif %}
+{%- endmacro %}
+
+{# Used for doc comments on symbols, members, and signatures. Browser cards can
+   highlight fenced examples; Markdown export gets plain pre/code with the language. #}
+{% macro blocks(items, local) -%}
+  {%- for block in items -%}
+    {%- if block.kind == 'code' -%}
+      {%- set code = block.parts | map(attribute='text') | join -%}
+      {%- set language = block.language | default(none) -%}
+      {%- set highlighted = highlight_example(code, language) if highlight_example | default(none) else none -%}
+      {% if highlighted %}{{ highlighted | safe }}{% else %}<pre><code {% if language %}class="language-{{ language }}"{% endif %}>{{ code }}</code></pre>{% endif %}
+    {%- else -%}
+      <p>{{ fragments(block.parts, local) }}</p>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endmacro %}

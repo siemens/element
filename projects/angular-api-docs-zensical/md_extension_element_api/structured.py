@@ -95,7 +95,7 @@ def preprocess_api(html: str, data: dict, output: str, site_url: str, *, rendere
     return html
   renderer = renderer if renderer is not None else ApiRenderer(data)
   adapter = renderer.adapter
-  template = renderer.environment.get_template('structured.html.jinja')
+  template = renderer.environment.get_template('llmstxt/structured.html.jinja')
   base = safe_url(site_url.rstrip('/') + '/')
   parsed_base = urlsplit(base)
   if parsed_base.scheme not in ('http', 'https') or parsed_base.query or parsed_base.fragment:
