@@ -1,6 +1,6 @@
 - textbox "Chat input" [disabled]:
   - /placeholder: Enter a command, question or topic…
-  - text: Show the energy consumption for the last seven days.
+  - text: Show energy consumption
 - group:
   - button "Attach file" [disabled]
 - button "Stop dictation" [pressed]
@@ -14,3 +14,5 @@
   - option "English (United States)"
   - option "German (Germany)"
   - option "French (France)"
+- switch "Provide custom audio levels" [checked] [disabled]
+- text: Provide custom audio levels

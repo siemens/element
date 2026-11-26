@@ -7,6 +7,13 @@
     [(value)]="value"
     (send)="sendMessage($event)"
   >
+    @if (voiceInput.listening()) {
+      <si-voice-waveform
+        siChatInputEnd
+        [active]="voiceInput.listening()"
+        [level]="voiceInputLevel()"
+      />
+    }
     <button
       #voiceInput="siVoiceInput"
       type="button"
@@ -18,6 +25,7 @@
       [silenceTimeout]="2000"
       [siTooltip]="voiceInput.listening() ? 'Stop dictation' : 'Start dictation'"
       [(value)]="value"
+      (transcript)="onTranscript($event)"
       (listeningChange)="onListeningChange($event)"
       (errorOccurred)="onVoiceInputError($event)"
     >
@@ -46,6 +54,18 @@
           <option value="de-DE">German (Germany)</option>
           <option value="fr-FR">French (France)</option>
         </select>
+      </div>
+      <div class="form-check form-switch mt-4">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          role="switch"
+          id="custom-levels"
+          [checked]="useCustomLevels()"
+          [disabled]="listening()"
+          (change)="useCustomLevels.set(!useCustomLevels())"
+        />
+        <label for="custom-levels" class="form-check-label">Provide custom audio levels</label>
       </div>
     </div>
   </div>

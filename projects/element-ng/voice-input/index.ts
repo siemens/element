@@ -3,3 +3,4 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './si-voice-input.directive';
+export * from './si-voice-waveform.component';
