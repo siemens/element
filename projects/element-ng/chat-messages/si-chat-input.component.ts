@@ -502,6 +502,15 @@ export class SiChatInputComponent implements AfterViewInit {
   }
 
   /**
+   * Submits the current draft and attachments programmatically, for example to auto-send
+   * after voice dictation completes. Respects the same disabled, sending, and non-empty
+   * guards as the send button and does not trigger interrupt.
+   */
+  submit(): void {
+    this.onSend();
+  }
+
+  /**
    * Focus the textarea input
    */
   focus(): void {

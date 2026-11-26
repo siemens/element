@@ -8,7 +8,8 @@
 - text: The content is AI generated. Always verify the information for accuracy.
 - status: Listening…
 - heading "Control panel" [level=3]
-- text: Recognition language
+- switch "Send after dictation" [disabled]
+- text: Send after dictation Recognition language
 - combobox "Recognition language" [disabled]:
   - option "Browser default" [selected]
   - option "English (United States)"

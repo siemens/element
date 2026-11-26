@@ -120,7 +120,7 @@ Provide `SI_VOICE_INPUT_RECOGNITION` to use a custom provider.
 Place `si-voice-waveform` in `siChatInputEnd` beside the button to show audio activity while
 recording.
 
-<si-docs-component example="si-chat-messages/si-chat-voice-input" height="400"></si-docs-component>
+<si-docs-component example="si-chat-messages/si-chat-voice-input" height="440"></si-docs-component>
 
 ### Measured microphone levels
 
