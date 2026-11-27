@@ -2,3 +2,5 @@
 - text: Badge default Badge primary Badge secondary Badge inverse Badge info Badge success Badge warning Badge danger Badge critical Badge caution Badge info-emphasis Badge success-emphasis Badge warning-emphasis Badge danger-emphasis Badge critical-emphasis Badge caution-emphasis
 - heading "Small size" [level=3]
 - text: Badge default Badge primary Badge secondary Badge inverse Badge info Badge success Badge warning Badge danger Badge critical Badge caution Badge info-emphasis Badge success-emphasis Badge warning-emphasis Badge danger-emphasis Badge critical-emphasis Badge caution-emphasis
+- heading "Single-digit badges" [level=3]
+- text: 1 1
