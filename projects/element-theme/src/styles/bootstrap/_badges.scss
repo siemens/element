@@ -1,5 +1,6 @@
 @use '../variables/si-sys-variables';
 @use '../variables/spacers';
+@use '../variables/typography';
 @use './mixins/badge-text';
 @use './variables';
 
@@ -126,11 +127,21 @@
     @extend %badge-text-emphasis;
   }
 
-  &:has(> .icon) {
+  &.badge-sm {
+    @include typography.si-font(
+      si-sys-variables.$si-sys-typography-body-font-size,
+      si-sys-variables.$si-sys-typography-body-line-height,
+      si-sys-variables.$si-sys-typography-body-font-weight
+    );
+    min-inline-size: calc(1rem + 2 * variables.$badge-padding-y);
+    padding-inline: map.get(spacers.$spacers-inline, 3);
+  }
+
+  &:has(> :is(.icon, .icon-sm)) {
     display: inline-flex;
     align-items: center;
     gap: map.get(spacers.$spacers-block, 1) map.get(spacers.$spacers-inline, 1);
-    padding-inline: map.get(spacers.$spacers-inline, 2) variables.$badge-padding-x;
+    padding-inline-start: map.get(spacers.$spacers-inline, 2);
   }
 }
 

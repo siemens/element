@@ -21,6 +21,7 @@ Place them close to the item they describe so the meaning stays clear.
 ### Best practices
 
 - Keep badge text short and specific.
+- Use a small badge in compact spaces, such as inline next or in list item.
 - Use whole numbers for counts.
 
 ## Design ---
@@ -97,6 +98,12 @@ To set a badge's background color, apply the `.bg-{status token}` utility classe
 
 ```html
 <div role="status" class="badge bg-critical-emphasis">Critical</div>
+```
+
+For a compact badge in native markup, add the `badge-sm` class:
+
+```html
+<span class="badge badge-sm bg-default">Small</span>
 ```
 
 The `badge-dot` class provides a smaller dot that can be placed at the side of an icon:

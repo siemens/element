@@ -12,6 +12,7 @@ export type BadgeType = StatusType | 'default' | 'inverse' | 'info-emphasis' | '
 // @public (undocumented)
 export class SiBadgeComponent {
     readonly icon: _angular_core.InputSignal<string | undefined>;
+    readonly size: _angular_core.InputSignal<"small" | "regular">;
     readonly type: _angular_core.InputSignal<BadgeType>;
 }
 
