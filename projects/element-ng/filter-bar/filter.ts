@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { Translatable } from '@siemens/element-translate-ng/translate';
 
 /**
  * @deprecated FilterStatusType has been deprecated as it no longer has any visual effect on filter pills.
@@ -21,12 +21,12 @@ export interface Filter {
    * Shown title of filter pill.
    * Can be left empty if {@link description} is used.
    */
-  title?: TranslatableString;
+  title?: Translatable;
   /**
    * Short description of filter pill.
    * Can be left empty if {@link title} is used to align the title to middle of pill.
    */
-  description?: TranslatableString;
+  description?: Translatable;
   /**
    * @deprecated The status property has been deprecated as it no longer has any visual effect on filter pills.
    * This property will be removed in the next major version. Please remove this property from your Filter

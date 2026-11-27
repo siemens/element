@@ -4,7 +4,12 @@
  */
 import { ChangeDetectorRef, Component, inject, Injectable } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
+import {
+  bypassTranslation,
+  injectSiTranslateService,
+  t,
+  Translatable
+} from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,7 +22,7 @@ import { provideMockTranslateServiceBuilder } from './testing/si-translate.mock-
   template: `{{ toTranslateKey | translate: params }}`
 })
 class TestComponent {
-  toTranslateKey = t(() => $localize`:@@KEY:Test {{value}}`);
+  toTranslateKey: Translatable = t(() => $localize`:@@KEY:Test {{value}}`);
   params = { value: 'string' } as any;
   cdRef = inject(ChangeDetectorRef);
 }
@@ -46,7 +51,7 @@ class SiAsyncTranslateService extends SiTranslateService {
   override setDefaultLanguage(lang: string): void {}
 
   override translate<T extends string | string[]>(
-    keys: T,
+    keys: T | Translatable,
     params?: Record<string, unknown>
   ): Observable<TranslationResult<T>> {
     // "as any" due to Typescript not being able to handle type guards in combination with generics
@@ -56,14 +61,14 @@ class SiAsyncTranslateService extends SiTranslateService {
   }
 
   override translateAsync<T extends string | string[]>(
-    keys: T,
+    keys: T | Translatable,
     params?: Record<string, unknown> | undefined
   ): Observable<TranslationResult<T>> {
     return this.translate(keys, params);
   }
 
   override translateSync<T extends string | string[]>(
-    keys: T,
+    keys: T | Translatable,
     params?: Record<string, unknown>
   ): TranslationResult<T> {
     // "as any" due to Typescript not being able to handle type guards in combination with generics
@@ -161,6 +166,12 @@ describe('SiTranslatePipe', () => {
       expect(nativeElement.innerText).toBe(
         'translated=>KEY-{"value":"string","otherValue":"otherString"}'
       );
+    });
+
+    it('should return the bypass translation value', () => {
+      component.toTranslateKey = bypassTranslation('Test string');
+      component.cdRef.detectChanges();
+      expect(nativeElement.innerText).toBe('Test string');
     });
   });
 
