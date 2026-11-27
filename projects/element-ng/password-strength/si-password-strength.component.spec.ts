@@ -162,6 +162,15 @@ describe('SiPasswordStrengthDirective', () => {
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(0);
   });
 
+  it('should treat all ASCII punctuation as special characters', () => {
+    fixture.detectChanges();
+
+    for (const char of '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~') {
+      setInput(`s3K${char}TEst`);
+      expect(element).toHaveClass('strong');
+    }
+  });
+
   it('should not allow whitespaces by default', () => {
     fixture.detectChanges();
 

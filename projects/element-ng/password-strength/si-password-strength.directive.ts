@@ -8,7 +8,7 @@ import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@an
 const RE_UPPER_CASE = /[A-Z]/;
 const RE_LOWER_CASE = /[a-z]/;
 const RE_DIGITS = /[0-9]/;
-const RE_SPECIAL_CHARS = /[\x21-\x2F|\x3A-\x40|\x5B-\x60]/;
+const RE_SPECIAL_CHARS = /[\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7E]/;
 const RE_WHITESPACES = /\s/;
 
 export interface PasswordPolicy {
