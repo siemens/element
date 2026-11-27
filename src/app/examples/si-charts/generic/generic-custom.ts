@@ -92,6 +92,16 @@ export class SampleComponent {
         yAxisIndex: 1,
         data: [7, 6, 4.5, 8, 9, 8, 13, 16, 10, 8, 13, 7]
       }
-    ]
+    ],
+    visualMap: {
+      type: 'continuous',
+      min: 0,
+      max: 250,
+      calculable: true,
+      orient: 'horizontal',
+      right: 0,
+      top: 0,
+      dimension: 1
+    }
   };
 }
