@@ -42,12 +42,12 @@ import { typeaheadSearch } from './si-typeahead.search';
 import { SiTypeaheadSorting } from './si-typeahead.sorting';
 
 @Directive({
-  selector: '[siTypeahead]',
+  selector: 'input[siTypeahead]',
   host: {
     class: 'si-typeahead',
     '(focusout)': 'onBlur()',
-    '(focusin)': 'onInput($event)',
-    '(input)': 'onInput($event)',
+    '(focusin)': 'onInput()',
+    '(input)': 'onInput()',
     '(keydown.escape)': 'onKeydownEscape()'
   },
   hostDirectives: [SiAutocompleteDirective],
@@ -449,19 +449,12 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   }
 
   // Start the input timeout to display the typeahead when the host is focussed or a value is inputted into it.
-  protected onInput(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    if (!target) {
-      return;
-    }
-
-    // Get the value or otherwise textContent of the host element now, because later it could be reset.
-    const firstValue = target.value || target.textContent;
+  protected onInput(): void {
     this.inputTimer ??= setTimeout(() => {
       this.inputTimer = undefined;
-      const value = (target.value || target.textContent) ?? firstValue ?? '';
+      const value = this.elementRef.nativeElement.value;
       this.query.set(value);
-      this.typeaheadOnInput.emit(value ?? '');
+      this.typeaheadOnInput.emit(value);
       this.canBeOpen.set(true);
     }, this.typeaheadWaitMs());
   }
@@ -579,8 +572,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     this.typeaheadOnCreateOption.emit(this.query());
     this.clearTimer();
     if (!this.typeaheadMultiSelect() && this.typeaheadClearValueOnSelect()) {
-      const inputElement =
-        this.elementRef.nativeElement.querySelector('input')! ?? this.elementRef.nativeElement;
+      const inputElement = this.elementRef.nativeElement;
       inputElement.value = '';
       inputElement.dispatchEvent(new Event('input'));
     }
@@ -592,8 +584,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   selectMatch(match: TypeaheadMatch): void {
     match.itemSelected = !match.itemSelected;
     if (!this.typeaheadMultiSelect()) {
-      const inputElement =
-        this.elementRef.nativeElement.querySelector('input')! ?? this.elementRef.nativeElement;
+      const inputElement = this.elementRef.nativeElement;
       inputElement.value = this.typeaheadClearValueOnSelect() ? '' : match.text;
       inputElement.dispatchEvent(new Event('input'));
     }

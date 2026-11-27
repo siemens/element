@@ -115,6 +115,9 @@ The schematic also logs search bars that need a manual migration, for example if
 control flow (`@if`, `@switch`, or `*ngIf`). Conditional handlers stay unchanged to preserve
 template type narrowing.
 
+The typeahead only supports `<input>` elements. `ng update` therefore applies this migration
+to search bars that use `siTypeahead`.
+
 ### Search Bar - Input Value
 
 Set the initial value on the projected input's `FormControl` or Signal Forms
