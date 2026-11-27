@@ -55,6 +55,8 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     [itemCountText]="itemCountText"
     [(searchCriteria)]="searchCriteria"
     (doSearch)="doSearch($event)"
+    (searchCriteriaSubmit)="searchCriteriaSubmit($event)"
+    (searchCriteriaClear)="searchCriteriaClear()"
     (searchCriteriaChange)="searchCriteriaChange($event)"
     (interceptDisplayedCriteria)="showCriteria($event)"
   />`
@@ -87,6 +89,10 @@ class TestHostComponent {
   cdRef = inject(ChangeDetectorRef);
 
   doSearch(event: SearchCriteria): void {}
+
+  searchCriteriaSubmit(event: SearchCriteria): void {}
+
+  searchCriteriaClear(): void {}
 
   logEvent(event: any): void {}
 
@@ -165,6 +171,29 @@ describe('SiFilteredSearchComponent', () => {
   });
 
   describe('with clear all', () => {
+    it('should not clear criteria or emit events when disabled', async () => {
+      component.disabled = true;
+      component.searchCriteria.set({ criteria: [{ name: 'foo', value: 'bar' }], value: 'text' });
+      const submitSpy = vi.spyOn(component, 'searchCriteriaSubmit');
+      const clearSpy = vi.spyOn(component, 'searchCriteriaClear');
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const clearButton = element.querySelector<HTMLButtonElement>(
+        '.clear-button-container button'
+      )!;
+      expect(clearButton).toMatchObject({ disabled: true });
+
+      clearButton.click();
+      await fixture.whenStable();
+
+      expect(await filteredSearch.getCriteria()).toHaveLength(1);
+      expect(component.searchCriteria()).toEqual({
+        criteria: [{ name: 'foo', value: 'bar' }],
+        value: 'text'
+      });
+      expect(submitSpy).not.toHaveBeenCalled();
+      expect(clearSpy).not.toHaveBeenCalled();
+    });
+
     it('should not show button when empty', async () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       expect(await filteredSearch.clearButtonVisible()).toBeFalsy();
@@ -172,6 +201,8 @@ describe('SiFilteredSearchComponent', () => {
 
     it('should delete current criterion and edit last one', async () => {
       const spy = vi.spyOn(component, 'doSearch');
+      const submitSpy = vi.spyOn(component, 'searchCriteriaSubmit');
+      const clearSpy = vi.spyOn(component, 'searchCriteriaClear');
       component.searchCriteria.set({
         criteria: [
           { name: 'foo', value: 'bar' },
@@ -197,25 +228,38 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [{ name: 'foo', value: 'bar' }],
         value: ''
       });
+      expect(submitSpy).not.toHaveBeenCalled();
+      expect(clearSpy).not.toHaveBeenCalled();
     });
 
-    it('should reset searchCriteria and publish related events', async () => {
-      component.searchCriteria.set({ criteria: [{ name: 'foo', value: 'bar' }], value: 'value' });
-      vi.spyOn(component, 'doSearch');
+    it.each([false, true])(
+      'should reset searchCriteria and publish related events with automatic search %s',
+      async automaticSearch => {
+        component.doSearchOnInputChange = automaticSearch;
+        component.searchCriteria.set({ criteria: [{ name: 'foo', value: 'bar' }], value: 'value' });
+        vi.spyOn(component, 'doSearch');
+        const submitSpy = vi.spyOn(component, 'searchCriteriaSubmit');
+        const clearSpy = vi.spyOn(component, 'searchCriteriaClear').mockImplementation(() => {
+          expect(component.filteredSearch().searchCriteria()).toEqual({ criteria: [], value: '' });
+        });
 
-      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      expect(await filteredSearch.getCriteria()).toHaveLength(1);
-      await filteredSearch.clickClearButton();
-      expect(await filteredSearch.getCriteria()).toHaveLength(0);
-      expect(await filteredSearch.freeTextSearch().then(freeText => freeText.getValue())).toEqual(
-        ''
-      );
-      expect(component.filteredSearch().searchCriteria()).toEqual({ criteria: [], value: '' });
-      expect(component.doSearch).toHaveBeenCalledWith({
-        criteria: [],
-        value: ''
-      });
-    });
+        const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+        expect(await filteredSearch.getCriteria()).toHaveLength(1);
+        await filteredSearch.clickClearButton();
+        await tick();
+        expect(await filteredSearch.getCriteria()).toHaveLength(0);
+        expect(await filteredSearch.freeTextSearch().then(freeText => freeText.getValue())).toEqual(
+          ''
+        );
+        expect(component.filteredSearch().searchCriteria()).toEqual({ criteria: [], value: '' });
+        expect(component.doSearch).toHaveBeenCalledWith({
+          criteria: [],
+          value: ''
+        });
+        expect(submitSpy).not.toHaveBeenCalled();
+        expect(clearSpy).toHaveBeenCalledExactlyOnceWith();
+      }
+    );
   });
 
   describe('with delete criterion', () => {
@@ -745,22 +789,29 @@ describe('SiFilteredSearchComponent', () => {
 
   it('should trigger search when button is pressed', async () => {
     const spy = vi.spyOn(component, 'doSearch');
+    const submitSpy = vi.spyOn(component, 'searchCriteriaSubmit');
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
     await freeTextSearch.typeText('test-search');
     await filteredSearch.clickSearchButton();
     expect(spy).toHaveBeenCalledWith({ criteria: [], value: 'test-search' });
+    expect(submitSpy).toHaveBeenCalledExactlyOnceWith({ criteria: [], value: 'test-search' });
+    await filteredSearch.clickSearchButton();
+    expect(submitSpy).toHaveBeenCalledTimes(2);
+    expect(submitSpy).toHaveBeenLastCalledWith({ criteria: [], value: 'test-search' });
   });
 
   it('should trigger search if enter is pressed with no open typeahead', async () => {
     const spy = vi.spyOn(component, 'doSearch');
+    const submitSpy = vi.spyOn(component, 'searchCriteriaSubmit');
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
     await freeTextSearch.typeText('');
     await freeTextSearch.sendKeys(TestKey.ENTER);
     expect(spy).toHaveBeenCalledWith({ criteria: [], value: '' });
+    expect(submitSpy).toHaveBeenCalledExactlyOnceWith({ criteria: [], value: '' });
   });
 
   it('should trigger search if no value is selected', async () => {
@@ -1551,11 +1602,26 @@ describe('SiFilteredSearchComponent', () => {
       });
     });
 
-    it('should not emit on submit', async () => {
-      vi.spyOn(component, 'doSearch');
+    it('should emit searchCriteriaSubmit but not doSearch on submit after typing', async () => {
+      const searchSpy = vi.spyOn(component, 'doSearch');
+      const submitSpy = vi.spyOn(component, 'searchCriteriaSubmit');
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+      await freeTextSearch.typeText('updated text');
+      await tick();
+      expect(searchSpy).toHaveBeenLastCalledWith({ criteria: [], value: 'updated text' });
+      expect(submitSpy).not.toHaveBeenCalled();
+      searchSpy.mockClear();
+
       await filteredSearch.clickSearchButton();
       expect(component.doSearch).not.toHaveBeenCalled();
+      expect(submitSpy).toHaveBeenCalledExactlyOnceWith({ criteria: [], value: 'updated text' });
+      await filteredSearch.clickSearchButton();
+      expect(submitSpy).toHaveBeenCalledTimes(2);
+      await freeTextSearch.sendKeys(TestKey.ENTER);
+      expect(submitSpy).toHaveBeenCalledTimes(3);
+      expect(submitSpy).toHaveBeenLastCalledWith({ criteria: [], value: 'updated text' });
+      expect(searchSpy).not.toHaveBeenCalled();
     });
   });
 
@@ -3491,8 +3557,12 @@ describe('SiFilteredSearchComponent - With translation', () => {
       component.lazyValueProvider = (...[, typed]: [string, string]) =>
         typed === 'translated(Germany)' ? options : of([]);
       await pasteInput('translated(Country): translated(Germany);');
+      const submitSpy = vi.spyOn(component, 'searchCriteriaSubmit');
+      const clearSpy = vi.spyOn(component, 'searchCriteriaClear');
       component.filteredSearch().deleteAllCriteria();
       await fixture.whenStable();
+      expect(submitSpy).not.toHaveBeenCalled();
+      expect(clearSpy).not.toHaveBeenCalled();
       const changes = vi.spyOn(component, 'searchCriteriaChange');
 
       options.next([{ value: 'DE', label: 'Germany' }]);
