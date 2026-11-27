@@ -5,6 +5,7 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
+import { type MockInstance } from 'vitest';
 
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '.';
 
@@ -96,28 +97,32 @@ describe('SiDatatableInteractionDirective', () => {
 
   const refresh = async (): Promise<void> => {
     vi.advanceTimersByTime(10000);
-    fixture.detectChanges();
     await fixture.whenStable();
   };
 
-  const keypress = async (key: string, keyCode?: number): Promise<void> => {
-    document.activeElement?.dispatchEvent(new KeyboardEvent('keydown', { key, keyCode }));
+  const keypress = async (key: string, target: HTMLElement): Promise<KeyboardEvent> => {
+    const event = new KeyboardEvent('keydown', { key, cancelable: true });
+    target.dispatchEvent(event);
     await refresh();
-  };
-
-  const arrowDown = async (times = 1): Promise<void> => {
-    for (let i = 0; i < times; i++) {
-      await keypress('ArrowDown', 40);
-    }
-  };
-
-  const arrowUp = async (times = 1): Promise<void> => {
-    for (let i = 0; i < times; i++) {
-      await keypress('ArrowUp', 38);
-    }
+    return event;
   };
 
   const getTableElement = (): HTMLElement => wrapperElement.firstElementChild as HTMLElement;
+
+  // Same selectors the directive uses to find the first and last row or cell.
+  const edgeSelector = (edge: 'first' | 'last', cell: boolean): string =>
+    `.datatable-row-wrapper${edge === 'last' ? ':last-child' : ''} > .datatable-body-row` +
+    (cell ? ' .datatable-body-cell' : '');
+
+  const queryTable = (selector: string): HTMLElement => {
+    const element = getTableElement().querySelector<HTMLElement>(selector);
+    expect(element).toBeInstanceOf(HTMLElement);
+    return element!;
+  };
+
+  // Do not move real focus, so the outcome does not depend on whether the page has focus.
+  const spyOnFocus = (element: HTMLElement): MockInstance<HTMLElement['focus']> =>
+    vi.spyOn(element, 'focus').mockImplementation(() => {});
 
   beforeEach(() =>
     TestBed.configureTestingModule({
@@ -135,129 +140,61 @@ describe('SiDatatableInteractionDirective', () => {
     wrapperElement = fixture.nativeElement;
   });
 
-  it.skipIf(!document.hasFocus())('should navigate into table using arrow keys', async () => {
+  it('should navigate into table using arrow keys', async () => {
     await refresh();
-    getTableElement().focus();
+    const table = getTableElement();
+    table.focus();
+    expect(document.activeElement).toBe(table);
 
-    expect(document.activeElement).toBe(getTableElement());
+    using firstRowFocus = spyOnFocus(queryTable(edgeSelector('first', false)));
+    using lastRowFocus = spyOnFocus(queryTable(edgeSelector('last', false)));
 
-    await arrowDown();
+    expect(await keypress('ArrowDown', table)).toHaveProperty('defaultPrevented', true);
+    expect(firstRowFocus).toHaveBeenCalledOnce();
 
-    expect(document.activeElement).toBe(
-      getTableElement().querySelector('.datatable-row-wrapper > .datatable-body-row')
-    );
-
-    getTableElement().focus();
-
-    expect(document.activeElement).toBe(getTableElement());
-
-    await arrowUp();
-
-    expect(document.activeElement).toBe(
-      getTableElement().querySelector('.datatable-row-wrapper:last-child > .datatable-body-row')
-    );
+    expect(await keypress('ArrowUp', table)).toHaveProperty('defaultPrevented', true);
+    expect(lastRowFocus).toHaveBeenCalledOnce();
   });
 
-  it.skipIf(!document.hasFocus())(
-    'should navigate into and inside arrow keys when using virtualization',
-    async () => {
+  it.each([
+    { selectionType: 'multi', cell: false, target: 'row' },
+    { selectionType: 'cell', cell: true, target: 'cell' }
+  ] as const)(
+    'should navigate into table and scroll when focusing the edge $target with virtualization',
+    async ({ selectionType, cell }) => {
+      wrapperComponent.selectionType.set(selectionType);
       wrapperComponent.virtualization.set(true);
       await refresh();
-      getTableElement().focus();
+      const table = getTableElement();
+      const scrollContainer = queryTable('[datatableScrollContainer]');
 
-      expect(document.activeElement).toBe(getTableElement());
+      using firstFocus = spyOnFocus(queryTable(edgeSelector('first', cell)));
+      expect(await keypress('ArrowDown', table)).toHaveProperty('defaultPrevented', true);
+      expect(firstFocus).toHaveBeenCalledOnce();
 
-      await arrowDown();
-
-      expect(document.activeElement).toBe(
-        getTableElement().querySelector('.datatable-row-wrapper > .datatable-body-row')
+      // Start scrolled so that both scrolling down and up can be observed.
+      scrollContainer.scrollTop = 100;
+      queryTable(edgeSelector('last', cell)).dispatchEvent(
+        new FocusEvent('focusin', { bubbles: true })
       );
+      await refresh();
+      expect(scrollContainer.scrollTop).toBeGreaterThan(100);
 
-      await arrowDown(8);
+      // Query again after scrolling, as virtualization may have re-rendered the rows.
+      using lastFocus = spyOnFocus(queryTable(edgeSelector('last', cell)));
+      expect(await keypress('ArrowUp', table)).toHaveProperty('defaultPrevented', true);
+      expect(lastFocus).toHaveBeenCalledOnce();
 
-      const scrollTopBeforeDown = getTableElement().querySelector('.datatable-body')!.scrollTop;
-
-      await arrowDown();
-
-      expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
-        scrollTopBeforeDown
+      const scrollTopBeforeUp = scrollContainer.scrollTop;
+      queryTable(edgeSelector('first', cell)).dispatchEvent(
+        new FocusEvent('focusin', { bubbles: true })
       );
-
-      getTableElement().focus();
-
-      expect(document.activeElement).toBe(getTableElement());
-
-      await arrowUp();
-
-      expect(document.activeElement).toBe(
-        getTableElement().querySelector('.datatable-row-wrapper:last-child > .datatable-body-row')
-      );
-
-      await arrowUp(7);
-
-      const scrollTopBeforeUp = getTableElement().querySelector('.datatable-body')!.scrollTop;
-
-      await arrowUp();
-
-      expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
-        scrollTopBeforeUp
-      );
+      await refresh();
+      expect(scrollContainer.scrollTop).toBeLessThan(scrollTopBeforeUp);
     }
   );
 
-  it.skipIf(!document.hasFocus())(
-    'should navigate into and inside table using arrow keys when using virtualization and cell selection',
-    async () => {
-      wrapperComponent.selectionType.set('cell');
-      wrapperComponent.virtualization.set(true);
-      await refresh();
-      getTableElement().focus();
-
-      expect(document.activeElement).toBe(getTableElement());
-
-      await arrowDown();
-
-      expect(document.activeElement).toBe(
-        getTableElement().querySelector(
-          '.datatable-row-wrapper > .datatable-body-row .datatable-body-cell'
-        )
-      );
-
-      await arrowDown(8);
-
-      const scrollTopBeforeDown = getTableElement().querySelector('.datatable-body')!.scrollTop;
-
-      await arrowDown();
-
-      expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
-        scrollTopBeforeDown
-      );
-
-      getTableElement().focus();
-
-      expect(document.activeElement).toBe(getTableElement());
-
-      await arrowUp();
-
-      expect(document.activeElement).toBe(
-        getTableElement().querySelector(
-          '.datatable-row-wrapper:last-child > .datatable-body-row .datatable-body-cell'
-        )
-      );
-
-      await arrowUp(7);
-
-      const scrollTopBeforeUp = getTableElement().querySelector('.datatable-body')!.scrollTop;
-
-      await arrowUp();
-
-      expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
-        scrollTopBeforeUp
-      );
-    }
-  );
-
-  it.skipIf(!document.hasFocus())('should auto select on focus when enabled', async () => {
+  it('should auto select on focus when enabled', async () => {
     wrapperComponent.selectionType.set('single');
     wrapperComponent.datatableInteractionAutoSelect.set(true);
     await refresh();
@@ -270,51 +207,36 @@ describe('SiDatatableInteractionDirective', () => {
 
     await refresh();
 
-    expect(wrapperComponent.selected()).toContain({
-      id: 1,
-      firstname: 'First 1',
-      lastname: 'Last 1',
-      age: 50
-    });
+    expect(wrapperComponent.selected()).toEqual([wrapperComponent.rows()[0]]);
   });
 
-  it.skipIf(!document.hasFocus())(
-    'should not auto select on mouse click when enabled',
-    async () => {
-      wrapperComponent.selectionType.set('single');
-      wrapperComponent.datatableInteractionAutoSelect.set(true);
-      await refresh();
-      expect(wrapperComponent.selected()).toHaveLength(0);
+  it('should not auto select on mouse click when enabled', async () => {
+    wrapperComponent.selectionType.set('single');
+    wrapperComponent.datatableInteractionAutoSelect.set(true);
+    await refresh();
+    expect(wrapperComponent.selected()).toHaveLength(0);
 
-      const table = getTableElement();
+    const table = getTableElement();
 
-      table.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    table.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
 
-      await refresh();
+    await refresh();
 
-      const row = table.querySelector(
-        '.datatable-row-wrapper > .datatable-body-row'
-      ) as HTMLElement;
-      row.dispatchEvent(new Event('focusin', { bubbles: true }));
+    const row = table.querySelector('.datatable-row-wrapper > .datatable-body-row') as HTMLElement;
+    row.dispatchEvent(new Event('focusin', { bubbles: true }));
 
-      await refresh();
+    await refresh();
 
-      expect(wrapperComponent.selected()).toHaveLength(0);
+    expect(wrapperComponent.selected()).toHaveLength(0);
 
-      table.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    table.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
 
-      await refresh();
+    await refresh();
 
-      row.dispatchEvent(new Event('focusin', { bubbles: true }));
+    row.dispatchEvent(new Event('focusin', { bubbles: true }));
 
-      await refresh();
+    await refresh();
 
-      expect(wrapperComponent.selected()).toContain({
-        id: 1,
-        firstname: 'First 1',
-        lastname: 'Last 1',
-        age: 50
-      });
-    }
-  );
+    expect(wrapperComponent.selected()).toEqual([wrapperComponent.rows()[0]]);
+  });
 });

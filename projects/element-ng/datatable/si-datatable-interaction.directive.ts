@@ -44,7 +44,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
   readonly datatableInteractionAutoSelect = input(false, { transform: booleanAttribute });
 
   private element: HTMLElement = inject(ElementRef).nativeElement;
-  private tableBody?: HTMLElement;
+  private scrollContainer: HTMLElement | null = null;
 
   private autoSelectTimeout: any;
 
@@ -110,28 +110,30 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
       }, 100);
     }
     if (unwrapSignalOrValue(this.table.virtualization)) {
-      if (this.tableBody) {
+      if (this.scrollContainer) {
         const lastList =
           selectionType === 'cell'
-            ? this.tableBody.querySelectorAll(
+            ? this.scrollContainer.querySelectorAll(
                 '.datatable-row-wrapper:last-child > .datatable-body-row .datatable-body-cell'
               )
-            : this.tableBody.querySelectorAll(
+            : this.scrollContainer.querySelectorAll(
                 '.datatable-row-wrapper:last-child > .datatable-body-row'
               );
         if (Array.from(lastList).includes(target)) {
-          this.tableBody.scrollTop = this.tableBody.scrollTop + lastList[0].clientHeight;
+          this.scrollContainer.scrollTop =
+            this.scrollContainer.scrollTop + lastList[0].clientHeight;
         } else {
           const firstList =
             selectionType === 'cell'
-              ? this.tableBody.querySelectorAll(
+              ? this.scrollContainer.querySelectorAll(
                   '.datatable-row-wrapper:first-child > .datatable-body-row .datatable-body-cell'
                 )
-              : this.tableBody.querySelectorAll(
+              : this.scrollContainer.querySelectorAll(
                   '.datatable-row-wrapper:first-child > .datatable-body-row'
                 );
           if (Array.from(firstList).includes(target)) {
-            this.tableBody.scrollTop = this.tableBody.scrollTop - firstList[0].clientHeight;
+            this.scrollContainer.scrollTop =
+              this.scrollContainer.scrollTop - firstList[0].clientHeight;
           }
         }
       }
@@ -139,9 +141,12 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.tableBody = this.element.querySelector('datatable-body') as HTMLElement;
-    if (this.tableBody) {
-      this.tableBody.tabIndex = -1;
+    // Since ngx-datatable v27, the grid wrapping header and body is the vertical scroll container.
+    this.scrollContainer = this.element.querySelector<HTMLElement>('[datatableScrollContainer]');
+    // Keep the host as the single tab stop, the body is focusable by default.
+    const tableBody = this.element.querySelector<HTMLElement>('datatable-body');
+    if (tableBody) {
+      tableBody.tabIndex = -1;
     }
   }
 
