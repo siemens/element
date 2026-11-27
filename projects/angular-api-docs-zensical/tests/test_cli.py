@@ -104,13 +104,69 @@ def test_type_card_constructors_omit_redundant_name_and_returns(site):
   section = match.group(0)
 
   assert 't:WidgetChangeEvent.constructor' in section
-  assert 'class="api-type-callable"' in section or 'class=api-type-callable' in section
+  assert 'api-member--callable' in section
   assert '(options:' in section
   assert '=&gt;' in section or '=>' in section
   assert 'Parameters' in section
-  assert 'api-type-member"><a' not in section.split('Parameters', 1)[0]
+  assert 'api-member-name' not in section.split('Parameters', 1)[0]
   assert 'constructor(' not in section
   assert 'Returns:' not in section
+
+
+def test_component_api_uses_unified_property_list_and_angular_declaration_block(site):
+  reference = (site / f'site/{WIDGET_PAGE}/index.html').read_text(encoding='utf-8')
+  match = re.search(r'<section\b[^>]*data-api-mode="?api"?.*?(?=<h3\b[^>]*id="?types-documentation"?)', reference, re.S)
+  assert match is not None
+  component_section = match.group(0)
+
+  assert '<table' not in reference
+  assert 'api-member-list' in component_section
+  assert 'api-member-header' in component_section
+  assert 'api-member-name' in component_section
+  assert 'api-member-type' in component_section
+  assert 'data-badge="required"' in component_section or 'data-badge=required' in component_section
+  assert 'data-badge="default"' in component_section or 'data-badge=default' in component_section
+  assert 'api-metadata' in component_section
+  assert 'api-import' in component_section
+  assert 'Returns:' in component_section
+
+  decl_match = re.search(r'<pre\b[^>]*class="?api-declaration"?[^>]*><code>(.*?)</code></pre>', component_section, re.S)
+  assert decl_match is not None
+  decl_html = decl_match.group(1)
+  decl_text = re.sub(r'<[^>]+>', '', decl_html)
+  assert 'class WidgetComponent {' in decl_text
+  assert 'heading = input.required&lt;string&gt;();' in decl_text
+  assert 'fallbackTitle = input&lt;string&gt;(DEFAULT_WIDGET_TITLE);' in decl_text
+  assert "color = input&lt;string&gt;('primary');" in decl_text or 'color = input&lt;string&gt;(&#39;primary&#39;);' in decl_text
+  assert 'changed = output&lt;WidgetChangeEvent&gt;();' in decl_text
+  assert 'refresh(): void;' in decl_text
+  assert 'href="#t:DEFAULT_WIDGET_TITLE"' in decl_html or 'href=#t:DEFAULT_WIDGET_TITLE' in decl_html
+  assert 'href="#t:WidgetChangeEvent"' in decl_html or 'href=#t:WidgetChangeEvent' in decl_html
+
+
+def test_interface_and_type_alias_pages_render_typescript_declaration_headers(site):
+  extended = (site / 'site/api/fixture/library/types/ExtendedWidgetMap/index.html').read_text(encoding='utf-8')
+  alias = (site / 'site/api/fixture/library/types/WidgetLabel/index.html').read_text(encoding='utf-8')
+
+  assert '<table' not in extended
+  decl_match = re.search(r'<pre\b[^>]*class="?api-declaration"?[^>]*><code>(.*?)</code></pre>', extended, re.S)
+  assert decl_match is not None
+  decl_html = decl_match.group(1)
+  assert 'interface' in decl_html
+  assert 'ExtendedWidgetMap' in decl_html
+  assert 'extends' in decl_html
+  assert 'WidgetMap' in decl_html
+  assert 'href="#t%3AExtendedWidgetMap.title"' in decl_html or 'href=#t%3AExtendedWidgetMap.title' in decl_html
+  assert 'WidgetLabel' in decl_html
+  assert 'api-member-list' in extended
+
+  alias_match = re.search(r'<pre\b[^>]*class="?api-declaration"?[^>]*><code>(.*?)</code></pre>', alias, re.S)
+  assert alias_match is not None
+  alias_html = alias_match.group(1)
+  assert 'type' in alias_html
+  assert 'WidgetLabel' in alias_html
+  assert 'string</a> &amp; WidgetBrand;' in alias_html
+  assert 'Branded string label' in alias
 
 
 def test_regeneration_removes_stale_reference_pages_but_keeps_authored_docs(site, tmp_path):

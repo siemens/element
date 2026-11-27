@@ -87,6 +87,129 @@ def callable_type(signature, name):
   return parts
 
 
+CLASS_KINDS = (
+  'component',
+  'directive',
+  'injectable',
+  'pipe',
+  'ng_module',
+  'undecorated_class',
+  'class',
+)
+
+
+def method_declaration(signature, name):
+  """Display a method signature without its leading name for declaration code blocks."""
+  parts = [dict(part) for part in signature['label']]
+  if parts:
+    parts[0]['text'] = parts[0]['text'].removeprefix(name)
+  return parts
+
+
+def constructor_declaration(signature):
+  """Display a constructor parameter list without its leading name or trailing return type."""
+  parts = [dict(part) for part in signature['label']]
+  if parts:
+    parts[0]['text'] = parts[0]['text'].removeprefix('constructor')
+    for index in range(len(parts) - 1, -1, -1):
+      if '): ' in parts[index]['text'] and parts[index]['kind'] != 'link':
+        before, _ = parts[index]['text'].rsplit('): ', 1)
+        parts[index]['text'] = before + ')'
+        del parts[index + 1:]
+        break
+  return parts
+
+
+_CLUSTER_LABELS = {
+  'inputs': 'Inputs',
+  'outputs': 'Outputs',
+  'constructors': 'Constructor',
+  'propertys': 'Properties',
+  'accessors': 'Accessors',
+  'index_signatures': 'Index Signatures',
+  'methods': 'Methods',
+  'declarations': 'Declarations',
+}
+_CLUSTER_ORDER = (
+  'Inputs',
+  'Outputs',
+  'Constructor',
+  'Properties',
+  'Accessors',
+  'Index Signatures',
+  'Methods',
+  'Declarations',
+)
+
+
+def declaration_clusters(groups):
+  """Group class/interface declaration members by kind for clustered code overviews."""
+  buckets = {}
+
+  def add(label, group_kind, row):
+    buckets.setdefault(label, []).append((group_kind, row))
+
+  for group in groups:
+    kind = group['kind']
+    if kind == 'members':
+      for row in group['rows']:
+        if row['name'] == 'constructor' and row['signatures']:
+          add('Constructor', 'constructors', row)
+        elif row['signatures']:
+          add('Methods', 'methods', row)
+        else:
+          add('Properties', 'propertys', row)
+    else:
+      label = _CLUSTER_LABELS.get(kind, group['title'])
+      for row in group['rows']:
+        add(label, kind, row)
+
+  ordered = []
+  for label in _CLUSTER_ORDER:
+    if label in buckets:
+      ordered.append({'label': label, 'members': buckets.pop(label)})
+  for label, items in buckets.items():
+    ordered.append({'label': label, 'members': items})
+  return ordered
+
+
+def declaration_tokens(fragments, symbol_kind=None):
+  """Split TypeScript declaration keywords out of plain fragments for styling."""
+  keywords = ('interface ', 'enum ', 'type ', 'class ', 'function ', 'const ', ' extends ', ' implements ')
+  result = []
+  for index, part in enumerate(fragments):
+    if part['kind'] == 'link':
+      result.append((False, part))
+      continue
+    text = part['text']
+    if index == 0 and symbol_kind in CLASS_KINDS and text.startswith(symbol_kind + ' '):
+      result.append((True, {**part, 'text': 'class'}))
+      rest = text[len(symbol_kind):]
+      if rest:
+        result.append((False, {**part, 'text': rest}))
+      continue
+    matched = False
+    for kw in keywords:
+      if text.startswith(kw):
+        if kw.startswith(' '):
+          result.append((False, {**part, 'text': ' '}))
+          result.append((True, {**part, 'text': kw.strip()}))
+          rest = text[len(kw) - 1:]
+          if rest:
+            result.append((False, {**part, 'text': rest}))
+        else:
+          lead = kw[:-1]
+          result.append((True, {**part, 'text': lead}))
+          rest = text[len(lead):]
+          if rest:
+            result.append((False, {**part, 'text': rest}))
+        matched = True
+        break
+    if not matched:
+      result.append((False, part))
+  return result
+
+
 def node_anchor(node, view, symbol_anchor, target_anchor):
   """Bindings use their published names, including distinct model outputs."""
   for group in view['groups']:
@@ -117,18 +240,27 @@ def group_anchors(view, symbol_anchor):
 
 
 def _strip_template_indent(text):
-  """Remove template indentation outside fenced code blocks so md_in_html never treats HTML as code."""
+  """Remove template indentation outside fenced code and <pre> blocks so md_in_html never treats HTML as code."""
   lines = []
   fence = None
+  in_pre = False
   for line in text.splitlines():
     stripped = line.lstrip()
     if fence is not None:
       lines.append(line)
       if stripped.startswith(fence) and not stripped.strip('`'):
         fence = None
+    elif in_pre:
+      lines.append(line)
+      if '</pre>' in line:
+        in_pre = False
     elif stripped.startswith('```'):
       fence = '`' * (len(stripped) - len(stripped.lstrip('`')))
       lines.append(stripped)
+    elif stripped.startswith('<pre'):
+      lines.append(stripped)
+      if '</pre>' not in stripped:
+        in_pre = True
     else:
       lines.append(stripped)
   return '\n'.join(lines)
@@ -149,6 +281,11 @@ class ApiRenderer:
     )
     self.environment.globals['safe_url'] = safe_url
     self.environment.globals['callable_type'] = callable_type
+    self.environment.globals['method_declaration'] = method_declaration
+    self.environment.globals['constructor_declaration'] = constructor_declaration
+    self.environment.globals['declaration_clusters'] = declaration_clusters
+    self.environment.globals['declaration_tokens'] = declaration_tokens
+    self.environment.globals['class_kinds'] = CLASS_KINDS
     self.environment.globals['kind_documentation'] = KIND_DOCUMENTATION
     self.template = self.environment.get_template('html/symbol.html.jinja')
     self.member_template = self.environment.get_template('html/member.html.jinja')
