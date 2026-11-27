@@ -348,6 +348,21 @@ describe('SiSliderComponent', () => {
       expect(element.querySelector<HTMLButtonElement>('.increment-button')?.disabled).toBe(true);
     });
 
+    it('should not change the value with arrow keys when disabled', () => {
+      component.form.controls.slider.disable();
+      fixture.detectChanges();
+
+      const thumb = element.querySelector<HTMLElement>('.thumb')!;
+      expect(thumb).toHaveAttribute('tabindex', '-1');
+      expect(thumb).toHaveAttribute('aria-disabled', 'true');
+
+      thumb.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+      thumb.dispatchEvent(new KeyboardEvent('keyup', { key: 'ArrowRight' }));
+      fixture.detectChanges();
+
+      expect(component.form.controls.slider.value).toBe(10);
+    });
+
     it('should handle undefined value on change', () => {
       component.form.controls.slider.setValue(undefined);
       fixture.detectChanges();

@@ -270,6 +270,9 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
   }
 
   protected autoUpdateKeydown(event: KeyboardEvent): void {
+    if (this.disabled()) {
+      return;
+    }
     const rtlCorrectedKey = correctKeyRTL(event.key);
 
     if (rtlCorrectedKey === 'ArrowLeft') {
