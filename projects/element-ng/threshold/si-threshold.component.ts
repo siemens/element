@@ -253,6 +253,9 @@ export class SiThresholdComponent implements OnChanges {
   private validate(): void {
     const prevValid = this.valid;
     this._valid = true;
+    // JS math is not exact for decimals, e.g. 20.2 - 20.1 = 0.09999999999999787 instead of 0.1.
+    // Allow a tiny margin (0.000000001) so such steps are not rejected.
+    const minGap = this.stepSize() - 1e-9;
     for (let i = 1; i < this.thresholdSteps().length; i++) {
       const step = this.thresholdSteps()[i];
 
@@ -265,8 +268,8 @@ export class SiThresholdComponent implements OnChanges {
           step.value != null &&
           step.value >= this.minValue() &&
           step.value <= this.maxValue() &&
-          (prev.value == null || step.value - this.stepSize() >= prev.value) &&
-          (next?.value == null || step.value + this.stepSize() <= next.value);
+          (prev.value == null || step.value - prev.value >= minGap) &&
+          (next?.value == null || next.value - step.value >= minGap);
         this._valid &&= step.valid;
       } else {
         step.valid = true;
