@@ -77,6 +77,9 @@ describe('SiFormFieldComponent', () => {
 
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
+    // The inputs are in the DOM right after creation. Bind `[formField]` in the same task, or an
+    // `animationstart` from the validity monitor can fire first and throw NG0950.
+    TestBed.tick();
     await fixture.whenStable();
   });
 

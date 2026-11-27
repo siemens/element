@@ -70,6 +70,9 @@ describe('SiAutoCollapsableListDirective', () => {
     Array.from(hostElement.querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')).map(
       element => (element.classList.contains('visible') ? 'visible' : 'hidden')
     );
+  // Visibility updates may need more than one rendering frame after a size change.
+  const expectVisibilityStates = (expected: string[]): Promise<void> =>
+    vi.waitFor(() => expect(readVisibilityStates()).toEqual(expected));
 
   // Each browser rendering frame runs in order:
   //   requestAnimationFrame (rAF) callbacks → Style → Layout → ResizeObserver
@@ -122,43 +125,34 @@ describe('SiAutoCollapsableListDirective', () => {
     component.items().forEach(item => expect(item.canBeVisible()).toBe(true));
   });
 
-  it.skipIf(!document.hasFocus())(
-    'should collapse and expand items on container size changes',
-    async () => {
-      fixture.detectChanges();
-      await detectSizeChange({ width: 300 });
-      expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
-      expect(
-        hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
-      ).toHaveTextContent('Overflown Items: 3');
-      await detectSizeChange({ width: 600 });
-      expect(readVisibilityStates()).toEqual([
-        'visible',
-        'visible',
-        'visible',
-        'visible',
-        'visible'
-      ]);
-      expect(
-        hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
-      ).toHaveStyle({ visibility: 'hidden' });
-    }
-  );
+  it('should collapse and expand items on container size changes', async () => {
+    fixture.detectChanges();
+    await detectSizeChange({ width: 300 });
+    await expectVisibilityStates(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
+    expect(
+      hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
+    ).toHaveTextContent('Overflown Items: 3');
+    await detectSizeChange({ width: 600 });
+    await expectVisibilityStates(['visible', 'visible', 'visible', 'visible', 'visible']);
+    expect(
+      hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
+    ).toHaveStyle({ visibility: 'hidden' });
+  });
 
-  it.skipIf(!document.hasFocus())('should respect additional content', async () => {
+  it('should respect additional content', async () => {
     fixture.detectChanges();
     await detectSizeChange();
     component.showAdditionalContent.set(true);
     await detectSizeChange({ width: 300 });
-    expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
+    await expectVisibilityStates(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
   });
 
-  it.skipIf(!document.hasFocus())('should react to item changes', async () => {
+  it('should react to item changes', async () => {
     fixture.detectChanges();
     await detectSizeChange();
     component.moreItems.update(items => [...items, 100, 100]);
     await detectSizeChange({ width: 700 });
-    expect(readVisibilityStates()).toEqual([
+    await expectVisibilityStates([
       'visible',
       'visible',
       'visible',
@@ -169,7 +163,7 @@ describe('SiAutoCollapsableListDirective', () => {
     ]);
     component.moreItems.update(items => [0, ...items.slice(1)]);
     await detectSizeChange();
-    expect(readVisibilityStates()).toEqual([
+    await expectVisibilityStates([
       'visible',
       'visible',
       'visible',
@@ -182,25 +176,25 @@ describe('SiAutoCollapsableListDirective', () => {
 
   it('should react to disabled changes', async () => {
     await detectSizeChange({ width: 300 });
-    expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
+    await expectVisibilityStates(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     component.disabled.set(true);
     await detectSizeChange();
-    expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
+    await expectVisibilityStates(['visible', 'visible', 'visible', 'visible', 'visible']);
     component.disabled.set(false);
     await detectSizeChange();
-    expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
+    await expectVisibilityStates(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
   });
 
   it('should react to list reset', async () => {
     await detectSizeChange({ width: 300 });
-    expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
+    await expectVisibilityStates(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     expect(
       hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
     ).toHaveTextContent('Overflown Items: 3');
 
     component.renderItems.set(false);
     await detectSizeChange();
-    expect(readVisibilityStates()).toEqual([]);
+    await expectVisibilityStates([]);
     expect(
       hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!
     ).not.toBeVisible();
@@ -209,10 +203,10 @@ describe('SiAutoCollapsableListDirective', () => {
   it('should show new items if disabled', async () => {
     component.disabled.set(true);
     await detectSizeChange();
-    expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
+    await expectVisibilityStates(['visible', 'visible', 'visible', 'visible', 'visible']);
     component.moreItems.set([800]);
     await detectSizeChange();
-    expect(readVisibilityStates()).toEqual([
+    await expectVisibilityStates([
       'visible',
       'visible',
       'visible',
@@ -225,17 +219,17 @@ describe('SiAutoCollapsableListDirective', () => {
   it('should hide forced hide item', async () => {
     component.forceHideSecondItem.set(true);
     await detectSizeChange();
-    expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'visible', 'visible', 'visible']);
+    await expectVisibilityStates(['visible', 'hidden', 'visible', 'visible', 'visible']);
     await detectSizeChange({ width: 300 });
-    expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
+    await expectVisibilityStates(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
   });
 
   it('should use host width', async () => {
     await detectSizeChange({ width: 300 });
-    expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
+    await expectVisibilityStates(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     component.useContainerElement.set(true);
     await detectSizeChange();
-    expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
+    await expectVisibilityStates(['visible', 'visible', 'visible', 'visible', 'visible']);
   });
 
   it('should release resize observers when destroyed', async () => {

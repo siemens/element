@@ -6,7 +6,7 @@ import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { STATUS_ICON } from '@siemens/element-ng/common';
 import { Subject } from 'rxjs';
-import { userEvent } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
 import { SiToastNotificationComponent } from './si-toast-notification.component';
@@ -52,7 +52,7 @@ describe('SiToastNotificationComponent', () => {
     const closeSpy = vi.fn();
     component.toast.update(t => ({ ...t, close: closeSpy }));
 
-    await userEvent.click(element.querySelector<HTMLElement>(`[aria-label="Close"]`)!);
+    await userEvent.click(page.getByRole('button', { name: 'Close' }));
 
     expect(closeSpy).toHaveBeenCalled();
   });
@@ -66,14 +66,16 @@ describe('SiToastNotificationComponent', () => {
       SI_TOAST_AUTO_HIDE_DELAY / 1000 + 's'
     );
     const toastEl = element.querySelector<HTMLElement>('si-toast-notification')!;
-    await userEvent.hover(toastEl);
+    // Dispatch the events directly: the real pointer may still rest on this spot from a previous
+    // test, in which case a real hover would not fire `mouseenter`.
+    toastEl.dispatchEvent(new MouseEvent('mouseenter'));
     await fixture.whenStable();
 
     expect(component.siToastComponent().paused.emit).toHaveBeenCalledTimes(1);
 
     expect(timerBar?.style.getPropertyValue('--play-state')).toBe('paused');
 
-    await userEvent.unhover(toastEl);
+    toastEl.dispatchEvent(new MouseEvent('mouseleave'));
     await fixture.whenStable();
 
     expect(component.siToastComponent().resumed.emit).toHaveBeenCalledTimes(1);
