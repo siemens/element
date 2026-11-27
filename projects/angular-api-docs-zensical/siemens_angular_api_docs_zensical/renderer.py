@@ -74,6 +74,27 @@ def view_nodes(view):
     yield from rows(group['rows'])
 
 
+OVERVIEW_GROUP_COMMENTS = {
+  'inputs': 'Inputs',
+  'outputs': 'Outputs',
+  'constructors': 'Constructor',
+  'propertys': 'Properties',
+  'accessors': 'Accessors',
+  'methods': 'Methods',
+  'index_signatures': 'Index Signatures',
+  'declarations': 'Declarations',
+}
+
+_CLASS_DECLARATION_PREFIXES = (
+  'undecorated_class ',
+  'component ',
+  'directive ',
+  'injectable ',
+  'pipe ',
+  'ng_module ',
+)
+
+
 def callable_type(signature, name):
   """Display a member signature as a callable type, retaining linked fragments."""
   parts = [dict(part) for part in signature['label']]
@@ -85,6 +106,49 @@ def callable_type(signature, name):
         part['text'] = before + ') => ' + after
         break
   return parts
+
+
+def signature_suffix(signature, name):
+  """Return a callable signature after its name in TypeScript declaration syntax."""
+  parts = [dict(part) for part in signature['label']]
+  if parts:
+    parts[0]['text'] = parts[0]['text'].removeprefix(name)
+  if name == 'constructor':
+    for index in range(len(parts) - 1, -1, -1):
+      if '): ' in parts[index]['text'] and parts[index]['kind'] != 'link':
+        before, _ = parts[index]['text'].rsplit('): ', 1)
+        parts[index]['text'] = before + ')'
+        del parts[index + 1:]
+        break
+  return parts
+
+
+def declaration_header(symbol, view):
+  """Normalize a symbol's TypeScript declaration header for the code-first overview."""
+  if symbol['kind'] == 'constant':
+    if view['declaration']:
+      return [{'kind': 'code', 'text': f"const {symbol['name']}: ", 'targetId': None, 'href': None},
+              *[dict(part) for part in view['declaration']]]
+    return [{'kind': 'code', 'text': f"const {symbol['name']}", 'targetId': None, 'href': None}]
+  parts = [dict(part) for part in view['declaration']]
+  if parts:
+    for prefix in _CLASS_DECLARATION_PREFIXES:
+      if parts[0]['text'].startswith(prefix):
+        parts[0]['text'] = 'class ' + parts[0]['text'][len(prefix):]
+        break
+  return parts
+
+
+def anchor_href(anchor):
+  """Format a page-local fragment href while preserving ':' in type anchors."""
+  return '#' + quote(anchor, safe='-_.~:')
+
+
+def overview_group_comment(group):
+  """Return a concise TypeScript comment label for a member group in the code overview."""
+  if group['kind'] == 'members' and group['title'] == 'Attributes and Methods':
+    return 'Properties & Methods'
+  return OVERVIEW_GROUP_COMMENTS.get(group['kind'], group['title'])
 
 
 def node_anchor(node, view, symbol_anchor, target_anchor):
@@ -117,18 +181,27 @@ def group_anchors(view, symbol_anchor):
 
 
 def _strip_template_indent(text):
-  """Remove template indentation outside fenced code blocks so md_in_html never treats HTML as code."""
+  """Remove template indentation outside fenced code and <pre> blocks so md_in_html never treats HTML as code."""
   lines = []
   fence = None
+  in_pre = False
   for line in text.splitlines():
     stripped = line.lstrip()
     if fence is not None:
       lines.append(line)
       if stripped.startswith(fence) and not stripped.strip('`'):
         fence = None
+    elif in_pre:
+      lines.append(line)
+      if '</pre>' in line:
+        in_pre = False
     elif stripped.startswith('```'):
       fence = '`' * (len(stripped) - len(stripped.lstrip('`')))
       lines.append(stripped)
+    elif stripped.startswith('<pre'):
+      lines.append(stripped)
+      if '</pre>' not in stripped:
+        in_pre = True
     else:
       lines.append(stripped)
   return '\n'.join(lines)
@@ -149,6 +222,10 @@ class ApiRenderer:
     )
     self.environment.globals['safe_url'] = safe_url
     self.environment.globals['callable_type'] = callable_type
+    self.environment.globals['signature_suffix'] = signature_suffix
+    self.environment.globals['declaration_header'] = declaration_header
+    self.environment.globals['anchor_href'] = anchor_href
+    self.environment.globals['overview_group_comment'] = overview_group_comment
     self.environment.globals['kind_documentation'] = KIND_DOCUMENTATION
     self.template = self.environment.get_template('html/symbol.html.jinja')
     self.member_template = self.environment.get_template('html/member.html.jinja')

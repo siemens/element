@@ -104,13 +104,35 @@ def test_type_card_constructors_omit_redundant_name_and_returns(site):
   section = match.group(0)
 
   assert 't:WidgetChangeEvent.constructor' in section
-  assert 'class="api-type-callable"' in section or 'class=api-type-callable' in section
+  assert 'api-member-list' in section
   assert '(options:' in section
-  assert '=&gt;' in section or '=>' in section
   assert 'Parameters' in section
-  assert 'api-type-member"><a' not in section.split('Parameters', 1)[0]
-  assert 'constructor(' not in section
   assert 'Returns:' not in section
+
+
+def test_renders_code_first_overview_and_compact_linked_member_list(site):
+  reference = (site / f'site/{WIDGET_PAGE}/index.html').read_text(encoding='utf-8')
+  section = re.search(r'<section\b[^>]*data-api-symbol="[^"]*WidgetComponent"[^>]*>.*?</section>', reference, re.S)
+  assert section is not None
+  api_html = section.group(0)
+
+  assert 'class="api-code-overview"' in api_html or 'class=api-code-overview' in api_html
+  assert 'class WidgetComponent {' in api_html
+  assert '= input.required&lt;' in api_html
+  assert '= input&lt;' in api_html
+  assert '= output&lt;' in api_html
+  assert re.search(r'href="?#WidgetComponent\.heading(?:"|\s|>)', api_html)
+  assert re.search(r'href="?#WidgetComponent\.refresh(?:"|\s|>)', api_html)
+  assert re.search(r'<li\b[^>]*id="?WidgetComponent\.heading(?:"|\s|>)', api_html)
+  assert 'api-member-list' in api_html
+  assert 'api-kind' in api_html
+  assert '<table' not in api_html
+  # Group headings must sit between member lists, never inside a preceding <li>
+  assert re.search(
+    r'</li>\s*</ul>\s*<h4\b[^>]*id="?WidgetComponent_a"?[^>]*>Attributes and Methods.*?</h4>\s*<ul\b[^>]*class="?api-member-list"?',
+    api_html,
+    re.S,
+  )
 
 
 def test_regeneration_removes_stale_reference_pages_but_keeps_authored_docs(site, tmp_path):
