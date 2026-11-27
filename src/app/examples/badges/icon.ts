@@ -3,8 +3,16 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
+import {
+  elementFaceNeutral,
+  elementValidationCaution,
+  elementValidationInformation,
+  elementValidationIssue,
+  elementValidationSuccess,
+  elementValidationWarning
+} from '@siemens/element-icons';
 import { type BadgeType, SiBadgeComponent } from '@siemens/element-ng/badge';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'app-sample',
@@ -15,22 +23,31 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
   }
 })
 export class SampleComponent {
+  readonly icons = addIcons({
+    elementFaceNeutral,
+    elementValidationCaution,
+    elementValidationInformation,
+    elementValidationIssue,
+    elementValidationSuccess,
+    elementValidationWarning
+  });
+
   readonly variants: { name: BadgeType | 'primary' | 'secondary'; icon: string }[] = [
-    { name: 'default', icon: 'element-face-neutral' },
-    { name: 'primary', icon: 'element-face-neutral' },
-    { name: 'secondary', icon: 'element-face-neutral' },
-    { name: 'inverse', icon: 'element-face-neutral' },
-    { name: 'info', icon: 'element-validation-information' },
-    { name: 'success', icon: 'element-validation-success' },
-    { name: 'warning', icon: 'element-validation-warning' },
-    { name: 'danger', icon: 'element-validation-issue' },
-    { name: 'critical', icon: 'element-validation-issue' },
-    { name: 'caution', icon: 'element-validation-caution' },
-    { name: 'info-emphasis', icon: 'element-validation-information' },
-    { name: 'success-emphasis', icon: 'element-validation-success' },
-    { name: 'warning-emphasis', icon: 'element-validation-warning' },
-    { name: 'danger-emphasis', icon: 'element-validation-issue' },
-    { name: 'critical-emphasis', icon: 'element-validation-issue' },
-    { name: 'caution-emphasis', icon: 'element-validation-caution' }
+    { name: 'default', icon: this.icons.elementFaceNeutral },
+    { name: 'primary', icon: this.icons.elementFaceNeutral },
+    { name: 'secondary', icon: this.icons.elementFaceNeutral },
+    { name: 'inverse', icon: this.icons.elementFaceNeutral },
+    { name: 'info', icon: this.icons.elementValidationInformation },
+    { name: 'success', icon: this.icons.elementValidationSuccess },
+    { name: 'warning', icon: this.icons.elementValidationWarning },
+    { name: 'danger', icon: this.icons.elementValidationIssue },
+    { name: 'critical', icon: this.icons.elementValidationIssue },
+    { name: 'caution', icon: this.icons.elementValidationCaution },
+    { name: 'info-emphasis', icon: this.icons.elementValidationInformation },
+    { name: 'success-emphasis', icon: this.icons.elementValidationSuccess },
+    { name: 'warning-emphasis', icon: this.icons.elementValidationWarning },
+    { name: 'danger-emphasis', icon: this.icons.elementValidationIssue },
+    { name: 'critical-emphasis', icon: this.icons.elementValidationIssue },
+    { name: 'caution-emphasis', icon: this.icons.elementValidationCaution }
   ];
 }
