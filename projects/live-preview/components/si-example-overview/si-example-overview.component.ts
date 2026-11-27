@@ -55,7 +55,15 @@ export class SiExampleOverviewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.title.setTitle(this.internalConfig.titleBase);
 
+    const supportingFiles = new Set(
+      Object.values(this.config.componentLoader.supportingFiles ?? {})
+        .flat()
+        .filter(file => file.endsWith('.ts'))
+        .map(file => file.replace(/\.ts$/, ''))
+    );
+
     this.componentList = this.config.componentLoader.list
+      .filter(component => !supportingFiles.has(component))
       .sort()
       .map(component => component.replace(this.baseUrl, ''));
     this.makeTree();

@@ -9,6 +9,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   ElementRef,
   effect,
   inject,
@@ -22,8 +23,8 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import CodeFlask from 'codeflask';
-import { Subject } from 'rxjs';
-import { retry, throttleTime, timeout } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { finalize, retry, throttleTime, timeout } from 'rxjs/operators';
 
 import {
   SI_LIVE_PREVIEW_CONFIG,
@@ -42,6 +43,12 @@ import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.
 
 const PREVIEW_RESIZE_STEP = 24;
 const PREVIEW_DRAG_THRESHOLD = 4;
+
+interface SupportingFile {
+  path: string;
+  name: string;
+  language: 'html' | 'typescript';
+}
 
 @Component({
   selector: 'si-live-preview',
@@ -65,11 +72,13 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   private readonly self = inject(ElementRef);
   private readonly http = inject(HttpClient);
   private readonly urls = inject(LivePreviewUrlService);
+  private readonly destroyRef = inject(DestroyRef);
   protected readonly localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
   protected readonly state = inject(LivePreviewStateService);
 
   protected readonly templateElem = viewChild.required<ElementRef>('codeTemplate');
   protected readonly typescriptElem = viewChild.required<ElementRef>('codeTypescript');
+  protected readonly supportingElem = viewChild.required<ElementRef>('codeSupporting');
   protected readonly reactVueElem = viewChild.required<ElementRef>('codeReactVue');
   protected readonly consoleElem = viewChild.required<ElementRef>('consoleContainer');
 
@@ -92,6 +101,26 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   private previewDrag?: { pointerId: number; pageY: number; height: number; moved: boolean };
 
   private templateTs = '';
+  private supportingFileCode = '';
+  private supportingFileLanguage: 'html' | 'typescript' = 'typescript';
+  protected readonly supportingFiles = computed<SupportingFile[]>(() => {
+    const example = this.state.example();
+    if (!example) {
+      return [];
+    }
+    const baseUrl = this.config.examplesBaseUrl;
+    const files = this.config.componentLoader.supportingFiles?.[baseUrl + example] ?? [];
+    return files.map(file => {
+      const relativePath = file.startsWith(baseUrl) ? file.slice(baseUrl.length) : file;
+      const name = relativePath.split('/').at(-1) ?? relativePath;
+      return {
+        path: relativePath,
+        name,
+        language: relativePath.endsWith('.html') ? 'html' : 'typescript'
+      };
+    });
+  });
+  protected readonly selectedSupportingFile = signal('');
   protected readonly activeTab = signal<string>('template');
   protected readonly showCopied = signal(false);
   protected readonly allowFullscreen =
@@ -116,8 +145,11 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   private skipInitialLoad = false;
   private flaskTemplate: any;
   private flaskTypescript: any;
+  private flaskSupporting: any;
   private flaskReactVue: any;
-  private savedScrollPos = { top: 0, left: 0 };
+  private savedScrollPos = new Map<string, { top: number; left: number }>();
+  private supportingFileCache = new Map<string, string>();
+  private supportingFileLoadSub?: Subscription;
   private tsLoaded = false;
   private reactLoaded = false;
   private vueLoaded = false;
@@ -125,6 +157,9 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   private webcomponentsList: string[] = [];
 
   constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.supportingFileLoadSub?.unsubscribe();
+    });
     const storedFramework = localStorage.getItem('si-live-preview-framework');
     if (storedFramework === 'react' || storedFramework === 'vue' || storedFramework === 'js') {
       this.state.framework.set(storedFramework);
@@ -145,7 +180,12 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
       const firstLoad = previousExample === undefined;
       previousExample = example;
       untracked(() => {
-        this.activeTab.set(this.activeTab() !== 'typescript' ? 'template' : this.activeTab());
+        const currentTab = this.activeTab();
+        if (currentTab === 'other') {
+          this.activeTab.set(this.supportingFiles().length ? 'other' : 'template');
+        } else if (currentTab !== 'typescript') {
+          this.activeTab.set('template');
+        }
         this.skipInitialLoad =
           firstLoad &&
           !!(
@@ -206,6 +246,19 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
       handleTabs: false,
       ariaLabelledby: 'typescriptEditorTab'
     });
+
+    this.flaskSupporting = new CodeFlask(this.supportingElem().nativeElement, {
+      styleParent,
+      lineNumbers: true,
+      language: this.supportingFileLanguage,
+      readonly: true,
+      defaultTheme: false,
+      handleTabs: false,
+      ariaLabelledby: 'otherFilesEditorTab'
+    });
+    if (this.supportingFileCode) {
+      this.flaskSupporting.updateCode(this.supportingFileCode);
+    }
 
     this.flaskReactVue = new CodeFlask(this.reactVueElem().nativeElement, {
       styleParent,
@@ -335,32 +388,59 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   }
 
   activateTab(tab: string): void {
+    const previousTab = this.activeTab();
     this.activeTab.set(tab);
 
-    let saveScroll: ElementRef;
-    let restoreScroll: ElementRef;
     this.state.loadReact.set(false);
     this.state.loadVue.set(false);
     this.state.loadJs.set(false);
-    if (tab === 'template') {
-      saveScroll = this.typescriptElem();
-      restoreScroll = this.templateElem();
-    } else {
-      if (!this.tsLoaded) {
-        this.loadTsFromUrl();
-      }
-      saveScroll = this.templateElem();
-      restoreScroll = this.typescriptElem();
+    if (tab === 'typescript' && !this.tsLoaded) {
+      this.loadTsFromUrl();
+    } else if (tab === 'other') {
+      this.loadSelectedSupportingFile();
     }
 
-    const areaSave = saveScroll.nativeElement.querySelector('textarea');
-    const areaRestore = restoreScroll.nativeElement.querySelector('textarea');
-    const scrollPos = this.savedScrollPos;
-    this.savedScrollPos = { left: areaSave.scrollLeft, top: areaSave.scrollTop };
-    setTimeout(() => {
-      areaRestore.scrollTop = scrollPos.top;
-      areaRestore.scrollLeft = scrollPos.left;
-    });
+    const saveElem = this.editorElementForTab(previousTab);
+    const restoreElem = this.editorElementForTab(tab);
+    const areaSave = saveElem?.nativeElement.querySelector('textarea');
+    if (areaSave) {
+      this.savedScrollPos.set(previousTab, { left: areaSave.scrollLeft, top: areaSave.scrollTop });
+    }
+    const areaRestore = restoreElem?.nativeElement.querySelector('textarea');
+    const scrollPos = this.savedScrollPos.get(tab) ?? { left: 0, top: 0 };
+    if (areaRestore) {
+      setTimeout(() => {
+        areaRestore.scrollTop = scrollPos.top;
+        areaRestore.scrollLeft = scrollPos.left;
+      });
+    }
+  }
+
+  protected selectSupportingFile(path: string): void {
+    if (path === this.selectedSupportingFile()) {
+      return;
+    }
+    this.selectedSupportingFile.set(path);
+    this.savedScrollPos.set('other', { left: 0, top: 0 });
+    const textarea = this.supportingElem().nativeElement.querySelector('textarea');
+    if (textarea) {
+      textarea.scrollTop = 0;
+      textarea.scrollLeft = 0;
+    }
+    this.loadSelectedSupportingFile();
+  }
+
+  private editorElementForTab(tab: string): ElementRef | undefined {
+    if (tab === 'template') {
+      return this.templateElem();
+    }
+    if (tab === 'typescript') {
+      return this.typescriptElem();
+    }
+    if (tab === 'other') {
+      return this.supportingElem();
+    }
+    return undefined;
   }
 
   themeChange(theme: ThemeType): void {
@@ -379,6 +459,15 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
     this.templateTs = ts;
     if (this.flaskTypescript) {
       this.flaskTypescript.updateCode(this.templateTs);
+    }
+  }
+
+  private updateSupportingFile(code: string, language: 'html' | 'typescript'): void {
+    this.supportingFileCode = code;
+    this.supportingFileLanguage = language;
+    if (this.flaskSupporting) {
+      this.flaskSupporting.updateLanguage(language);
+      this.flaskSupporting.updateCode(this.supportingFileCode);
     }
   }
 
@@ -411,12 +500,20 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
       this.updateTemplate('');
     }
     this.updateTs('');
-    this.savedScrollPos = { top: 0, left: 0 };
+    this.supportingFileLoadSub?.unsubscribe();
+    this.supportingFileLoadSub = undefined;
+    this.supportingFileCache.clear();
+    const firstSupporting = this.supportingFiles()[0];
+    this.selectedSupportingFile.set(firstSupporting?.path ?? '');
+    this.updateSupportingFile('', firstSupporting?.language ?? 'typescript');
+    this.savedScrollPos.clear();
     this.state.resetRenderingProgress();
     this.tsLoaded = false;
 
     if (this.activeTab() === 'typescript') {
       this.loadTsFromUrl();
+    } else if (this.activeTab() === 'other') {
+      this.loadSelectedSupportingFile();
     }
   }
 
@@ -467,6 +564,47 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
       });
   }
 
+  private loadSelectedSupportingFile(): void {
+    const selectedPath = this.selectedSupportingFile();
+    const file = this.supportingFiles().find(item => item.path === selectedPath);
+    if (!file) {
+      this.updateSupportingFile('', 'typescript');
+      return;
+    }
+
+    const cached = this.supportingFileCache.get(file.path);
+    if (cached !== undefined) {
+      this.supportingFileLoadSub?.unsubscribe();
+      this.supportingFileLoadSub = undefined;
+      this.updateSupportingFile(cached, file.language);
+      return;
+    }
+
+    this.supportingFileLoadSub?.unsubscribe();
+    this.updateSupportingFile('', file.language);
+    this.handleInProgressEvent(true);
+    this.supportingFileLoadSub = this.http
+      .get(this.urls.sourceUrl(file.path), { responseType: 'text' })
+      .pipe(
+        timeout(3000),
+        retry(1),
+        finalize(() => this.handleInProgressEvent(false))
+      )
+      .subscribe({
+        next: data => {
+          this.supportingFileCache.set(file.path, data);
+          if (this.selectedSupportingFile() === file.path) {
+            this.updateSupportingFile(data, file.language);
+          }
+        },
+        error: () => {
+          if (this.selectedSupportingFile() === file.path) {
+            this.updateSupportingFile('', file.language);
+          }
+        }
+      });
+  }
+
   checkWebComponentsAvailable(): void {
     const baseUrl = this.config.examplesBaseUrl;
     const example = this.state.example() ?? '';
@@ -499,7 +637,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
   }
 
   changeFramework(framework: LivePreviewFramework): void {
-    this.activeTab.set(framework);
+    const previousTab = this.activeTab();
     this.state.framework.set(framework);
     localStorage.setItem('si-live-preview-framework', framework);
     this.state.loadReact.set(false);
@@ -507,9 +645,13 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
     this.state.loadJs.set(false);
     let fileType = 'vue';
     if (framework === 'angular') {
-      this.activeTab.set('template');
+      if (previousTab !== 'template' && previousTab !== 'typescript' && previousTab !== 'other') {
+        this.activeTab.set('template');
+      }
       return;
-    } else if (framework === 'react') {
+    }
+    this.activeTab.set(framework);
+    if (framework === 'react') {
       fileType = 'tsx';
       if (this.reactLoaded) {
         this.updateReact(this.state.templateReact());
@@ -676,6 +818,8 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit {
       this.clipboardCopy(this.state.templateVue());
     } else if (this.activeTab() === 'js') {
       this.clipboardCopy(this.state.templateJs());
+    } else if (this.activeTab() === 'other') {
+      this.clipboardCopy(this.supportingFileCode);
     } else {
       this.clipboardCopy(this.templateTs);
     }
