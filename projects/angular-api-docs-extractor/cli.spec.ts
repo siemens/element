@@ -163,6 +163,27 @@ it('prefers host-directive binding docs and defaults over re-exposed class prope
   );
 });
 
+it('keeps the inherited label default in both documentation views', () => {
+  const options = documentation.symbols.find(symbol => symbol.name === 'WidgetOptions')!;
+
+  expect(options.api.groups.flatMap(group => group.rows)).toContainEqual(
+    expect.objectContaining({ name: 'label', default: "''" })
+  );
+  expect(options.type.groups.flatMap(group => group.rows)).toContainEqual(
+    expect.objectContaining({ name: 'label', default: "''" })
+  );
+});
+
+it('shows public methods but not protected hooks in either documentation view', () => {
+  const widget = documentation.symbols.find(symbol => symbol.name === 'WidgetComponent')!;
+
+  for (const [viewName, view] of Object.entries({ api: widget.api, type: widget.type })) {
+    const names = view.groups.flatMap(group => group.rows.map(row => row.name));
+    expect(names, viewName).toContain('refresh');
+    expect(names, viewName).not.toContain('updateDisplay');
+  }
+});
+
 it('reports a missing package without replacing either previously generated file', async () => {
   const files = ['api-documentation.json', 'api-reference-pages.json'];
   const before = await Promise.all(files.map(readOutput));

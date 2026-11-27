@@ -615,11 +615,10 @@ function relatedId(node: ts.Node, name: string, context: Context): string {
   return `${importPathOf(node, context)}#${name}@${relative(context.root, node.getSourceFile().fileName)}`;
 }
 
-/** Collect source-backed class, structural-type and enum members with explicit view admission. */
+/** Collect members for structural types and enums not supplied by Angular. */
 function sourceMembers(
-  owner: TypeOwner | ts.TypeAliasDeclaration | ts.EnumDeclaration,
-  context: Context,
-  complete = false
+  owner: ts.InterfaceDeclaration | ts.TypeAliasDeclaration | ts.EnumDeclaration,
+  context: Context
 ): ApiMember[] {
   if (ts.isEnumDeclaration(owner))
     return owner.members
@@ -644,34 +643,10 @@ function sourceMembers(
     !ts.isIntersectionTypeNode(owner.type)
   )
     return [];
-  const structural = !complete && !ts.isClassDeclaration(owner);
-  const symbols = context.checker
-    .getTypeAtLocation(owner)
-    .getProperties()
-    .map(symbol => ({ symbol, isStatic: false }));
-  const classSymbol =
-    ts.isClassDeclaration(owner) && owner.name
-      ? context.checker.getSymbolAtLocation(owner.name)
-      : undefined;
-  if (classSymbol)
-    symbols.push(
-      ...context.checker
-        .getTypeOfSymbolAtLocation(classSymbol, owner)
-        .getProperties()
-        .map(symbol => ({ symbol, isStatic: true }))
-    );
-  const members = symbols.flatMap<ApiMember>(({ symbol, isStatic }) => {
+  const symbols = context.checker.getTypeAtLocation(owner).getProperties();
+  const members = symbols.flatMap<ApiMember>(symbol => {
     const declaration = declarationOf(symbol, context.checker);
-    if (
-      !declaration ||
-      (!structural && !owningType(declaration)) ||
-      (!complete &&
-        (isExcluded(declaration, symbol.name) ||
-          (!structural &&
-            isExcluded(memberDeclaration(owner, symbol.name, context.checker), symbol.name)))) ||
-      (!structural && symbol.name === 'prototype')
-    )
-      return [];
+    if (!declaration || isExcluded(declaration, symbol.name)) return [];
     const name =
       'name' in declaration &&
       declaration.name &&
@@ -684,48 +659,31 @@ function sourceMembers(
           : symbol.name;
     const member = prepareMember(
       {
-        ...sourceMember(name, owner, declaration, context, symbol, !complete),
-        optional: !complete && !structural && !!(symbol.flags & ts.SymbolFlags.Optional),
-        static: isStatic,
-        inherited: !structural && owningType(declaration) !== owner,
-        kind: structural
-          ? MemberType.Property
-          : ts.isMethodDeclaration(declaration) || ts.isMethodSignature(declaration)
-            ? MemberType.Method
-            : ts.isGetAccessor(declaration)
-              ? MemberType.Getter
-              : ts.isSetAccessor(declaration)
-                ? MemberType.Setter
-                : MemberType.Property,
+        ...sourceMember(name, owner, declaration, context, symbol),
         type: context.checker.typeToString(
-          complete || structural
-            ? context.checker.getTypeOfSymbolAtLocation(symbol, complete ? owner : declaration)
-            : context.checker.getTypeAtLocation(declaration),
-          complete ? owner : declaration,
+          context.checker.getTypeOfSymbolAtLocation(symbol, declaration),
+          declaration,
           ts.TypeFormatFlags.NoTruncation
         )
       },
       owner,
       declaration,
-      context,
-      !complete
+      context
     );
-    if (complete) member.static = isStatic;
     return [member];
   });
-  return [...members, ...indexSignatureMembers(owner, context, complete)];
+  return [...members, ...indexSignatureMembers(owner, context)];
 }
 
 /** Collect index signatures declared directly on a class, interface, or type alias. */
 function indexSignatureMembers(
   owner: TypeOwner | ts.TypeAliasDeclaration,
-  context: Context,
-  complete = false
+  context: Context
 ): ApiMember[] {
   const { checker } = context;
   return checker.getIndexInfosOfType(checker.getTypeAtLocation(owner)).flatMap(index => {
     const node = index.declaration;
-    if (!node || declaringOwner(node) !== owner || (!complete && isExcluded(node, ''))) return [];
+    if (!node || declaringOwner(node) !== owner || isExcluded(node, '')) return [];
     const parameter = node.parameters[0];
     const keyType = typeText(
       checker.typeToString(index.keyType, owner, ts.TypeFormatFlags.NoTruncation),
@@ -735,7 +693,7 @@ function indexSignatureMembers(
     const name = `[${parameter.name.getText()}: ${keyType}]`;
     return [
       {
-        ...sourceMember(name, owner, node, context, undefined, !complete),
+        ...sourceMember(name, owner, node, context),
         kind: 'index_signature',
         type: typeText(
           checker.typeToString(index.type, owner, ts.TypeFormatFlags.NoTruncation),
@@ -751,14 +709,13 @@ function indexSignatureMembers(
   });
 }
 
-/** Shared source metadata; each view supplies its declared or contextual type once. */
+/** Shared metadata for source-backed members. */
 function sourceMember(
   name: string,
   owner: ts.Declaration,
   node: ts.Declaration | undefined,
   context: Context,
-  symbol?: ts.Symbol,
-  admitRelated = true
+  symbol?: ts.Symbol
 ): Omit<ApiMember, 'type'> {
   return {
     name,
@@ -770,7 +727,7 @@ function sourceMember(
     source: node ? sourceOf(node, context.root) : undefined,
     visibility: visibilityOf(node),
     readonly: hasModifier(node, ts.SyntaxKind.ReadonlyKeyword),
-    ...referencesOf(node, context, admitRelated),
+    ...referencesOf(node, context),
     ...memberProvenance(node, owner, name, context)
   };
 }
@@ -878,8 +835,7 @@ function entityNameText(name: ts.EntityName): string {
 /** Resolve type references by compiler symbol identity, not unqualified name matching. */
 function referencesOf(
   node: ts.Node | undefined,
-  context: Context,
-  admitRelated = true
+  context: Context
 ): Required<Pick<ApiEntry, 'references' | 'typeReferences'>> {
   const references = new Set<string>();
   const candidates: { declaration: ts.Declaration; symbol: ts.Symbol; type: ts.Type }[] = [];
@@ -887,7 +843,7 @@ function referencesOf(
   visitTypes(node, context, type => {
     for (const symbol of [type.aliasSymbol, type.getSymbol()]) {
       if (!symbol) continue;
-      for (const declaration of admitRelated ? (symbol.declarations ?? []) : []) {
+      for (const declaration of symbol.declarations ?? []) {
         const name = declarationName(declaration);
         if (
           !context.identities.has(declaration) &&
@@ -1746,13 +1702,19 @@ function normalizeMember(
   );
   const signature = signatureOf(raw);
   const binding = raw as Partial<PropertyEntry>;
+  const isDefault = (tag: ApiJsDocTag): boolean =>
+    ['default', 'defaultvalue'].includes(tag.name.toLowerCase());
+  // Angular escapes @default as template syntax before extracting JSDoc tags.
+  const jsdocTags = raw.jsdocTags.some(isDefault)
+    ? raw.jsdocTags
+    : [...raw.jsdocTags, ...tagsOf(node).filter(isDefault)];
   const seed: ApiMember = {
     name: raw.name,
     kind: 'memberType' in raw ? raw.memberType : raw.entryType,
     type:
       'type' in raw ? (raw as PropertyEntry | ConstantEntry).type : (signature?.returnType ?? ''),
     description: raw.description,
-    jsdocTags: raw.jsdocTags,
+    jsdocTags,
     optional: memberTags.includes(MemberTags.Optional),
     readonly: memberTags.includes(MemberTags.Readonly),
     static: memberTags.includes(MemberTags.Static),
@@ -1781,8 +1743,7 @@ function prepareMember(
   seed: ApiMember,
   owner: ts.Declaration | undefined,
   node: ts.Declaration | undefined,
-  context: Context,
-  discoverReferences = true
+  context: Context
 ): ApiMember {
   const accessor = node && (ts.isGetAccessor(node) || ts.isSetAccessor(node)) ? node : undefined;
   const accessorSymbol = accessor ? context.checker.getSymbolAtLocation(accessor.name) : undefined;
@@ -1857,7 +1818,7 @@ function prepareMember(
         ),
     ...(seed.references && seed.typeReferences
       ? { references: seed.references, typeReferences: seed.typeReferences }
-      : referencesOf(node, context, discoverReferences)),
+      : referencesOf(node, context)),
     ...initializerMetadata(node, context, contextualType, substitutions),
     ...memberProvenance(node, owner, seed.name, context)
   };
@@ -2062,73 +2023,6 @@ function addBindings(entry: ApiEntry, node: ts.Declaration | undefined, context:
   }
 }
 
-/** A bounded source-complete view; unlike public API extraction it retains private/internal members. */
-function completeTypeMembers(owner: TypeOwner, entry: ApiEntry, context: Context): ApiMember[] {
-  const type = context.checker.getTypeAtLocation(owner);
-  const members = sourceMembers(owner, context, true);
-  for (const member of members) {
-    const publicMember = entry.members.find(
-      candidate => candidate.name === member.name && !!candidate.static === !!member.static
-    );
-    if (publicMember) {
-      member.inputAlias = publicMember.inputAlias;
-      member.outputAlias = publicMember.outputAlias;
-      member.required = publicMember.required;
-      member.signalTransformType ??= publicMember.signalTransformType;
-    }
-  }
-  if (ts.isClassDeclaration(owner)) {
-    const constructor = constructorOf(owner);
-    if (constructor) {
-      const member = prepareMember(
-        {
-          name: 'constructor',
-          kind: MemberType.Method,
-          type: sourceSignature(constructor, context)?.returnType ?? '',
-          description: ts.displayPartsToString(
-            context.checker
-              .getSignatureFromDeclaration(constructor)
-              ?.getDocumentationComment(context.checker)
-          ),
-          jsdocTags: tagsOf(constructor)
-        },
-        owner,
-        constructor,
-        context,
-        false
-      );
-      member.type = '';
-      members.unshift(member);
-    } else {
-      const implicit = entry.members.find(member => member.kind === 'constructor');
-      if (implicit) members.unshift(implicit);
-    }
-  } else {
-    for (const signature of [...type.getCallSignatures(), ...type.getConstructSignatures()]) {
-      const declaration = signature.getDeclaration();
-      if (!declaration) continue;
-      members.push(
-        prepareMember(
-          {
-            name: ts.isConstructSignatureDeclaration(declaration) ? 'new' : '',
-            kind: MemberType.Method,
-            type: sourceSignature(declaration, context)?.returnType ?? '',
-            description: ts.displayPartsToString(
-              signature.getDocumentationComment(context.checker)
-            ),
-            jsdocTags: tagsOf(declaration)
-          },
-          owner,
-          declaration,
-          context,
-          false
-        )
-      );
-    }
-  }
-  return members;
-}
-
 function decoratorOption(args: readonly ts.Expression[] | undefined, name: string) {
   const options = args?.[0];
   if (!options || !ts.isObjectLiteralExpression(options)) return undefined;
@@ -2309,13 +2203,11 @@ function finishEntry(
       const kind = clause.token === ts.SyntaxKind.ExtendsKeyword ? 'extends' : 'implements';
       entry[kind] = clause.types.map(type => typeText(type.getText(), type, context));
     }
-    entry.typeMembers = completeTypeMembers(node, entry, context);
   }
   const typeReferences = new Map<string, ApiOrigin>();
   for (const origin of [
     ...(entry.typeReferences ?? []),
-    ...entry.members.flatMap(member => member.typeReferences ?? []),
-    ...(entry.typeMembers?.flatMap(member => member.typeReferences ?? []) ?? [])
+    ...entry.members.flatMap(member => member.typeReferences ?? [])
   ]) {
     typeReferences.set(
       `${origin.name}:${origin.source.filePath}:${origin.source.startLine}:${origin.type}`,

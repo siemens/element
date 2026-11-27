@@ -98,8 +98,6 @@ export interface ApiEntry {
   rawComment?: string;
   source: ApiSource;
   members: ApiMember[];
-  /** Source-complete class/interface view for explicitly requested type tables. */
-  typeMembers?: ApiMember[];
   type?: string;
   selector?: string;
   exportAs?: string[];

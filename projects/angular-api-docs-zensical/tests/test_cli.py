@@ -113,6 +113,17 @@ def test_type_card_constructors_omit_redundant_name_and_returns(site):
   assert 'Returns:' not in section
 
 
+def test_qualified_embed_links_to_the_method_without_rendering_the_whole_component(site):
+  html = (site / 'site/refresh/index.html').read_text(encoding='utf-8')
+  markdown = (site / 'site/refresh/index.md').read_text(encoding='utf-8')
+
+  assert 'href="#WidgetComponent.refresh">the refresh method</a>' in html
+  assert 'id="WidgetComponent.refresh"' in html
+  for output in (html, markdown):
+    assert 'Refreshes the widget display.' in output
+    assert 'Heading displayed above the widget.' not in output
+
+
 def test_regeneration_removes_stale_reference_pages_but_keeps_authored_docs(site, tmp_path):
   shutil.copytree(site, tmp_path, ignore=shutil.ignore_patterns('site'), dirs_exist_ok=True)
   stale = tmp_path / 'docs/api/old-widget.md'

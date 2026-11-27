@@ -41,21 +41,17 @@ const canonicalMemberName = (name: string): string => {
     : name;
 };
 
-const normalizedMembers = (entry: ApiEntry, sourceComplete: boolean): ApiMember[] => {
+const normalizedMembers = (entry: ApiEntry): ApiMember[] => {
   const members = new Map<string, ApiMember>();
   for (const member of entry.members) {
     const name = canonicalMemberName(member.name);
     const normalized = name === member.name ? member : { ...member, name };
     members.set(memberId(entry, normalized), normalized);
   }
-  // Source-derived names already contain the actual string-literal value, which
-  // may itself include quotes. Do not decode those values a second time.
-  if (sourceComplete)
-    for (const member of entry.typeMembers ?? []) members.set(memberId(entry, member), member);
   return [...members.values()].filter(visible);
 };
 
-// Match Composer's default Angular API filtering, not its complete TYPE view.
+// Match Composer's default Angular API filtering in both layouts.
 const angularInterfaceMethods: Record<string, readonly string[]> = {
   '@angular/core': [
     'AfterContentChecked.ngAfterContentChecked',
@@ -121,11 +117,10 @@ export function createPresentationContext(
     memberIndex: Object.create(null) as ApiPresentation['memberIndex'],
     targets: Object.create(null) as ApiPresentation['targets']
   };
-  const typeMembers = new Map(entries.map(entry => [entry.id, normalizedMembers(entry, true)]));
   const apiMembers = new Map(
     entries.map(entry => [
       entry.id,
-      (angularApi(entry) ? normalizedMembers(entry, false) : typeMembers.get(entry.id)!).filter(
+      normalizedMembers(entry).filter(
         member =>
           angularMemberVisible(entry, member) &&
           (member.visibility !== 'protected' ||
@@ -142,7 +137,6 @@ export function createPresentationContext(
     entries,
     byId,
     result,
-    typeMembers,
     apiMembers,
     homepages: new Map()
   };
@@ -193,8 +187,7 @@ export function createPresentationContext(
           `${entry.name}.declaration-${index + 1}`
         );
     });
-    // Register only records used by prepared views, not superseded compiler spellings
-    // or overload parameter IDs from raw rows replaced by source-complete records.
+    // Register only the members that can appear in the prepared views.
     for (const member of referenceMembers(context, entry)) {
       const id = memberId(entry, member);
       addTarget(

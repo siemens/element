@@ -138,6 +138,9 @@ export class WidgetComponent {
 
   /** Refreshes the widget display. */
   refresh(): void {}
+
+  /** Updates private display state. */
+  protected updateDisplay(): void {}
 }
 
 /** Supplies the default widget title. */
