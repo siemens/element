@@ -15,11 +15,9 @@
   (hasLargeSizeChange)="isLarge = $event"
   (mainContainerWidthChange)="onSplitChange($event)"
 >
-  <si-search-bar
-    slot="mainSearch"
-    placeholder="Search"
-    (searchChange)="searchTermChanged($event)"
-  />
+  <si-search-bar slot="mainSearch">
+    <input siSearchBarInput placeholder="Search" aria-label="Search" [formField]="searchField" />
+  </si-search-bar>
   <si-content-action-bar slot="mainActions" viewType="collapsible" [primaryActions]="mainActions" />
 
   <ngx-datatable

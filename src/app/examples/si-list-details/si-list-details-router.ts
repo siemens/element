@@ -4,7 +4,16 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
-import { AfterViewInit, Component, inject, ChangeDetectorRef } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  effect,
+  inject,
+  signal,
+  untracked
+} from '@angular/core';
+import { debounce, form, FormField } from '@angular/forms/signals';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent, SiEmptyStateModule } from '@siemens/element-ng/empty-state';
@@ -27,7 +36,7 @@ import {
   SiMenuItemComponent
 } from '@siemens/element-ng/menu';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { SiTabLinkComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 import { LOG_EVENT, provideExampleRoutes } from '@siemens/live-preview';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
@@ -130,6 +139,8 @@ class EmptyComponent {}
     SiIconComponent,
     SiMenuItemComponent,
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
+    FormField,
     SiFilterBarComponent,
     NgxDatatableModule,
     SiDatatableModule,
@@ -201,11 +212,25 @@ export class SampleComponent implements AfterViewInit {
   selectedEntities: CorporateEmployee[] = [];
   tableConfig = SI_DATATABLE_CONFIG;
   totalElements = 0;
-  searchTerm?: string;
+  protected readonly searchTerm = signal('');
+  protected readonly searchField = form(this.searchTerm, path => {
+    debounce(path, 400);
+  });
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private cdRef = inject(ChangeDetectorRef);
+
+  constructor() {
+    let previousSearchTerm = this.searchTerm();
+    effect(() => {
+      const searchTerm = this.searchTerm();
+      if (searchTerm !== previousSearchTerm) {
+        previousSearchTerm = searchTerm;
+        untracked(() => this.searchTermChanged(searchTerm));
+      }
+    });
+  }
 
   ngAfterViewInit(): void {
     this.router
@@ -221,7 +246,6 @@ export class SampleComponent implements AfterViewInit {
   }
 
   searchTermChanged(searchTerm: string): void {
-    this.searchTerm = searchTerm;
     this.cache = {};
     this.totalElements = 0;
     this.rows = [];
@@ -229,7 +253,7 @@ export class SampleComponent implements AfterViewInit {
   }
 
   setPage(pageRequest: PageRequest): void {
-    pageRequest.filter = this.searchTerm;
+    pageRequest.filter = this.searchTerm();
     // current page number is determined by last call to setPage
     this.pageNumber = pageRequest.offset;
 

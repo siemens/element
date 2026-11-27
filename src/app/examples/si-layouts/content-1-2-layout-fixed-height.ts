@@ -23,7 +23,7 @@ import {
 } from '@siemens/element-ng/header-dropdown';
 import { NavbarVerticalItem } from '@siemens/element-ng/navbar-vertical';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent, SiSearchBarInputDirective } from '@siemens/element-ng/search-bar';
 import { LOG_EVENT } from '@siemens/live-preview';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
 
@@ -37,6 +37,7 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     SiDatatableInteractionDirective,
     SiResizeObserverDirective,
     SiSearchBarComponent,
+    SiSearchBarInputDirective,
     RouterLink,
     SiAccountDetailsComponent,
     SiApplicationHeaderComponent,
