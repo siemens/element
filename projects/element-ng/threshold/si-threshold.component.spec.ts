@@ -232,6 +232,37 @@ describe('SiThresholdComponent', () => {
     expect(readonlyOptions).toEqual(['Poor', 'Average', 'Good', 'Average', 'Poor']);
   });
 
+  it('should treat steps exactly one decimal step size apart as valid', async () => {
+    component.validation.set(true);
+    component.minValue.set(0);
+    component.maxValue.set(100);
+    component.stepSize.set(0.1);
+    component.thresholdSteps.set([
+      { value: undefined, optionValue: 'poor' },
+      { value: 20.1, optionValue: 'average' },
+      { value: 20.2, optionValue: 'good' }
+    ]);
+    await fixture.whenStable();
+
+    expect(component.valid()).toBe(true);
+    expect(component.thresholdSteps().every(step => step.valid !== false)).toBe(true);
+  });
+
+  it('should treat steps closer than the step size as invalid', async () => {
+    component.validation.set(true);
+    component.minValue.set(0);
+    component.maxValue.set(100);
+    component.stepSize.set(0.1);
+    component.thresholdSteps.set([
+      { value: undefined, optionValue: 'poor' },
+      { value: 20.1, optionValue: 'average' },
+      { value: 20.15, optionValue: 'good' }
+    ]);
+    await fixture.whenStable();
+
+    expect(component.valid()).toBe(false);
+  });
+
   describe('useAliasForStepValues', () => {
     beforeEach(async () => {
       component.useAliasForStepValues.set(true);
