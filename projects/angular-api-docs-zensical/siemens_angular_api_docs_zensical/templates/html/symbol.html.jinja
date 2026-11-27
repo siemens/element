@@ -1,6 +1,6 @@
-{# ApiRenderer uses this for full browser cards: api() shows the API of
-   a component, directive, or other symbol. api_type() and api_types()
-   show compact type cards. For the main description, see view.documentation below. #}
+{# ApiRenderer uses this for browser cards: api() shows the API of a component,
+   directive, or other symbol; api_type() and api_types() show referenced types.
+   All symbol kinds share the same card, header, and tabbed presentation. #}
 {% import 'shared/content.html.jinja' as content with context %}
 {% import 'html/macros.html.jinja' as layout with context %}
 {% import 'html/markdown.md.jinja' as md %}
@@ -20,71 +20,57 @@
   {% if mode == 'api' and hide_implicitly_public %}data-api-hide-implicitly-public="true"{% endif %}
 >
   {{ content.type_target(symbol_anchor, mode == 'api') }}
-  {% set card_content %}
-    {% if mode == 'type' or not no_heading %}
-      {% set section_title = heading ~ ' API Documentation' if heading == symbol.name else heading %}
-      <div
-        class="{{ 'api-type-header' if mode == 'type' else 'api-symbol-header' }}"
-        {% if mode == 'api' %}markdown="1"{% endif %}
-      >
-        {% if mode == 'api' %}
-          {{ md.heading(3, section_title, symbol_anchor) }}
-          {% if symbol.sourceUrl %}
-            <div>
-              <a
-                class="api-member-source"
-                href="{{ safe_url(symbol.sourceUrl) }}"
-                aria-label="Source for {{ symbol.name }}"
-                >Source</a
-              >
-            </div>
-          {% endif %}
-        {% else %}
+  {% set kind_label = symbol.kind.replace('undecorated_', '').replace('_', ' ') %}
+  <div class="api-symbol-card" {% if mode == 'api' %}markdown="1"{% endif %}>
+    {% set section_title = heading ~ ' API Documentation' if heading == symbol.name else heading %}
+    <div class="api-symbol-header" {% if mode == 'api' %}markdown="1"{% endif %}>
+      {% if mode == 'api' and not no_heading %}
+        {{ md.heading(3, section_title, symbol_anchor) }}
+      {% else %}
+        <div class="api-symbol-title">
           {% if not no_heading %}
             <h3 id="{{ symbol_anchor }}">
-              {% if symbol.sourceUrl %}
-                <a href="{{ safe_url(symbol.sourceUrl) }}" title="Source for {{ symbol.name }}"
-                  >{{ heading }}</a
-                >
-              {% else %}
-                {{ heading }}
-              {% endif %}
-            </h3>
-          {% endif %}
-          <div class="api-type-declaration">
-            {% if symbol.kind == 'type_alias' and view.declaration %}
-              <code
-                >{% if view.declaration[0:2] | map(attribute='text') | join == 'type ' ~ symbol.name ~ ' = ' %}{{ content.fragments(view.declaration[2:], local, false) }}{% else %}{{ content.fragments(view.declaration, local, false) }}{% endif %}</code
+              {{ heading }}
+              <a
+                class="headerlink"
+                href="#{{ symbol_anchor | urlencode }}"
+                title="Permanent link to {{ heading }}"
+                >¶</a
               >
-            {% elif view.declaration[1:] and view.declaration[0].text == symbol.kind ~ ' ' ~ symbol.name %}
-              <code>{{ content.fragments(view.declaration[1:], local, false) }}</code>
-            {% endif %}
+            </h3>
+          {% else %}
             <a
               class="headerlink"
               href="#{{ symbol_anchor | urlencode }}"
               title="Permanent link to {{ heading }}"
               >¶</a
             >
-          </div>
-          {% set kind_label = symbol.kind.replace('undecorated_', '').replace('_', ' ') %}
-          {% if symbol.kind in kind_documentation %}
-            <a
-              class="api-kind"
-              href="{{ kind_documentation[symbol.kind] }}"
-              target="_blank"
-              rel="noopener noreferrer"
-              >{{ kind_label }}</a
-            >
-          {% else %}
-            <span class="api-kind">{{ kind_label }}</span>
           {% endif %}
+        </div>
+      {% endif %}
+      <div class="api-symbol-actions">
+        {% if symbol.kind in kind_documentation %}
+          <a
+            class="api-kind"
+            href="{{ kind_documentation[symbol.kind] }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            >{{ kind_label }}</a
+          >
+        {% else %}
+          <span class="api-kind">{{ kind_label }}</span>
+        {% endif %}
+        {% if symbol.sourceUrl %}
+          <a
+            class="api-member-source"
+            href="{{ safe_url(symbol.sourceUrl) }}"
+            aria-label="Source for {{ symbol.name }}"
+            >Source</a
+          >
         {% endif %}
       </div>
-    {% endif %}
-    <div
-      class="{{ 'api-type-body' if mode == 'type' else 'api-symbol-body' }}"
-      {% if mode == 'api' %}markdown="1"{% endif %}
-    >
+    </div>
+    <div class="api-symbol-body" {% if mode == 'api' %}markdown="1"{% endif %}>
       {% if symbol.metadata %}
         <dl class="api-metadata">
           {% for item in symbol.metadata %}
@@ -96,17 +82,50 @@
       {% if symbol.importStatement and (mode != 'type' or source.startswith('api/')) %}
         <pre class="api-import"><code>{{ symbol.importStatement }}</code></pre>
       {% endif %}
-      {# The main description comes from the symbol's TypeScript doc comment. For a
-   component or directive, it appears below the selector and import. To find the
-   descriptions of individual inputs, outputs, or methods, follow group() below. #}
+      {# The main description comes from the symbol's TypeScript doc comment. #}
       {{ layout.blocks(view.documentation, local) }}
-      {{ layout.signatures(view.signatures, local, compact=mode == 'type') }}
-      {% for group in view.groups %}{{ layout.group(group, local, mode) }}{% endfor %}
+      {% if view.groups %}
+        {% set tab_id = 'api-tabs-' ~ symbol_anchor %}
+        <div class="api-tabs" data-api-tabs {% if mode == 'api' %}markdown="1"{% endif %}>
+          <div class="api-tab-bar" role="presentation">
+            <input
+              class="api-tab-input api-tab-input-members"
+              type="radio"
+              name="{{ tab_id }}"
+              id="{{ tab_id }}-members"
+              checked
+            />
+            <label class="api-tab-label" for="{{ tab_id }}-members">Members</label>
+            <input
+              class="api-tab-input api-tab-input-ts"
+              type="radio"
+              name="{{ tab_id }}"
+              id="{{ tab_id }}-ts"
+            />
+            <label class="api-tab-label" for="{{ tab_id }}-ts">TypeScript</label>
+          </div>
+          <div class="api-tab-panels" {% if mode == 'api' %}markdown="1"{% endif %}>
+            <div
+              class="api-tab-panel api-tab-panel-members"
+              {% if mode == 'api' %}markdown="1"{% endif %}
+            >
+              {{ layout.signatures(view.signatures, local, compact=mode == 'type') }}
+              {% for group in view.groups %}{{ layout.group(group, local, mode) }}{% endfor %}
+            </div>
+            <div class="api-tab-panel api-tab-panel-ts">
+              <pre
+                class="api-ts-code"
+              ><code>{{ content.fragments(typescript_declaration(symbol, view), local, false) }}</code></pre>
+            </div>
+          </div>
+        </div>
+      {% elif view.signatures %}
+        {{ layout.signatures(view.signatures, local, compact=mode == 'type') }}
+      {% elif view.declaration %}
+        <pre
+          class="api-ts-code"
+        ><code>{{ content.fragments(typescript_declaration(symbol, view), local, false) }}</code></pre>
+      {% endif %}
     </div>
-  {% endset %}
-  {% if mode == 'type' %}
-    <div class="api-type-card">{{ card_content }}</div>
-  {% else %}
-    {{ card_content }}
-  {% endif %}
+  </div>
 </section>

@@ -71,7 +71,136 @@ def view_nodes(view):
 
   yield from signatures(view['signatures'])
   for group in view['groups']:
-    yield from rows(group['rows'])
+    yield from rows([row for row in group['rows'] if not row['signatures']])
+    yield from rows([row for row in group['rows'] if row['signatures']])
+
+
+_CLASS_KINDS = frozenset((
+  'component', 'directive', 'injectable', 'pipe', 'ng_module', 'class', 'undecorated_class'
+))
+
+
+def _code_fragment(text):
+  return {'kind': 'code', 'text': text, 'targetId': None, 'href': None}
+
+
+def _constructor_label(signature):
+  """Strip the synthetic return type from a constructor signature for TypeScript display."""
+  parts = [dict(part) for part in signature['label']]
+  for index in range(len(parts) - 1, -1, -1):
+    if '): ' in parts[index]['text'] and parts[index]['kind'] != 'link':
+      before, _ = parts[index]['text'].rsplit('): ', 1)
+      parts[index]['text'] = before + ')'
+      del parts[index + 1:]
+      break
+  return parts
+
+
+def typescript_declaration(symbol, view):
+  """Assemble a full TypeScript declaration with clickable type fragments."""
+  kind = symbol['kind']
+  decl = [dict(part) for part in view['declaration']]
+
+  if kind == 'constant':
+    return [_code_fragment(f"const {symbol['name']}: "), *decl, _code_fragment(';')]
+
+  if kind == 'function' and view['signatures']:
+    parts = []
+    for index, signature in enumerate(view['signatures']):
+      if index:
+        parts.append(_code_fragment('\n'))
+      parts.append(_code_fragment('function '))
+      parts.extend(signature['label'])
+      parts.append(_code_fragment(';'))
+    return parts
+
+  if kind in _CLASS_KINDS and decl and decl[0]['kind'] != 'link':
+    prefix = kind + ' '
+    if decl[0]['text'].startswith(prefix):
+      decl[0]['text'] = 'class ' + decl[0]['text'][len(prefix):]
+
+  groups = view['groups']
+  if not groups:
+    if kind == 'type_alias':
+      return [*decl, _code_fragment(';')]
+    if decl:
+      return [*decl, _code_fragment(' {}')]
+    return []
+
+  parts = [*decl, _code_fragment(' {\n')]
+  show_group_comments = len(groups) > 1
+  for group_index, group in enumerate(groups):
+    if group_index:
+      parts.append(_code_fragment('\n'))
+    if show_group_comments:
+      parts.append(_code_fragment(f"  // {group['title']}\n"))
+    for row in group['rows']:
+      badges = row['badges']
+      if kind == 'enum':
+        parts.append(_code_fragment(f"  {row['name']}"))
+        if row['default'] is not None:
+          parts.append(_code_fragment(' = '))
+          parts.append(row['defaultLink'] if 'defaultLink' in row else _code_fragment(row['default']))
+        elif row['type']:
+          parts.append(_code_fragment(' = '))
+          parts.extend(row['type'])
+        parts.append(_code_fragment(',\n'))
+        continue
+
+      if group['kind'] == 'inputs':
+        parts.append(_code_fragment(f"  {row['name']} = input"))
+        if 'required' in badges:
+          parts.append(_code_fragment('.required'))
+        if row['type']:
+          parts.append(_code_fragment('<'))
+          parts.extend(row['type'])
+          parts.append(_code_fragment('>'))
+        parts.append(_code_fragment('('))
+        if 'required' not in badges and row['default'] is not None:
+          parts.append(row['defaultLink'] if 'defaultLink' in row else _code_fragment(row['default']))
+        parts.append(_code_fragment(');\n'))
+        continue
+
+      if group['kind'] == 'outputs':
+        parts.append(_code_fragment(f"  {row['name']} = output"))
+        if row['type']:
+          parts.append(_code_fragment('<'))
+          parts.extend(row['type'])
+          parts.append(_code_fragment('>'))
+        parts.append(_code_fragment('();\n'))
+        continue
+
+      prefix = ''
+      if 'static' in badges:
+        prefix += 'static '
+      if 'protected' in badges:
+        prefix += 'protected '
+
+      if row['signatures']:
+        for signature in row['signatures']:
+          parts.append(_code_fragment(f'  {prefix}'))
+          if row['name'] == 'constructor':
+            parts.extend(_constructor_label(signature))
+          else:
+            parts.extend(signature['label'])
+          parts.append(_code_fragment(';\n'))
+      else:
+        if 'readonly' in badges:
+          prefix += 'readonly '
+        optional = '?' if 'optional' in badges else ''
+        parts.append(_code_fragment(f"  {prefix}{row['name']}{optional}"))
+        if row['type']:
+          parts.append(_code_fragment(': '))
+          parts.extend(row['type'])
+        if row['default'] is not None:
+          parts.append(_code_fragment(' = '))
+          parts.append(row['defaultLink'] if 'defaultLink' in row else _code_fragment(row['default']))
+        parts.append(_code_fragment(';'))
+        if 'required' in badges:
+          parts.append(_code_fragment(' // required'))
+        parts.append(_code_fragment('\n'))
+  parts.append(_code_fragment('}'))
+  return parts
 
 
 def callable_type(signature, name):
@@ -117,20 +246,27 @@ def group_anchors(view, symbol_anchor):
 
 
 def _strip_template_indent(text):
-  """Remove template indentation outside fenced code blocks so md_in_html never treats HTML as code."""
+  """Remove template indentation outside fenced code and <pre> blocks so md_in_html never treats HTML as code."""
   lines = []
   fence = None
+  in_pre = False
   for line in text.splitlines():
     stripped = line.lstrip()
     if fence is not None:
       lines.append(line)
       if stripped.startswith(fence) and not stripped.strip('`'):
         fence = None
+    elif in_pre:
+      lines.append(line)
+      if '</pre>' in stripped:
+        in_pre = False
     elif stripped.startswith('```'):
       fence = '`' * (len(stripped) - len(stripped.lstrip('`')))
       lines.append(stripped)
     else:
       lines.append(stripped)
+      if '<pre' in stripped and '</pre>' not in stripped:
+        in_pre = True
   return '\n'.join(lines)
 
 
@@ -149,6 +285,7 @@ class ApiRenderer:
     )
     self.environment.globals['safe_url'] = safe_url
     self.environment.globals['callable_type'] = callable_type
+    self.environment.globals['typescript_declaration'] = typescript_declaration
     self.environment.globals['kind_documentation'] = KIND_DOCUMENTATION
     self.template = self.environment.get_template('html/symbol.html.jinja')
     self.member_template = self.environment.get_template('html/member.html.jinja')
