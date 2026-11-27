@@ -74,6 +74,36 @@ def view_nodes(view):
     yield from rows(group['rows'])
 
 
+_CLASS_KINDS = frozenset((
+  'component', 'directive', 'injectable', 'pipe', 'ng_module', 'class', 'undecorated_class'
+))
+
+
+def _code_fragment(text):
+  return {'kind': 'code', 'text': text, 'targetId': None, 'href': None}
+
+
+def typescript_declaration(symbol, view):
+  """Assemble a standalone TypeScript declaration with clickable type fragments."""
+  kind = symbol['kind']
+  decl = [dict(part) for part in view['declaration']]
+  if not decl:
+    return []
+
+  if kind == 'constant':
+    return [_code_fragment(f"const {symbol['name']}: "), *decl, _code_fragment(';')]
+
+  if kind == 'type_alias':
+    return [*decl, _code_fragment(';')]
+
+  if kind in _CLASS_KINDS and decl[0]['kind'] != 'link':
+    prefix = kind + ' '
+    if decl[0]['text'].startswith(prefix):
+      decl[0]['text'] = 'class ' + decl[0]['text'][len(prefix):]
+
+  return [*decl, _code_fragment(' {}')]
+
+
 def callable_type(signature, name):
   """Display a member signature as a callable type, retaining linked fragments."""
   parts = [dict(part) for part in signature['label']]
@@ -117,20 +147,27 @@ def group_anchors(view, symbol_anchor):
 
 
 def _strip_template_indent(text):
-  """Remove template indentation outside fenced code blocks so md_in_html never treats HTML as code."""
+  """Remove template indentation outside fenced code and <pre> blocks so md_in_html never treats HTML as code."""
   lines = []
   fence = None
+  in_pre = False
   for line in text.splitlines():
     stripped = line.lstrip()
     if fence is not None:
       lines.append(line)
       if stripped.startswith(fence) and not stripped.strip('`'):
         fence = None
+    elif in_pre:
+      lines.append(line)
+      if '</pre>' in stripped:
+        in_pre = False
     elif stripped.startswith('```'):
       fence = '`' * (len(stripped) - len(stripped.lstrip('`')))
       lines.append(stripped)
     else:
       lines.append(stripped)
+      if '<pre' in stripped and '</pre>' not in stripped:
+        in_pre = True
   return '\n'.join(lines)
 
 
@@ -149,6 +186,7 @@ class ApiRenderer:
     )
     self.environment.globals['safe_url'] = safe_url
     self.environment.globals['callable_type'] = callable_type
+    self.environment.globals['typescript_declaration'] = typescript_declaration
     self.environment.globals['kind_documentation'] = KIND_DOCUMENTATION
     self.template = self.environment.get_template('html/symbol.html.jinja')
     self.member_template = self.environment.get_template('html/member.html.jinja')
