@@ -11,23 +11,4 @@ import { Component } from '@angular/core';
     class: 'p-5 background-1'
   }
 })
-export class SampleComponent {
-  readonly variants = [
-    'default',
-    'primary',
-    'secondary',
-    'inverse',
-    'info',
-    'success',
-    'warning',
-    'danger',
-    'critical',
-    'caution',
-    'info-emphasis',
-    'success-emphasis',
-    'warning-emphasis',
-    'danger-emphasis',
-    'critical-emphasis',
-    'caution-emphasis'
-  ];
-}
+export class SampleComponent {}

@@ -1,15 +1,47 @@
 <h3 class="mb-6">Default size</h3>
 <div class="d-flex flex-wrap align-items-center gap-4">
-  @for (variant of variants; track variant.name) {
-    @if (variant.name === 'primary' || variant.name === 'secondary') {
-      <span class="badge mx-0" [class]="'bg-' + variant.name">
-        <si-icon class="icon" [icon]="variant.icon" />
-        <span class="text-truncate">Badge {{ variant.name }}</span>
-      </span>
-    } @else {
-      <si-badge class="mx-0" [type]="variant.name" [icon]="variant.icon">
-        Badge {{ variant.name }}
-      </si-badge>
-    }
-  }
+  <si-badge class="mx-0" type="default" [icon]="icons.elementFaceNeutral">Badge default</si-badge>
+  <span class="badge mx-0 bg-primary">
+    <si-icon class="icon" [icon]="icons.elementFaceNeutral" />
+    <span class="text-truncate">Badge primary</span>
+  </span>
+  <span class="badge mx-0 bg-secondary">
+    <si-icon class="icon" [icon]="icons.elementFaceNeutral" />
+    <span class="text-truncate">Badge secondary</span>
+  </span>
+  <si-badge class="mx-0" type="inverse" [icon]="icons.elementFaceNeutral">Badge inverse</si-badge>
+  <si-badge class="mx-0" type="info" [icon]="icons.elementValidationInformation"
+    >Badge info</si-badge
+  >
+  <si-badge class="mx-0" type="success" [icon]="icons.elementValidationSuccess"
+    >Badge success</si-badge
+  >
+  <si-badge class="mx-0" type="warning" [icon]="icons.elementValidationWarning"
+    >Badge warning</si-badge
+  >
+  <si-badge class="mx-0" type="danger" [icon]="icons.elementValidationIssue">Badge danger</si-badge>
+  <si-badge class="mx-0" type="critical" [icon]="icons.elementValidationIssue"
+    >Badge critical</si-badge
+  >
+  <si-badge class="mx-0" type="caution" [icon]="icons.elementValidationCaution"
+    >Badge caution</si-badge
+  >
+  <si-badge class="mx-0" type="info-emphasis" [icon]="icons.elementValidationInformation"
+    >Badge info-emphasis</si-badge
+  >
+  <si-badge class="mx-0" type="success-emphasis" [icon]="icons.elementValidationSuccess"
+    >Badge success-emphasis</si-badge
+  >
+  <si-badge class="mx-0" type="warning-emphasis" [icon]="icons.elementValidationWarning"
+    >Badge warning-emphasis</si-badge
+  >
+  <si-badge class="mx-0" type="danger-emphasis" [icon]="icons.elementValidationIssue"
+    >Badge danger-emphasis</si-badge
+  >
+  <si-badge class="mx-0" type="critical-emphasis" [icon]="icons.elementValidationIssue"
+    >Badge critical-emphasis</si-badge
+  >
+  <si-badge class="mx-0" type="caution-emphasis" [icon]="icons.elementValidationCaution"
+    >Badge caution-emphasis</si-badge
+  >
 </div>
