@@ -19,7 +19,8 @@
         "../../projects/element-ng"
       ],
       "@siemens/element-ng/*": ["../../projects/element-ng/*"],
-      "@siemens/dashboards-ng": ["./src/public-api.ts", "./src"]
+      "@siemens/dashboards-ng": ["./src/public-api.ts", "./src"],
+      "@siemens/dashboards-ng/*": ["./*"]
     }
   },
   "include": ["**/*.spec.ts", "**/*.d.ts", "**/test/**/*.ts"]
