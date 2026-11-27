@@ -4,21 +4,18 @@
  */
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { page } from 'vitest/browser';
 
 import { SiResponsiveContainerDirective } from './index';
+import {
+  MockResizeObserver,
+  mockResizeObserver,
+  restoreResizeObserver
+} from './testing/resize-observer.mock';
 
 @Component({
   imports: [SiResponsiveContainerDirective],
   template: `
-    <div
-      siResponsiveContainer
-      class="vh-100 w-100"
-      [resizeThrottle]="10"
-      [style.width.px]="width()"
-    >
-      Testli
-    </div>
+    <div siResponsiveContainer [resizeThrottle]="10" [style.width.px]="width()">Testli</div>
   `
 })
 class TestHostComponent {
@@ -26,25 +23,35 @@ class TestHostComponent {
 }
 
 describe('SiResponsiveContainerDirective', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
   let element: HTMLElement;
+  let fixture: ComponentFixture<TestHostComponent>;
+  let component: TestHostComponent;
 
   beforeEach(async () => {
-    await page.viewport(100, 100);
+    mockResizeObserver();
     fixture = TestBed.createComponent(TestHostComponent);
+    component = fixture.componentInstance;
     element = fixture.nativeElement;
+    // after createComponent so Angular's initial change detection is scheduled with real timers
+    vi.useFakeTimers();
+    await fixture.whenStable();
+    // flush the initial size emission
+    vi.advanceTimersByTime(0);
   });
 
-  afterEach(() => vi.useRealTimers());
+  afterEach(() => {
+    restoreResizeObserver();
+    vi.useRealTimers();
+  });
 
-  const testSize = async (size: string | number, clazz: string | number): Promise<void> => {
-    vi.useFakeTimers();
-    await page.viewport(parseInt(size as string, 10), 100);
+  const testSize = (size: number, clazz: string): void => {
+    component.width.set(size);
+    TestBed.tick();
+    MockResizeObserver.triggerResize({});
+    vi.advanceTimersByTime(10);
+    TestBed.tick();
 
-    vi.advanceTimersByTime(100);
-    await fixture.whenStable();
-
-    expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz.toString());
+    expect(element.querySelector<HTMLElement>('div')!).toHaveClass(clazz);
   };
 
   it.for([
@@ -53,7 +60,7 @@ describe('SiResponsiveContainerDirective', () => {
     [780, 'si-container-md'],
     [1000, 'si-container-lg'],
     [1200, 'si-container-xl']
-  ])('width %i sets %s class', async ([size, expected]) => {
-    await testSize(size, expected);
+  ] as const)('width %i sets %s class', ([size, expected]) => {
+    testSize(size, expected);
   });
 });
