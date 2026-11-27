@@ -19,7 +19,8 @@
   > .tabbed-labels
   > label
   > a {
-  padding: 0.5rem 0.75rem;
+  padding-block: 0.5rem;
+  padding-inline: 0.75rem;
 }
 
 .js
@@ -91,7 +92,11 @@
   min-inline-size: 0;
   max-inline-size: 100%;
   overflow-x: auto;
-  font-size: 0.64rem;
+  font-size: 0.68rem;
+}
+
+.md-typeset .si-docs-api pre code {
+  white-space: pre;
 }
 
 .md-typeset .si-docs-api .api-import {
@@ -99,25 +104,121 @@
 }
 
 .md-typeset .si-docs-api .api-member-source {
-  font-size: 0.64rem;
+  font-size: 0.7rem;
 }
 
-/* API tables reuse the theme's table skin and contain horizontal scrolling. */
+/* Accessible pure-CSS 2-tab switcher (Members/API | TypeScript). */
+.md-typeset .si-docs-api .api-tabs {
+  position: relative;
+  margin-block: 0.75rem 0;
+}
+
+.md-typeset .si-docs-api .api-tab-input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.md-typeset .si-docs-api .api-tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-block-end: 0.75rem;
+  border-block-end: 1px solid var(--md-table-border-color, var(--md-typeset-table-color));
+}
+
+.md-typeset .si-docs-api .api-tab-label {
+  display: inline-flex;
+  align-items: center;
+  padding-block: 0.4rem;
+  padding-inline: 0.75rem;
+  margin-block-end: -1px;
+  border-block-end: 2px solid transparent;
+  color: var(--md-default-fg-color--light, var(--md-default-fg-color));
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.25;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.md-typeset .si-docs-api .api-tab-label:hover {
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset .si-docs-api .api-tab-input:checked + .api-tab-label {
+  border-block-end-color: var(--md-nav-underline-color, var(--md-typeset-a-color));
+  color: var(--si-sys-color-text-accent, var(--md-typeset-a-color));
+  font-weight: 600;
+}
+
+.md-typeset .si-docs-api .api-tab-input:focus-visible + .api-tab-label {
+  outline: 2px solid var(--md-nav-focus-border-color, var(--md-typeset-a-color));
+  outline-offset: -2px;
+  border-radius: 0.125rem;
+}
+
+.md-typeset .si-docs-api .api-tab-panel {
+  display: none;
+}
+
+.md-typeset
+  .si-docs-api
+  .api-tabs:has(> .api-tab-bar > .api-tab-input-members:checked)
+  > .api-tab-panels
+  > .api-tab-panel-members,
+.md-typeset
+  .si-docs-api
+  .api-tabs:has(> .api-tab-bar > .api-tab-input-ts:checked)
+  > .api-tab-panels
+  > .api-tab-panel-ts {
+  display: block;
+}
+
+.md-typeset .si-docs-api .api-tab-panel > :first-child {
+  margin-block-start: 0;
+}
+
+.md-typeset .si-docs-api .api-tab-panel > :last-child {
+  margin-block-end: 0;
+}
+
+/* TypeScript declaration block (tabbed view and standalone simple type aliases). */
+.md-typeset .si-docs-api .api-ts-code {
+  margin-block: 0.4rem 0;
+  padding-block: 0.75rem;
+  padding-inline: 0.9rem;
+  border: 1px solid var(--md-table-border-color, var(--md-typeset-table-color));
+  border-radius: 0.2rem;
+  background-color: var(--md-code-bg-color);
+  color: var(--md-code-fg-color, var(--md-default-fg-color));
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.md-typeset .si-docs-api .api-ts-code code {
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+  font-size: inherit;
+}
+
+.md-typeset .si-docs-api .api-ts-code a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Compact 2-column member table (Name | Details). */
 .md-typeset .si-docs-api .api-table {
   min-inline-size: 0;
   max-inline-size: 100%;
-  margin-block: 1rem;
-  overflow-x: auto;
-}
-
-.md-typeset .si-docs-api .api-table th:hover .headerlink,
-.md-typeset .si-docs-api .api-table th .headerlink:focus-visible {
-  opacity: 1;
-}
-
-.md-typeset .si-docs-api .api-table:focus-visible {
-  outline: 0.1rem solid var(--si-sys-color-text-accent, var(--md-typeset-a-color));
-  outline-offset: 0.1rem;
+  margin-block: 0.65rem 1rem;
 }
 
 /* Zensical adds these theme wrappers around the table. */
@@ -133,11 +234,29 @@
 }
 /* stylelint-enable selector-class-pattern */
 
-.md-typeset .si-docs-api .api-table table:not([class]) {
+.md-typeset .si-docs-api .api-compact-table table:not([class]) {
   display: table;
   inline-size: 100%;
-  min-inline-size: 32rem;
+  table-layout: fixed;
   margin: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.md-typeset .si-docs-api .api-compact-table thead th {
+  border-block-start: 0;
+  border-block-end: 0.05rem solid var(--md-table-border-color, var(--md-typeset-table-color));
+  background-color: transparent;
+}
+
+.md-typeset .si-docs-api .api-compact-table .api-col-name {
+  inline-size: 32%;
+}
+
+.md-typeset .si-docs-api .api-compact-table .api-col-details {
+  inline-size: 68%;
 }
 
 .md-typeset .si-docs-api th,
@@ -146,18 +265,96 @@
   vertical-align: top;
 }
 
-.md-typeset .si-docs-api th[scope='row'] {
+.md-typeset .si-docs-api .api-compact-table th[scope='row'] {
   font-weight: normal;
-  border-block-start: 0.1rem solid var(--md-table-border-color, var(--md-typeset-table-color));
+  border-block-start: 0.05rem solid var(--md-table-border-color, var(--md-typeset-table-color));
   border-block-end: 0;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .si-docs-api .api-compact-table td {
+  border-block-start: 0.05rem solid var(--md-table-border-color, var(--md-typeset-table-color));
+  border-block-end: 0;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .si-docs-api .api-compact-table th:hover .headerlink,
+.md-typeset .si-docs-api .api-compact-table th .headerlink:focus-visible,
+.md-typeset .si-docs-api .api-method-header:hover .headerlink,
+.md-typeset .si-docs-api .api-method-header .headerlink:focus-visible,
+.md-typeset .si-docs-api .api-group-heading:hover .headerlink,
+.md-typeset .si-docs-api .api-group-heading .headerlink:focus-visible {
+  opacity: 1;
+}
+
+.md-typeset .si-docs-api .api-member-name-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.md-typeset .si-docs-api .api-member-name {
+  padding: 0;
+  background-color: transparent;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .si-docs-api .api-optional {
+  color: var(--md-default-fg-color--light, var(--md-default-fg-color));
+  font-weight: 400;
+}
+
+.md-typeset .si-docs-api .api-member-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.75rem;
+  margin-block-end: 0.35rem;
+}
+
+.md-typeset .si-docs-api .api-member-meta:last-child {
+  margin-block-end: 0;
+}
+
+.md-typeset .si-docs-api .api-member-type code {
+  font-size: 0.74rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .si-docs-api .api-member-default {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem;
+  color: var(--md-default-fg-color--light, var(--md-default-fg-color));
+  font-size: 0.72rem;
+}
+
+.md-typeset .si-docs-api .api-default-label {
+  font-weight: 600;
+}
+
+.md-typeset .si-docs-api .api-member-description > :first-child {
+  margin-block-start: 0;
+}
+
+.md-typeset .si-docs-api .api-member-description > :last-child {
+  margin-block-end: 0;
+}
+
+.md-typeset .si-docs-api .api-member-origin {
+  margin-block-start: 0.3rem;
+  color: var(--md-default-fg-color--light, var(--md-default-fg-color));
+  font-size: 0.72rem;
 }
 
 .md-typeset .si-docs-api td code {
   white-space: normal;
-}
-
-.md-typeset .si-docs-api pre code {
-  white-space: pre;
 }
 
 /* Code blocks scroll inside their cell instead of widening the column. */
@@ -178,16 +375,22 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem;
+  margin-block-start: 0.25rem;
+}
+
+.md-typeset .si-docs-api .api-method-header .api-badges {
+  margin-block-start: 0;
 }
 
 .md-typeset .si-docs-api .api-badge {
   display: inline-block;
-  padding: 0.05rem 0.3rem;
+  padding-block: 0.05rem;
+  padding-inline: 0.35rem;
   border-radius: 0.125rem;
   background-color: var(--si-sys-color-background-2, var(--md-code-bg-color));
   color: var(--si-sys-color-text-primary, var(--md-default-fg-color));
-  font-size: 0.6rem;
-  font-weight: normal;
+  font-size: 0.62rem;
+  font-weight: 500;
   line-height: 1.5;
   text-transform: capitalize;
 }
@@ -202,156 +405,253 @@
   color: var(--si-sys-color-text-on-danger);
 }
 
-.md-typeset .si-docs-api .api-symbol-header {
+/* Flat definition list for methods, constructors, and callables. */
+.md-typeset .si-docs-api .api-method-list {
+  margin-block: 0.65rem 1rem;
+  padding: 0;
+}
+
+.md-typeset .si-docs-api .api-method-item {
+  padding-block: 0.65rem;
+  border-block-start: 0.05rem solid var(--md-table-border-color, var(--md-typeset-table-color));
+}
+
+.md-typeset .si-docs-api .api-method-item:first-child {
+  padding-block-start: 0.2rem;
+  border-block-start: 0;
+}
+
+.md-typeset .si-docs-api .api-method-header {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 0.25rem 1rem;
-  overflow-wrap: anywhere;
+  gap: 0.35rem;
+  margin-block: 0 0.35rem;
+  margin-inline: 0;
 }
 
-.md-typeset .si-docs-api .api-symbol-header h3 {
+.md-typeset .si-docs-api .api-method-body {
   margin: 0;
 }
 
-.md-typeset .si-docs-api[data-api-no-heading='false'] .api-symbol-header {
-  margin-block-start: 2rem;
+.md-typeset .si-docs-api .api-signature-block {
+  margin-block: 0.35rem 0;
 }
 
-.md-typeset .si-docs-api .api-symbol-header > strong {
-  font-size: 0.8rem;
+.md-typeset .si-docs-api .api-signature-block:first-child {
+  margin-block-start: 0;
 }
 
-.md-typeset .si-docs-api .api-type-card {
-  margin-block: 1.15rem 0.625rem;
-  background-color: var(--md-table-bg-color, var(--md-default-bg-color));
-  border: 0.05rem solid var(--md-typeset-table-color);
-  border-radius: 0.125rem;
-  box-shadow: var(--md-shadow-z3);
-  overflow-wrap: anywhere;
+.md-typeset .si-docs-api .api-signature {
+  margin-block: 0 0.45rem;
+  padding-block: 0.45rem;
+  padding-inline: 0.65rem;
+  border: 1px solid var(--md-table-border-color, var(--md-typeset-table-color));
+  border-radius: 0.15rem;
+  background-color: var(--md-code-bg-color);
 }
 
-.md-typeset .si-docs-api .api-type-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0 0.375rem;
-  padding: 0.375rem 0.5rem;
-  font-size: 0.9375rem;
-  line-height: 1.6;
+.md-typeset .si-docs-api .api-signature code {
+  padding: 0;
+  background-color: transparent;
 }
 
-.md-typeset .si-docs-api .api-type-header h3 {
-  margin: 0;
-  padding-block-end: 0.1875rem;
-  font-size: inherit;
-  font-weight: bold;
+.md-typeset .si-docs-api .api-params {
+  margin-block: 0.45rem;
+  padding-inline-start: 0.85rem;
+  border-inline-start: 2px solid var(--md-table-border-color, var(--md-typeset-table-color));
 }
 
-.md-typeset .si-docs-api .api-type-declaration {
-  flex: 1 1 auto;
-  min-inline-size: 0;
-  padding-block: 0.1875rem;
-  font-size: 0.8rem;
+.md-typeset .si-docs-api .api-params-heading {
+  margin-block-end: 0.3rem;
+  color: var(--md-default-fg-color--light, var(--md-default-fg-color));
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
-.md-typeset .si-docs-api .api-kind {
-  flex: 0 0 auto;
-  font-size: 0.64rem;
-  white-space: nowrap;
-  text-transform: capitalize;
-}
-
-.md-typeset .si-docs-api .api-type-header .api-kind {
-  padding-block: 0.1875rem;
-  color: var(--md-typeset-a-color);
-  font-size: 0.8rem;
-}
-
-.md-typeset .si-docs-api .api-type-body,
-.md-typeset .si-docs-api .api-symbol-body {
-  min-inline-size: 0;
-}
-
-.md-typeset .si-docs-api .api-type-body {
-  padding: 0 0.5rem 0.375rem;
-  font-size: 0.8rem;
-}
-
-.md-typeset .si-docs-api .api-type-body :is(p, pre) {
-  margin-block: 0.25rem;
-}
-
-.md-typeset .si-docs-api .api-type-group {
-  padding: 0.375rem 0.5rem;
-  border-block-start: 0.1rem solid var(--md-table-border-color);
-  background-color: var(--md-typeset-table-color--light);
-}
-
-.md-typeset .si-docs-api :is(.api-type-body, .api-type-callable section) > .api-type-group {
-  margin-inline: -0.5rem;
-}
-
-.md-typeset
-  .si-docs-api
-  :is(.api-type-body, .api-type-callable > section:last-child)
-  > .api-type-group:last-child {
-  margin-block-end: -0.375rem;
-  border-end-start-radius: 0.125rem;
-  border-end-end-radius: 0.125rem;
-}
-
-.md-typeset .si-docs-api .api-type-list,
-.md-typeset .si-docs-api .api-type-list > li {
+.md-typeset .si-docs-api .api-param-list,
+.md-typeset .si-docs-api .api-param-list > li {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.md-typeset .si-docs-api .api-type-list > li {
-  padding: 0.1875rem 0.125rem;
-  line-height: 1.125rem;
+.md-typeset .si-docs-api .api-param-item {
+  margin-block-end: 0.35rem;
 }
 
-.md-typeset .si-docs-api .api-type-notes {
-  font-size: 0.9em;
-  font-style: italic;
+.md-typeset .si-docs-api .api-param-item:last-child {
+  margin-block-end: 0;
 }
 
-.md-typeset .si-docs-api .api-type-list :is(.api-type-member, .api-type-notes > p) {
-  margin-block: 0;
+.md-typeset .si-docs-api .api-param-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.15rem 0.35rem;
+  font-size: 0.76rem;
 }
 
-.md-typeset .si-docs-api .api-type-origin {
-  font-size: 0.9em;
+.md-typeset .si-docs-api .api-param-name {
+  padding: 0;
+  background-color: transparent;
+  font-weight: 600;
 }
 
-.md-typeset .si-docs-api .api-type-list > .api-type-callable {
-  margin-block: 0.375rem;
-  padding: 0.375rem 0.5rem;
-  border: 0.05rem solid var(--md-typeset-table-color);
-  border-radius: 0.125rem;
-  background-color: var(--md-table-bg-color, var(--md-default-bg-color));
-  box-shadow: var(--md-shadow-z1);
-}
-
-.md-typeset .si-docs-api .api-type-callable .api-type-group {
-  margin-block-start: 0.375rem;
-}
-
-.md-typeset
-  .si-docs-api
-  .api-type-card
-  :is(.api-type-member, .api-type-signature, .api-type-declaration)
-  code {
+.md-typeset .si-docs-api .api-param-type code {
   white-space: normal;
+  overflow-wrap: anywhere;
 }
 
-.md-typeset .si-docs-api .api-type-body > :last-child,
+.md-typeset .si-docs-api .api-param-description {
+  margin-block-start: 0.15rem;
+  font-size: 0.76rem;
+}
+
+.md-typeset .si-docs-api .api-param-description > :first-child {
+  margin-block-start: 0;
+}
+
+.md-typeset .si-docs-api .api-param-description > :last-child {
+  margin-block-end: 0;
+}
+
+.md-typeset .si-docs-api .api-returns {
+  margin-block: 0.4rem 0 0;
+  font-size: 0.78rem;
+}
+
+/* Unified card presentation for all symbols (components, directives, services, interfaces, enums, types). */
+.md-typeset .si-docs-api .api-symbol-card {
+  margin-block: 1.25rem 0.75rem;
+  background-color: var(--md-table-bg-color, var(--md-default-bg-color));
+  border: 0.05rem solid var(--md-typeset-table-color);
+  border-radius: 0.2rem;
+  box-shadow: var(--md-shadow-z2);
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .si-docs-api .api-symbol-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+  padding-block: 0.5rem;
+  padding-inline: 0.75rem;
+  border-block-end: 0.05rem solid var(--md-table-border-color, var(--md-typeset-table-color));
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset .si-docs-api .api-symbol-header h3 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: bold;
+}
+
+.md-typeset .si-docs-api .api-symbol-actions {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.md-typeset .si-docs-api .api-kind {
+  flex: 0 0 auto;
+  color: var(--md-typeset-a-color);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.md-typeset .si-docs-api .api-symbol-body {
+  min-inline-size: 0;
+  padding-block: 0.6rem 0.75rem;
+  padding-inline: 0.75rem;
+  font-size: 0.8rem;
+}
+
+.md-typeset .si-docs-api .api-symbol-body > :first-child {
+  margin-block-start: 0;
+}
+
 .md-typeset .si-docs-api .api-symbol-body > :last-child {
   margin-block-end: 0;
+}
+
+.md-typeset .si-docs-api .api-group {
+  margin-block: 0.65rem 0;
+}
+
+.md-typeset .si-docs-api .api-group:first-child {
+  margin-block-start: 0;
+}
+
+.md-typeset .si-docs-api .api-group-heading,
+.md-typeset .si-docs-api .api-tab-panel-members > h4 {
+  margin-block: 0.85rem 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.md-typeset .si-docs-api .api-tab-panel-members > h4:first-child {
+  margin-block-start: 0;
+}
+
+/* Responsive stacking: compact table rows become vertical cards below 640px. */
+@media (max-width: 639.98px) {
+  .md-typeset .si-docs-api .api-compact-table table:not([class]) {
+    display: block;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .md-typeset .si-docs-api .api-compact-table thead {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .md-typeset .si-docs-api .api-compact-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .md-typeset .si-docs-api .api-compact-table tbody tr {
+    display: block;
+    padding-block: 0.6rem;
+    padding-inline: 0.75rem;
+    border: 1px solid var(--md-table-border-color, var(--md-typeset-table-color));
+    border-radius: 0.25rem;
+    background-color: var(--md-table-bg-color, var(--md-default-bg-color));
+  }
+
+  .md-typeset .si-docs-api .api-compact-table th[scope='row'],
+  .md-typeset .si-docs-api .api-compact-table td {
+    display: block;
+    inline-size: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .md-typeset .si-docs-api .api-compact-table th[scope='row'] {
+    margin-block-end: 0.45rem;
+    padding-block-end: 0.35rem;
+    border-block-end: 1px solid var(--md-table-border-color, var(--md-typeset-table-color));
+  }
 }
 
 .icon-large {
