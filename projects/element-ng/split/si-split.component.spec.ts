@@ -5,7 +5,6 @@
 import { Component, ElementRef, Injectable, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideSiUiState, SI_UI_STATE_SERVICE, UIStateStorage } from '@siemens/element-ng/common';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { Mock } from 'vitest';
 
 import { CollapseTo, PartState, SiSplitModule, SplitOrientation, SplitUnit } from './index';
@@ -507,7 +506,7 @@ describe('SiSplitComponent', () => {
         expect(wrapperComponent.measureSize3()).toBeCloseTo(175, 0);
 
         wrapperComponent.containerWidth.set(1064);
-        await runOnPushChangeDetection(fixture);
+        await fixture.whenStable();
 
         expect(wrapperComponent.measureSize1()).toBeCloseTo(400, 0);
         expect(wrapperComponent.measureSize2()).toBeCloseTo(300, 0);

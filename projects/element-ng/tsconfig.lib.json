@@ -19,5 +19,5 @@
     "compilationMode": "partial"
   },
   "include": ["./**/*.ts"],
-  "exclude": ["**/*.spec.ts", "**/vitest*.ts", "**/test-helpers/", "**/schematics/", "**/testing/"]
+  "exclude": ["**/*.spec.ts", "**/vitest*.ts", "**/schematics/", "**/testing/"]
 }

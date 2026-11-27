@@ -14,7 +14,6 @@ export default defineConfig(
       defaultValue: defaultValuePlugin
     },
     files: ['**/*.ts'],
-    ignores: ['**/test-helpers/*.ts'],
 
     languageOptions: {
       parserOptions: {
