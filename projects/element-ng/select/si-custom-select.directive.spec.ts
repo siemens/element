@@ -65,6 +65,7 @@ class FormHostComponent {
 describe('SiCustomSelectDirective', () => {
   let fixture: ComponentFixture<SiTestSelectComponent>;
   let overlayContainerElement: HTMLElement;
+  const fixtureHosts: HTMLElement[] = [];
 
   const getHost = (): HTMLElement => fixture.nativeElement;
 
@@ -73,6 +74,16 @@ describe('SiCustomSelectDirective', () => {
 
   const getDropdownItems = (): HTMLElement[] =>
     Array.from(overlayContainerElement.querySelectorAll('.dropdown-item'));
+
+  // SiCustomSelectDirective overrides the host id, so TestBed cannot find and remove "root*" elements.
+  const trackFixture = <T>(componentFixture: ComponentFixture<T>): ComponentFixture<T> => {
+    fixtureHosts.push(componentFixture.nativeElement);
+    return componentFixture;
+  };
+
+  afterEach(() => {
+    fixtureHosts.splice(0).forEach(host => host.remove());
+  });
 
   describe('direct usage', () => {
     let value: ReturnType<typeof signal<string | null | undefined>>;
@@ -86,14 +97,16 @@ describe('SiCustomSelectDirective', () => {
       readonly = signal(false);
       labelledby = signal(undefined);
 
-      fixture = TestBed.createComponent(SiTestSelectComponent, {
-        bindings: [
-          twoWayBinding('value', value),
-          inputBinding('disabled', disabled),
-          inputBinding('readonly', readonly),
-          inputBinding('labelledby', labelledby)
-        ]
-      });
+      fixture = trackFixture(
+        TestBed.createComponent(SiTestSelectComponent, {
+          bindings: [
+            twoWayBinding('value', value),
+            inputBinding('disabled', disabled),
+            inputBinding('readonly', readonly),
+            inputBinding('labelledby', labelledby)
+          ]
+        })
+      );
       overlayContainerElement = TestBed.inject(OverlayContainer).getContainerElement();
       await fixture.whenStable();
     });
@@ -121,7 +134,7 @@ describe('SiCustomSelectDirective', () => {
         readonly select = inject(SiCustomSelectDirective<string>);
       }
 
-      const treeFixture = TestBed.createComponent(TreeSelectComponent);
+      const treeFixture = trackFixture(TestBed.createComponent(TreeSelectComponent));
       await treeFixture.whenStable();
 
       expect(treeFixture.nativeElement).toHaveAttribute('aria-haspopup', 'tree');
@@ -258,7 +271,7 @@ describe('SiCustomSelectDirective', () => {
       })
       class ActionSelectComponent {}
 
-      const actionFixture = TestBed.createComponent(ActionSelectComponent);
+      const actionFixture = trackFixture(TestBed.createComponent(ActionSelectComponent));
       await actionFixture.whenStable();
 
       actionFixture.nativeElement.click();
@@ -335,7 +348,7 @@ describe('SiCustomSelectDirective', () => {
     let formHost: FormHostComponent;
 
     beforeEach(async () => {
-      formFixture = TestBed.createComponent(FormHostComponent);
+      formFixture = trackFixture(TestBed.createComponent(FormHostComponent));
       fixture = undefined!;
       overlayContainerElement = TestBed.inject(OverlayContainer).getContainerElement();
       formHost = formFixture.componentInstance;
@@ -474,7 +487,7 @@ describe('SiCustomSelectDirective', () => {
 
   describe('SiFormItemControl integration', () => {
     it('should provide SI_FORM_ITEM_CONTROL token', async () => {
-      fixture = TestBed.createComponent(SiTestSelectComponent);
+      fixture = trackFixture(TestBed.createComponent(SiTestSelectComponent));
       await fixture.whenStable();
 
       const formItemControl = fixture.debugElement.injector.get(SI_FORM_ITEM_CONTROL);
@@ -493,7 +506,7 @@ describe('SiCustomSelectDirective', () => {
       })
       class FormItemHostComponent {}
 
-      const formItemFixture = TestBed.createComponent(FormItemHostComponent);
+      const formItemFixture = trackFixture(TestBed.createComponent(FormItemHostComponent));
       await formItemFixture.whenStable();
 
       const select = formItemFixture.nativeElement.querySelector('si-test-select');
