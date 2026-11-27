@@ -134,14 +134,14 @@
       si-sys-variables.$si-sys-typography-body-font-weight
     );
     min-inline-size: calc(1rem + 2 * variables.$badge-padding-y);
-    padding-inline: variables.$badge-padding-x;
+    padding-inline: map.get(spacers.$spacers-inline, 3);
   }
 
   &:has(> :is(.icon, .icon-sm)) {
     display: inline-flex;
     align-items: center;
     gap: map.get(spacers.$spacers-block, 1) map.get(spacers.$spacers-inline, 1);
-    padding-inline: map.get(spacers.$spacers-inline, 2) variables.$badge-padding-x;
+    padding-inline-start: map.get(spacers.$spacers-inline, 2);
   }
 }
 
