@@ -161,7 +161,7 @@ Run E2E tests:
 ./e2e-local.sh update <test-file-name>                 # specific test (glob supported)
 
 # Run specific static tests (with the examples project selected)
-./e2e-local.sh run static '--project=element-examples/*' --grep 'buttons/buttons|badges/badges'
+./e2e-local.sh run static '--project=element-examples/*' --grep 'buttons/buttons|badges/default'
 ```
 
 Always include the project, unless explicitly all snapshots should be updated.

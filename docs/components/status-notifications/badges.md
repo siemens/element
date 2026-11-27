@@ -123,7 +123,11 @@ Unless the context is clear - you should add extra, descriptive text that is `vi
 
 ### Examples
 
-<si-docs-component example="badges/badges"></si-docs-component>
+<si-docs-component example="badges/default"></si-docs-component>
+
+<si-docs-component example="badges/icon"></si-docs-component>
+
+<si-docs-component example="badges/notification"></si-docs-component>
 
 [[ api('SiBadgeComponent') ]]
 

@@ -4,7 +4,9 @@
  */
 import { expect, test } from '../../support/test-helpers';
 
-test('badges/badges', ({ si }) => si.static());
+test('badges/default', ({ si }) => si.static());
+test('badges/icon', ({ si }) => si.static());
+test('badges/notification', ({ si }) => si.static());
 test('buttons/buttons', ({ si }) => si.static());
 test('buttons/button-groups', ({ si }) => si.static());
 test('buttons/selection-buttons', ({ si }) => si.static());
