@@ -1,0 +1,60 @@
+- alert:
+  - text: Danger
+  - strong: No connection to server
+  - text: Check connection and try again.
+  - link "Retry":
+    - /url: ""
+- table:
+  - rowgroup:
+    - row "Name Role Company":
+      - columnheader "Name"
+      - columnheader "Role"
+      - columnheader "Company"
+  - rowgroup:
+    - row "Max Meier 0 Engineer Great Company 0":
+      - cell "Max Meier 0"
+      - cell "Engineer"
+      - cell "Great Company 0"
+    - row "Max Meier 1 Installer Great Company 1":
+      - cell "Max Meier 1"
+      - cell "Installer"
+      - cell "Great Company 1"
+    - row "Max Meier 2 Engineer Great Company 2":
+      - cell "Max Meier 2"
+      - cell "Engineer"
+      - cell "Great Company 2"
+    - row "Max Meier 3 Installer Great Company 3":
+      - cell "Max Meier 3"
+      - cell "Installer"
+      - cell "Great Company 3"
+    - row "Max Meier 4 Engineer Great Company 4":
+      - cell "Max Meier 4"
+      - cell "Engineer"
+      - cell "Great Company 4"
+- navigation "Pagination":
+  - list:
+    - listitem:
+      - button "back" [disabled]
+    - listitem:
+      - button "1" [disabled]
+    - listitem:
+      - button "2"
+    - listitem:
+      - button "3"
+    - listitem:
+      - button "4"
+    - listitem:
+      - button "5"
+    - listitem: …
+    - listitem:
+      - button /\d+/
+    - listitem:
+      - button "forward"
+- text: Settings Simulated server response
+- combobox "Simulated server response":
+  - option /\d+ OK/
+  - option "Network error" [selected]
+  - option /\d+ Unauthorized/
+  - option /\d+ Forbidden/
+  - option /\d+ Internal Server Error/
+  - option /\d+ Gateway Timeout/

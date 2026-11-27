@@ -1,0 +1,83 @@
+<div class="p-5 d-flex flex-column gap-6">
+  @let error = loadError();
+  @if (error && rows().length) {
+    <si-inline-notification
+      severity="danger"
+      [heading]="error.heading"
+      [message]="error.message"
+      [action]="error.action"
+    />
+  }
+  <ngx-datatable
+    #table
+    class="table-element"
+    siDatatableInteraction
+    columnMode="force"
+    [rows]="rows()"
+    [columns]="[
+      { name: 'Name', sortable: false },
+      { name: 'Role', sortable: false },
+      { name: 'Company', sortable: false }
+    ]"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [footerHeight]="totalElements() ? tableConfig.footerHeight : 0"
+    [externalPaging]="true"
+    [ghostLoadingIndicator]="dataResource.isLoading()"
+    [count]="totalElements()"
+    [offset]="pageRequest().offset"
+    [limit]="pageSize"
+    (page)="setPage($event)"
+  >
+    @if (error) {
+      <si-empty-state
+        empty-content
+        role="alert"
+        [icon]="error.icon"
+        [heading]="error.heading"
+        [content]="error.message"
+      >
+        @if (error.action; as action) {
+          <button type="button" class="btn btn-secondary" (click)="action.action()">
+            {{ action.title }}
+          </button>
+        }
+      </si-empty-state>
+    } @else {
+      <si-empty-state empty-content icon="element-users" heading="No users" />
+    }
+    <ngx-datatable-footer>
+      <ng-template ngx-datatable-footer-template>
+        <si-pagination
+          class="ms-auto"
+          forwardButtonText="forward"
+          backButtonText="back"
+          [currentPage]="pageRequest().offset + 1"
+          [totalRowCount]="totalElements()"
+          [pageSize]="pageSize"
+          (currentPageChange)="table.onFooterPage({ page: $event })"
+        />
+      </ng-template>
+    </ngx-datatable-footer>
+  </ngx-datatable>
+</div>
+
+<div class="p-5 e2e-ignore">
+  <div class="card">
+    <div class="card-header">Settings</div>
+    <div class="card-body">
+      <div class="col-sm-6">
+        <si-form-item label="Simulated server response">
+          <select
+            class="form-select"
+            [ngModel]="responseStatus()"
+            (ngModelChange)="simulateResponse($event)"
+          >
+            @for (response of responseStatuses; track response.status) {
+              <option [ngValue]="response.status">{{ response.label }}</option>
+            }
+          </select>
+        </si-form-item>
+      </div>
+    </div>
+  </div>
+</div>
