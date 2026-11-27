@@ -25,35 +25,31 @@
       </span>
     </div>
 
-    <div class="slider" [class.dragging]="isDragging">
-      <div class="track"></div>
-      <div
-        class="thumb-handle-wrapper"
-        [class.dragging]="isDragging"
-        (mousedown)="handleMouseDown($event)"
-        (touchstart)="handleTouchStart($event)"
-      >
-        <div #handle class="thumb-handle" [style.inset-inline-start.%]="indicatorPos()">
-          <div
-            class="thumb"
-            tabindex="0"
-            role="slider"
-            [attr.aria-label]="sliderLabel() | translate"
-            [attr.aria-valuenow]="sliderValue()"
-            [attr.aria-describedby]="errormessageId()"
-            [class.dragging]="isDragging"
-            (keydown)="autoUpdateKeydown($event)"
-            (keyup)="autoUpdateStop()"
-          >
-            @let iconValue = thumbIcon();
-            @if (iconValue) {
-              <si-icon [icon]="iconValue" />
-            } @else {
-              <div class="hover-circle"></div>
-            }
-          </div>
+    <div class="slider">
+      <input
+        type="range"
+        class="form-range"
+        [class.has-icon]="!!thumbIcon()"
+        [min]="min()"
+        [max]="max()"
+        [step]="step()"
+        [disabled]="disabled()"
+        [value]="sliderValue()"
+        [attr.aria-label]="sliderLabel() | translate"
+        [attr.aria-describedby]="errormessageId()"
+        (input)="handleInput($event)"
+        (blur)="handleBlur()"
+      />
+      @let iconValue = thumbIcon();
+      @if (iconValue) {
+        <div class="thumb-icon-wrapper" aria-hidden="true">
+          <si-icon
+            class="thumb-icon"
+            [icon]="iconValue"
+            [style.inset-inline-start.%]="indicatorPos()"
+          />
         </div>
-      </div>
+      }
     </div>
   </div>
 

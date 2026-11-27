@@ -4,22 +4,17 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectorRef,
   Component,
   computed,
-  ElementRef,
-  HostListener,
+  DestroyRef,
   inject,
   input,
   model,
-  NgZone,
   numberAttribute,
-  signal,
-  viewChild
+  signal
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { elementMinus, elementPlus } from '@siemens/element-icons';
-import { correctKeyRTL, isRTL, listenGlobal } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -49,8 +44,6 @@ import { Subscription, timer } from 'rxjs';
 })
 export class SiSliderComponent implements ControlValueAccessor, SiFormItemControl {
   private static idCounter = 0;
-
-  private readonly handleRef = viewChild.required<ElementRef>('handle');
 
   private readonly disabledNgControl = signal(false);
 
@@ -165,36 +158,44 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
   readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected readonly indicatorPos = computed(() => {
-    const range = this.max() - this.min();
-    if (range === 0) {
+    const min = this.min();
+    const max = this.max();
+    const range = max - min;
+    if (range <= 0) {
       return 50;
     }
-    const indicatorPos = ((this.sliderValue()! - this.min()) * 100) / range;
+    const step = this.step();
+    let val = Math.min(Math.max(this.sliderValue(), min), max);
+    if (step > 0) {
+      const steps = Math.round((val - min) / step);
+      val = min + steps * step;
+      if (val > max) {
+        val = Math.max(min, min + (steps - 1) * step);
+      }
+    }
+    const indicatorPos = ((val - min) * 100) / range;
     return Math.max(Math.min(indicatorPos, 100), 0);
   });
 
   protected readonly icons = addIcons({ elementMinus, elementPlus });
-  protected isDragging = false;
 
   private autoUpdate$ = timer(400, 80); // 250
   private autoUpdateSubs?: Subscription;
-  private rtl = false;
-
-  private unlistenDragEvents: (() => void)[] = [];
 
   private onTouchedCallback: () => void = () => {};
   private onChangeCallback: (val: any) => void = () => {};
 
-  private zone = inject(NgZone);
-  private changeDetectorRef = inject(ChangeDetectorRef);
+  constructor() {
+    inject(DestroyRef).onDestroy(() => this.autoUpdateStop());
+  }
 
   private incrementValue(): void {
-    this.value.set(this.normalizeValue(this.sliderValue()! + this.step()));
+    this.value.set(this.normalizeValue(this.sliderValue() + this.step()));
     this.valueChanged();
   }
 
   private decrementValue(): void {
-    this.value.set(this.normalizeValue(this.sliderValue()! - this.step()));
+    this.value.set(this.normalizeValue(this.sliderValue() - this.step()));
     this.valueChanged();
   }
 
@@ -210,73 +211,19 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
     return Math.min(Math.max(this.roundToStepPrecision(value), this.min()), this.max());
   }
 
-  private handleTouchMove(event: TouchEvent): void {
-    if (event.cancelable) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    this.handleDragMove(event.touches[0]);
-  }
-
-  private handleMouseMove(event: MouseEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.handleDragMove(event);
-  }
-
-  private handleDragMove(event: MouseEvent | Touch): void {
-    const pointerPosX = event.clientX;
-    const handleRect = this.handleRef().nativeElement.getBoundingClientRect();
-    const handleWrapperWidth = this.handleRef().nativeElement.parentElement.clientWidth;
-
-    const direction = this.rtl ? -1 : 1;
-    const pointerPosDelta =
-      Math.round(pointerPosX - (handleRect.x + handleRect.width / 2)) * direction;
-    const valueDelta = (pointerPosDelta / handleWrapperWidth) * (this.max() - this.min());
-
-    const newValue = this.normalizeValue(this.sliderValue()! + valueDelta);
-
-    if (
-      (pointerPosDelta > 0 && newValue > this.sliderValue()!) ||
-      (pointerPosDelta < 0 && newValue < this.sliderValue()!)
-    ) {
-      // the zone is required to work around a problem on native device where CD doesn't trigger
-      this.zone.run(() => {
-        this.changeDetectorRef.markForCheck();
-        this.value.set(newValue);
-        this.valueChanged();
-      });
-    }
-    window.getSelection()?.removeAllRanges();
-  }
-
-  private handleDragEnd(): void {
-    this.isDragging = false;
-
-    this.unlistenDragEvents.forEach(handler => handler());
-    this.unlistenDragEvents.length = 0;
-  }
-
   private valueChanged(): void {
     this.onTouchedCallback();
     this.onChangeCallback(this.sliderValue());
   }
 
-  @HostListener('pointerdown', ['$event'])
-  @HostListener('mousedown', ['$event'])
-  @HostListener('touchstart', ['$event'])
-  protected handlePointerDown(event: Event): void {
-    event.stopPropagation();
+  protected handleInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.value.set(target.valueAsNumber);
+    this.valueChanged();
   }
 
-  protected autoUpdateKeydown(event: KeyboardEvent): void {
-    const rtlCorrectedKey = correctKeyRTL(event.key);
-
-    if (rtlCorrectedKey === 'ArrowLeft') {
-      this.autoUpdateStart(event, false);
-    } else if (rtlCorrectedKey === 'ArrowRight') {
-      this.autoUpdateStart(event, true);
-    }
+  protected handleBlur(): void {
+    this.onTouchedCallback();
   }
 
   protected autoUpdateStart(event: Event, isIncrement: boolean): void {
@@ -294,32 +241,6 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
       this.autoUpdateSubs.unsubscribe();
       this.autoUpdateSubs = undefined;
     }
-  }
-
-  protected handleMouseDown(event: MouseEvent): void {
-    this.unlistenDragEvents.push(
-      listenGlobal('mousemove', moveEvent => this.handleMouseMove(moveEvent))
-    );
-    this.unlistenDragEvents.push(listenGlobal('mouseup', () => this.handleDragEnd()));
-
-    this.isDragging = true;
-
-    this.rtl = isRTL();
-    this.handleMouseMove(event);
-  }
-
-  protected handleTouchStart(event: TouchEvent): void {
-    if (event.touches.length !== 1) {
-      return;
-    }
-
-    this.unlistenDragEvents.push(listenGlobal('touchmove', e => this.handleTouchMove(e), true));
-    this.unlistenDragEvents.push(listenGlobal('touchend', () => this.handleDragEnd()));
-
-    this.isDragging = true;
-
-    this.rtl = isRTL();
-    this.handleTouchMove(event);
   }
 
   /** @internal */
