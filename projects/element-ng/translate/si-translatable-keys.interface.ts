@@ -3,7 +3,14 @@
 // Auto-generated file. Run 'npx update-translatable-keys' to update.
 
 export interface SiTranslatableKeys {
+  'SI_ABOUT.LOADING_LICENSES'?: string;
+  'SI_ABOUT.LOADING_LICENSE_TEXT'?: string;
+  'SI_ABOUT.LOAD_ERROR'?: string;
+  'SI_ABOUT.LOAD_TEXT_ERROR'?: string;
   'SI_ABOUT.LOGO_ALT'?: string;
+  'SI_ABOUT.NO_LICENSES'?: string;
+  'SI_ABOUT.NO_LICENSE_TEXT'?: string;
+  'SI_ABOUT.RETRY'?: string;
   'SI_AI_CHAT_CONTAINER.INPUT_ARGUMENTS'?: string;
   'SI_AI_CHAT_CONTAINER.OUTPUT'?: string;
   'SI_AI_CHAT_CONTAINER.REASONING'?: string;

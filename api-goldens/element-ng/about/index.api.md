@@ -8,7 +8,6 @@ import * as _angular_core from '@angular/core';
 import * as _angular_platform_browser from '@angular/platform-browser';
 import { NavigationExtras } from '@angular/router';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
@@ -31,6 +30,7 @@ export interface LicenseInfo {
 
 // @public (undocumented)
 export class SiAboutComponent implements OnInit {
+    constructor();
     readonly aboutTitle: _angular_core.InputSignal<string>;
     readonly acceptableUsePolicyLink: _angular_core.InputSignal<Link | undefined>;
     readonly appName: _angular_core.InputSignal<string>;
@@ -41,7 +41,7 @@ export class SiAboutComponent implements OnInit {
     readonly imprintLink: _angular_core.InputSignal<Link | undefined>;
     readonly licenseInfo: _angular_core.InputSignal<LicenseInfo>;
     readonly links: _angular_core.InputSignal<Link[]>;
-    readonly logoAlt: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly logoAlt: _angular_core.InputSignal<TranslatableString>;
     readonly privacyLink: _angular_core.InputSignal<Link | undefined>;
     readonly subheading: _angular_core.InputSignal<string[] | undefined>;
     readonly termsLink: _angular_core.InputSignal<Link | undefined>;
