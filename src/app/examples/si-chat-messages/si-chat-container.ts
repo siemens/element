@@ -36,13 +36,14 @@ import {
   Attachment,
   SiAiWelcomeScreenComponent,
   PromptCategory,
-  PromptSuggestion
+  PromptSuggestion,
+  ChatModelItem
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import { SiMarkdownComponent } from '@siemens/element-ng/markdown';
-import { MenuItemAction, SiMenuActionService } from '@siemens/element-ng/menu';
+import { MenuItem, MenuItemAction, SiMenuActionService } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -107,6 +108,25 @@ export class SampleComponent {
   private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
 
   protected markdownOptions = markdownOptions;
+
+  protected readonly selectedModel = signal('claude-quantum');
+  protected readonly models: ChatModelItem[] = [
+    {
+      type: 'option',
+      value: 'claude-quantum',
+      label: 'Claude Quantum'
+    },
+    {
+      type: 'option',
+      value: 'gemini-nova',
+      label: 'Gemini Nova'
+    },
+    {
+      type: 'option',
+      value: 'gpt-horizon',
+      label: 'GPT Horizon'
+    }
+  ];
 
   protected readonly icons = addIcons({
     elementAi,
