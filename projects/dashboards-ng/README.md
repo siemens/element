@@ -181,6 +181,25 @@ The Angular component should export the template as the public attribute `footer
 @ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;
 ```
 
+Web-component widgets receive a `widgetSlots` property containing DOM outlets owned by the
+dashboard. The widget body remains inside the custom element, while frameworks that support
+portals can render footer content into `widgetSlots.footer`. For example, a React widget can use:
+
+```tsx
+function Widget({ widgetSlots }: { widgetSlots?: WidgetSlotTargets }) {
+  return (
+    <>
+      <WidgetBody />
+      {widgetSlots && createPortal(<WidgetFooter />, widgetSlots.footer)}
+    </>
+  );
+}
+```
+
+The custom element must expose `widgetSlots` as a JavaScript property and pass updates to its
+framework component. The footer target itself remains owned by the dashboard and must not be
+removed by the widget.
+
 ### Remote Widget Loading (Microfrontends)
 
 The flexible dashboard supports loading widgets as remote microfrontends, allowing widgets to be deployed and updated independently from the host application. Three integration options are available:
