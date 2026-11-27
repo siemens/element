@@ -4,13 +4,12 @@
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { provideLocationMocks } from '@angular/common/testing';
-import { Component, HostBinding, viewChild } from '@angular/core';
+import { inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { SiNavbarPrimaryComponent, SiNavbarPrimaryComponent as TestComponent } from '.';
+import { SiNavbarPrimaryComponent } from '.';
 import { SiApplicationHeaderHarness } from '../../application-header/testing/si-application-header.harness';
-import { runOnPushChangeDetection } from '../../test-helpers';
 import { AppItem, AppItemCategory } from './si-navbar-primary.model';
 
 const appItems: AppItem[] = [{ title: 'Account', icon: 'element-account', link: '/account' }];
@@ -21,32 +20,27 @@ const categorizedAppItems: AppItemCategory[] = [
   }
 ];
 
-@Component({
-  imports: [SiNavbarPrimaryComponent],
-  template: ` <si-navbar-primary [appItems]="appItems" [appCategoryItems]="categorizedAppItems" />`
-})
-export class TestHostComponent {
-  readonly component = viewChild.required(TestComponent);
-  @HostBinding('class.mobile') fakeMobile = false;
-  appItems?: AppItem[];
-  categorizedAppItems?: AppItemCategory[];
-}
-
 describe('SiNavbarPrimaryComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let hostComponent: TestHostComponent;
+  let fixture: ComponentFixture<SiNavbarPrimaryComponent>;
+  let appItemsInput: ReturnType<typeof signal<AppItem[] | undefined>>;
+  let categorizedAppItemsInput: ReturnType<typeof signal<AppItemCategory[] | undefined>>;
   let harness: SiApplicationHeaderHarness;
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestHostComponent],
       providers: [provideRouter([]), provideLocationMocks()]
     })
   );
 
   beforeEach(async () => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    hostComponent = fixture.componentInstance;
+    appItemsInput = signal<AppItem[] | undefined>(undefined);
+    categorizedAppItemsInput = signal<AppItemCategory[] | undefined>(undefined);
+    fixture = TestBed.createComponent(SiNavbarPrimaryComponent, {
+      bindings: [
+        inputBinding('appItems', appItemsInput),
+        inputBinding('appCategoryItems', categorizedAppItemsInput)
+      ]
+    });
     harness = await TestbedHarnessEnvironment.loader(fixture).getHarness(
       SiApplicationHeaderHarness
     );
@@ -57,8 +51,8 @@ describe('SiNavbarPrimaryComponent', () => {
   });
 
   it('should render render launchpad with categories', async () => {
-    hostComponent.categorizedAppItems = categorizedAppItems;
-    await runOnPushChangeDetection(fixture);
+    categorizedAppItemsInput.set(categorizedAppItems);
+    await fixture.whenStable();
     await harness.openLaunchpad();
     expect(
       await harness
@@ -69,8 +63,8 @@ describe('SiNavbarPrimaryComponent', () => {
   });
 
   it('should render render launchpad without categories', async () => {
-    hostComponent.appItems = appItems;
-    await runOnPushChangeDetection(fixture);
+    appItemsInput.set(appItems);
+    await fixture.whenStable();
     await harness.openLaunchpad();
     expect(await harness.getLaunchpad().then(lp => lp?.getApp('Account'))).toBeTruthy();
   });

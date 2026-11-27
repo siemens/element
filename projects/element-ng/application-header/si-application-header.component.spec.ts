@@ -5,14 +5,13 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, Injectable } from '@angular/core';
+import { Component, Injectable, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownItemComponent,
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { page } from 'vitest/browser';
@@ -201,10 +200,10 @@ describe('SiApplicationHeaderComponent', () => {
         <si-application-header expandBreakpoint="never">
           <si-header-actions>
             <si-header-collapsible-actions>
-              <button type="button" si-header-action-item icon="fake-icon" [badge]="bade1">
+              <button type="button" si-header-action-item icon="fake-icon" [badge]="badge1()">
                 Action 1
               </button>
-              <button type="button" si-header-action-item icon="fake-icon" [badge]="bade2">
+              <button type="button" si-header-action-item icon="fake-icon" [badge]="badge2()">
                 Action 2
               </button>
             </si-header-collapsible-actions>
@@ -213,8 +212,8 @@ describe('SiApplicationHeaderComponent', () => {
       `
     })
     class TestHostComponent {
-      bade1?: number | boolean;
-      bade2?: number | boolean;
+      readonly badge1 = signal<number | boolean | undefined>(undefined);
+      readonly badge2 = signal<number | boolean | undefined>(undefined);
     }
     let fixture: ComponentFixture<TestHostComponent>;
     let component: TestHostComponent;
@@ -229,45 +228,45 @@ describe('SiApplicationHeaderComponent', () => {
     });
 
     it('should limit numbers to two digits', async () => {
-      component.bade1 = 400;
-      await runOnPushChangeDetection(fixture);
+      component.badge1.set(400);
+      await fixture.whenStable();
       expect(await actionItem1Harness.getBadgeText()).toBe('+99');
     });
 
     it('should show a dot for booleans', async () => {
-      component.bade1 = true;
-      await runOnPushChangeDetection(fixture);
+      component.badge1.set(true);
+      await fixture.whenStable();
       expect(await actionItem1Harness.hasBadgeDot()).toBe(true);
     });
 
     it('should show a text for numbers', async () => {
-      component.bade1 = 42;
-      await runOnPushChangeDetection(fixture);
+      component.badge1.set(42);
+      await fixture.whenStable();
       expect(await actionItem1Harness.getBadgeText()).toBe('42');
     });
 
     it('should update parent account', async () => {
       expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(false);
-      component.bade1 = 1;
-      await runOnPushChangeDetection(fixture);
+      component.badge1.set(1);
+      await fixture.whenStable();
       expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(true);
-      component.bade2 = true;
-      await runOnPushChangeDetection(fixture);
+      component.badge2.set(true);
+      await fixture.whenStable();
       expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(true);
-      component.bade1 = 0;
-      await runOnPushChangeDetection(fixture);
+      component.badge1.set(0);
+      await fixture.whenStable();
       expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(true);
-      component.bade2 = false;
-      await runOnPushChangeDetection(fixture);
+      component.badge2.set(false);
+      await fixture.whenStable();
       expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(false);
-      component.bade1 = true;
-      await runOnPushChangeDetection(fixture);
+      component.badge1.set(true);
+      await fixture.whenStable();
       expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(true);
-      component.bade1 = 1;
-      await runOnPushChangeDetection(fixture);
+      component.badge1.set(1);
+      await fixture.whenStable();
       expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(true);
-      component.bade1 = false;
-      await runOnPushChangeDetection(fixture);
+      component.badge1.set(false);
+      await fixture.whenStable();
       expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(false);
     });
   });

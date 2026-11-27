@@ -15,7 +15,6 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CriterionDefinition } from '@siemens/element-ng/filtered-search';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
@@ -39,7 +38,7 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     searchLabel="search"
     [disabled]="disabled"
     [disableFreeTextSearch]="disableFreeTextSearch"
-    [freeTextCriterion]="freeTextCriterion"
+    [freeTextCriterion]="freeTextCriterion()"
     [placeholder]="placeholder"
     [lazyLoadingDebounceTime]="lazyLoadingDebounceTime"
     [lazyCriterionProvider]="lazyCriterionProvider"
@@ -47,7 +46,7 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     [exclusiveCriteria]="exclusiveCriteria"
     [strictCriterion]="strictCriterion"
     [strictValue]="strictValue"
-    [maxCriteria]="maxCriteria"
+    [maxCriteria]="maxCriteria()"
     [typeaheadOptionsLimit]="typeaheadOptionsLimit"
     [doSearchOnInputChange]="doSearchOnInputChange"
     [onlySelectValue]="onlySelectValue"
@@ -64,7 +63,7 @@ class TestHostComponent {
   readonly filteredSearch = viewChild.required(SiFilteredSearchComponent);
   disabled!: boolean;
   disableFreeTextSearch = false;
-  freeTextCriterion?: CriterionDefinition;
+  readonly freeTextCriterion = signal<CriterionDefinition | undefined>(undefined);
   placeholder = '';
 
   // eslint-disable-next-line @angular-eslint/prefer-signals
@@ -79,7 +78,7 @@ class TestHostComponent {
   exclusiveCriteria!: boolean;
   strictCriterion = false;
   strictValue!: boolean;
-  maxCriteria!: number;
+  readonly maxCriteria = signal<number | undefined>(undefined);
   typeaheadOptionsLimit!: number;
   doSearchOnInputChange = false;
   onlySelectValue = false;
@@ -938,7 +937,7 @@ describe('SiFilteredSearchComponent', () => {
       ],
       value: ''
     });
-    runOnPushChangeDetection(fixture);
+    await fixture.whenStable();
 
     const criteria = Array.from(element.querySelectorAll('.criteria'));
     const heights = criteria.map(c => c.getBoundingClientRect().height);
@@ -1570,7 +1569,7 @@ describe('SiFilteredSearchComponent', () => {
   });
 
   it('should make criteria as empty if the maxCriteria value has already been met.', async () => {
-    component.maxCriteria = 2;
+    component.maxCriteria.set(2);
     component.criteria.set([
       { name: 'company', label: 'Company', options: ['Foo', 'Bar'] },
       { name: 'Location', label: 'Location', options: ['Munich', 'Zug'] }
@@ -1591,7 +1590,7 @@ describe('SiFilteredSearchComponent', () => {
   });
 
   it('should not restrict typeahead on criteria.', async () => {
-    component.maxCriteria = 2;
+    component.maxCriteria.set(2);
     component.typeaheadOptionsLimit = 0;
     component.criteria.set([
       { name: 'company', label: 'Company' },
@@ -1614,7 +1613,7 @@ describe('SiFilteredSearchComponent', () => {
   });
 
   it('should restrict typeahead on criteria based on input.', async () => {
-    component.maxCriteria = 20;
+    component.maxCriteria.set(20);
     component.typeaheadOptionsLimit = 10;
     component.criteria.set([
       { name: 'company', label: 'Company' },
@@ -2197,7 +2196,7 @@ describe('SiFilteredSearchComponent', () => {
 
     it('should not emit interceptDisplayedCriteria when maxCriteria exceeded', async () => {
       const spy = vi.spyOn(component, 'showCriteria');
-      component.maxCriteria = 1;
+      component.maxCriteria.set(1);
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -2280,9 +2279,9 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     it('should allow only one free-text pill at a time using interceptor', async () => {
-      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.freeTextCriterion.set({ name: 'free-text', label: 'Free Text' });
       component.searchCriteria.set({ criteria: [], value: '' });
-      await runOnPushChangeDetection(fixture);
+      await fixture.whenStable();
       vi.spyOn(component, 'showCriteria').mockImplementation(e => {
         const hasFreeTextPill = e.searchCriteria.criteria.some(c => c.name === 'free-text');
         // Allow criteria but disable free text if one already exists
@@ -2695,7 +2694,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
   describe('with delimited input', () => {
     beforeEach(() => {
       vi.useRealTimers();
-      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.freeTextCriterion.set({ name: 'free-text', label: 'Free Text' });
       component.criteria.set([
         { name: 'status', label: 'Status' },
         { name: 'owner', label: 'Owner' },
@@ -2833,12 +2832,12 @@ describe('SiFilteredSearchComponent - With translation', () => {
     });
 
     it('should preserve literal free text regardless of option and multi-select configuration', async () => {
-      component.freeTextCriterion = {
+      component.freeTextCriterion.set({
         name: 'query',
         label: 'Free Text',
         multiSelect: true,
         options: [{ value: 'DE', label: 'Germany' }]
-      };
+      });
 
       await pasteInput('  translated(Germany)  ;');
 
@@ -2851,7 +2850,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
     });
 
     it('should not parse free-text values as dates', async () => {
-      component.freeTextCriterion = { name: 'query', validationType: 'date' };
+      component.freeTextCriterion.set({ name: 'query', validationType: 'date' });
 
       await pasteInput('not-a-date;');
 
@@ -2860,7 +2859,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
     it('should allow configured free-text pills in strict criterion mode', async () => {
       component.strictCriterion = true;
-      component.freeTextCriterion = { name: 'query' };
+      component.freeTextCriterion.set({ name: 'query' });
 
       await pasteInput('urgent;');
 
@@ -3284,7 +3283,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
     it.for([0, 1, 2])(
       'should enforce maxCriteria=%i for mixed pasted tokens',
       async maxCriteria => {
-        component.maxCriteria = maxCriteria;
+        component.maxCriteria.set(maxCriteria);
 
         await pasteInput('translated(Status):open;unknown:value;plain text;');
 
@@ -3386,7 +3385,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
     });
 
     it('should retain the remaining input when free text pills are unavailable', async () => {
-      component.freeTextCriterion = undefined;
+      component.freeTextCriterion.set(undefined);
 
       const input = await pasteInput('plain text;translated(Location):Lünen');
 
@@ -3506,12 +3505,12 @@ describe('SiFilteredSearchComponent - With translation', () => {
 
   describe('with free text pills enabled', () => {
     it('should create a free text pill when typing text and blurring the input', async () => {
-      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.freeTextCriterion.set({ name: 'free-text', label: 'Free Text' });
       component.searchCriteria.set({
         value: '',
         criteria: []
       });
-      await runOnPushChangeDetection(fixture);
+      await fixture.whenStable();
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -3542,12 +3541,12 @@ describe('SiFilteredSearchComponent - With translation', () => {
     });
 
     it('should update an existing free text pill', async () => {
-      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.freeTextCriterion.set({ name: 'free-text', label: 'Free Text' });
       component.searchCriteria.set({
         value: '',
         criteria: [{ name: 'free-text', value: 'original value' }]
       });
-      await runOnPushChangeDetection(fixture);
+      await fixture.whenStable();
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       let criteria = await filteredSearch.getCriteria();
@@ -3583,12 +3582,12 @@ describe('SiFilteredSearchComponent - With translation', () => {
     });
 
     it('should remove free text pill when editing, deleting all value and pressing enter', async () => {
-      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.freeTextCriterion.set({ name: 'free-text', label: 'Free Text' });
       component.searchCriteria.set({
         value: '',
         criteria: [{ name: 'free-text', value: 'text to delete' }]
       });
-      await runOnPushChangeDetection(fixture);
+      await fixture.whenStable();
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       let criteria = await filteredSearch.getCriteria();
@@ -3619,13 +3618,13 @@ describe('SiFilteredSearchComponent - With translation', () => {
     });
 
     it('should not allow adding free text pills when maxCriteria is reached', async () => {
-      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
-      component.maxCriteria = 2;
+      component.freeTextCriterion.set({ name: 'free-text', label: 'Free Text' });
+      component.maxCriteria.set(2);
       component.searchCriteria.set({
         value: '',
         criteria: [{ name: 'free-text', value: 'initial pill' }]
       });
-      await runOnPushChangeDetection(fixture);
+      await fixture.whenStable();
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
